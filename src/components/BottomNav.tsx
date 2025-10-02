@@ -11,20 +11,26 @@ const items = [
 
 export default function BottomNav() {
   return (
-    <nav className="h-16 w-full flex justify-around items-center border-t bg-white/95 backdrop-blur safe-bottom">
-      {items.map(({ to, icon: Icon, label }) => (
-        <NavLink
-          key={to}
-          to={to}
-          className={({ isActive }) =>
-            'flex flex-col items-center gap-1 text-xs transition-colors ' +
-            (isActive ? 'text-brand-800' : 'text-gray-400 hover:text-gray-600')
-          }
-        >
-          <Icon size={22} strokeWidth={2} />
-          <span className="leading-none">{label}</span>
-        </NavLink>
-      ))}
+    <nav
+      className="fixed inset-x-0 bottom-0 z-50 border-t bg-white/95 backdrop-blur"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }} // iOS safe area
+      aria-label="Primary"
+    >
+      <div className="mx-auto max-w-[560px] h-16 w-full flex justify-around items-center">
+        {items.map(({ to, icon: Icon, label }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) =>
+              'flex flex-col items-center gap-1 text-xs transition-colors ' +
+              (isActive ? 'text-brand-800' : 'text-gray-400 hover:text-gray-600')
+            }
+          >
+            <Icon size={22} strokeWidth={2} />
+            <span className="leading-none">{label}</span>
+          </NavLink>
+        ))}
+      </div>
     </nav>
   );
 }

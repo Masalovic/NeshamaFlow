@@ -21,18 +21,16 @@ function Layout() {
   const { pathname } = useLocation()
   const hideBar = pathname.startsWith('/ritual/start')
 
+  const contentPad = hideBar ? '' : 'pb-[calc(64px+env(safe-area-inset-bottom))]';
+
   return (
-    // Make the top-level a flex column that fills the screen
-    <div className="screen flex min-h-screen flex-col bg-gray-50">
-      {/* Single scroll container for all pages */}
-      <div className="flex-1 min-h-0 overflow-y-auto pb-20">
-        {/* pb-20 prevents the BottomNav from covering the last card */}
+    <div className="screen">
+      <div className={`flex-1 overflow-y-auto ${contentPad}`}>
         <Outlet />
       </div>
-
       {!hideBar && <BottomNav />}
     </div>
-  )
+  );
 }
 
 
