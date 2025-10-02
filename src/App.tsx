@@ -18,16 +18,16 @@ import Insights from './pages/Insights'
 import ExportData from './pages/ExportData'
 
 function Layout() {
-  const { pathname } = useLocation()
-  const hideBar = pathname.startsWith('/ritual/start')
-
-  const contentPad = hideBar ? '' : 'pb-[calc(64px+env(safe-area-inset-bottom))]';
+  const { pathname } = useLocation();
+  const hideBar = pathname.startsWith('/ritual/start'); // keep hidden on timer screen
 
   return (
-    <div className="screen">
-      <div className={`flex-1 overflow-y-auto ${contentPad}`}>
+    <div className="min-h-[100svh] flex flex-col"> {/* svh avoids mobile URL-bar jumps */}
+      {/* This is the SINGLE scroll area for the app */}
+      <main className="flex-1 overflow-y-auto">
         <Outlet />
-      </div>
+      </main>
+
       {!hideBar && <BottomNav />}
     </div>
   );
