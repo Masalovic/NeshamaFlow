@@ -1,21 +1,19 @@
-// 1) Single source of truth for moods + guard
+
 export const MOOD_KEYS = ['😊','🙂','😌','😔','😐','🤔','😫','😠'] as const;
 export type MoodKey = typeof MOOD_KEYS[number];
 export function isMoodKey(x: unknown): x is MoodKey {
   return typeof x === 'string' && (MOOD_KEYS as readonly string[]).includes(x as MoodKey);
 }
 
-// 2) Ritual shape (keeps your fields, adds whyBullets for UI)
 export interface Ritual {
   id: string;
   title: string;
   durationSec: number;
-  why: string;            // long summary paragraph
-  whyBullets: string[];   // short bullets for “Why it works”
-  steps?: string[];
+  why: string;
+  whyBullets: readonly string[];
+  steps?: readonly string[];
 }
 
-// 3) Ritual catalog (type-safe, ids stay literal)
 const RITUALS = {
   'box-breath-2m': {
     id: 'box-breath-2m',
@@ -91,36 +89,32 @@ const RITUALS = {
       'Easy daily micro-practice',
     ],
   },
-} as const satisfies Record<string, Ritual>;
+} as const;
 
-// 4) Strong ID type derived from the catalog
 export type RitualId = keyof typeof RITUALS;
-export const RITUAL_IDS = Object.keys(RITUALS) as RitualId[];
+export const DEFAULT_RITUAL_ID: RitualId = 'body-scan-1m';
 export function isRitualId(x: unknown): x is RitualId {
   return typeof x === 'string' && x in RITUALS;
 }
-export const DEFAULT_RITUAL_ID: RitualId = 'body-scan-1m';
 
-// 5) Mood → ritual mapping (typed)
 const MOOD_MAP: Record<MoodKey, RitualId> = {
-  '😫': 'box-breath-2m',     // stressed
-  '😠': 'ground-54321',      // angry
-  '😔': 'compassion-break',  // sad
-  '🤔': 'gratitude-3',       // reflective
-  '😐': '478-pace-2m',       // neutral
-  '😌': 'body-scan-1m',      // calm
-  '🙂': 'body-scan-1m',      // content
-  '😊': 'gratitude-3',       // happy
+  '😫': 'box-breath-2m',
+  '😠': 'ground-54321',
+  '😔': 'compassion-break',
+  '🤔': 'gratitude-3',
+  '😐': '478-pace-2m',
+  '😌': 'body-scan-1m',
+  '🙂': 'body-scan-1m',
+  '😊': 'gratitude-3',
 };
 
-// 6) Public API
-export const ALL_RITUALS: Ritual[] = Object.values(RITUALS);
+export const ALL_RITUALS = Object.values(RITUALS);
 
-export function getRitualForMood(mood: MoodKey): Ritual {
+export function getRitualForMood(mood: MoodKey) {
   const id = MOOD_MAP[mood] ?? DEFAULT_RITUAL_ID;
   return RITUALS[id];
 }
 
-export function getRitualById(id: string): Ritual | null {
-  return (RITUALS as Record<string, Ritual>)[id] ?? null;
+export function getRitualById(id: string) {
+  return isRitualId(id) ? RITUALS[id] : null;
 }

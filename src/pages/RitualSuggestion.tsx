@@ -1,29 +1,38 @@
-
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { decryptLoad } from '../lib/storage'
-import { getRitualForMood, isMoodKey, type Ritual } from '../lib/ritualEngine'
-import Header from '../components/ui/Header'
-import Card from '../components/ui/Card'
-import Button from '../components/ui/Button'
-import Modal from '../components/ui/Modal'
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  getRitualForMood,
+  isMoodKey,
+  type Ritual,
+  type MoodKey,
+} from '../lib/ritualEngine';
+import Header from '../components/ui/Header';
+import Card from '../components/ui/Card';
+import Button from '../components/ui/Button';
+import Modal from '../components/ui/Modal';
+import { getItem as sGet } from '../lib/secureStorage';
 
 export default function RitualSuggestion() {
-  const navigate = useNavigate()
-  const [ritual, setRitual] = useState<Ritual | null>(null)
-  const [whyOpen, setWhyOpen] = useState(false)
+  const navigate = useNavigate();
+  const [ritual, setRitual] = useState<Ritual | null>(null);
+  const [whyOpen, setWhyOpen] = useState(false);
 
   useEffect(() => {
-    const moodRaw = decryptLoad<unknown>('mood')
-    if (!isMoodKey(moodRaw)) {
-      // mood missing or invalid → send user to log it again
-      navigate('/log', { replace: true })
-      return
-    }
-    setRitual(getRitualForMood(moodRaw))
-  }, [navigate])
+    let alive = true;
+    (async () => {
+      const moodRaw = await sGet<unknown>('mood');
+      if (!isMoodKey(moodRaw)) {
+        navigate('/log', { replace: true });
+        return;
+      }
+      const mood: MoodKey = moodRaw;
+      if (!alive) return;
+      setRitual(getRitualForMood(mood));
+    })();
+    return () => { alive = false; };
+  }, [navigate]);
 
-  if (!ritual) return null
+  if (!ritual) return null;
 
   return (
     <div className="flex flex-col h-full">
@@ -48,16 +57,14 @@ export default function RitualSuggestion() {
             <Modal open={whyOpen} onClose={() => setWhyOpen(false)} title="Why it works">
               <p className="text-sm text-gray-700">{ritual.why}</p>
               <ul className="mt-3 list-disc pl-5 space-y-1 text-gray-600 text-sm">
-                {(ritual.whyBullets?.length ? ritual.whyBullets : [
-                  'Activates parasympathetic nervous system',
-                  'Evidence-backed micro-practice',
-                  'Designed to finish in under 2 minutes',
-                ]).map((b, i) => <li key={i}>{b}</li>)}
+                {(ritual.whyBullets ?? []).map((b, i) => (
+                  <li key={i}>{b}</li>
+                ))}
               </ul>
             </Modal>
           </Card>
         </div>
       </main>
     </div>
-  )
+  );
 }
