@@ -15,39 +15,45 @@ export type LogItem = {
 const KEY = 'history'
 const MAX_ITEMS = 500
 
-// normalize any ISO to exact second precision
+/** Clamp any ISO to exact second precision to create a stable natural key. */
 function toSecondISO(iso: string): string {
   const ms = Math.floor(new Date(iso).getTime() / 1000) * 1000
   return new Date(ms).toISOString()
 }
 
-// natural key for dedupe across sources
-const SECOND_KEY = (x: { ts: string; ritualId: string }) =>
-  `${x.ritualId}|${toSecondISO(x.ts)}`
+/** Natural key to dedupe across sources: ritual + second. */
+function secondKey(x: { ts: string; ritualId: string }): string {
+  return `${x.ritualId}|${toSecondISO(x.ts)}`
+}
 
+/** Always returns newest-first (desc by ts). */
 export async function loadHistory(): Promise<LogItem[]> {
   if (!sReady()) return []
   try {
     const data = await sGet<LogItem[]>(KEY)
-    return Array.isArray(data) ? data.slice(0, MAX_ITEMS) : []
+    const list = Array.isArray(data) ? data.slice(0, MAX_ITEMS) : []
+    // Normalize + sort newest-first
+    list.forEach(it => { it.ts = toSecondISO(it.ts) })
+    list.sort((a, b) => (a.ts < b.ts ? 1 : -1))
+    return list
   } catch {
     return []
   }
 }
 
+/** Save, keeping only newest-first and capping size. */
 export async function saveHistory(items: LogItem[]): Promise<void> {
   if (!sReady()) throw new Error('secureStorage not ready (locked)')
   try {
-    await sSet(KEY, (items ?? []).slice(0, MAX_ITEMS))
+    const copy = (items ?? []).map(it => ({ ...it, ts: toSecondISO(it.ts) }))
+    copy.sort((a, b) => (a.ts < b.ts ? 1 : -1))
+    await sSet(KEY, copy.slice(0, MAX_ITEMS))
   } catch {
     // ignore write errors (quota, etc.)
   }
 }
 
-/**
- * Log a new local entry and persist with dedupe.
- * Returns the created row.
- */
+/** Log a new local entry and persist with dedupe. Returns the created row. */
 export async function logLocal(input: {
   mood: MoodKey
   ritualId: string
@@ -67,20 +73,55 @@ export async function logLocal(input: {
     source: 'local',
   }
 
-  // merge with dedupe by id and by natural second-precision key
+  // Merge with dedupe by id AND by natural second key
   const seenIds = new Set<string>()
   const seenKeys = new Set<string>()
   const merged = [row, ...items].filter(it => {
-    const k = SECOND_KEY(it)
+    const k = secondKey(it)
     if (seenIds.has(it.id) || seenKeys.has(k)) return false
     seenIds.add(it.id)
     seenKeys.add(k)
     return true
   })
 
-  // newest first
-  merged.sort((a, b) => (a.ts < b.ts ? 1 : -1))
-
   await saveHistory(merged)
   return row
+}
+
+/**
+ * Merge remote rows (e.g., from Supabase) into local history with proper dedupe.
+ * Returns the number of new rows accepted.
+ */
+export async function mergeRemote(incoming: LogItem[]): Promise<number> {
+  if (!incoming?.length) return 0
+  const current = await loadHistory()
+
+  // Pre-normalize incoming
+  const sanitized = incoming.map(r => ({
+    ...r,
+    ts: toSecondISO(r.ts),
+    source: 'remote' as const,
+  }))
+
+  const byId = new Set(current.map(x => x.id))
+  const byKey = new Set(current.map(x => secondKey(x)))
+
+  const additions: LogItem[] = []
+  for (const r of sanitized) {
+    const k = secondKey(r)
+    if (byId.has(r.id) || byKey.has(k)) continue
+    additions.push(r)
+    byId.add(r.id)
+    byKey.add(k)
+  }
+
+  if (!additions.length) return 0
+  await saveHistory([...additions, ...current])
+  return additions.length
+}
+
+/** Optional helper if you ever need it elsewhere */
+export async function clearHistory(): Promise<void> {
+  if (!sReady()) return
+  await sSet(KEY, [])
 }

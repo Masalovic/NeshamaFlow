@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Airy, editorial vibe with subtle purple tone */
+/* Soft, airy base */
 body {
-  @apply bg-gradient-to-b from-brand-50 via-white to-white text-gray-900;
+  @apply bg-chiffon text-velvet;
   font-family: theme("fontFamily.sans");
 }
 
@@ -15,30 +15,61 @@ body {
 .ios-title { @apply text-[28px] leading-tight font-semibold tracking-tight; }
 
 /* Cards & tiles */
-.card { @apply bg-white rounded-2xl shadow-soft p-4; }
+.card { @apply bg-white rounded-2xl shadow-soft border border-silk/50 p-4; }
 .tile { @apply card p-4 flex items-start gap-3; }
 
 /* Inputs */
 .input {
   @apply w-full h-12 px-4 rounded-xl bg-gray-100/80 placeholder:text-gray-400
-         focus:outline-none focus:ring-2 focus:ring-brand-300;
+         focus:outline-none focus:ring-2 focus:ring-brand-400 focus:ring-offset-2 focus:ring-offset-white;
 }
 
-/* Buttons */
-.btn { @apply h-12 inline-flex items-center justify-center rounded-xl px-4 font-medium transition; }
-.btn-primary { @apply text-white bg-gradient-to-b from-brand-700 to-brand-800 hover:from-brand-800 hover:to-brand-900; }
-.btn-secondary { @apply text-brand-800 bg-brand-200 hover:bg-brand-300; }
-.btn-ghost { @apply text-brand-700 hover:bg-brand-50; }
+/* ---------------- Buttons (accessible states) ---------------- */
+.btn {
+  @apply h-12 inline-flex items-center justify-center rounded-pill px-5
+         text-sm font-medium transition-all select-none outline-none
+         focus-visible:ring-2 focus-visible:ring-brand-400 focus-visible:ring-offset-2 focus-visible:ring-offset-white
+         disabled:opacity-45 disabled:cursor-not-allowed;
+}
 
-/* Safe area */
+/* Primary — rose */
+.btn-primary {
+  @apply bg-brand-600 text-white shadow-soft
+         hover:bg-brand-700 hover:shadow
+         active:bg-brand-800 active:shadow-soft-press;
+}
+
+/* Secondary — smoke/velvet */
+.btn-secondary {
+  @apply bg-smoke text-white shadow-soft
+         hover:bg-black hover:shadow
+         active:bg-black/90 active:shadow-soft-press;
+}
+
+/* Outline — white bg, rose border */
+.btn-outline {
+  @apply bg-white text-brand-800 border border-brand-300
+         hover:border-brand-500 hover:text-brand-900 hover:shadow
+         active:bg-brand-50;
+}
+
+/* Ghost — very light */
+.btn-ghost {
+  @apply bg-transparent text-brand-800
+         hover:bg-brand-50 active:bg-brand-100;
+}
+
+/* Safe area padding for bottom nav */
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
 
 /* Height of the fixed bottom nav (64px) + iOS home-indicator safe area */
-:root { --nav-height: 44px; }
+:root { --nav-height: 64px; }  /* <-- was 44px */
 
-/* Any scroll area inside the app gets safe bottom padding
-   so content never hides behind the fixed bottom nav */
+/* Any scroll area inside the app gets safe bottom padding so it never hides behind nav */
 .screen .overflow-y-auto,
 .min-h-\[100svh\] .overflow-y-auto {
   padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
 }
+
+/* Optional: gentle top shadow for the fixed bottom nav */
+.safe-bottom-shadow { box-shadow: 0 -6px 16px rgba(15,15,16,0.06); }

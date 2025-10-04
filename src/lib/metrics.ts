@@ -1,18 +1,24 @@
 // src/lib/metrics.ts
-/* Minimal, privacy-friendly event tracker.
- * Stores a small queue (encrypted when storage is ready) and best-effort flushes to Supabase.
- */
 import { getItem as sGet, setItem as sSet, ready as storageReady } from './secureStorage'
 import { supabase } from './supabase'
 
 export type EventName =
   | 'app_open'
-  | 'mood_selected'
-  | 'ritual_completed'
-  | 'first_mood'
-  | 'first_ritual'
   | 'upgrade_click'
   | 'pro_enabled'
+  | 'mood_selected'
+  | 'first_mood'
+  | 'ritual_completed'
+  | 'first_ritual'
+  | 'slash_quick_used'
+  | 'streak_repair_used'
+  | 'streak_repair_ineligible'
+  | 'streak_repair_failed'
+  | 'nudge_shown'
+  | 'nudge_tapped'
+  | 'export_json'
+  | 'export_csv'
+  | 'app_error';            // 👈 added
 
 type Event = {
   id: string
@@ -22,8 +28,6 @@ type Event = {
 }
 
 const KEY = 'events.queue'
-
-// Fallback queue used before secureStorage has a key (eg. before unlock)
 let memQueue: Event[] = []
 
 async function loadQueue(): Promise<Event[]> {

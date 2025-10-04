@@ -1,4 +1,3 @@
-// vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
@@ -7,7 +6,8 @@ export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      registerType: 'autoUpdate',
+      // ⬇️ prompt so we can show "Update available" UI
+      registerType: 'prompt',
       devOptions: { enabled: false }, // keep SW off in dev
       includeAssets: [
         'offline.html',
@@ -56,15 +56,14 @@ export default defineConfig({
     }),
   ],
 
-  // 👇 Dev-server tweaks so tunnels work
+  // Dev-server tweaks so tunnels work
   server: {
-    host: true,         // listen on all interfaces so LAN/tunnel can reach it
+    host: true,        // listen on all interfaces so LAN/tunnel can reach it
     port: 5173,
-    strictPort: true,   // fail fast if the port is taken
+    strictPort: true,  // fail fast if the port is taken
     allowedHosts: true, // DEV ONLY: allow any hostname (e.g. *.trycloudflare.com, *.loca.lt)
     hmr: {
-      // HMR over HTTPS tunnels uses 443 on the public URL
-      clientPort: 443,
+      clientPort: 443, // for HTTPS tunnels
     },
   },
 })

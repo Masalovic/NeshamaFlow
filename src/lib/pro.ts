@@ -1,18 +1,50 @@
 // src/lib/pro.ts
-import { getItem as sGet, setItem as sSet } from './secureStorage'
+import { supabase } from './supabase';
+import { getItem as sGet, setItem as sSet } from './secureStorage';
 
-const KEY = 'entitlement.pro' // boolean
+const KEY = 'entitlement.pro';
 
 export async function isPro(): Promise<boolean> {
-  return (await sGet<boolean>(KEY)) === true
+  // local cache first
+  const cached = await sGet<boolean>(KEY);
+  let result = !!cached;
+
+  try {
+    const { data, error } = await supabase
+      .from('entitlements')
+      .select('active')
+      .eq('product', 'pro')
+      .maybeSingle();
+
+    if (!error && data) {
+      result = !!data.active;
+      await sSet(KEY, result);
+    }
+  } catch {
+    // ignore network errors; rely on cache
+  }
+
+  return result;
 }
 
-export async function setPro(enabled: boolean): Promise<void> {
-  await sSet(KEY, !!enabled)
+/** Local preview toggle used in Settings (does not touch Supabase). */
+export async function setPro(val: boolean): Promise<void> {
+  await sSet(KEY, !!val);
 }
 
-/** Placeholder for future server check (e.g., Stripe via Supabase Function). */
-export async function refreshProFromServer(): Promise<boolean> {
-  // No-op for now; return stored flag
-  return isPro()
+/** Refresh from server after login or foreground. */
+export async function refreshEntitlement(): Promise<void> {
+  try {
+    const { data, error } = await supabase
+      .from('entitlements')
+      .select('active')
+      .eq('product', 'pro')
+      .maybeSingle();
+
+    if (!error && data) {
+      await sSet(KEY, !!data.active);
+    }
+  } catch {
+    // ignore
+  }
 }

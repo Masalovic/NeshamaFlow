@@ -11,6 +11,7 @@ import {
 import { supabase } from '../lib/supabase';
 import { loadSettings, setSetting } from '../lib/settings';
 import { isPro, setPro } from '../lib/pro';
+import { isEnabled as remindersEnabled, toggleEnabled as remindersToggle } from '../lib/reminders';
 
 // Use one device-local secret when no PIN is set (so secureStorage still works)
 function getOrCreateDeviceSecret(): string {
@@ -46,19 +47,31 @@ export default function Settings() {
 
   // ----- Preferences (encrypted) -----
   const [haptics, setHaptics] = useState(true);
+  const [remindersOn, setRemindersOn] = useState<boolean>(true);
+
   useEffect(() => {
     let alive = true;
     (async () => {
       const s = await loadSettings();
       if (alive) setHaptics(s.haptics);
+      if (alive) setRemindersOn(remindersEnabled());
     })();
     return () => {
       alive = false;
     };
   }, []);
+
   async function toggleHaptics(next: boolean) {
     setHaptics(next);
     await setSetting('haptics', next);
+  }
+
+  function toggleReminders(next: boolean) {
+    // reminders have their own localStorage flag; no server/secureStorage write
+    const now = remindersToggle(); // flips current
+    // If UI requested a specific state, ensure it matches
+    if (now !== next) remindersToggle();
+    setRemindersOn(next);
   }
 
   // ----- Pro (preview) -----
@@ -89,12 +102,9 @@ export default function Settings() {
   async function rekeyAll(newPassphrase: string) {
     const snapshot: Record<string, unknown> = {};
     for (const k of REKEY_KEYS) {
-      // read with current key
       snapshot[k] = await sGet(k);
     }
-    // switch key
     await setEncryptionPassphrase(newPassphrase);
-    // rewrite under new key
     for (const k of REKEY_KEYS) {
       const v = snapshot[k];
       if (v !== null && v !== undefined) {
@@ -116,10 +126,8 @@ export default function Settings() {
     }
     setBusy(true);
     try {
-      // Re-key encrypted data from device-secret -> PIN passphrase
-      await rekeyAll(pin);
-      // Persist the PIN salt/hash (controls AppLock)
-      await setLockPIN(pin);
+      await rekeyAll(pin);     // re-key to the PIN
+      await setLockPIN(pin);   // store hash/salt
       setPin('');
       setPin2('');
       setMsg('App lock enabled on this device.');
@@ -136,9 +144,8 @@ export default function Settings() {
     setBusy(true);
     setMsg(null);
     try {
-      // Re-key encrypted data from PIN -> device-secret so app keeps working without lock
       const secret = getOrCreateDeviceSecret();
-      await rekeyAll(secret);
+      await rekeyAll(secret); // re-key back to device secret
       clearLock();
       setMsg('App lock disabled on this device.');
     } catch (e) {
@@ -165,6 +172,7 @@ export default function Settings() {
           {/* Preferences */}
           <div className="rounded-2xl border bg-white p-4">
             <div className="text-sm font-medium mb-2">Preferences</div>
+
             <label className="flex items-center justify-between py-1">
               <span className="text-sm">Haptic cues (if supported)</span>
               <input
@@ -173,6 +181,19 @@ export default function Settings() {
                 checked={haptics}
                 onChange={(e) => toggleHaptics(e.target.checked)}
                 aria-label="Enable haptic cues"
+              />
+            </label>
+
+            <label className="flex items-center justify-between py-1">
+              <div className="min-w-0">
+                <span className="text-sm">Smart reminders</span>
+              </div>
+              <input
+                type="checkbox"
+                className="h-4 w-4"
+                checked={remindersOn}
+                onChange={(e) => toggleReminders(e.target.checked)}
+                aria-label="Enable smart reminders"
               />
             </label>
           </div>
@@ -191,18 +212,18 @@ export default function Settings() {
               />
             </label>
             {!pro && (
-      <button
-        className="btn btn-primary w-full mt-3"
-        onClick={async () => {
-          const { track } = await import('../lib/metrics'); // lazy
-          track('upgrade_click', { source: 'settings_pro_card' });
-          await togglePro(true);
-          track('pro_enabled');
-        }}
-      >
-        Upgrade to Pro
-      </button>
-    )}
+              <button
+                className="btn btn-primary w-full mt-3"
+                onClick={async () => {
+                  const { track } = await import('../lib/metrics'); // lazy
+                  (track as any)('upgrade_click', { source: 'settings_pro_card' });
+                  await togglePro(true);
+                  (track as any)('pro_enabled');
+                }}
+              >
+                Upgrade to Pro
+              </button>
+            )}
             <p className="text-xs text-gray-500 mt-2">
               This is a client-only toggle for testing. We’ll wire it to Stripe later.
             </p>

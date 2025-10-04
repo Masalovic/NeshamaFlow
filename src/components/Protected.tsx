@@ -4,6 +4,7 @@ import AuthScreen from '../pages/AuthScreen';
 import AppLock from '../pages/AppLock';
 import { ready as storageReady, setEncryptionPassphrase } from '../lib/secureStorage';
 import { track, flush } from '../lib/metrics';
+import { refreshEntitlement } from '../lib/pro';
 
 function getOrCreateDeviceSecret(): string {
   let s = localStorage.getItem('secure.device_secret.v1');
@@ -62,6 +63,10 @@ export default function Protected({ children }: { children: JSX.Element }) {
       if (!mounted) return;
       setAuthed(!!session);
       if (session && storageReady()) track('app_open');
+      if (session) {
+        track('app_open');
+        void refreshEntitlement();
+      }
     });
 
     // Best-effort periodic metrics flush (only if key is ready)
