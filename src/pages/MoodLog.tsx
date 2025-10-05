@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import EmojiGrid from "../components/EmojiGrid";
-import TodayPanel from '../components/TodayPanel';
+import TodayPanel from "../components/TodayPanel";
 import Header from "../components/ui/Header";
 import InsightChips from "../components/InsightChips";
 import StreakCard from "../components/StreakCard";
@@ -18,10 +18,8 @@ import { SlidersHorizontal, Zap } from "lucide-react";
 export default function MoodLog() {
   const [mood, setMood] = useState("");
   const [note, setNote] = useState("");
-  const [last, setLast] = useState<{ emoji: string; date: string } | null>(
-    null
-  );
-  const nav = useNavigate();
+  const [last, setLast] = useState<{ emoji: string; date: string } | null>(null);
+  const navigate = useNavigate();
 
   // Last logged item (from encrypted local history)
   useEffect(() => {
@@ -49,11 +47,16 @@ export default function MoodLog() {
     await sSet("mood", mood);
     await sSet("note", note.trim());
     track("mood_selected", { mood });
+
     try {
       const items = await loadHistory();
-      if (!items.length) (track as any)("first_mood", { mood });
-    } catch {}
-    nav("/ritual");
+      if (!items.length) track("first_mood", { mood });
+    } catch {
+      /* ignore */
+    }
+
+    // Go to the suggestion screen (from there the user can start timer)
+    navigate("/ritual");
   }
 
   async function quickSave() {
@@ -61,17 +64,19 @@ export default function MoodLog() {
     // If user typed /quick message, strip the prefix for the saved note
     const cleanedNote = isSlashQuick ? (slash?.rest ?? "").trim() : note.trim();
 
-    logLocal({
+    await logLocal({
       mood: mood as MoodKey,
       ritualId: "quick",
       durationSec: 0,
       note: cleanedNote || null,
     });
-    (track as any)("slash_quick_used", { mood });
-    syncHistoryUp().catch(() => {});
+
+    track("slash_quick_used", { mood });
+    void syncHistoryUp().catch(() => {});
+
     setNote("");
     setMood("");
-    nav("/history", { replace: true });
+    navigate("/history", { replace: true });
   }
 
   // Keyboard: Ctrl/⌘ + Enter = Quick Save
@@ -98,8 +103,9 @@ export default function MoodLog() {
             <div className="flex items-center justify-between mb-2">
               <div className="font-medium">Select your mood</div>
               <button
+                type="button"
                 className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700"
-                onClick={() => nav("/settings")}
+                onClick={() => navigate("/settings")}
                 aria-label="Settings"
                 title="Settings"
               >
@@ -128,8 +134,7 @@ export default function MoodLog() {
                 <Zap size={14} className="opacity-70" />
                 <span>
                   <strong>Quick Save</strong> logs your mood instantly and skips
-                  the ritual. We’ll save your selected mood and optional note to{" "}
-                  <em>History</em>.
+                  the ritual. We’ll save your selected mood and optional note to <em>History</em>.
                 </span>
               </span>
             </div>
@@ -145,6 +150,7 @@ export default function MoodLog() {
           {/* Primary actions */}
           <div className="grid grid-cols-2 gap-3">
             <button
+              type="button"
               onClick={startRitual}
               disabled={!hasMood}
               className="btn btn-primary w-full disabled:opacity-40"
@@ -152,8 +158,8 @@ export default function MoodLog() {
               Start Ritual
             </button>
 
-            {/* Outline only on hover (not initially) */}
             <button
+              type="button"
               onClick={quickSave}
               disabled={!hasMood}
               className="btn w-full bg-white text-gray-700 border border-transparent
