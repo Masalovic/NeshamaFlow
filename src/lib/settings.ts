@@ -1,10 +1,9 @@
-// src/lib/settings.ts
 import { getItem as sGet, setItem as sSet, ready as sReady } from './secureStorage';
 
 export type AppSettings = {
   haptics: boolean;
-  goalMin: number;         // daily goal minutes (shown in TodayPanel/progress)
-  reminderTime: string;    // "HH:mm" local time preference
+  goalMin: number;         // daily goal minutes
+  reminderTime: string;    // "HH:mm"
   onboardingDone?: boolean;
 };
 
@@ -20,7 +19,6 @@ const DEFAULTS: AppSettings = {
 export async function loadSettings(): Promise<AppSettings> {
   try {
     const cur = (sReady() ? await sGet<AppSettings>(KEY) : null) || {};
-    // shallow-merge defaults with stored values
     return { ...DEFAULTS, ...(cur as Partial<AppSettings>) };
   } catch {
     return { ...DEFAULTS };

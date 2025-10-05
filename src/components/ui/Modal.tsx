@@ -1,18 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
-export default function Modal({ open, onClose, title, children }:{
-  open:boolean; onClose:()=>void; title:string; children:React.ReactNode
-}) {
-  if (!open) return null
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/30">
-      <div className="bg-white w-full sm:w-[380px] rounded-t-2xl sm:rounded-2xl shadow-soft p-4">
-        <div className="flex items-center justify-between mb-2">
-          <h3 className="text-base font-semibold">{title}</h3>
-          <button onClick={onClose} className="btn btn-ghost h-8 px-2">✕</button>
+type ModalProps = {
+  open: boolean;
+  title?: string;
+  onClose: () => void;
+  children: React.ReactNode;
+};
+
+export default function Modal({ open, title, onClose, children }: ModalProps) {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    if (open) document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  if (!mounted) return null;
+
+  return createPortal(
+    <div
+      className={`fixed inset-0 z-[80] ${open ? "pointer-events-auto" : "pointer-events-none"}`}
+      role="dialog"
+      aria-hidden={!open}
+    >
+      {/* Backdrop */}
+      <div
+        className={`absolute inset-0 bg-black/30 transition-opacity ${open ? "opacity-100" : "opacity-0"}`}
+        onClick={onClose}
+      />
+      {/* Sheet */}
+      <div
+        className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+                    w-[min(92vw,420px)] max-h-[85vh] overflow-y-auto rounded-2xl bg-white p-4 shadow-soft
+                    transition-transform ${open ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}
+      >
+        {title && <div className="text-sm font-medium mb-2">{title}</div>}
+        {children}
+        <div className="mt-4 flex justify-end">
+          <button className="btn btn-outline" onClick={onClose}>Close</button>
         </div>
-        <div className="text-sm text-gray-700">{children}</div>
       </div>
-    </div>
-  )
+    </div>,
+    document.body
+  );
 }

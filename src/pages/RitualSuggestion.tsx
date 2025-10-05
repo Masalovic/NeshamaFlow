@@ -1,6 +1,5 @@
-// src/pages/RitualSuggestion.tsx
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import {
   getRitualForMood,
   isMoodKey,
@@ -32,12 +31,10 @@ export default function RitualSuggestion() {
       if (!alive) return;
       setRitual(getRitualForMood(mood));
     })();
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, [navigate]);
 
-  // Compute the instructional guide for this ritual
+  // Instructional guide for this ritual
   const guide: RitualGuide = useMemo(() => guideFor(ritual), [ritual]);
 
   if (!ritual) return null;
@@ -67,13 +64,10 @@ export default function RitualSuggestion() {
             ) : null}
 
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <Button
-                onClick={() => navigate('/ritual/start')}
-                variant="primary"
-                className="col-span-2"
-              >
+              {/* SPA navigation for reliability on mobile */}
+              <Link to="/ritual/start" className="btn btn-primary col-span-2 text-center">
                 Start Ritual
-              </Button>
+              </Link>
 
               {/* Secondary actions open modals */}
               <button
@@ -101,9 +95,7 @@ export default function RitualSuggestion() {
               ) : (
                 <p className="text-sm text-gray-600">No steps available.</p>
               )}
-              {guide.tip && (
-                <p className="text-xs text-gray-500 mt-2">{guide.tip}</p>
-              )}
+              {guide.tip && <p className="text-xs text-gray-500 mt-2">{guide.tip}</p>}
             </Modal>
 
             {/* Why modal */}

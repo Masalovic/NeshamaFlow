@@ -1,4 +1,3 @@
-// src/pages/Settings.tsx
 import React, { useEffect, useState } from 'react';
 import Header from '../components/ui/Header';
 import { clearLock, setLockPIN } from '../lib/appLock';
@@ -39,9 +38,7 @@ const REKEY_KEYS = [
 export default function Settings() {
   async function clearAll() {
     secureClearAll();
-    try {
-      await supabase.auth.signOut();
-    } catch {}
+    try { await supabase.auth.signOut(); } catch {}
     alert('All local data cleared.');
   }
 
@@ -78,7 +75,6 @@ export default function Settings() {
   }
 
   async function onReminderTimeChange(next: string) {
-    // Expect "HH:mm"
     const valid = /^\d{2}:\d{2}$/.test(next);
     const hhmm = valid ? next : '20:00';
     setReminderTime(hhmm);
@@ -115,29 +111,19 @@ export default function Settings() {
   // Helper: snapshot -> switch key -> rewrite
   async function rekeyAll(newPassphrase: string) {
     const snapshot: Record<string, unknown> = {};
-    for (const k of REKEY_KEYS) {
-      snapshot[k] = await sGet(k);
-    }
+    for (const k of REKEY_KEYS) snapshot[k] = await sGet(k);
     await setEncryptionPassphrase(newPassphrase);
     for (const k of REKEY_KEYS) {
       const v = snapshot[k];
-      if (v !== null && v !== undefined) {
-        await sSet(k, v);
-      }
+      if (v !== null && v !== undefined) await sSet(k, v);
     }
   }
 
   async function enablePin() {
     setMsg(null);
     if (busy) return;
-    if (pin.length < 4 || /\D/.test(pin)) {
-      setMsg('PIN must be at least 4 digits (numbers only).');
-      return;
-    }
-    if (pin !== pin2) {
-      setMsg('PINs do not match.');
-      return;
-    }
+    if (pin.length < 4 || /\D/.test(pin)) { setMsg('PIN must be at least 4 digits (numbers only).'); return; }
+    if (pin !== pin2) { setMsg('PINs do not match.'); return; }
     setBusy(true);
     try {
       await rekeyAll(pin);
@@ -147,9 +133,7 @@ export default function Settings() {
     } catch (e) {
       console.error(e);
       setMsg('Failed to enable PIN. Please try again.');
-    } finally {
-      setBusy(false);
-    }
+    } finally { setBusy(false); }
   }
 
   async function disablePin() {
@@ -164,9 +148,7 @@ export default function Settings() {
     } catch (e) {
       console.error(e);
       setMsg('Failed to disable PIN. Please try again.');
-    } finally {
-      setBusy(false);
-    }
+    } finally { setBusy(false); }
   }
 
   return (
@@ -197,7 +179,7 @@ export default function Settings() {
             </label>
           </div>
 
-          {/* Practice & reminders (from onboarding) */}
+          {/* Practice & reminders */}
           <div className="rounded-2xl border bg-white p-4">
             <div className="text-sm font-medium mb-2">Practice & reminders</div>
 
