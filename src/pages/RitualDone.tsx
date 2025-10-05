@@ -1,97 +1,174 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Header from '../components/ui/Header';
-import Button from '../components/ui/Button';
-import { loadHistory, type LogItem } from '../lib/history';
-import { isMoodKey } from '../lib/ritualEngine';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
+import EmojiGrid from "../components/EmojiGrid";
+import TodayPanel from "../components/TodayPanel";
+import Header from "../components/ui/Header";
+import InsightChips from "../components/InsightChips";
+import StreakCard from "../components/StreakCard";
+import SmartReminderBanner from "../components/SmartReminderBanner";
+import { loadHistory, logLocal, type LogItem } from "../lib/history";
+import { track } from "../lib/metrics";
+import { setItem as sSet } from "../lib/secureStorage";
+import { parseSlashCommand } from "../lib/commands";
+import { isMoodKey, type MoodKey } from "../lib/ritualEngine";
+import { syncHistoryUp } from "../lib/sync";
+import { SlidersHorizontal, Zap } from "lucide-react";
 
-function niceDuration(sec: number) {
-  if (sec < 60) return `${sec}s`;
-  const m = Math.floor(sec / 60);
-  const s = sec % 60;
-  return s ? `${m}m ${s}s` : `${m}m`;
-}
+export default function MoodLog() {
+  const [mood, setMood] = useState("");
+  const [note, setNote] = useState("");
+  const [last, setLast] = useState<{ emoji: string; date: string } | null>(null);
+  const navigate = useNavigate();
 
-export default function RitualDone() {
-  const nav = useNavigate();
-  const [last, setLast] = useState<LogItem | null>(null);
-
+  // Last logged item (from encrypted local history)
   useEffect(() => {
     let alive = true;
     (async () => {
-      const list = await loadHistory();
-      if (!alive) return;
-      setLast(list[0] ?? null);
+      const items: LogItem[] = await loadHistory();
+      if (!alive || !items.length) return;
+      const it = items[0];
+      setLast({
+        emoji: String(it.mood),
+        date: dayjs(it.ts).format("DD MMM, HH:mm"),
+      });
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
-  const practiced = useMemo(() => {
-    if (!last) return null;
-    // Guard: only treat true ritual rows as “just done”
-    if (!isMoodKey(last.mood) || !last.ritualId) return null;
-    return {
-      when: new Date(last.ts),
-      dur: niceDuration(Math.max(0, last.durationSec ?? 0)),
-      ritualId: last.ritualId,
-      mood: String(last.mood),
-    };
-  }, [last]);
+  const hasMood = isMoodKey(mood);
+  const slash = parseSlashCommand(note);
+  const isSlashQuick = slash?.name === "quick";
+
+  async function startRitual() {
+    if (!hasMood) return;
+    await sSet("mood", mood);
+    await sSet("note", note.trim());
+    track("mood_selected", { mood });
+
+    try {
+      const items = await loadHistory();
+      if (!items.length) track("first_mood", { mood });
+    } catch {
+      /* ignore */
+    }
+
+    // Go to the suggestion screen (from there the user can start timer)
+    navigate("/ritual");
+  }
+
+  async function quickSave() {
+    if (!hasMood) return;
+    // If user typed /quick message, strip the prefix for the saved note
+    const cleanedNote = isSlashQuick ? (slash?.rest ?? "").trim() : note.trim();
+
+    await logLocal({
+      mood: mood as MoodKey,
+      ritualId: "quick",
+      durationSec: 0,
+      note: cleanedNote || null,
+    });
+
+    track("slash_quick_used", { mood });
+    void syncHistoryUp().catch(() => {});
+
+    setNote("");
+    setMood("");
+    navigate("/history", { replace: true });
+  }
+
+  // Keyboard: Ctrl/⌘ + Enter = Quick Save
+  function onNoteKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+      e.preventDefault();
+      void quickSave();
+    }
+  }
 
   return (
-    <div className="flex h-full flex-col">
-      <Header title="Nice work ✨" back />
-      <main className="flex-1 overflow-y-auto p-4">
-        <div className="max-w-[420px] mx-auto">
-          <div className="rounded-2xl bg-white shadow p-6 text-center">
-            <div className="mx-auto mb-3 h-12 w-12 rounded-full bg-brand-100 flex items-center justify-center">
-              <span className="text-2xl">✅</span>
-            </div>
-            <h2 className="text-lg font-semibold">Session complete</h2>
+    <div className="flex h-full flex-col bg-gray-50">
+      <Header title="How are you feeling?" />
 
-            {practiced ? (
-              <p className="text-sm text-gray-600 mt-1">
-                Logged <span className="font-medium">{practiced.dur}</span> — {practiced.ritualId.replace(/_/g,' ')}.
+      <main className="flex-1 overflow-y-auto">
+        <div className="max-w-[420px] mx-auto p-4 space-y-4">
+          <TodayPanel />
+          <SmartReminderBanner />
+          <StreakCard />
+          <InsightChips />
+
+          {/* Mood picker */}
+          <div className="rounded-2xl bg-white shadow p-4">
+            <div className="flex items-center justify-between mb-2">
+              <div className="font-medium">Select your mood</div>
+              <button
+                type="button"
+                className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700"
+                onClick={() => navigate("/settings")}
+                aria-label="Settings"
+                title="Settings"
+              >
+                <SlidersHorizontal size={14} />
+                Settings
+              </button>
+            </div>
+            <EmojiGrid selected={mood} onSelect={setMood} />
+          </div>
+
+          {/* Note + explanation */}
+          <div className="rounded-2xl bg-white shadow p-4">
+            <label className="block text-sm text-gray-600 mb-2">
+              Add a note (optional)
+            </label>
+            <textarea
+              className="w-full min-h-[92px] rounded-xl border px-3 py-2 text-sm"
+              placeholder="What’s on your mind?"
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              onKeyDown={onNoteKeyDown}
+            />
+
+            <div className="mt-2 text-xs text-gray-500">
+              <span className="inline-flex items-center gap-2">
+                <Zap size={14} className="opacity-70" />
+                <span>
+                  <strong>Quick Save</strong> logs your mood instantly and skips
+                  the ritual. We’ll save your selected mood and optional note to <em>History</em>.
+                </span>
+              </span>
+            </div>
+
+            {last && (
+              <p className="text-xs text-gray-500 px-1 mt-3">
+                Last Logged Mood: <span className="text-base">{last.emoji}</span>{" "}
+                on {last.date}
               </p>
-            ) : (
-              <p className="text-sm text-gray-600 mt-1">Your practice was saved.</p>
             )}
+          </div>
 
-            <div className="mt-4 text-sm text-gray-700">
-              <p className="mb-1 font-medium">After-care</p>
-              <ul className="text-left list-disc pl-5 space-y-1">
-                <li>Take one slower breath and unclench your jaw.</li>
-                <li>Drink a sip of water (tiny rituals stick better!).</li>
-                <li>Optional: jot a 1-line note in <em>History</em>.</li>
-              </ul>
-            </div>
+          {/* Primary actions */}
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={startRitual}
+              disabled={!hasMood}
+              className="btn btn-primary w-full disabled:opacity-40"
+            >
+              Start Ritual
+            </button>
 
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              <Button
-                variant="primary"
-                className="col-span-1"
-                onClick={() => nav('/log', { replace: true })}
-              >
-                Log another
-              </Button>
-              <Button
-                variant="outline"
-                className="col-span-1"
-                onClick={() => nav('/history', { replace: true })}
-              >
-                See history
-              </Button>
-            </div>
-
-            <div className="mt-3">
-              <Button
-                variant="ghost"
-                onClick={() => nav('/settings')}
-                title="Open Settings → Smart reminders"
-              >
-                Set a smart reminder
-              </Button>
-            </div>
+            <button
+              type="button"
+              onClick={quickSave}
+              disabled={!hasMood}
+              className="btn w-full bg-white text-gray-700 border border-transparent
+                         hover:border-gray-300 hover:ring-1 hover:ring-gray-200
+                         focus-visible:ring-2 focus-visible:ring-brand-300
+                         disabled:opacity-40"
+            >
+              Quick Save
+            </button>
           </div>
         </div>
       </main>
