@@ -1,7 +1,8 @@
+// src/pages/History.tsx
 import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useNavigate } from "react-router-dom";
 import { loadHistory, type LogItem } from "../lib/history";
 import { ready as storageReady } from "../lib/secureStorage";
 import { titleForRitualId } from "../lib/ritualEngine";
@@ -29,6 +30,7 @@ function fmtDuration(sec: number): string {
 }
 
 export default function History() {
+  const navigate = useNavigate();
   const [items, setItems] = useState<LogItem[] | null>(null);
   const [unlocked, setUnlocked] = useState<boolean>(storageReady());
 
@@ -77,13 +79,14 @@ export default function History() {
     <div className="flex h-full flex-col bg-gray-50">
       <header className="h-12 flex items-center justify-between border-b bg-white px-3">
         <h1 className="text-lg font-semibold">History</h1>
-        <Link
-          to="/insights"
+        <button
+          type="button"
+          onClick={() => navigate("/insights")}
           className="text-xs text-brand-700 underline"
-          aria-label="See Insights"
+          aria-label="Open Insights"
         >
           Insights
-        </Link>
+        </button>
       </header>
 
       <main className="flex-1 overflow-y-auto p-4">
