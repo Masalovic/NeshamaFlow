@@ -11,7 +11,7 @@ import {
 import { supabase } from '../lib/supabase';
 import { loadSettings, setSetting } from '../lib/settings';
 import { isPro, setPro } from '../lib/pro';
-import { isEnabled as remindersEnabled, toggleEnabled as remindersToggle } from '../lib/reminders';
+import { isEnabled as remindersOn, toggleEnabled } from '../lib/reminders';
 
 // Use one device-local secret when no PIN is set (so secureStorage still works)
 function getOrCreateDeviceSecret(): string {
@@ -47,18 +47,23 @@ export default function Settings() {
 
   // ----- Preferences (encrypted) -----
   const [haptics, setHaptics] = useState(true);
-  const [remindersOn, setRemindersOn] = useState<boolean>(true);
+
+  // ----- Practice & reminders (from onboarding) -----
+  const [goalMin, setGoalMin] = useState<number>(2);
+  const [reminderTime, setReminderTime] = useState<string>('20:00');
+  const [remindersEnabled, setRemindersEnabled] = useState<boolean>(remindersOn());
 
   useEffect(() => {
     let alive = true;
     (async () => {
       const s = await loadSettings();
-      if (alive) setHaptics(s.haptics);
-      if (alive) setRemindersOn(remindersEnabled());
+      if (!alive) return;
+      setHaptics(s.haptics);
+      setGoalMin(s.goalMin ?? 2);
+      setReminderTime(s.reminderTime ?? '20:00');
+      setRemindersEnabled(remindersOn());
     })();
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, []);
 
   async function toggleHaptics(next: boolean) {
@@ -66,12 +71,23 @@ export default function Settings() {
     await setSetting('haptics', next);
   }
 
-  function toggleReminders(next: boolean) {
-    // reminders have their own localStorage flag; no server/secureStorage write
-    const now = remindersToggle(); // flips current
-    // If UI requested a specific state, ensure it matches
-    if (now !== next) remindersToggle();
-    setRemindersOn(next);
+  async function onGoalChange(next: string) {
+    const n = Math.max(1, Math.min(60, Number(next) || 0));
+    setGoalMin(n);
+    await setSetting('goalMin', n);
+  }
+
+  async function onReminderTimeChange(next: string) {
+    // Expect "HH:mm"
+    const valid = /^\d{2}:\d{2}$/.test(next);
+    const hhmm = valid ? next : '20:00';
+    setReminderTime(hhmm);
+    await setSetting('reminderTime', hhmm);
+  }
+
+  function onToggleReminders() {
+    const on = toggleEnabled();
+    setRemindersEnabled(on);
   }
 
   // ----- Pro (preview) -----
@@ -82,9 +98,7 @@ export default function Settings() {
       const val = await isPro();
       if (alive) setProState(val);
     })();
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, []);
   async function togglePro(next: boolean) {
     setProState(next);
@@ -126,10 +140,9 @@ export default function Settings() {
     }
     setBusy(true);
     try {
-      await rekeyAll(pin);     // re-key to the PIN
-      await setLockPIN(pin);   // store hash/salt
-      setPin('');
-      setPin2('');
+      await rekeyAll(pin);
+      await setLockPIN(pin);
+      setPin(''); setPin2('');
       setMsg('App lock enabled on this device.');
     } catch (e) {
       console.error(e);
@@ -145,7 +158,7 @@ export default function Settings() {
     setMsg(null);
     try {
       const secret = getOrCreateDeviceSecret();
-      await rekeyAll(secret); // re-key back to device secret
+      await rekeyAll(secret);
       clearLock();
       setMsg('App lock disabled on this device.');
     } catch (e) {
@@ -160,7 +173,7 @@ export default function Settings() {
     <div className="flex h-full flex-col">
       <Header title="Settings" back />
       <main className="flex-1 overflow-y-auto p-4">
-        <div className="max-w-[360px] mx-auto space-y-6">
+        <div className="max-w-[420px] mx-auto space-y-6">
           {/* Privacy */}
           <div className="rounded-2xl border bg-white p-4">
             <div className="text-sm font-medium">Privacy</div>
@@ -172,7 +185,6 @@ export default function Settings() {
           {/* Preferences */}
           <div className="rounded-2xl border bg-white p-4">
             <div className="text-sm font-medium mb-2">Preferences</div>
-
             <label className="flex items-center justify-between py-1">
               <span className="text-sm">Haptic cues (if supported)</span>
               <input
@@ -183,19 +195,50 @@ export default function Settings() {
                 aria-label="Enable haptic cues"
               />
             </label>
+          </div>
 
-            <label className="flex items-center justify-between py-1">
-              <div className="min-w-0">
-                <span className="text-sm">Smart reminders</span>
-              </div>
+          {/* Practice & reminders (from onboarding) */}
+          <div className="rounded-2xl border bg-white p-4">
+            <div className="text-sm font-medium mb-2">Practice & reminders</div>
+
+            <label className="flex items-center justify-between py-2">
+              <span className="text-sm">Daily goal (minutes)</span>
+              <input
+                type="number"
+                min={1}
+                max={60}
+                value={goalMin}
+                onChange={(e) => onGoalChange(e.target.value)}
+                className="w-20 border rounded-lg px-2 py-1 text-sm text-right"
+                aria-label="Daily goal in minutes"
+              />
+            </label>
+
+            <label className="flex items-center justify-between py-2">
+              <span className="text-sm">Preferred reminder time</span>
+              <input
+                type="time"
+                value={reminderTime}
+                onChange={(e) => onReminderTimeChange(e.target.value)}
+                className="border rounded-lg px-2 py-1 text-sm"
+                aria-label="Preferred reminder time"
+              />
+            </label>
+
+            <label className="flex items-center justify-between py-2">
+              <span className="text-sm">Smart reminders</span>
               <input
                 type="checkbox"
                 className="h-4 w-4"
-                checked={remindersOn}
-                onChange={(e) => toggleReminders(e.target.checked)}
+                checked={remindersEnabled}
+                onChange={onToggleReminders}
                 aria-label="Enable smart reminders"
               />
             </label>
+
+            <p className="text-xs text-gray-500 mt-2">
+              We’ll nudge you near your preferred time using lightweight, on-device logic.
+            </p>
           </div>
 
           {/* Pro (preview) */}
@@ -216,9 +259,9 @@ export default function Settings() {
                 className="btn btn-primary w-full mt-3"
                 onClick={async () => {
                   const { track } = await import('../lib/metrics'); // lazy
-                  (track as any)('upgrade_click', { source: 'settings_pro_card' });
+                  track('upgrade_click', { source: 'settings_pro_card' });
                   await togglePro(true);
-                  (track as any)('pro_enabled');
+                  track('pro_enabled');
                 }}
               >
                 Upgrade to Pro

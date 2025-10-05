@@ -1,33 +1,45 @@
 // src/lib/settings.ts
-import { getItem as sGet, setItem as sSet, ready } from './secureStorage'
+import { getItem as sGet, setItem as sSet, ready as sReady } from './secureStorage';
 
 export type AppSettings = {
-  haptics?: boolean; // default true
-}
+  haptics: boolean;
+  goalMin: number;         // daily goal minutes (shown in TodayPanel/progress)
+  reminderTime: string;    // "HH:mm" local time preference
+  onboardingDone?: boolean;
+};
 
-const KEY = 'settings'
+const KEY = 'settings';
 
-const DEFAULTS: Required<AppSettings> = {
+const DEFAULTS: AppSettings = {
   haptics: true,
+  goalMin: 2,
+  reminderTime: '20:00',
+  onboardingDone: false,
+};
+
+export async function loadSettings(): Promise<AppSettings> {
+  try {
+    const cur = (sReady() ? await sGet<AppSettings>(KEY) : null) || {};
+    // shallow-merge defaults with stored values
+    return { ...DEFAULTS, ...(cur as Partial<AppSettings>) };
+  } catch {
+    return { ...DEFAULTS };
+  }
 }
 
-function withDefaults(partial: AppSettings | null): Required<AppSettings> {
-  return { ...DEFAULTS, ...(partial ?? {}) }
+export async function setSetting<K extends keyof AppSettings>(
+  key: K,
+  value: AppSettings[K]
+): Promise<void> {
+  const cur = await loadSettings();
+  const next = { ...cur, [key]: value };
+  if (!sReady()) throw new Error('secureStorage not ready (locked)');
+  await sSet(KEY, next);
 }
 
-export async function loadSettings(): Promise<Required<AppSettings>> {
-  if (!ready()) return DEFAULTS
-  const s = await sGet<AppSettings>(KEY)
-  return withDefaults(s)
-}
-
-export async function saveSettings(next: AppSettings): Promise<void> {
-  const merged = withDefaults(next)
-  await sSet(KEY, merged)
-}
-
-export async function setSetting<K extends keyof AppSettings>(k: K, v: NonNullable<AppSettings[K]>) {
-  const cur = await loadSettings()
-  const next = { ...cur, [k]: v }
-  await saveSettings(next)
+export async function setSettingsBulk(patch: Partial<AppSettings>): Promise<void> {
+  const cur = await loadSettings();
+  const next = { ...cur, ...patch };
+  if (!sReady()) throw new Error('secureStorage not ready (locked)');
+  await sSet(KEY, next);
 }

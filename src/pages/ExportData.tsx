@@ -5,15 +5,15 @@ import Header from '../components/ui/Header';
 import { loadHistory, type LogItem } from '../lib/history';
 import { ready as storageReady } from '../lib/secureStorage';
 import { track } from '../lib/metrics';
+import { titleForRitualId } from '../lib/ritualEngine';
 
 function toCSV(rows: (string | number | null)[][], header: string[]): string {
   const esc = (v: string | number | null) => {
     const s = v === null ? '' : String(v);
-    // wrap in quotes and escape quotes inside
     return `"${s.replace(/"/g, '""')}"`;
   };
   const lines = [header, ...rows].map(r => r.map(esc).join(','));
-  // Add BOM so Excel opens as UTF-8
+  // BOM so Excel opens as UTF-8
   return '\uFEFF' + lines.join('\n');
 }
 
@@ -86,11 +86,24 @@ export default function ExportData() {
       h.ts,
       h.mood,
       h.ritualId,
+      titleForRitualId(h.ritualId), // friendly name
       h.durationSec,
       h.note ?? '',
       h.source ?? '',
     ]);
-    const csv = toCSV(rows, ['id', 'ts', 'mood', 'ritualId', 'durationSec', 'note', 'source']);
+
+    const header = [
+      'id',
+      'ts',
+      'mood',
+      'ritualId',
+      'ritualTitle',
+      'durationSec',
+      'note',
+      'source',
+    ];
+
+    const csv = toCSV(rows, header);
     await shareOrDownload(`${base}.csv`, 'text/csv;charset=utf-8', csv);
     track('export_csv');
   }

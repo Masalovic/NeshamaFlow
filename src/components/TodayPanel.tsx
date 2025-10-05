@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import { loadHistory, type LogItem } from '../lib/history';
+import { loadSettings } from '../lib/settings';
 import { setItem as sSet } from '../lib/secureStorage';
 import { Sparkles, Sun, Moon, Coffee } from 'lucide-react';
 
@@ -23,12 +24,15 @@ function suggestTitle(): string {
 export default function TodayPanel() {
   const nav = useNavigate();
   const [list, setList] = useState<LogItem[] | null>(null);
+  const [goalMin, setGoalMin] = useState<number>(2);
 
   useEffect(() => {
     let alive = true;
     (async () => {
-      const items = await loadHistory();
-      if (alive) setList(items);
+      const [items, s] = await Promise.all([loadHistory(), loadSettings()]);
+      if (!alive) return;
+      setList(items);
+      setGoalMin(s.goalMin ?? 2);
     })();
     return () => { alive = false; };
   }, []);
@@ -42,19 +46,17 @@ export default function TodayPanel() {
     return { minutesToday: Math.round(mins * 10) / 10, last: lastItem };
   }, [list]);
 
-  const goalMin = 2;
-  const donePct = Math.min(100, Math.round((minutesToday / goalMin) * 100));
+  const donePct = Math.min(100, Math.round((minutesToday / Math.max(1, goalMin)) * 100));
   const { text: greet, Icon } = greeting();
   const suggestion = suggestTitle();
 
   async function quickStart() {
-    // Prefer last known mood so the ritual flow can start immediately.
     if (last) {
       await sSet('mood', last.mood);
       await sSet('note', '');
-      nav('/ritual'); // uses the saved mood to suggest a ritual
+      nav('/ritual');
     } else {
-      nav('/log'); // first-time users pick a mood
+      nav('/log');
     }
   }
 
