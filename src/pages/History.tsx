@@ -4,6 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { loadHistory, type LogItem } from '../lib/history';
 import { ready as storageReady } from '../lib/secureStorage';
 import { titleForRitualId } from '../lib/ritualEngine';
+import InsightChips from "../components/InsightChips";
 import Heatmap28 from '../components/Heatmap28';
 
 dayjs.extend(relativeTime);
@@ -84,6 +85,7 @@ export default function History() {
         <div className="max-w-[420px] mx-auto space-y-4">
           {/* 28-day streak heatmap */}
           <Heatmap28 />
+          <InsightChips compact />
 
           {items === null && <div className="text-center text-gray-400">Loading…</div>}
 

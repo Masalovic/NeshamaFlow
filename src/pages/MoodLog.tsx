@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import EmojiGrid from "../components/EmojiGrid";
 import TodayPanel from '../components/TodayPanel';
 import Header from "../components/ui/Header";
+import InsightChips from "../components/InsightChips";
 import StreakCard from "../components/StreakCard";
 import SmartReminderBanner from "../components/SmartReminderBanner";
 import { loadHistory, logLocal, type LogItem } from "../lib/history";
@@ -90,6 +91,7 @@ export default function MoodLog() {
           <TodayPanel />
           <SmartReminderBanner />
           <StreakCard />
+          <InsightChips />
 
           {/* Mood picker */}
           <div className="rounded-2xl bg-white shadow p-4">
