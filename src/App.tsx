@@ -1,6 +1,7 @@
 // src/App.tsx
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { BrowserRouter, Routes, Route, Outlet, useLocation, Navigate } from 'react-router-dom'
+import { applyTheme, bindSystemThemeReactivity, loadTheme, type Appearance, type Accent } from './lib/theme'
 import ErrorBoundary from './components/ErrorBoundary'
 import Protected from './components/Protected'
 import AuthScreen from './pages/AuthScreen'
@@ -38,6 +39,27 @@ function Layout() {
 }
 
 export default function App() {
+  // Apply theme early to avoid FOUC
+  const [themeReady, setThemeReady] = useState(false)
+  const appearanceRef = useRef<Appearance>('system')
+  const accentRef = useRef<Accent>('berry')
+
+  useEffect(() => {
+    let alive = true
+    ;(async () => {
+      const t = await loadTheme()
+      if (!alive) return
+      appearanceRef.current = t.appearance
+      accentRef.current = t.accent
+      applyTheme(t)
+      setThemeReady(true)
+    })()
+    const unbind = bindSystemThemeReactivity(() => appearanceRef.current)
+    return () => { alive = false; unbind() }
+  }, [])
+
+  if (!themeReady) return null
+
   return (
     <ErrorBoundary>
       <BrowserRouter>

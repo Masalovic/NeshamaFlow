@@ -1,9 +1,10 @@
+// src/pages/Insights.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import Header from "../components/ui/Header";
 import { summarize } from "../lib/insights";
 import { titleForRitualId } from "../lib/ritualEngine";
 import { loadHistory, type LogItem } from "../lib/history";
-import dayjs from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 import {
   ResponsiveContainer,
   PieChart, Pie, Cell,
@@ -11,6 +12,7 @@ import {
   BarChart, Bar, Legend,
 } from "recharts";
 
+// Small wrapper for consistent card styling
 function Card({
   title,
   children,
@@ -40,6 +42,8 @@ const COLORS = [
   "#06b6d4", "#a78bfa", "#84cc16", "#fb7185",
 ];
 
+type Preset = "7" | "28" | "90" | "custom";
+
 export default function Insights() {
   const [history, setHistory] = useState<LogItem[] | null>(null);
 
@@ -52,49 +56,72 @@ export default function Insights() {
     return () => { alive = false; };
   }, []);
 
-  // ✅ Define summary at top-level (not inside any conditional/hook)
-  const summary = summarize(history ?? [], 28);
+  // -------- Range controls --------
+  const [preset, setPreset] = useState<Preset>("28");
+  const [customStart, setCustomStart] = useState<string>("");
+  const [customEnd, setCustomEnd] = useState<string>("");
 
-  // Last 28 days, inclusive of today
-  const last28 = useMemo(() => {
+  // Resolved range (inclusive)
+  const { start, end }: { start: Dayjs; end: Dayjs } = useMemo(() => {
+    const today = dayjs().endOf("day");
+    if (preset !== "custom") {
+      const n = Number(preset);
+      return { start: today.startOf("day").subtract(n - 1, "day"), end: today };
+    }
+    // Custom: fall back to last 28d if invalid
+    const s = dayjs(customStart || "").startOf("day");
+    const e = dayjs(customEnd || "").endOf("day");
+    if (!s.isValid() || !e.isValid() || s.isAfter(e)) {
+      return { start: today.startOf("day").subtract(27, "day"), end: today };
+    }
+    return { start: s, end: e };
+  }, [preset, customStart, customEnd]);
+
+  const windowDays = Math.max(1, end.startOf("day").diff(start.startOf("day"), "day") + 1);
+
+  // -------- Data slicing --------
+  const rangeItems: LogItem[] = useMemo(() => {
     const list = history ?? [];
-    const cutoff = dayjs().startOf("day").subtract(27, "day");
-    return list.filter(x => !dayjs(x.ts).isBefore(cutoff));
-  }, [history]);
+    return list.filter(x => {
+      const t = dayjs(x.ts);
+      return !t.isBefore(start) && !t.isAfter(end);
+    });
+  }, [history, start, end]);
 
-  // 1) Mood distribution (last 28 days)
+  // Summary for the visible range
+  const summary = summarize(rangeItems ?? [], windowDays);
+
+  // 1) Mood distribution
   const moodChart: MoodSlice[] = useMemo(() => {
-    if (!last28.length) return [];
+    if (!rangeItems.length) return [];
     const map = new Map<string, number>();
-    last28.forEach(x => map.set(x.mood, (map.get(x.mood) || 0) + 1));
+    rangeItems.forEach(x => map.set(x.mood, (map.get(x.mood) || 0) + 1));
     return Array.from(map.entries())
       .sort((a, b) => b[1] - a[1])
       .map(([name, value]) => ({ name, value }));
-  }, [last28]);
+  }, [rangeItems]);
 
-  // 2) Sessions per day (last 28 days)
+  // 2) Sessions per day
   const daySeries: DayPoint[] = useMemo(() => {
-    const end = dayjs().startOf("day");
-    const start = end.subtract(27, "day");
     const counts = new Map<string, number>();
-    for (let i = 0; i < 28; i++) {
+    for (let i = 0; i < windowDays; i++) {
       counts.set(start.add(i, "day").format("YYYY-MM-DD"), 0);
     }
-    last28.forEach(x => {
+    rangeItems.forEach(x => {
       const key = dayjs(x.ts).startOf("day").format("YYYY-MM-DD");
       counts.set(key, (counts.get(key) || 0) + 1);
     });
     return Array.from(counts.entries()).map(([day, count]) => ({
-      day: dayjs(day).format("MMM D"),
+      day: dayjs(day).format(windowDays <= 35 ? "MMM D" : "MM/DD"),
       count,
     }));
-  }, [last28]);
+  }, [rangeItems, start, windowDays]);
 
-  // 3) Time-of-day blocks (0–3h, 4–7h, … 20–23h)
+  // 3) Time-of-day blocks (0–3h, 4–7h, …)
   const blocks: Block[] = useMemo(() => {
-    if (!last28.length) return [];
+    if (!rangeItems.length) return [];
     const buckets = Array.from({ length: 24 }, () => 0);
-    for (const x of last28) {
+    for (const x of rangeItems) {
       const h = new Date(x.ts).getHours();
       buckets[h]++;
     }
@@ -105,13 +132,13 @@ export default function Insights() {
       out.push({ block: label, count: value });
     }
     return out.filter(b => b.count > 0).sort((a, b) => b.count - a.count);
-  }, [last28]);
+  }, [rangeItems]);
 
-  // 4) Quick wins: shortest average duration per ritual (top 3)
+  // 4) Quick wins
   const quickWins = useMemo(() => {
-    if (!last28.length) return [] as { ritualId: string; avg: number; n: number }[];
+    if (!rangeItems.length) return [] as { ritualId: string; avg: number; n: number }[];
     const map = new Map<string, { sum: number; n: number }>();
-    for (const x of last28) {
+    for (const x of rangeItems) {
       const p = map.get(x.ritualId) || { sum: 0, n: 0 };
       p.sum += x.durationSec || 0;
       p.n += 1;
@@ -125,18 +152,63 @@ export default function Insights() {
       }))
       .sort((a, b) => a.avg - b.avg)
       .slice(0, 3);
-  }, [last28]);
+  }, [rangeItems]);
 
   const empty = (history?.length ?? 0) === 0;
+
+  // Range UI
+  function RangeControls() {
+    return (
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="text-xs text-gray-500">
+          {start.format("MMM D, YYYY")} – {end.format("MMM D, YYYY")}
+        </div>
+        <div className="ml-auto flex items-center gap-2">
+          <select
+            value={preset}
+            onChange={(e) => setPreset(e.target.value as Preset)}
+            className="rounded-md border px-2 py-1 text-sm"
+            aria-label="Select range"
+          >
+            <option value="7">Last 7 days</option>
+            <option value="28">Last 28 days</option>
+            <option value="90">Last 90 days</option>
+            <option value="custom">Custom…</option>
+          </select>
+
+          {preset === "custom" && (
+            <div className="flex items-center gap-1">
+              <input
+                type="date"
+                value={customStart}
+                onChange={(e) => setCustomStart(e.target.value)}
+                className="rounded-md border px-2 py-1 text-sm"
+                aria-label="Start date"
+              />
+              <span className="text-gray-400">–</span>
+              <input
+                type="date"
+                value={customEnd}
+                onChange={(e) => setCustomEnd(e.target.value)}
+                className="rounded-md border px-2 py-1 text-sm"
+                aria-label="End date"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-full flex-col">
       <Header title="Insights (Pro)" back />
       <main className="flex-1 p-4">
-        <div className="max-w-[480px] mx-auto space-y-4 pb-24">
+        <div className="max-w-[560px] mx-auto space-y-4 pb-24">
           {/* Summary header */}
           <div className="rounded-2xl border bg-white p-4">
-            <div className="flex flex-wrap gap-3 text-sm">
+            <RangeControls />
+            <div className="mt-3 flex flex-wrap gap-3 text-sm">
               <div className="flex-1 min-w-[140px]">
                 <div className="text-gray-500 text-xs">This period</div>
                 <div className="font-medium">
@@ -175,11 +247,11 @@ export default function Insights() {
 
           {/* Mood distribution */}
           <Card
-            title="Last 28 days — mood distribution"
+            title="Mood distribution"
             right={
               !!moodChart.length && (
                 <span className="text-xs text-gray-500">
-                  {last28.length} entries
+                  {rangeItems.length} entries
                 </span>
               )
             }
@@ -211,7 +283,7 @@ export default function Insights() {
           </Card>
 
           {/* Sessions per day (sparkline) */}
-          <Card title="Consistency — sessions per day (28d)">
+          <Card title="Consistency — sessions per day">
             {daySeries.length ? (
               <div className="h-40">
                 <ResponsiveContainer width="100%" height="100%">
@@ -223,7 +295,7 @@ export default function Insights() {
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={6} />
+                    <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={Math.ceil(windowDays / 7)} />
                     <YAxis allowDecimals={false} tick={{ fontSize: 10 }} width={24} />
                     <Tooltip />
                     <Area type="monotone" dataKey="count" stroke="#7c3aed" fill="url(#c)" />

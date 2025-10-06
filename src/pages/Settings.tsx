@@ -11,6 +11,7 @@ import { supabase } from '../lib/supabase';
 import { loadSettings, setSetting } from '../lib/settings';
 import { isPro, setPro } from '../lib/pro';
 import { isEnabled as remindersOn, toggleEnabled } from '../lib/reminders';
+import { loadTheme, saveTheme, type Appearance, type Accent } from '../lib/theme';
 
 // Use one device-local secret when no PIN is set (so secureStorage still works)
 function getOrCreateDeviceSecret(): string {
@@ -86,6 +87,30 @@ export default function Settings() {
     setRemindersEnabled(on);
   }
 
+  // ----- Theme -----
+  const [appearance, setAppearance] = useState<Appearance>('system')
+  const [accent, setAccent] = useState<Accent>('berry')
+
+  useEffect(() => {
+    let alive = true
+    ;(async () => {
+      const t = await loadTheme()
+      if (!alive) return
+      setAppearance(t.appearance)
+      setAccent(t.accent)
+    })()
+    return () => { alive = false }
+  }, [])
+
+  async function onAppearanceChange(a: Appearance) {
+    setAppearance(a)
+    await saveTheme({ appearance: a, accent })
+  }
+  async function onAccentChange(c: Accent) {
+    setAccent(c)
+    await saveTheme({ appearance, accent: c })
+  }
+
   // ----- Pro (preview) -----
   const [pro, setProState] = useState(false);
   useEffect(() => {
@@ -157,15 +182,15 @@ export default function Settings() {
       <main className="flex-1 overflow-y-auto p-4">
         <div className="max-w-[420px] mx-auto space-y-6">
           {/* Privacy */}
-          <div className="rounded-2xl border bg-white p-4">
+          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
             <div className="text-sm font-medium">Privacy</div>
-            <p className="text-sm text-gray-600 mt-1">
+            <p className="text-sm text-gray-600 mt-1 dark:text-neutral-400">
               Your moods and rituals are stored locally on your device and encrypted.
             </p>
           </div>
 
           {/* Preferences */}
-          <div className="rounded-2xl border bg-white p-4">
+          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
             <div className="text-sm font-medium mb-2">Preferences</div>
             <label className="flex items-center justify-between py-1">
               <span className="text-sm">Haptic cues (if supported)</span>
@@ -179,8 +204,56 @@ export default function Settings() {
             </label>
           </div>
 
+          {/* Theme */}
+          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
+            <div className="text-sm font-medium mb-2">Theme</div>
+
+            <div className="mb-3">
+              <div className="text-xs text-gray-500 mb-1 dark:text-neutral-400">Appearance</div>
+              <div className="grid grid-cols-3 gap-2">
+                {(['system','light','dark'] as Appearance[]).map(a => (
+                  <button
+                    key={a}
+                    onClick={() => onAppearanceChange(a)}
+                    className={[
+                      'px-3 py-2 rounded-lg border text-sm',
+                      appearance === a ? 'border-accent bg-accent-100' : 'border-gray-300 hover:border-gray-400 dark:border-neutral-700 dark:hover:border-neutral-500'
+                    ].join(' ')}
+                    aria-pressed={appearance === a}
+                  >
+                    {a[0].toUpperCase() + a.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div>
+              <div className="text-xs text-gray-500 mb-1 dark:text-neutral-400">Accent</div>
+              <div className="grid grid-cols-3 gap-2">
+                {([
+                  { key: 'berry',  name: 'Berry',  swatch: 'bg-pink-500'   },
+                  { key: 'ocean',  name: 'Ocean',  swatch: 'bg-blue-500'   },
+                  { key: 'forest', name: 'Forest', swatch: 'bg-green-500'  },
+                ] as { key: Accent; name: string; swatch: string }[]).map(opt => (
+                  <button
+                    key={opt.key}
+                    onClick={() => onAccentChange(opt.key)}
+                    className={[
+                      'px-3 py-2 rounded-lg border text-sm flex items-center gap-2',
+                      accent === opt.key ? 'border-accent bg-accent-100' : 'border-gray-300 hover:border-gray-400 dark:border-neutral-700 dark:hover:border-neutral-500'
+                    ].join(' ')}
+                    aria-pressed={accent === opt.key}
+                  >
+                    <span className={`inline-block w-3 h-3 rounded-full ${opt.swatch}`} />
+                    {opt.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
           {/* Practice & reminders */}
-          <div className="rounded-2xl border bg-white p-4">
+          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
             <div className="text-sm font-medium mb-2">Practice & reminders</div>
 
             <label className="flex items-center justify-between py-2">
@@ -191,7 +264,7 @@ export default function Settings() {
                 max={60}
                 value={goalMin}
                 onChange={(e) => onGoalChange(e.target.value)}
-                className="w-20 border rounded-lg px-2 py-1 text-sm text-right"
+                className="w-20 border rounded-lg px-2 py-1 text-sm text-right dark:bg-neutral-900 dark:border-neutral-700"
                 aria-label="Daily goal in minutes"
               />
             </label>
@@ -202,7 +275,7 @@ export default function Settings() {
                 type="time"
                 value={reminderTime}
                 onChange={(e) => onReminderTimeChange(e.target.value)}
-                className="border rounded-lg px-2 py-1 text-sm"
+                className="border rounded-lg px-2 py-1 text-sm dark:bg-neutral-900 dark:border-neutral-700"
                 aria-label="Preferred reminder time"
               />
             </label>
@@ -218,13 +291,13 @@ export default function Settings() {
               />
             </label>
 
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 mt-2 dark:text-neutral-400">
               We’ll nudge you near your preferred time using lightweight, on-device logic.
             </p>
           </div>
 
           {/* Pro (preview) */}
-          <div className="rounded-2xl border bg-white p-4">
+          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
             <div className="text-sm font-medium mb-2">Pro (Preview)</div>
             <label className="flex items-center justify-between py-1">
               <span className="text-sm">Enable Pro features (local toggle)</span>
@@ -249,18 +322,18 @@ export default function Settings() {
                 Upgrade to Pro
               </button>
             )}
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 mt-2 dark:text-neutral-400">
               This is a client-only toggle for testing. We’ll wire it to Stripe later.
             </p>
           </div>
 
           {/* App Lock (PIN) */}
-          <div className="rounded-2xl border bg-white p-4">
+          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
             <div className="text-sm font-medium mb-2">App Lock (PIN)</div>
 
             {lockEnabled ? (
               <div className="space-y-2">
-                <p className="text-sm text-gray-600">A PIN is currently set on this device.</p>
+                <p className="text-sm text-gray-600 dark:text-neutral-400">A PIN is currently set on this device.</p>
                 <button
                   className="btn btn-secondary w-full"
                   onClick={disablePin}
@@ -273,7 +346,7 @@ export default function Settings() {
               <div className="space-y-3">
                 <label className="block text-sm">New PIN</label>
                 <input
-                  className="w-full border rounded-xl px-3 py-2"
+                  className="w-full border rounded-xl px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700"
                   type="password"
                   inputMode="numeric"
                   pattern="\d*"
@@ -282,7 +355,7 @@ export default function Settings() {
                 />
                 <label className="block text-sm">Confirm PIN</label>
                 <input
-                  className="w-full border rounded-xl px-3 py-2"
+                  className="w-full border rounded-xl px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700"
                   type="password"
                   inputMode="numeric"
                   pattern="\d*"
@@ -300,7 +373,7 @@ export default function Settings() {
             )}
 
             {msg && <div className="text-sm mt-2">{msg}</div>}
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="text-xs text-gray-500 mt-2 dark:text-neutral-400">
               The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only.
             </p>
           </div>
