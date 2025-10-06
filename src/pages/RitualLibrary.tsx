@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/ui/Header'
 import Card from '../components/ui/Card'
@@ -7,17 +7,25 @@ import Modal from '../components/ui/Modal'
 import { ALL_RITUALS, titleForRitualId } from '../lib/ritualEngine'
 import { guideFor } from '../lib/ritualGuides'
 import { setItem as sSet } from '../lib/secureStorage'
+import { track } from '../lib/metrics'
 
 export default function RitualLibrary() {
   const navigate = useNavigate()
   const [detail, setDetail] = useState<string | null>(null)
 
-  // keep stable reference; if you later add search/sort, adjust here
+  useEffect(() => { track('library_opened') }, [])
+
   const list = useMemo(() => ALL_RITUALS, [])
 
-async function start(id: string) {
+  async function start(id: string) {
+    track('library_start_clicked', { ritualId: id })
     await sSet('draft.ritual', id)
     navigate('/ritual/start')
+  }
+
+  function openDetails(id: string) {
+    setDetail(id)
+    track('library_detail_viewed', { ritualId: id })
   }
 
   return (
@@ -46,7 +54,7 @@ async function start(id: string) {
 
               <button
                 className="mt-3 text-sm text-brand-700 underline"
-                onClick={() => setDetail(r.id)}
+                onClick={() => openDetails(r.id)}
               >
                 Details
               </button>
@@ -62,8 +70,7 @@ async function start(id: string) {
       >
         {detail && (() => {
           const r = list.find(x => x.id === detail)!
-          const g = guideFor(r) // ✅ pass Ritual object
-
+          const g = guideFor(r)
           return (
             <div className="space-y-3">
               {r.why && <div className="text-sm text-gray-700">{r.why}</div>}
@@ -72,7 +79,6 @@ async function start(id: string) {
                   {r.whyBullets.map((b, i) => <li key={i}>{b}</li>)}
                 </ul>
               ) : null}
-
               <div>
                 <div className="text-xs font-medium text-gray-500 mb-1">Steps</div>
                 <ol className="list-decimal pl-5 space-y-1 text-gray-700 text-sm">
@@ -80,7 +86,6 @@ async function start(id: string) {
                 </ol>
                 {g.tip && <p className="text-xs text-gray-500 mt-2">{g.tip}</p>}
               </div>
-
               <div className="pt-2">
                 <Button variant="primary" onClick={() => start(r.id)}>Start this</Button>
               </div>

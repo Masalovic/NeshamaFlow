@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 type Props = {
   open: boolean;
@@ -23,6 +23,11 @@ export default function Modal({ open, onClose, title, children }: Props) {
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
 
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    if (open) titleRef.current?.focus();
+  }, [open]);
+
   if (!open) return null;
 
   return (
@@ -42,12 +47,16 @@ export default function Modal({ open, onClose, title, children }: Props) {
             rounded-t-2xl bg-white shadow-soft
             p-4 pt-5
             pb-[calc(16px+env(safe-area-inset-bottom))]
-            max-h-[min(80vh,calc(100svh-80px))]    /* 80vh per acceptance */
+            max-h-[min(80vh,calc(100svh-80px))]
             overflow-y-auto overscroll-contain
           "
         >
           <div className="flex items-center justify-between mb-2">
-            {title ? <h3 className="text-base font-semibold">{title}</h3> : <div />}
+            {title ? (
+              <h3 ref={titleRef} tabIndex={-1} className="text-base font-semibold">
+                {title}
+              </h3>
+            ) : <div />}
             <button
               onClick={onClose}
               className="rounded-full p-1 text-gray-500 hover:bg-gray-100"

@@ -9,9 +9,9 @@ import {
 import { guideFor, type RitualGuide } from '../lib/ritualGuides';
 import Header from '../components/ui/Header';
 import Card from '../components/ui/Card';
-import Button from '../components/ui/Button';
 import Modal from '../components/ui/Modal';
 import { getItem as sGet } from '../lib/secureStorage';
+import { track } from '../lib/metrics';
 
 export default function RitualSuggestion() {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ export default function RitualSuggestion() {
   const [whyOpen, setWhyOpen] = useState(false);
   const [stepsOpen, setStepsOpen] = useState(false);
 
-   useEffect(() => {
+  useEffect(() => {
     let alive = true;
     (async () => {
       const moodRaw = await sGet<unknown>('mood');
@@ -35,7 +35,7 @@ export default function RitualSuggestion() {
   }, [navigate]);
 
   const guide: RitualGuide | null = useMemo(
-    () => (ritual ? guideFor(ritual) : null), // ✅ pass Ritual object
+    () => (ritual ? guideFor(ritual) : null),
     [ritual]
   );
 
@@ -71,13 +71,13 @@ export default function RitualSuggestion() {
               </Link>
 
               <button
-                onClick={() => setStepsOpen(true)}
+                onClick={() => { setStepsOpen(true); track('suggestion_steps_opened', { ritualId: ritual.id }); }}
                 className="col-span-1 text-sm text-brand-700 underline"
               >
                 See steps
               </button>
               <button
-                onClick={() => setWhyOpen(true)}
+                onClick={() => { setWhyOpen(true); track('suggestion_why_opened', { ritualId: ritual.id }); }}
                 className="col-span-1 text-sm text-brand-700 underline text-right"
               >
                 Why it works
@@ -94,7 +94,9 @@ export default function RitualSuggestion() {
             <Modal open={stepsOpen} onClose={() => setStepsOpen(false)} title="How to do it">
               {guide?.steps?.length ? (
                 <ol className="list-decimal pl-5 space-y-1 text-gray-700 text-sm">
-                  {guide.steps.map((s: string, i: number) => <li key={i}>{s}</li>)}
+                  {guide.steps.map((s: string, i: number) => (
+                    <li key={i}>{s}</li>
+                  ))}
                 </ol>
               ) : (
                 <p className="text-sm text-gray-600">No steps available.</p>
@@ -107,7 +109,9 @@ export default function RitualSuggestion() {
               {ritual.why ? <p className="text-sm text-gray-700">{ritual.why}</p> : null}
               {ritual.whyBullets?.length ? (
                 <ul className="mt-3 list-disc pl-5 space-y-1 text-gray-600 text-sm">
-                  {ritual.whyBullets.map((b: string, i: number) => <li key={i}>{b}</li>)}
+                  {ritual.whyBullets.map((b: string, i: number) => (
+                    <li key={i}>{b}</li>
+                  ))}
                 </ul>
               ) : null}
             </Modal>

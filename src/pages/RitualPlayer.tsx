@@ -128,6 +128,22 @@ export default function RitualPlayer() {
     return () => window.clearInterval(id)
   }, [resting, haptics])
 
+  // Pause when page/tab is hidden (prevents background running)
+  useEffect(() => {
+    const onVis = () => {
+      if (document.hidden && running) setRunning(false)
+    }
+    document.addEventListener('visibilitychange', onVis)
+    return () => document.removeEventListener('visibilitychange', onVis)
+  }, [running])
+
+  // Clear any timers on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
+    }
+  }, [])
+
   // Auto-finish when timer hits zero
   useEffect(() => {
     if (remaining <= 0 && !completing) {
@@ -146,7 +162,11 @@ export default function RitualPlayer() {
       if (mood && ritual) {
         const durationSec = Math.max(0, Math.min(total, total - remaining))
         await logLocal({ mood, ritualId: ritual.id, durationSec, note }) // single write
-        track('ritual_completed', { ritualId: ritual.id, durationSec })
+        track('ritual_completed', {
+          ritualId: ritual.id,
+          durationSec,
+          source: draftRitualId ? 'library' : 'suggestion',
+        })
         try {
           const list = await loadHistory()
           if (list.length === 1) track('first_ritual', { ritualId: ritual.id })
@@ -161,18 +181,28 @@ export default function RitualPlayer() {
   function onStartPause() {
     setRunning(v => {
       const next = !v
-      if (next) vibrate(18, haptics)
+      if (next) {
+        vibrate(18, haptics)
+        if (ritual) {
+          track('ritual_started', {
+            ritualId: ritual.id,
+            source: draftRitualId ? 'library' : 'suggestion',
+          })
+        }
+      }
       return next
     })
   }
   function onPause() {
     setRunning(false)
     vibrate([20, 30, 20], haptics)
+    if (ritual) track('ritual_paused', { ritualId: ritual.id })
   }
   function onRest() {
     if (!running || resting) return
     vibrate(14, haptics)
     setResting(true)
+    if (ritual) track('ritual_rest', { ritualId: ritual.id, len: REST_LEN })
   }
 
   if (!loaded || !ritual) return null

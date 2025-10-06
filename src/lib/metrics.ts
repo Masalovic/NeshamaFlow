@@ -2,14 +2,23 @@
 import { getItem as sGet, setItem as sSet, ready as storageReady } from './secureStorage'
 import { supabase } from './supabase'
 
+// Expanded event set (adds ritual_started, ritual_paused, ritual_rest, library_*, suggestion_*).
 export type EventName =
   | 'app_open'
   | 'upgrade_click'
   | 'pro_enabled'
   | 'mood_selected'
   | 'first_mood'
+  | 'ritual_started'
+  | 'ritual_paused'
+  | 'ritual_rest'
   | 'ritual_completed'
   | 'first_ritual'
+  | 'library_opened'
+  | 'library_detail_viewed'
+  | 'library_start_clicked'
+  | 'suggestion_steps_opened'
+  | 'suggestion_why_opened'
   | 'slash_quick_used'
   | 'streak_repair_used'
   | 'streak_repair_ineligible'
@@ -18,7 +27,7 @@ export type EventName =
   | 'nudge_tapped'
   | 'export_json'
   | 'export_csv'
-  | 'app_error';            // 👈 added
+  | 'app_error';
 
 type Event = {
   id: string
@@ -40,14 +49,27 @@ async function saveQueue(list: Event[]): Promise<void> {
   await sSet(KEY, capped)
 }
 
+/**
+ * Queue an analytics event; attempts flush if storage is ready.
+ * Props are stored as JSONB via Supabase (see `flush()`).
+ */
 export async function track(name: EventName, props?: Record<string, unknown>): Promise<void> {
-  const e: Event = { id: crypto.randomUUID(), ts: new Date().toISOString(), name, props: props ?? null }
+  const e: Event = {
+    id: (globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random()}`),
+    ts: new Date().toISOString(),
+    name,
+    props: props ?? null,
+  }
   const q = await loadQueue()
   q.push(e)
   await saveQueue(q)
   if (storageReady()) void flush().catch(() => {})
 }
 
+/**
+ * Flush queued events to Supabase (requires authenticated user).
+ * Upserts on `id` to avoid duplicates.
+ */
 export async function flush(): Promise<void> {
   if (!storageReady()) return
   const q = await loadQueue()
