@@ -1,173 +1,133 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import dayjs from "dayjs";
-import EmojiGrid from "../components/EmojiGrid";
-import TodayPanel from "../components/TodayPanel";
-import Header from "../components/ui/Header";
-import InsightChips from "../components/InsightChips";
-import StreakCard from "../components/StreakCard";
-import SmartReminderBanner from "../components/SmartReminderBanner";
-import { loadHistory, logLocal, type LogItem } from "../lib/history";
-import { track } from "../lib/metrics";
-import { setItem as sSet } from "../lib/secureStorage";
-import { parseSlashCommand } from "../lib/commands";
-import { isMoodKey, type MoodKey } from "../lib/ritualEngine";
-import { syncHistoryUp } from "../lib/sync";
-import { SlidersHorizontal, Zap } from "lucide-react";
+// src/pages/RitualDone.tsx
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/ui/Header';
+import { loadHistory, type LogItem } from '../lib/history';
+import { titleForRitualId } from '../lib/ritualEngine';
 
-export default function MoodLog() {
-  const [mood, setMood] = useState("");
-  const [note, setNote] = useState("");
-  const [last, setLast] = useState<{ emoji: string; date: string } | null>(null);
+function fmtDuration(sec: number): string {
+  const s = Math.max(0, Math.floor(sec));
+  if (s < 60) return `${s}s`;
+  const m = Math.round(s / 60);
+  return `${m} min`;
+}
+
+function afterCareFor(ritualId: string): string[] {
+  switch (ritualId) {
+    case 'box-breath-2m':
+      return [
+        'Take one slower breath and unclench your jaw.',
+        'Soften the next exhale; notice shoulders drop.',
+        'If helpful, do 1–2 quiet cycles later today.'
+      ];
+    case '478-pace-2m':
+      return [
+        'If light-headed, breathe normally for a minute.',
+        'Use 4-7-8 at bedtime: 3–4 rounds is plenty.',
+        'Sip water and avoid standing up too fast.'
+      ];
+    case 'body-scan-1m':
+      return [
+        'Roll shoulders once; soften forehead and tongue.',
+        'Note one area to revisit for 30s later today.',
+        'Take a sip of water and stretch gently.'
+      ];
+    case 'ground-54321':
+      return [
+        'Pick one tiny next action and do it slowly.',
+        'Open your hands; relax the tongue from the palate.',
+        'If agitation returns, take a slow, longer exhale.'
+      ];
+    case 'compassion-break':
+      return [
+        'Place a hand on your heart and offer one kind phrase.',
+        'Remember “common humanity”: others feel this too.',
+        'Write one supportive line you can reuse later.'
+      ];
+    case 'gratitude-3':
+      return [
+        'Savor one concrete detail for ~10 seconds.',
+        'If possible, send a 1-line thank-you message.',
+        'Smile softly to help encode the memory.'
+      ];
+    default:
+      return [
+        'Take one slower breath and relax your shoulders.',
+        'Drink a sip of water (tiny rituals stick better!).',
+        'Optional: jot a 1-line note in History.'
+      ];
+  }
+}
+
+export default function RitualDone() {
   const navigate = useNavigate();
+  const [last, setLast] = useState<LogItem | null>(null);
 
-  // Last logged item (from encrypted local history)
   useEffect(() => {
     let alive = true;
     (async () => {
-      const items: LogItem[] = await loadHistory();
-      if (!alive || !items.length) return;
-      const it = items[0];
-      setLast({
-        emoji: String(it.mood),
-        date: dayjs(it.ts).format("DD MMM, HH:mm"),
-      });
+      const list = await loadHistory();
+      if (!alive) return;
+      if (!list.length) return setLast(null);
+      // newest-first by timestamp
+      const latest = [...list].sort((a, b) => (a.ts < b.ts ? 1 : -1))[0];
+      setLast(latest);
     })();
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, []);
 
-  const hasMood = isMoodKey(mood);
-  const slash = parseSlashCommand(note);
-  const isSlashQuick = slash?.name === "quick";
-
-  async function startRitual() {
-    if (!hasMood) return;
-    await sSet("mood", mood);
-    await sSet("note", note.trim());
-    track("mood_selected", { mood });
-
-    try {
-      const items = await loadHistory();
-      if (!items.length) track("first_mood", { mood });
-    } catch {
-      /* ignore */
-    }
-
-    // Go to the suggestion screen (from there the user can start timer)
-    navigate("/ritual");
-  }
-
-  async function quickSave() {
-    if (!hasMood) return;
-    // If user typed /quick message, strip the prefix for the saved note
-    const cleanedNote = isSlashQuick ? (slash?.rest ?? "").trim() : note.trim();
-
-    await logLocal({
-      mood: mood as MoodKey,
-      ritualId: "quick",
-      durationSec: 0,
-      note: cleanedNote || null,
-    });
-
-    track("slash_quick_used", { mood });
-    void syncHistoryUp().catch(() => {});
-
-    setNote("");
-    setMood("");
-    navigate("/history", { replace: true });
-  }
-
-  // Keyboard: Ctrl/⌘ + Enter = Quick Save
-  function onNoteKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
-    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-      e.preventDefault();
-      void quickSave();
-    }
-  }
+  const ritualTitle = last ? titleForRitualId(last.ritualId) : 'ritual';
+  const tips = afterCareFor(last?.ritualId ?? '');
 
   return (
-    <div className="flex h-full flex-col bg-gray-50">
-      <Header title="How are you feeling?" />
+    <div className="flex h-full flex-col">
+      <Header title="Ritual done" back />
+      <main className="flex-1 overflow-y-auto p-4">
+        <div className="max-w-[420px] mx-auto">
+          <div className="rounded-2xl bg-white shadow p-6 text-center">
+            <div className="mx-auto mb-3 h-12 w-12 rounded-full bg-emerald-50 flex items-center justify-center text-2xl">
+              ✅
+            </div>
 
-      <main className="flex-1 overflow-y-auto">
-        <div className="max-w-[420px] mx-auto p-4 space-y-4">
-          <TodayPanel />
-          <SmartReminderBanner />
-          <StreakCard />
-          <InsightChips />
+            <h2 className="text-lg font-semibold">Session complete</h2>
 
-          {/* Mood picker */}
-          <div className="rounded-2xl bg-white shadow p-4">
-            <div className="flex items-center justify-between mb-2">
-              <div className="font-medium">Select your mood</div>
+            <p className="mt-1 text-sm text-gray-600">
+              {last ? (
+                <>
+                  Logged <strong>{fmtDuration(last.durationSec)}</strong> — {ritualTitle}.
+                </>
+              ) : (
+                'Saved.'
+              )}
+            </p>
+
+            <div className="mt-4 text-left">
+              <div className="text-sm font-semibold text-gray-800 text-center">After-care</div>
+              <ul className="mt-2 list-disc pl-5 text-sm text-gray-700 space-y-1">
+                {tips.map((s, i) => <li key={i}>{s}</li>)}
+              </ul>
+            </div>
+
+            <div className="mt-5 grid grid-cols-2 gap-3">
               <button
-                type="button"
-                className="inline-flex items-center gap-1 text-xs text-gray-500 hover:text-gray-700"
-                onClick={() => navigate("/settings")}
-                aria-label="Settings"
-                title="Settings"
+                className="btn btn-primary w-full"
+                onClick={() => navigate('/log', { replace: true })}
               >
-                <SlidersHorizontal size={14} />
-                Settings
+                Log another
+              </button>
+              <button
+                className="btn btn-secondary w-full"
+                onClick={() => navigate('/history')}
+              >
+                See history
               </button>
             </div>
-            <EmojiGrid selected={mood} onSelect={setMood} />
-          </div>
-
-          {/* Note + explanation */}
-          <div className="rounded-2xl bg-white shadow p-4">
-            <label className="block text-sm text-gray-600 mb-2">
-              Add a note (optional)
-            </label>
-            <textarea
-              className="w-full min-h-[92px] rounded-xl border px-3 py-2 text-sm"
-              placeholder="What’s on your mind?"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              onKeyDown={onNoteKeyDown}
-            />
-
-            <div className="mt-2 text-xs text-gray-500">
-              <span className="inline-flex items-center gap-2">
-                <Zap size={14} className="opacity-70" />
-                <span>
-                  <strong>Quick Save</strong> logs your mood instantly and skips
-                  the ritual. We’ll save your selected mood and optional note to <em>History</em>.
-                </span>
-              </span>
-            </div>
-
-            {last && (
-              <p className="text-xs text-gray-500 px-1 mt-3">
-                Last Logged Mood: <span className="text-base">{last.emoji}</span>{" "}
-                on {last.date}
-              </p>
-            )}
-          </div>
-
-          {/* Primary actions */}
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={startRitual}
-              disabled={!hasMood}
-              className="btn btn-primary w-full disabled:opacity-40"
-            >
-              Start Ritual
-            </button>
 
             <button
-              type="button"
-              onClick={quickSave}
-              disabled={!hasMood}
-              className="btn w-full bg-white text-gray-700 border border-transparent
-                         hover:border-gray-300 hover:ring-1 hover:ring-gray-200
-                         focus-visible:ring-2 focus-visible:ring-brand-300
-                         disabled:opacity-40"
+              className="mt-4 text-sm text-brand-700 underline"
+              onClick={() => navigate('/settings')}
             >
-              Quick Save
+              Set a smart reminder
             </button>
           </div>
         </div>

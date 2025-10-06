@@ -1,82 +1,70 @@
-// src/lib/insights.ts
-import dayjs from "dayjs";
-import isBetween from "dayjs/plugin/isBetween";
-dayjs.extend(isBetween);
-import type { LogItem } from "./history";
-
-/** Window for "recent" insights (days) */
-export const INSIGHTS_WINDOW_DAYS = 28;
+import dayjs from 'dayjs'
+import type { LogItem } from './history'
 
 export type InsightsSummary = {
-  // meta
-  fromISO: string;
-  toISO: string;
+  // totals (last N days, default 28)
+  totalSec: number
+  sessions: number
+  avgSec: number
 
-  // streak ending today
-  streakDays: number;
+  // “favorite” ritual
+  topRitualId: string | null
+  topRitualCount: number
 
-  // aggregates (last 28d)
-  totalMinutes: number;       // sum(duration) / 60
-  avgDurationSec: number;     // average session length
-  sessionsCount: number;      // number of sessions
+  // rhythm
+  streak: number           // consecutive days ending today
+  hasTodayLog: boolean
 
-  // top rituals
-  topRitualId: string | null;
-  ritualCounts: Record<string, number>;
+  // simple histograms
+  byHour: number[]         // length 24
+  byDow: number[]          // length 7; 0 = Sun
+}
 
-  // distributions
-  byHour: number[]; // length 24
-  byDow: number[];  // length 7, 0=Sun
-};
+/** Summarize the last `windowDays` days (inclusive of today). */
+export function summarize(list: LogItem[], windowDays = 28): InsightsSummary {
+  const end = dayjs().endOf('day')
+  const start = end.startOf('day').subtract(windowDays - 1, 'day')
 
-export function summarize(list: LogItem[], windowDays = INSIGHTS_WINDOW_DAYS): InsightsSummary {
-  const to = dayjs().endOf("day");
-  const from = to.subtract(windowDays - 1, "day").startOf("day");
+  const inWindow = list.filter(x => dayjs(x.ts).isAfter(start) || dayjs(x.ts).isSame(start))
 
-  const inWindow = list.filter(it => dayjs(it.ts).isBetween(from, to, "millisecond", "[]"));
+  // Totals
+  const totalSec = inWindow.reduce((s, it) => s + Math.max(0, it.durationSec || 0), 0)
+  const sessions  = inWindow.length
+  const avgSec    = sessions ? Math.round(totalSec / sessions) : 0
 
-  // basic counts
-  const totalSec = inWindow.reduce((s, it) => s + Math.max(0, it.durationSec || 0), 0);
-  const sessionsCount = inWindow.length;
-  const avgDurationSec = sessionsCount ? Math.round(totalSec / sessionsCount) : 0;
-  const totalMinutes = Math.round(totalSec / 60);
+  // Top ritual by count
+  let topRitualId: string | null = null
+  let topRitualCount = 0
+  const counts = new Map<string, number>()
+  inWindow.forEach(it => {
+    const n = (counts.get(it.ritualId) || 0) + 1
+    counts.set(it.ritualId, n)
+    if (n > topRitualCount) { topRitualCount = n; topRitualId = it.ritualId }
+  })
 
-  // ritual counts
-  const ritualCounts: Record<string, number> = {};
-  for (const it of inWindow) ritualCounts[it.ritualId] = (ritualCounts[it.ritualId] || 0) + 1;
-  const topRitualId =
-    Object.entries(ritualCounts).sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  // Has today?
+  const hasTodayLog = inWindow.some(it => dayjs(it.ts).isSame(dayjs(), 'day'))
 
-  // by hour (0-23) and day-of-week (0=Sun..6=Sat)
-  const byHour = new Array(24).fill(0);
-  const byDow = new Array(7).fill(0);
-  for (const it of inWindow) {
-    const d = dayjs(it.ts);
-    byHour[d.hour()]++;
-    byDow[d.day()]++;
+  // Streak (ending today)
+  const uniqDays = Array.from(
+    new Set(inWindow.map(it => dayjs(it.ts).startOf('day').valueOf()))
+  ).sort((a, b) => a - b).map(ms => dayjs(ms))
+
+  let streak = 0
+  let cursor = dayjs().startOf('day')
+  for (let i = uniqDays.length - 1; i >= 0; i--) {
+    if (uniqDays[i].isSame(cursor, 'day')) { streak++; cursor = cursor.subtract(1, 'day') }
+    else if (uniqDays[i].isBefore(cursor, 'day')) break
   }
 
-  // streak (ending today)
-  const uniqueDays = new Set(
-    list.map(it => dayjs(it.ts).startOf("day").valueOf())
-  );
-  let streak = 0;
-  let cursor = dayjs().startOf("day");
-  while (uniqueDays.has(cursor.valueOf())) {
-    streak++;
-    cursor = cursor.subtract(1, "day");
-  }
+  // Histograms
+  const byHour = Array.from({ length: 24 }, () => 0)
+  const byDow  = Array.from({ length: 7 }, () => 0)
+  inWindow.forEach(it => {
+    const d = dayjs(it.ts)
+    byHour[d.hour()]++
+    byDow[d.day()]++
+  })
 
-  return {
-    fromISO: from.toISOString(),
-    toISO: to.toISOString(),
-    streakDays: streak,
-    totalMinutes,
-    avgDurationSec,
-    sessionsCount,
-    topRitualId,
-    ritualCounts,
-    byHour,
-    byDow,
-  };
+  return { totalSec, sessions, avgSec, topRitualId, topRitualCount, streak, hasTodayLog, byHour, byDow }
 }

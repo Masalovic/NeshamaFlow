@@ -19,7 +19,7 @@ export default function RitualSuggestion() {
   const [whyOpen, setWhyOpen] = useState(false);
   const [stepsOpen, setStepsOpen] = useState(false);
 
-  useEffect(() => {
+   useEffect(() => {
     let alive = true;
     (async () => {
       const moodRaw = await sGet<unknown>('mood');
@@ -34,12 +34,13 @@ export default function RitualSuggestion() {
     return () => { alive = false; };
   }, [navigate]);
 
-  // Instructional guide for this ritual
-  const guide: RitualGuide = useMemo(() => guideFor(ritual), [ritual]);
+  const guide: RitualGuide | null = useMemo(
+    () => (ritual ? guideFor(ritual) : null), // ✅ pass Ritual object
+    [ritual]
+  );
 
   if (!ritual) return null;
-
-  const minutes = Math.max(1, Math.round(ritual.durationSec / 60));
+  const minutes = Math.max(1, Math.round((ritual.durationSec ?? 0) / 60));
 
   return (
     <div className="flex flex-col h-full">
@@ -49,12 +50,13 @@ export default function RitualSuggestion() {
           <Card>
             <div className="flex items-start justify-between">
               <h2 className="text-xl font-semibold font-heading">{ritual.title}</h2>
-              <span className="ml-3 shrink-0 inline-flex items-center rounded-full border px-2 py-0.5 text-xs text-gray-600">
-                ~ {minutes} min
-              </span>
+              {!!ritual.durationSec && (
+                <span className="ml-3 shrink-0 inline-flex items-center rounded-full border px-2 py-0.5 text-xs text-gray-600">
+                  ~ {minutes} min
+                </span>
+              )}
             </div>
 
-            {/* Tiny preview of why-bullets so users can decide quickly */}
             {ritual.whyBullets?.length ? (
               <ul className="mt-2 text-sm text-gray-600 list-disc pl-5 space-y-1">
                 {ritual.whyBullets.slice(0, 2).map((b: string, i: number) => (
@@ -64,12 +66,10 @@ export default function RitualSuggestion() {
             ) : null}
 
             <div className="mt-4 grid grid-cols-2 gap-3">
-              {/* SPA navigation for reliability on mobile */}
               <Link to="/ritual/start" className="btn btn-primary col-span-2 text-center">
                 Start Ritual
               </Link>
 
-              {/* Secondary actions open modals */}
               <button
                 onClick={() => setStepsOpen(true)}
                 className="col-span-1 text-sm text-brand-700 underline"
@@ -84,28 +84,30 @@ export default function RitualSuggestion() {
               </button>
             </div>
 
+            <div className="mt-3 text-center">
+              <Link to="/rituals" className="text-sm text-gray-600 underline">
+                Browse rituals
+              </Link>
+            </div>
+
             {/* Steps modal */}
             <Modal open={stepsOpen} onClose={() => setStepsOpen(false)} title="How to do it">
-              {Array.isArray(guide.steps) && guide.steps.length > 0 ? (
+              {guide?.steps?.length ? (
                 <ol className="list-decimal pl-5 space-y-1 text-gray-700 text-sm">
-                  {guide.steps.map((s: string, i: number) => (
-                    <li key={i}>{s}</li>
-                  ))}
+                  {guide.steps.map((s: string, i: number) => <li key={i}>{s}</li>)}
                 </ol>
               ) : (
                 <p className="text-sm text-gray-600">No steps available.</p>
               )}
-              {guide.tip && <p className="text-xs text-gray-500 mt-2">{guide.tip}</p>}
+              {guide?.tip && <p className="text-xs text-gray-500 mt-2">{guide.tip}</p>}
             </Modal>
 
             {/* Why modal */}
             <Modal open={whyOpen} onClose={() => setWhyOpen(false)} title="Why it works">
-              <p className="text-sm text-gray-700">{ritual.why}</p>
+              {ritual.why ? <p className="text-sm text-gray-700">{ritual.why}</p> : null}
               {ritual.whyBullets?.length ? (
                 <ul className="mt-3 list-disc pl-5 space-y-1 text-gray-600 text-sm">
-                  {ritual.whyBullets.map((b: string, i: number) => (
-                    <li key={i}>{b}</li>
-                  ))}
+                  {ritual.whyBullets.map((b: string, i: number) => <li key={i}>{b}</li>)}
                 </ul>
               ) : null}
             </Modal>

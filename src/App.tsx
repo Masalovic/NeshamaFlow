@@ -8,6 +8,7 @@ import Profile from './pages/Profile'
 import MoodLog from './pages/MoodLog'
 import RitualSuggestion from './pages/RitualSuggestion'
 import RitualPlayer from './pages/RitualPlayer'
+import RitualLibrary from './pages/RitualLibrary'
 import RitualDone from './pages/RitualDone'
 import History from './pages/History'
 import SignupForm from './components/SignupForm'
@@ -63,6 +64,11 @@ export default function App() {
             <Route path="/ritual" element={<RitualSuggestion />} />
             <Route path="/ritual/start" element={<RitualPlayer />} />
             <Route path="/ritual/done" element={<RitualDone />} />
+
+            {/* 🔹 Ritual Library */}
+            <Route path="/rituals" element={<RitualLibrary />} />
+            <Route path="/library" element={<RitualLibrary />} />
+
             <Route path="/history" element={<History />} />
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/profile" element={<Profile />} />

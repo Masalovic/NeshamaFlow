@@ -7,33 +7,31 @@ type Props = {
   children: React.ReactNode;
 };
 
-/**
- * Mobile-safe bottom sheet:
- * - hidden when closed (no overlay catching taps)
- * - full-screen overlay with high z-index
- * - content max-height within safe viewport, scrollable
- * - safe-area padding so it never sits under the bottom nav / gesture bar
- * - locks body scroll while open
- */
 export default function Modal({ open, onClose, title, children }: Props) {
   // Lock the body scroll when open
   useEffect(() => {
     const prev = document.body.style.overflow;
     if (open) document.body.style.overflow = 'hidden';
-    return () => {
-      document.body.style.overflow = prev;
-    };
+    return () => { document.body.style.overflow = prev; };
   }, [open]);
 
-  if (!open) return null; // <-- important: no invisible overlay when closed
+  // Close on Escape
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-[60]">
+    <div className="fixed inset-0 z-[60]" role="dialog" aria-modal="true" aria-label={title ?? 'Dialog'}>
       {/* Dim background */}
       <button
         aria-label="Close"
         onClick={onClose}
-        className="absolute inset-0 bg-black/40"
+        className="absolute inset-0 bg-black/40 touch-none"
       />
 
       {/* Sheet */}
@@ -44,13 +42,10 @@ export default function Modal({ open, onClose, title, children }: Props) {
             rounded-t-2xl bg-white shadow-soft
             p-4 pt-5
             pb-[calc(16px+env(safe-area-inset-bottom))]
-            max-h-[min(85vh,calc(100svh-80px))]
+            max-h-[min(80vh,calc(100svh-80px))]    /* 80vh per acceptance */
             overflow-y-auto overscroll-contain
           "
-          role="dialog"
-          aria-modal="true"
         >
-          {/* Header */}
           <div className="flex items-center justify-between mb-2">
             {title ? <h3 className="text-base font-semibold">{title}</h3> : <div />}
             <button

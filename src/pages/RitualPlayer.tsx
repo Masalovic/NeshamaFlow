@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   getRitualForMood,
+  getRitualById,
   isMoodKey,
   type Ritual,
   type MoodKey,
@@ -11,10 +12,10 @@ import { guideFor } from '../lib/ritualGuides'
 import Header from '../components/ui/Header'
 import Button from '../components/ui/Button'
 import ProgressRing from '../components/ProgressRing'
+import { getItem as sGet, setItem as sSet } from '../lib/secureStorage'
 import { track } from '../lib/metrics'
 import { logLocal, loadHistory } from '../lib/history'
 import { syncHistoryUp } from '../lib/sync'
-import { getItem as sGet } from '../lib/secureStorage'
 import { loadSettings } from '../lib/settings'
 
 function vibrate(pattern: number[] | number, enabled: boolean) {
@@ -31,7 +32,9 @@ export default function RitualPlayer() {
   const [note, setNote] = useState<string>('')
   const [loaded, setLoaded] = useState(false)
   const [haptics, setHaptics] = useState(true)
+  const [draftRitualId, setDraftRitualId] = useState<string | null>(null)
 
+  // Load settings, mood, note, and any one-shot draft ritual selection
   useEffect(() => {
     let alive = true
     ;(async () => {
@@ -39,25 +42,35 @@ export default function RitualPlayer() {
       if (alive) setHaptics(s.haptics)
 
       const rawMood = await sGet<unknown>('mood')
+      const n = (await sGet<string>('note')) || ''
+      const draft = await sGet<string>('draft.ritual')
+
       if (!isMoodKey(rawMood)) {
         navigate('/log', { replace: true })
         return
       }
-      const n = (await sGet<string>('note')) || ''
+
       if (!alive) return
       setMood(rawMood)
       setNote(n)
+      setDraftRitualId(draft || null)
+
+      // one-shot: clear the stored draft pick so next run falls back to the suggestion flow
+      if (draft) {
+        sSet('draft.ritual', '').catch(() => {}) // fire-and-forget
+      }
+
       setLoaded(true)
     })()
     return () => { alive = false }
   }, [navigate])
 
-  const ritual: Ritual | null = useMemo(
-    () => (mood ? getRitualForMood(mood) : null),
-    [mood]
-  )
+  // Choose ritual: draft override > mood suggestion
+  const ritual: Ritual | null = useMemo(() => {
+    return draftRitualId ? getRitualById(draftRitualId) : (mood ? getRitualForMood(mood) : null)
+  }, [draftRitualId, mood])
 
-  // timer state
+  // Timer state
   const total = ritual?.durationSec ?? 120
   const [remaining, setRemaining] = useState<number>(total)
   const [running, setRunning] = useState(false)
@@ -77,7 +90,7 @@ export default function RitualPlayer() {
     if (loaded && !ritual) navigate('/log', { replace: true })
   }, [loaded, ritual, navigate])
 
-  // main timer
+  // Main timer
   useEffect(() => {
     if (!running || resting) return
     vibrate(24, haptics)
@@ -97,7 +110,7 @@ export default function RitualPlayer() {
     }
   }, [running, resting, haptics])
 
-  // rest timer
+  // Rest timer
   useEffect(() => {
     if (!resting) return
     const id = window.setInterval(() => {
@@ -115,6 +128,7 @@ export default function RitualPlayer() {
     return () => window.clearInterval(id)
   }, [resting, haptics])
 
+  // Auto-finish when timer hits zero
   useEffect(() => {
     if (remaining <= 0 && !completing) {
       setRunning(false)
@@ -172,12 +186,14 @@ export default function RitualPlayer() {
       <main className="flex-1 overflow-y-auto p-4">
         <div className="max-w-[380px] mx-auto">
           <div className="rounded-2xl bg-white shadow p-6 flex flex-col items-center">
+            {/* Timer */}
             <div role="timer" aria-live="polite" aria-atomic="true">
               <ProgressRing progress={progress}>
                 {resting ? restRemaining : remaining}
               </ProgressRing>
             </div>
 
+            {/* Guidance */}
             <div className="mt-4 w-full text-gray-700 text-sm text-center">
               {resting ? (
                 <div>Rest — close your eyes and breathe.</div>
@@ -185,7 +201,7 @@ export default function RitualPlayer() {
                 <div className="text-left">
                   <div className="font-medium mb-1">{guide.title}</div>
                   <ol className="list-decimal pl-5 space-y-1">
-                    {guide.steps.map((s, i) => <li key={i}>{s}</li>)}
+                    {(guide.steps ?? []).map((s, i) => <li key={i}>{s}</li>)}
                   </ol>
                   {guide.tip && (
                     <p className="text-xs text-gray-500 mt-2">{guide.tip}</p>
@@ -194,6 +210,7 @@ export default function RitualPlayer() {
               )}
             </div>
 
+            {/* Controls */}
             <div className="mt-8 w-full grid grid-cols-3 gap-3">
               {!running ? (
                 <Button className="col-span-1" variant="primary" onClick={onStartPause}>

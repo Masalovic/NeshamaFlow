@@ -1,8 +1,8 @@
-// src/pages/Insights.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import Header from "../components/ui/Header";
-import { loadHistory, type LogItem } from "../lib/history";
+import { summarize } from "../lib/insights";
 import { titleForRitualId } from "../lib/ritualEngine";
+import { loadHistory, type LogItem } from "../lib/history";
 import dayjs from "dayjs";
 import {
   ResponsiveContainer,
@@ -11,7 +11,6 @@ import {
   BarChart, Bar, Legend,
 } from "recharts";
 
-// Small wrapper for consistent card styling
 function Card({
   title,
   children,
@@ -53,11 +52,14 @@ export default function Insights() {
     return () => { alive = false; };
   }, []);
 
-  // last 28 days (inclusive of today)
+  // ✅ Define summary at top-level (not inside any conditional/hook)
+  const summary = summarize(history ?? [], 28);
+
+  // Last 28 days, inclusive of today
   const last28 = useMemo(() => {
     const list = history ?? [];
     const cutoff = dayjs().startOf("day").subtract(27, "day");
-    return list.filter(x => dayjs(x.ts).isAfter(cutoff.subtract(1, "millisecond")));
+    return list.filter(x => !dayjs(x.ts).isBefore(cutoff));
   }, [history]);
 
   // 1) Mood distribution (last 28 days)
@@ -132,6 +134,39 @@ export default function Insights() {
       <Header title="Insights (Pro)" back />
       <main className="flex-1 p-4">
         <div className="max-w-[480px] mx-auto space-y-4 pb-24">
+          {/* Summary header */}
+          <div className="rounded-2xl border bg-white p-4">
+            <div className="flex flex-wrap gap-3 text-sm">
+              <div className="flex-1 min-w-[140px]">
+                <div className="text-gray-500 text-xs">This period</div>
+                <div className="font-medium">
+                  {Math.round((summary.totalSec ?? 0) / 60)} min · {summary.sessions ?? 0} sessions
+                </div>
+              </div>
+
+              <div className="flex-1 min-w-[140px]">
+                <div className="text-gray-500 text-xs">Avg session</div>
+                <div className="font-medium">{summary.avgSec ?? 0}s</div>
+              </div>
+
+              <div className="flex-1 min-w-[140px]">
+                <div className="text-gray-500 text-xs">Top ritual</div>
+                <div className="font-medium truncate">
+                  {summary.topRitualId
+                    ? `${titleForRitualId(summary.topRitualId)} (${summary.topRitualCount})`
+                    : "—"}
+                </div>
+              </div>
+
+              <div className="flex-1 min-w-[140px]">
+                <div className="text-gray-500 text-xs">Streak</div>
+                <div className="font-medium">
+                  {summary.streak ?? 0}🔥 {summary.hasTodayLog ? "" : <span className="text-gray-400">(no entry today)</span>}
+                </div>
+              </div>
+            </div>
+          </div>
+
           {empty && (
             <div className="rounded-2xl border bg-white p-4 text-sm text-gray-600">
               No data yet — complete a ritual or two and check back!
@@ -180,10 +215,7 @@ export default function Insights() {
             {daySeries.length ? (
               <div className="h-40">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart
-                    data={daySeries}
-                    margin={{ left: 0, right: 0, top: 10, bottom: 0 }}
-                  >
+                  <AreaChart data={daySeries} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
                     <defs>
                       <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#7c3aed" stopOpacity={0.4} />
@@ -222,7 +254,7 @@ export default function Insights() {
             )}
           </Card>
 
-          {/* Quick wins table */}
+          {/* Quick wins */}
           <Card title="Quick wins">
             {!quickWins.length ? (
               <div className="text-xs text-gray-500">No data yet.</div>
