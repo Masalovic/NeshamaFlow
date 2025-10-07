@@ -1,3 +1,4 @@
+// vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
@@ -9,6 +10,7 @@ export default defineConfig(({ mode }) => ({
       // show "update available" prompt from the SW
       registerType: "prompt",
       devOptions: { enabled: false }, // keep SW off in dev
+
       includeAssets: [
         "offline.html",
         "favicon.ico",
@@ -16,12 +18,12 @@ export default defineConfig(({ mode }) => ({
         "icons/icon-512.png",
         "icons/maskable-512.png",
       ],
+
       manifest: {
         id: "/?source=pwa",
         name: "Neshama Flow",
         short_name: "Neshama",
-        description:
-          "Daily micro-rituals to track moods and build mindful streaks.",
+        description: "Daily micro-rituals to track moods and build mindful streaks.",
         start_url: "/",
         scope: "/",
         display: "standalone",
@@ -31,50 +33,35 @@ export default defineConfig(({ mode }) => ({
         icons: [
           { src: "icons/icon-192.png", sizes: "192x192", type: "image/png" },
           { src: "icons/icon-512.png", sizes: "512x512", type: "image/png" },
-          {
-            src: "icons/maskable-512.png",
-            sizes: "512x512",
-            type: "image/png",
-            purpose: "maskable",
-          },
+          { src: "icons/maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
         ],
         shortcuts: [
-          {
-            name: "Log mood",
-            url: "/log",
-            description: "Open the mood logger",
-          },
-          {
-            name: "History",
-            url: "/history",
-            description: "See recent sessions",
-          },
-          {
-            name: "Insights",
-            url: "/insights",
-            description: "View trends (Pro)",
-          },
+          { name: "Log mood", url: "/log", description: "Open the mood logger" },
+          { name: "History", url: "/history", description: "See recent sessions" },
+          { name: "Insights", url: "/insights", description: "View trends (Pro)" },
         ],
         categories: ["health", "productivity", "lifestyle"],
       },
+
       workbox: {
         navigateFallback: "/offline.html",
         navigateFallbackDenylist: [/^\/auth/i, /^\/api\//],
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
-            // allow your System theme photo host
+            // Allow your System theme photo host(s)
             urlPattern: ({ url }) =>
-    /^https:\/\/(images|plus)\.unsplash\.com\/.*/i.test(url.href) ||
-    /^https:\/\/source\.unsplash\.com\/.*/i.test(url.href),
-  handler: "StaleWhileRevalidate",
+              /^https:\/\/(images|plus)\.unsplash\.com\/.*/i.test(url.href) ||
+              /^https:\/\/source\.unsplash\.com\/.*/i.test(url.href),
+            handler: "StaleWhileRevalidate",
             options: {
-              cacheName: "ext-images",
-              cacheableResponse: { statuses: [0, 200] }, // allow opaque & OK
+              cacheName: "ext-images-v2", // bump to clear any stale entries
+              cacheableResponse: { statuses: [0, 200] }, // opaque & OK
               expiration: {
                 maxEntries: 60,
                 maxAgeSeconds: 60 * 60 * 24 * 14, // 14 days
               },
+              // default matchOptions keeps query string so ?v= works as a cache-buster
             },
           },
         ],
@@ -90,10 +77,10 @@ export default defineConfig(({ mode }) => ({
     strictPort: true,
     ...(mode === "development"
       ? {
-          allowedHosts: true, // allow tunnels like *.pages.dev, *.loca.lt, etc.
+          allowedHosts: true, // allow tunnels (*.pages.dev, *.loca.lt, etc.)
           hmr: {
             protocol: "ws",
-            // If you use an HTTPS tunnel and need a custom port, set:
+            // If you use an HTTPS tunnel with a custom port, uncomment:
             // clientPort: Number(process.env.VITE_HMR_CLIENT_PORT) || undefined,
           },
         }

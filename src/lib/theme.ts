@@ -10,9 +10,10 @@ export type Theme = {
   bgImageUrl?: string;
 };
 
-const THEME_KEY = 'ui.theme.v1';
+// BUMPED to v2 to invalidate old saved wallpapers (e.g., Pexels links)
+const THEME_KEY = 'ui.theme.v2';
 
-// ---- Accent palettes (unchanged except for tiny fixes) ----
+// ---- Accent palettes ----
 type Shade = '50'|'100'|'200'|'300'|'400'|'500'|'600'|'700'|'800'|'900';
 type AccentMap = Record<Shade, string>;
 
@@ -57,6 +58,7 @@ const SURFACES = {
       radial-gradient(720px 520px  at 100% 100%, var(--accent-300) 0%, transparent 52%),
       #ffffff
     `,
+    // light translucent cards on colorful bg
     surface1:  'rgba(255,255,255,0.22)',
     surface2:  '#fafbff',
     border:    'var(--accent-300)',
@@ -69,25 +71,55 @@ const SURFACES = {
   },
 } as const;
 
-// ---- Load / Save ----
+// ---- Defaults & helpers ----
+const DEFAULT_SYSTEM_BG_URL =
+  'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0';
+
+function sanitizeBgUrl(url: string | undefined): string {
+  try {
+    const u = new URL(url ?? '');
+    // Allow Unsplash only (prevents lingering Pexels URL)
+    if (u.hostname !== 'images.unsplash.com') return DEFAULT_SYSTEM_BG_URL;
+    return u.toString();
+  } catch {
+    return DEFAULT_SYSTEM_BG_URL;
+  }
+}
+
+// ---- Load / Save (with migration from v1) ----
 export function loadTheme(): Theme {
   try {
+    // Try v2
     const raw = localStorage.getItem(THEME_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as Partial<Theme>;
-      return {
-        appearance: (parsed.appearance ?? 'system') as Appearance,
-        accent:     (parsed.accent ?? 'berry') as Accent,
-        bgMode:     (parsed.bgMode ?? 'image') as BgMode, // default to image
-        bgImageUrl: parsed.bgImageUrl ?? DEFAULT_SYSTEM_BG_URL,
+    if (raw) return JSON.parse(raw) as Theme;
+
+    // Migrate from v1 if present
+    const oldRaw = localStorage.getItem('ui.theme.v1');
+    if (oldRaw) {
+      const old = JSON.parse(oldRaw) as Partial<Theme>;
+      const migrated: Theme = {
+        appearance: (old.appearance ?? 'system') as Appearance,
+        accent:     (old.accent ?? 'berry') as Accent,
+        bgMode:     (old.bgMode ?? 'image') as BgMode,
+        bgImageUrl: sanitizeBgUrl(old.bgImageUrl),
       };
+      localStorage.setItem(THEME_KEY, JSON.stringify(migrated));
+      // optional cleanup
+      localStorage.removeItem('ui.theme.v1');
+      return migrated;
     }
-  } catch {}
+  } catch { /* ignore */ }
+
+  // Fresh default
   return { appearance: 'system', accent: 'berry', bgMode: 'image', bgImageUrl: DEFAULT_SYSTEM_BG_URL };
 }
 
 export function saveTheme(t: Theme) {
-  localStorage.setItem(THEME_KEY, JSON.stringify(t));
+  const safe: Theme = {
+    ...t,
+    bgImageUrl: t.bgImageUrl ? sanitizeBgUrl(t.bgImageUrl) : DEFAULT_SYSTEM_BG_URL,
+  };
+  localStorage.setItem(THEME_KEY, JSON.stringify(safe));
 }
 
 // ---- Apply ----
@@ -103,16 +135,14 @@ export function applyTheme(t: Theme): void {
   root.dataset.appearance = t.appearance;
   root.dataset.accent     = t.accent;
 
-  // Accent scale
+  // Accent scale → CSS vars
   const pal = ACCENTS[t.accent];
   (Object.keys(pal) as Shade[]).forEach(k => set(`--accent-${k}`, pal[k]));
 
-  // ---- Background
+  // Background: System + Image → overlay + photo (with cache-bust)
   if (t.appearance === 'system' && t.bgMode === 'image' && (t.bgImageUrl ?? '').length > 0) {
-    // cache-bust so we don't see the *previous* image
-    const url = withVersion(t.bgImageUrl!);
+    const url = withVersion(sanitizeBgUrl(t.bgImageUrl));
     const overlay = 'linear-gradient(0deg, rgba(255,255,255,0.42), rgba(255,255,255,0.42))';
-    // keep image URL in its own var for devtools inspection if you like
     set('--bg-image', `url("${url}")`);
     set('--bg', `${overlay}, var(--bg-image)`);
   } else {
@@ -120,7 +150,7 @@ export function applyTheme(t: Theme): void {
     set('--bg-image', 'none');
   }
 
-  // Surfaces & text
+  // Surfaces & text tokens
   set('--surface-1',  surf.surface1);
   set('--surface-2',  surf.surface2);
   set('--border',     surf.border);
@@ -130,7 +160,7 @@ export function applyTheme(t: Theme): void {
   set('--nav-bg',     surf.navBg);
   set('--hover',      surf.hover);
 
-  // Buttons
+  // Buttons (contrast-aware)
   const isDark = (t.appearance === 'dark');
   if (isDark) {
     set('--primary-fg', '#ffffff');
@@ -155,19 +185,16 @@ export function applyTheme(t: Theme): void {
 
   // meta theme-color
   const themeMeta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
-  if (themeMeta) themeMeta.content = typeof surf.themeMeta === 'string' ? surf.themeMeta : '#ffffff';
+  if (themeMeta) themeMeta.content = typeof (surf as any).themeMeta === 'string' ? (surf as any).themeMeta : '#ffffff';
 
   function set(name: string, value: string) {
     root.style.setProperty(name, value);
   }
-
   function withVersion(url: string): string {
     const sep = url.includes('?') ? '&' : '?';
-    // use seconds to avoid thrashing; increments whenever you save/apply
     return `${url}${sep}v=${Math.floor(Date.now()/1000)}`;
   }
 }
-
 
 // Keep UI synced with OS mode when appearance='system'
 export function bindSystemThemeReactivity(getAppearance: () => Appearance): () => void {
@@ -176,12 +203,14 @@ export function bindSystemThemeReactivity(getAppearance: () => Appearance): () =
   const handler = () => {
     if (getAppearance() === 'system') {
       const current = loadTheme();
-      applyTheme({ appearance: 'system', accent: current.accent, bgMode: current.bgMode, bgImageUrl: current.bgImageUrl });
+      applyTheme({
+        appearance: 'system',
+        accent: current.accent,
+        bgMode: current.bgMode,
+        bgImageUrl: current.bgImageUrl,
+      });
     }
   };
   mql.addEventListener('change', handler);
   return () => mql.removeEventListener('change', handler);
 }
-
-// ---- Helpers ----
-const DEFAULT_SYSTEM_BG_URL = 'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
