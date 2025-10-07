@@ -76,7 +76,7 @@ export default function History() {
     <div className="flex h-full flex-col bg-app">
       <Header title="History" back />
       
-        <button
+        <button 
           type="button"
           onClick={() => navigate("/insights")}
           className="text-xs underline text-accent"

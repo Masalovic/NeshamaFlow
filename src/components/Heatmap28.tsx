@@ -60,7 +60,7 @@ export default function Heatmap28() {
       : 'bg-brand-700';
 
   return (
-    <div className="rounded-2xl p-3 border bg-[var(--surface-1)]">
+    <div className="rounded-2xl p-3 border bg-surface-1">
       <div className="flex items-center justify-between mb-2 ">
         <div className="text-sm font-medium">Past 28 days</div>
         <div className="text-xs text-gray-500">{total} sessions • {streak}-day streak</div>

@@ -40,7 +40,7 @@ const SURFACES = {
     bg:        '#0b0b0c',
     surface1:  '#151517',
     surface2:  '#1c1c20',
-    border:    '#2a2a2e',
+    border:    '#454545',
     text:      '#f4f4f5',
     textDim:   '#c7c7cd',
     textMuted: '#9ca3af',
@@ -57,7 +57,7 @@ const SURFACES = {
       radial-gradient(720px 520px  at 100% 100%, var(--accent-300) 0%, transparent 52%),
       #ffffff
     `,
-    surface1:  '#ffffff',
+    surface1:  '#rgba(255,255,255,0.92)',
     surface2:  '#fafbff',
     border:    'var(--accent-100)',
     text:      '#0f172a',
@@ -131,14 +131,14 @@ export function applyTheme(t: Theme): void {
   const isDark = (t.appearance === 'dark');
   if (isDark) {
     set('--primary-fg', '#ffffff');
-    set('--primary-bg', 'var(--accent-500)');
-    set('--primary-bg-hover', 'var(--accent-600)');
-    set('--primary-bg-active','var(--accent-700)');
+    set('--primary-bg', 'var(--accent-300)');
+    set('--primary-bg-hover', 'var(--accent-400)');
+    set('--primary-bg-active','var(--accent-500)');
   } else {
     set('--primary-fg', '#000000');
     set('--primary-bg', 'var(--accent-600)');
-    set('--primary-bg-hover', 'var(--accent-700)');
-    set('--primary-bg-active','var(--accent-800)');
+    set('--primary-bg-hover', 'var(--accent-300)');
+    set('--primary-bg-active','var(--accent-500)');
   }
 
   // Browser chrome color
@@ -165,4 +165,4 @@ export function bindSystemThemeReactivity(getAppearance: () => Appearance): () =
 }
 
 // ---- Helpers ----
-const DEFAULT_SYSTEM_BG_URL = 'https://images.pexels.com/photos/7130480/pexels-photo-7130480.jpeg';
+const DEFAULT_SYSTEM_BG_URL = 'https://images.pexels.com/photos/7130479/pexels-photo-7130479.jpeg';

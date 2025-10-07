@@ -61,8 +61,8 @@ export default function TodayPanel() {
   }
 
   return (
-    <section className="card p-4">
-      <div className="mb-1 flex items-center gap-2">
+    <section className="card p-4 ">
+      <div className="mb-1 flex items-center gap-2 ">
         <Icon size={16} style={{ color: 'var(--accent-500)' }} />
         <div className="text-sm font-medium text-main">{greet}</div>
       </div>

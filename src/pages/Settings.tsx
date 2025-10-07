@@ -214,7 +214,7 @@ export default function Settings() {
                 <button
                   key={opt}
                   className={
-                    'h-10 rounded-xl border text-sm ' +
+                    'h-8 rounded-xl border text-sm ' +
                     (appearance === opt
                       ? 'border-brand-400 ring-1 ring-brand-300'
                       : 'border-[var(--border)] hover:bg-[var(--hover)]')
@@ -233,11 +233,12 @@ export default function Settings() {
                 <button
                   key={a}
                   onClick={() => updateTheme({ accent: a })}
-                  className="h-8 px-3 rounded-full border text-xs"
+                  className="h-6 px-3 rounded-full border text-xs"
                   style={{
-                    background: accent === a ? 'var(--accent-50)' : 'transparent',
+                    background: accent === a ? 'var(--accent-200)' : 'transparent',
                     borderColor: 'var(--border)',
                     color: 'var(--text)',
+                    textTransform: 'capitalize',
                   }}
                   aria-pressed={accent === a}
                   title={`Accent: ${a}`}
@@ -251,7 +252,7 @@ export default function Settings() {
             <div className="grid grid-cols-2 gap-2 mb-2">
               <button
                 className={
-                  'h-9 rounded-xl border text-sm ' +
+                  'h-10 rounded-xl border text-sm ' +
                   (bgMode === 'gradient'
                     ? 'border-brand-400 ring-1 ring-brand-300'
                     : 'border-[var(--border)] hover:bg-[var(--hover)]')
@@ -279,13 +280,13 @@ export default function Settings() {
             <label className="block text-xs text-muted mb-1">Photo URL</label>
             <div className="flex gap-2">
               <input
-                className="input flex-1 h-9"
+                className="input flex-1 h-10"
                 value={bgUrl}
                 onChange={(e) => setBgUrl(e.target.value)}
                 placeholder="https://…"
               />
               <button
-                className="btn btn-secondary h-9"
+                className="btn btn-primary h-10"
                 onClick={() => updateTheme({ bgImageUrl: bgUrl, bgMode: 'image' })}
               >
                 Apply
@@ -414,7 +415,7 @@ export default function Settings() {
               <div className="space-y-3">
                 <label className="block text-sm text-main">New PIN</label>
                 <input
-                  className="input"
+                  className="input w-full"
                   type="password"
                   inputMode="numeric"
                   pattern="\d*"
@@ -423,7 +424,7 @@ export default function Settings() {
                 />
                 <label className="block text-sm text-main">Confirm PIN</label>
                 <input
-                  className="input"
+                  className="input w-full"
                   type="password"
                   inputMode="numeric"
                   pattern="\d*"
@@ -447,7 +448,7 @@ export default function Settings() {
           </div>
 
           {/* Danger / Clear */}
-          <button className="btn btn-secondary w-full" onClick={clearAll}>
+          <button className="btn btn-primary w-full" onClick={clearAll}>
             Clear all local data
           </button>
         </div>

@@ -66,13 +66,13 @@ select:focus {
 
 /* ---- Buttons --------------------------------------------------------- */
 .btn {
-  @apply inline-flex items-center justify-center h-12 px-5 rounded-pill text-sm font-semibold transition select-none outline-none disabled:opacity-45 disabled:cursor-not-allowed;
+  @apply inline-flex items-center justify-center h-10 px-5 rounded-pill text-sm font-normal transition select-none outline-none disabled:opacity-45 disabled:cursor-not-allowed;
   box-shadow: var(--elev, 0 0 0 rgba(0,0,0,0));
 }
 
 /* Primary – uses theme.ts contrast tokens */
 .btn-primary {
-  background: var(--primary-bg);
+  background: var(--accent-200);
   color: var(--primary-fg);              /* black in light, white in dark */
 }
 .btn-primary:hover  { background: var(--primary-bg-hover); }
