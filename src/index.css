@@ -3,15 +3,29 @@
 @tailwind utilities;
 
 /* ---- Color scheme hint (helps form controls, scrollbar, etc.) ------- */
-:root { color-scheme: light; }
-[data-appearance="dark"] { color-scheme: dark; }
- 
+:root {
+  color-scheme: light;
+}
+[data-appearance="dark"] {
+  color-scheme: dark;
+}
+
 /* ---- App base -------------------------------------------------------- */
-html, body {
+html,
+body {
   min-height: 100%;
   background: var(--bg);
   color: var(--text);
-  font-family: 'Outfit', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
+  font-family:
+    "Outfit",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Inter,
+    "Helvetica Neue",
+    Arial;
 }
 
 /* ---- Cards & tiles (shared across pages) ----------------------------- */
@@ -29,7 +43,10 @@ html, body {
 }
 
 /* Small chips / pills / badges (stats, filters, etc.) */
-.chip, .pill, .badge, .segment {
+.chip,
+.pill,
+.badge,
+.segment {
   background: var(--surface-2);
   border: 1px solid var(--border);
   color: var(--text-dim);
@@ -46,7 +63,7 @@ input[type="email"],
 textarea,
 select {
   background: var(--surface-2) !important;
-  color: var(--text) !important;         /* ✅ readable in dark */
+  color: var(--text) !important; /* ✅ readable in dark */
   border: 1px solid var(--border) !important;
   border-radius: 0.75rem;
   padding: 0.75rem 1rem;
@@ -54,7 +71,9 @@ select {
   caret-color: var(--accent-600);
 }
 .input::placeholder,
-textarea::placeholder { color: var(--text-muted); }
+textarea::placeholder {
+  color: var(--text-muted);
+}
 
 /* token-based focus ring (works in light/dark) */
 .input:focus,
@@ -67,16 +86,21 @@ select:focus {
 /* ---- Buttons --------------------------------------------------------- */
 .btn {
   @apply inline-flex items-center justify-center h-10 px-5 rounded-pill text-sm font-normal transition select-none outline-none disabled:opacity-45 disabled:cursor-not-allowed;
-  box-shadow: var(--elev, 0 0 0 rgba(0,0,0,0));
+  box-shadow: var(--elev, 0 0 0 rgba(0, 0, 0, 0));
 }
 
 /* Primary – uses theme.ts contrast tokens */
 .btn-primary {
   background: var(--accent-200);
-  color: var(--primary-fg);              /* black in light, white in dark */
+  color: var(--primary-fg); /* black in light, white in dark */
 }
-.btn-primary:hover  { background: var(--primary-bg-hover); }
-.btn-primary:active { background: var(--primary-bg-active); box-shadow: inset 0 2px 6px rgba(0,0,0,.25); }
+.btn-primary:hover {
+  background: var(--primary-bg-hover);
+}
+.btn-primary:active {
+  background: var(--primary-bg-active);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
+}
 
 /* Secondary – subtle surface */
 .btn-secondary {
@@ -84,7 +108,9 @@ select:focus {
   color: var(--text);
   border: 1px solid var(--border);
 }
-.btn-secondary:hover { background: var(--surface-2); }
+.btn-secondary:hover {
+  background: var(--surface-2);
+}
 
 /* Outline – neutral with accent border */
 .btn-outline {
@@ -92,32 +118,88 @@ select:focus {
   color: var(--text);
   border: 1px solid var(--accent-300);
 }
-.btn-outline:hover { background: var(--hover); }
+.btn-outline:hover {
+  background: var(--hover);
+}
 
 /* Small pill CTA inside tiles/cards (e.g. Ritual list “Start”) */
 .tile .btn-primary,
 .btn-chip {
   background: var(--primary-bg);
-  color: #fff;                           /* keep white for punchy pills */
+  color: #fff; /* keep white for punchy pills */
   height: 40px;
   padding-inline: 16px;
 }
 
 /* ---- Bottom nav ------------------------------------------------------ */
-:root { --nav-height: 64px; }
-.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+:root {
+  --nav-height: 64px;
+}
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
+}
 .screen .overflow-y-auto,
 .min-h-\[100svh\] .overflow-y-auto {
   padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
 }
-.safe-bottom-shadow { box-shadow: 0 -6px 16px rgba(15,15,16,0.06); }
-.bottom-nav { background: var(--nav-bg) !important; color: var(--text-dim); }
+.safe-bottom-shadow {
+  box-shadow: 0 -6px 16px rgba(15, 15, 16, 0.06);
+}
+.bottom-nav {
+  background: var(--nav-bg) !important;
+  color: var(--text-dim);
+}
+.bottom-nav {
+  background: var(--nav-bg);
+  border-color: var(--border);
+  box-shadow: 0 -6px 16px rgba(15, 15, 16, 0.06);
+}
+
+.bottom-nav .nav-link {
+  color: var(--text-muted);
+  transition:
+    color 0.18s ease,
+    background-color 0.18s ease,
+    transform 0.04s ease;
+}
+.bottom-nav .nav-link:hover {
+  color: var(--text);
+}
+
+/* Active = current route (accent hue) */
+.bottom-nav .nav-link.active {
+  color: var(--accent-nav);
+}
+
+/* Pressed feedback */
+.bottom-nav .nav-link:active {
+  color: var(--accent-nav-press);
+  transform: translateY(1px);
+}
+
+/* Optional: a very subtle icon highlight “pill” */
+.bottom-nav .nav-link.active .nav-ico {
+  background: rgb(var(--accent-50) / 0.6);
+  border-radius: 10px;
+  padding: 2px;
+}
+[data-appearance="dark"] .bottom-nav .nav-link.active .nav-ico {
+  background: rgb(var(--accent-400) / 0.18);
+}
 
 /* ---- Utilities that respect tokens ---------------------------------- */
-.text-dim   { color: var(--text-dim); }
-.text-muted { color: var(--text-muted); }
-.border-token { border-color: var(--border); }
-.shadow-soft { box-shadow: 0 12px 28px rgba(0,0,0,.12); }
+.text-dim {
+  color: var(--text-dim);
+}
+.text-muted {
+  color: var(--text-muted);
+}
+.border-token {
+  border-color: var(--border);
+}
+.shadow-soft {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
 
 /* Keyboard focus */
 :focus-visible {
@@ -140,6 +222,6 @@ select:focus {
   .border-token  { border-color: var(--border) !important; }
 
   /* Accent text helper (for links etc.) */
-  /* .text-accent        { color: rgb(var(--accent-600)) !important; }
+/* .text-accent        { color: rgb(var(--accent-600)) !important; }
   .text-accent:hover  { color: rgb(var(--accent-700)) !important; }
 }  */

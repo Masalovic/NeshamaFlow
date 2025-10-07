@@ -141,6 +141,14 @@ export function applyTheme(t: Theme): void {
     set('--primary-bg-active','var(--accent-500)');
   }
 
+  if (resolved === 'dark') {
+    set('--accent-nav', 'var(--accent-400)');
+    set('--accent-nav-press', 'var(--accent-500)');
+  } else {
+    set('--accent-nav', 'var(--accent-600)');
+    set('--accent-nav-press', 'var(--accent-700)');
+  } 
+  
   // Browser chrome color
   const themeMeta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
   if (themeMeta) themeMeta.content = typeof surf.themeMeta === 'string' ? surf.themeMeta : '#ffffff';

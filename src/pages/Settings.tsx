@@ -214,7 +214,7 @@ export default function Settings() {
                 <button
                   key={opt}
                   className={
-                    'h-8 rounded-xl border text-sm ' +
+                    'h-9 rounded-xl border text-sm ' +
                     (appearance === opt
                       ? 'border-brand-400 ring-1 ring-brand-300'
                       : 'border-[var(--border)] hover:bg-[var(--hover)]')
@@ -264,7 +264,7 @@ export default function Settings() {
               </button>
               <button
                 className={
-                  'h-9 rounded-xl border text-sm ' +
+                  'h-10 rounded-xl border text-sm ' +
                   (bgMode === 'image'
                     ? 'border-brand-400 ring-1 ring-brand-300'
                     : 'border-[var(--border)] hover:bg-[var(--hover)]')
@@ -276,25 +276,9 @@ export default function Settings() {
               </button>
             </div>
 
-            {/* Photo URL (only affects System+Photo) */}
-            <label className="block text-xs text-muted mb-1">Photo URL</label>
-            <div className="flex gap-2">
-              <input
-                className="input flex-1 h-10"
-                value={bgUrl}
-                onChange={(e) => setBgUrl(e.target.value)}
-                placeholder="https://…"
-              />
-              <button
-                className="btn btn-primary h-10"
-                onClick={() => updateTheme({ bgImageUrl: bgUrl, bgMode: 'image' })}
-              >
-                Apply
-              </button>
-            </div>
 
             <p className="mt-3 text-xs text-muted">
-              Photo background is used only in <strong>System</strong> appearance. Cards stay white for readability.
+              Photo background is used only in <strong>System</strong> appearance.
             </p>
           </section>
 
