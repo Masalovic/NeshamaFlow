@@ -148,7 +148,7 @@ export function applyTheme(t: Theme): void {
     set('--accent-nav', 'var(--accent-600)');
     set('--accent-nav-press', 'var(--accent-700)');
   } 
-  
+
   // Browser chrome color
   const themeMeta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
   if (themeMeta) themeMeta.content = typeof surf.themeMeta === 'string' ? surf.themeMeta : '#ffffff';
@@ -173,4 +173,4 @@ export function bindSystemThemeReactivity(getAppearance: () => Appearance): () =
 }
 
 // ---- Helpers ----
-const DEFAULT_SYSTEM_BG_URL = 'https://images.pexels.com/photos/7130479/pexels-photo-7130479.jpeg';
+const DEFAULT_SYSTEM_BG_URL = 'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
