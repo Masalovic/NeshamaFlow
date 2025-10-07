@@ -11,10 +11,13 @@
 }
 
 /* ---- App base -------------------------------------------------------- */
-html,
+html, body, #root { min-height: 100%; }
 body {
   min-height: 100%;
   background: var(--bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   color: var(--text);
   font-family:
     "Outfit",
