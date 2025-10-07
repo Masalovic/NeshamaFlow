@@ -64,11 +64,17 @@ export default defineConfig(({ mode }) => ({
         runtimeCaching: [
           {
             // allow your System theme photo host
-            urlPattern: /^https:\/\/images\.pexels\.com\/.*/i,
-            handler: "StaleWhileRevalidate",
+            urlPattern: ({ url }) =>
+    /^https:\/\/(images|plus)\.unsplash\.com\/.*/i.test(url.href) ||
+    /^https:\/\/source\.unsplash\.com\/.*/i.test(url.href),
+  handler: "StaleWhileRevalidate",
             options: {
               cacheName: "ext-images",
-              expiration: { maxEntries: 30, maxAgeSeconds: 60 * 60 * 24 * 7 }, // 7 days
+              cacheableResponse: { statuses: [0, 200] }, // allow opaque & OK
+              expiration: {
+                maxEntries: 60,
+                maxAgeSeconds: 60 * 60 * 24 * 14, // 14 days
+              },
             },
           },
         ],
