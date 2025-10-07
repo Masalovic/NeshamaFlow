@@ -57,9 +57,9 @@ const SURFACES = {
       radial-gradient(720px 520px  at 100% 100%, var(--accent-300) 0%, transparent 52%),
       #ffffff
     `,
-    surface1:  '#rgba(255,255,255,0.92)',
+    surface1:  'rgba(255,255,255,0.22)',
     surface2:  '#fafbff',
-    border:    'var(--accent-100)',
+    border:    'var(--accent-300)',
     text:      '#0f172a',
     textDim:   '#334155',
     textMuted: '#64748b',
@@ -94,7 +94,6 @@ export function saveTheme(t: Theme) {
 export function applyTheme(t: Theme): void {
   const root = document.documentElement;
 
-  // Resolve OS mode for button contrast; System is treated as "light-style"
   const mql = window.matchMedia?.('(prefers-color-scheme: dark)');
   const resolved: Exclude<Appearance,'system'> =
     t.appearance === 'system' ? (mql?.matches ? 'dark' : 'light') : t.appearance;
@@ -104,20 +103,24 @@ export function applyTheme(t: Theme): void {
   root.dataset.appearance = t.appearance;
   root.dataset.accent     = t.accent;
 
-  // Accent scale → CSS vars
+  // Accent scale
   const pal = ACCENTS[t.accent];
   (Object.keys(pal) as Shade[]).forEach(k => set(`--accent-${k}`, pal[k]));
 
-  // Background: System + Image → overlay + photo; else surface bg
+  // ---- Background
   if (t.appearance === 'system' && t.bgMode === 'image' && (t.bgImageUrl ?? '').length > 0) {
-    // A soft white overlay keeps the UI readable on any photo
+    // cache-bust so we don't see the *previous* image
+    const url = withVersion(t.bgImageUrl!);
     const overlay = 'linear-gradient(0deg, rgba(255,255,255,0.42), rgba(255,255,255,0.42))';
-    set('--bg', `${overlay}, url("${t.bgImageUrl}")`);
+    // keep image URL in its own var for devtools inspection if you like
+    set('--bg-image', `url("${url}")`);
+    set('--bg', `${overlay}, var(--bg-image)`);
   } else {
     set('--bg', surf.bg);
+    set('--bg-image', 'none');
   }
 
-  // Surfaces & text tokens
+  // Surfaces & text
   set('--surface-1',  surf.surface1);
   set('--surface-2',  surf.surface2);
   set('--border',     surf.border);
@@ -127,7 +130,7 @@ export function applyTheme(t: Theme): void {
   set('--nav-bg',     surf.navBg);
   set('--hover',      surf.hover);
 
-  // Primary buttons:
+  // Buttons
   const isDark = (t.appearance === 'dark');
   if (isDark) {
     set('--primary-fg', '#ffffff');
@@ -137,26 +140,34 @@ export function applyTheme(t: Theme): void {
   } else {
     set('--primary-fg', '#000000');
     set('--primary-bg', 'var(--accent-600)');
-    set('--primary-bg-hover', 'var(--accent-300)');
-    set('--primary-bg-active','var(--accent-500)');
+    set('--primary-bg-hover', 'var(--accent-700)');
+    set('--primary-bg-active','var(--accent-800)');
   }
 
+  // BottomNav accent
   if (resolved === 'dark') {
     set('--accent-nav', 'var(--accent-400)');
     set('--accent-nav-press', 'var(--accent-500)');
   } else {
     set('--accent-nav', 'var(--accent-600)');
     set('--accent-nav-press', 'var(--accent-700)');
-  } 
+  }
 
-  // Browser chrome color
+  // meta theme-color
   const themeMeta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
   if (themeMeta) themeMeta.content = typeof surf.themeMeta === 'string' ? surf.themeMeta : '#ffffff';
 
   function set(name: string, value: string) {
     root.style.setProperty(name, value);
   }
+
+  function withVersion(url: string): string {
+    const sep = url.includes('?') ? '&' : '?';
+    // use seconds to avoid thrashing; increments whenever you save/apply
+    return `${url}${sep}v=${Math.floor(Date.now()/1000)}`;
+  }
 }
+
 
 // Keep UI synced with OS mode when appearance='system'
 export function bindSystemThemeReactivity(getAppearance: () => Appearance): () => void {
