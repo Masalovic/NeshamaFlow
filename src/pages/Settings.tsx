@@ -1,3 +1,4 @@
+// src/pages/Settings.tsx
 import React, { useEffect, useState } from 'react';
 import Header from '../components/ui/Header';
 import { clearLock, setLockPIN } from '../lib/appLock';
@@ -11,9 +12,19 @@ import { supabase } from '../lib/supabase';
 import { loadSettings, setSetting } from '../lib/settings';
 import { isPro, setPro } from '../lib/pro';
 import { isEnabled as remindersOn, toggleEnabled } from '../lib/reminders';
-import { loadTheme, saveTheme, type Appearance, type Accent } from '../lib/theme';
 
-// Use one device-local secret when no PIN is set (so secureStorage still works)
+import {
+  loadTheme,
+  saveTheme,
+  applyTheme,
+  bindSystemThemeReactivity,
+  type Appearance,
+  type Accent,
+  type Theme,
+  type BgMode,
+} from '../lib/theme';
+
+// Use one device-local secret when no PIN is set
 function getOrCreateDeviceSecret(): string {
   let s = localStorage.getItem('secure.device_secret.v1');
   if (!s) {
@@ -25,15 +36,8 @@ function getOrCreateDeviceSecret(): string {
   return s;
 }
 
-// Keys we want to preserve when we re-key storage
 const REKEY_KEYS = [
-  'history',
-  'settings',
-  'mood',
-  'note',
-  'draft.ritual',
-  'events.queue',
-  'entitlement.pro',
+  'history','settings','mood','note','draft.ritual','events.queue','entitlement.pro',
 ];
 
 export default function Settings() {
@@ -43,10 +47,54 @@ export default function Settings() {
     alert('All local data cleared.');
   }
 
-  // ----- Preferences (encrypted) -----
+  // THEME state
+  const [appearance, setAppearance] = useState<Appearance>('system');
+  const [accent, setAccent] = useState<Accent>('berry');
+  const [bgMode, setBgMode] = useState<BgMode>('image');
+  const [bgUrl, setBgUrl] = useState<string>('https://images.pexels.com/photos/7130470/pexels-photo-7130470.jpeg');
+
+  useEffect(() => {
+    const t = loadTheme();
+    setAppearance(t.appearance);
+    setAccent(t.accent);
+    setBgMode(t.bgMode ?? 'image');
+    setBgUrl(t.bgImageUrl ?? 'https://images.pexels.com/photos/7130470/pexels-photo-7130470.jpeg');
+    applyTheme(t);
+    const unbind = bindSystemThemeReactivity(() => appearance);
+    return () => unbind();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function updateTheme(next: Partial<Theme>) {
+  // Normalize everything so nothing is possibly undefined
+  const mergedAppearance: Appearance = next.appearance ?? appearance;
+  const mergedAccent: Accent = next.accent ?? accent;
+  const mergedBgMode: BgMode = next.bgMode ?? bgMode;
+  const mergedBgUrl: string | undefined =
+    typeof next.bgImageUrl !== 'undefined' ? next.bgImageUrl : bgUrl;
+
+  const merged: Theme = {
+    appearance: mergedAppearance,
+    accent: mergedAccent,
+    bgMode: mergedBgMode,
+    bgImageUrl: mergedBgUrl,
+  };
+
+  saveTheme(merged);
+  applyTheme(merged);
+
+  // Update local state with normalized values
+  setAppearance(mergedAppearance);
+  setAccent(mergedAccent);
+  setBgMode(mergedBgMode);             // <- now always a BgMode
+  setBgUrl(mergedBgUrl ?? '');
+}
+
+
+  // Preferences (encrypted)
   const [haptics, setHaptics] = useState(true);
 
-  // ----- Practice & reminders (from onboarding) -----
+  // Practice & reminders
   const [goalMin, setGoalMin] = useState<number>(2);
   const [reminderTime, setReminderTime] = useState<string>('20:00');
   const [remindersEnabled, setRemindersEnabled] = useState<boolean>(remindersOn());
@@ -87,31 +135,7 @@ export default function Settings() {
     setRemindersEnabled(on);
   }
 
-  // ----- Theme -----
-  const [appearance, setAppearance] = useState<Appearance>('system')
-  const [accent, setAccent] = useState<Accent>('berry')
-
-  useEffect(() => {
-    let alive = true
-    ;(async () => {
-      const t = await loadTheme()
-      if (!alive) return
-      setAppearance(t.appearance)
-      setAccent(t.accent)
-    })()
-    return () => { alive = false }
-  }, [])
-
-  async function onAppearanceChange(a: Appearance) {
-    setAppearance(a)
-    await saveTheme({ appearance: a, accent })
-  }
-  async function onAccentChange(c: Accent) {
-    setAccent(c)
-    await saveTheme({ appearance, accent: c })
-  }
-
-  // ----- Pro (preview) -----
+  // Pro (preview)
   const [pro, setProState] = useState(false);
   useEffect(() => {
     let alive = true;
@@ -126,14 +150,13 @@ export default function Settings() {
     await setPro(next);
   }
 
-  // ----- PIN state -----
+  // PIN
   const [pin, setPin] = useState('');
   const [pin2, setPin2] = useState('');
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const lockEnabled = !!localStorage.getItem('lock.hash');
 
-  // Helper: snapshot -> switch key -> rewrite
   async function rekeyAll(newPassphrase: string) {
     const snapshot: Record<string, unknown> = {};
     for (const k of REKEY_KEYS) snapshot[k] = await sGet(k);
@@ -181,19 +204,112 @@ export default function Settings() {
       <Header title="Settings" back />
       <main className="flex-1 overflow-y-auto p-4">
         <div className="max-w-[420px] mx-auto space-y-6">
+          {/* Appearance */}
+          <section className="card p-4">
+            <div className="text-sm font-medium text-main mb-2">Appearance</div>
+
+            {/* Appearance segmented */}
+            <div className="grid grid-cols-3 gap-2 mb-3">
+              {(['system','light','dark'] as Appearance[]).map((opt) => (
+                <button
+                  key={opt}
+                  className={
+                    'h-10 rounded-xl border text-sm ' +
+                    (appearance === opt
+                      ? 'border-brand-400 ring-1 ring-brand-300'
+                      : 'border-[var(--border)] hover:bg-[var(--hover)]')
+                  }
+                  onClick={() => updateTheme({ appearance: opt })}
+                  aria-pressed={appearance === opt}
+                >
+                  {opt[0].toUpperCase() + opt.slice(1)}
+                </button>
+              ))}
+            </div>
+
+            {/* Accent chips */}
+            <div className="flex items-center gap-2 mb-3">
+              {(['berry','ocean','forest'] as Accent[]).map((a) => (
+                <button
+                  key={a}
+                  onClick={() => updateTheme({ accent: a })}
+                  className="h-8 px-3 rounded-full border text-xs"
+                  style={{
+                    background: accent === a ? 'var(--accent-50)' : 'transparent',
+                    borderColor: 'var(--border)',
+                    color: 'var(--text)',
+                  }}
+                  aria-pressed={accent === a}
+                  title={`Accent: ${a}`}
+                >
+                  {a}
+                </button>
+              ))}
+            </div>
+
+            {/* Background style */}
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              <button
+                className={
+                  'h-9 rounded-xl border text-sm ' +
+                  (bgMode === 'gradient'
+                    ? 'border-brand-400 ring-1 ring-brand-300'
+                    : 'border-[var(--border)] hover:bg-[var(--hover)]')
+                }
+                onClick={() => updateTheme({ bgMode: 'gradient' })}
+                aria-pressed={bgMode === 'gradient'}
+              >
+                Use gradient
+              </button>
+              <button
+                className={
+                  'h-9 rounded-xl border text-sm ' +
+                  (bgMode === 'image'
+                    ? 'border-brand-400 ring-1 ring-brand-300'
+                    : 'border-[var(--border)] hover:bg-[var(--hover)]')
+                }
+                onClick={() => updateTheme({ bgMode: 'image', bgImageUrl: bgUrl })}
+                aria-pressed={bgMode === 'image'}
+              >
+                Use photo
+              </button>
+            </div>
+
+            {/* Photo URL (only affects System+Photo) */}
+            <label className="block text-xs text-muted mb-1">Photo URL</label>
+            <div className="flex gap-2">
+              <input
+                className="input flex-1 h-9"
+                value={bgUrl}
+                onChange={(e) => setBgUrl(e.target.value)}
+                placeholder="https://…"
+              />
+              <button
+                className="btn btn-secondary h-9"
+                onClick={() => updateTheme({ bgImageUrl: bgUrl, bgMode: 'image' })}
+              >
+                Apply
+              </button>
+            </div>
+
+            <p className="mt-3 text-xs text-muted">
+              Photo background is used only in <strong>System</strong> appearance. Cards stay white for readability.
+            </p>
+          </section>
+
           {/* Privacy */}
-          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
-            <div className="text-sm font-medium">Privacy</div>
-            <p className="text-sm text-gray-600 mt-1 dark:text-neutral-400">
+          <div className="card p-4">
+            <div className="text-sm font-medium text-main">Privacy</div>
+            <p className="text-sm text-muted mt-1">
               Your moods and rituals are stored locally on your device and encrypted.
             </p>
           </div>
 
           {/* Preferences */}
-          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
-            <div className="text-sm font-medium mb-2">Preferences</div>
+          <div className="card p-4">
+            <div className="text-sm font-medium text-main mb-2">Preferences</div>
             <label className="flex items-center justify-between py-1">
-              <span className="text-sm">Haptic cues (if supported)</span>
+              <span className="text-sm text-main">Haptic cues (if supported)</span>
               <input
                 type="checkbox"
                 className="h-4 w-4"
@@ -204,84 +320,36 @@ export default function Settings() {
             </label>
           </div>
 
-          {/* Theme */}
-          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
-            <div className="text-sm font-medium mb-2">Theme</div>
-
-            <div className="mb-3">
-              <div className="text-xs text-gray-500 mb-1 dark:text-neutral-400">Appearance</div>
-              <div className="grid grid-cols-3 gap-2">
-                {(['system','light','dark'] as Appearance[]).map(a => (
-                  <button
-                    key={a}
-                    onClick={() => onAppearanceChange(a)}
-                    className={[
-                      'px-3 py-2 rounded-lg border text-sm',
-                      appearance === a ? 'border-accent bg-accent-100' : 'border-gray-300 hover:border-gray-400 dark:border-neutral-700 dark:hover:border-neutral-500'
-                    ].join(' ')}
-                    aria-pressed={appearance === a}
-                  >
-                    {a[0].toUpperCase() + a.slice(1)}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <div className="text-xs text-gray-500 mb-1 dark:text-neutral-400">Accent</div>
-              <div className="grid grid-cols-3 gap-2">
-                {([
-                  { key: 'berry',  name: 'Berry',  swatch: 'bg-pink-500'   },
-                  { key: 'ocean',  name: 'Ocean',  swatch: 'bg-blue-500'   },
-                  { key: 'forest', name: 'Forest', swatch: 'bg-green-500'  },
-                ] as { key: Accent; name: string; swatch: string }[]).map(opt => (
-                  <button
-                    key={opt.key}
-                    onClick={() => onAccentChange(opt.key)}
-                    className={[
-                      'px-3 py-2 rounded-lg border text-sm flex items-center gap-2',
-                      accent === opt.key ? 'border-accent bg-accent-100' : 'border-gray-300 hover:border-gray-400 dark:border-neutral-700 dark:hover:border-neutral-500'
-                    ].join(' ')}
-                    aria-pressed={accent === opt.key}
-                  >
-                    <span className={`inline-block w-3 h-3 rounded-full ${opt.swatch}`} />
-                    {opt.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
           {/* Practice & reminders */}
-          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
-            <div className="text-sm font-medium mb-2">Practice & reminders</div>
+          <div className="card p-4">
+            <div className="text-sm font-medium text-main mb-2">Practice & reminders</div>
 
             <label className="flex items-center justify-between py-2">
-              <span className="text-sm">Daily goal (minutes)</span>
+              <span className="text-sm text-main">Daily goal (minutes)</span>
               <input
                 type="number"
                 min={1}
                 max={60}
                 value={goalMin}
                 onChange={(e) => onGoalChange(e.target.value)}
-                className="w-20 border rounded-lg px-2 py-1 text-sm text-right dark:bg-neutral-900 dark:border-neutral-700"
+                className="input w-20 text-right text-sm h-8"
                 aria-label="Daily goal in minutes"
               />
             </label>
 
             <label className="flex items-center justify-between py-2">
-              <span className="text-sm">Preferred reminder time</span>
+              <span className="text-sm text-main">Preferred reminder time</span>
               <input
                 type="time"
                 value={reminderTime}
                 onChange={(e) => onReminderTimeChange(e.target.value)}
-                className="border rounded-lg px-2 py-1 text-sm dark:bg-neutral-900 dark:border-neutral-700"
+                className="input h-8 text-sm"
                 aria-label="Preferred reminder time"
               />
             </label>
 
             <label className="flex items-center justify-between py-2">
-              <span className="text-sm">Smart reminders</span>
+              <span className="text-sm text-main">Smart reminders</span>
               <input
                 type="checkbox"
                 className="h-4 w-4"
@@ -291,16 +359,16 @@ export default function Settings() {
               />
             </label>
 
-            <p className="text-xs text-gray-500 mt-2 dark:text-neutral-400">
+            <p className="text-xs text-muted mt-2">
               We’ll nudge you near your preferred time using lightweight, on-device logic.
             </p>
           </div>
 
           {/* Pro (preview) */}
-          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
-            <div className="text-sm font-medium mb-2">Pro (Preview)</div>
+          <div className="card p-4">
+            <div className="text-sm font-medium text-main mb-2">Pro (Preview)</div>
             <label className="flex items-center justify-between py-1">
-              <span className="text-sm">Enable Pro features (local toggle)</span>
+              <span className="text-sm text-main">Enable Pro features (local toggle)</span>
               <input
                 type="checkbox"
                 className="h-4 w-4"
@@ -313,7 +381,7 @@ export default function Settings() {
               <button
                 className="btn btn-primary w-full mt-3"
                 onClick={async () => {
-                  const { track } = await import('../lib/metrics'); // lazy
+                  const { track } = await import('../lib/metrics');
                   track('upgrade_click', { source: 'settings_pro_card' });
                   await togglePro(true);
                   track('pro_enabled');
@@ -322,18 +390,18 @@ export default function Settings() {
                 Upgrade to Pro
               </button>
             )}
-            <p className="text-xs text-gray-500 mt-2 dark:text-neutral-400">
+            <p className="text-xs text-muted mt-2">
               This is a client-only toggle for testing. We’ll wire it to Stripe later.
             </p>
           </div>
 
           {/* App Lock (PIN) */}
-          <div className="rounded-2xl border bg-white p-4 dark:bg-neutral-900 dark:border-neutral-800">
-            <div className="text-sm font-medium mb-2">App Lock (PIN)</div>
+          <div className="card p-4">
+            <div className="text-sm font-medium text-main mb-2">App Lock (PIN)</div>
 
             {lockEnabled ? (
               <div className="space-y-2">
-                <p className="text-sm text-gray-600 dark:text-neutral-400">A PIN is currently set on this device.</p>
+                <p className="text-sm text-muted">A PIN is currently set on this device.</p>
                 <button
                   className="btn btn-secondary w-full"
                   onClick={disablePin}
@@ -344,18 +412,18 @@ export default function Settings() {
               </div>
             ) : (
               <div className="space-y-3">
-                <label className="block text-sm">New PIN</label>
+                <label className="block text-sm text-main">New PIN</label>
                 <input
-                  className="w-full border rounded-xl px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700"
+                  className="input"
                   type="password"
                   inputMode="numeric"
                   pattern="\d*"
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
                 />
-                <label className="block text-sm">Confirm PIN</label>
+                <label className="block text-sm text-main">Confirm PIN</label>
                 <input
-                  className="w-full border rounded-xl px-3 py-2 dark:bg-neutral-900 dark:border-neutral-700"
+                  className="input"
                   type="password"
                   inputMode="numeric"
                   pattern="\d*"
@@ -372,8 +440,8 @@ export default function Settings() {
               </div>
             )}
 
-            {msg && <div className="text-sm mt-2">{msg}</div>}
-            <p className="text-xs text-gray-500 mt-2 dark:text-neutral-400">
+            {msg && <div className="text-sm mt-2 text-main">{msg}</div>}
+            <p className="text-xs text-muted mt-2">
               The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only.
             </p>
           </div>

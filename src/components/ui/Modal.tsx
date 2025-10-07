@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 type Props = {
   open: boolean;
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export default function Modal({ open, onClose, title, children }: Props) {
-  // Lock the body scroll when open
+  // Lock body scroll when open
   useEffect(() => {
     const prev = document.body.style.overflow;
     if (open) document.body.style.overflow = 'hidden';
@@ -22,11 +22,6 @@ export default function Modal({ open, onClose, title, children }: Props) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
-
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  useEffect(() => {
-    if (open) titleRef.current?.focus();
-  }, [open]);
 
   if (!open) return null;
 
@@ -45,28 +40,24 @@ export default function Modal({ open, onClose, title, children }: Props) {
           className="
             mx-auto w-full max-w-[520px]
             rounded-t-2xl bg-white shadow-soft
+            dark:bg-neutral-900
             p-4 pt-5
             pb-[calc(16px+env(safe-area-inset-bottom))]
             max-h-[min(80vh,calc(100svh-80px))]
             overflow-y-auto overscroll-contain
           "
         >
-          <div className="flex items-center justify-between mb-2">
-            {title ? (
-              <h3 ref={titleRef} tabIndex={-1} className="text-base font-semibold">
-                {title}
-              </h3>
-            ) : <div />}
+          <div className="flex items-center justify-between mb-2 text-neutral-600 dark:text-neutral-300">
+            {title ? <h3 className="text-base font-semibold">{title}</h3> : <div />}
             <button
               onClick={onClose}
-              className="rounded-full p-1 text-gray-500 hover:bg-gray-100"
+              className="rounded-full p-1 hover:bg-neutral-100 dark:hover:bg-neutral-800"
               aria-label="Close modal"
               title="Close"
             >
               ×
             </button>
           </div>
-
           {children}
         </div>
       </div>

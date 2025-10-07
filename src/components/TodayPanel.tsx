@@ -61,30 +61,37 @@ export default function TodayPanel() {
   }
 
   return (
-    <section className="rounded-2xl border bg-white p-4">
-      <div className="flex items-center gap-2 mb-1">
-        <Icon size={16} className="text-brand-800" />
-        <div className="text-sm font-medium">{greet}</div>
+    <section className="card p-4">
+      <div className="mb-1 flex items-center gap-2">
+        <Icon size={16} style={{ color: 'var(--accent-500)' }} />
+        <div className="text-sm font-medium text-main">{greet}</div>
       </div>
 
-      <div className="text-sm text-gray-600">
-        Suggested today: <span className="font-medium text-gray-800">{suggestion}</span>
+      <div className="text-sm text-muted">
+        Suggested today:{' '}
+        <span className="font-medium text-main text-brand-400">{suggestion}</span>
       </div>
 
       <div className="mt-3 flex items-end justify-between gap-3">
-        <div className="text-xs text-gray-500">
-          Goal: {goalMin} min · <span className="text-gray-700 font-medium">{minutesToday} min</span> done
-          <div className="mt-1 h-2 w-40 rounded-full bg-gray-100 overflow-hidden">
+        <div className="text-xs text-muted">
+          Goal: {goalMin} min ·{' '}
+          <span className="font-medium text-main">{minutesToday} min</span> done
+          <div
+            className="mt-1 h-2 w-40 overflow-hidden rounded-full"
+            style={{ background: 'var(--surface-2)', border: '1px solid var(--border)' }}
+          >
             <div
-              className="h-full bg-brand-200"
-              style={{ width: `${donePct}%` }}
+              className="h-full"
+              style={{ width: `${donePct}%`, background: 'var(--accent-300)' }}
               aria-label={`Progress ${donePct}%`}
             />
           </div>
         </div>
 
-        <button className="btn btn-secondary inline-flex items-center gap-1"
-                onClick={quickStart}>
+        <button
+          className="btn btn-secondary inline-flex items-center gap-1"
+          onClick={quickStart}
+        >
           <Sparkles size={16} /> Start suggestion
         </button>
       </div>

@@ -1,18 +1,16 @@
 import React from 'react'
 
-type Variant = 'primary' | 'outline' | 'ghost'
+type Variant = 'primary' | 'outline' | 'ghost' | 'secondary'
 
-export default function Button({
-  variant = 'primary',
-  className,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }) {
-  // Use theme-aware .btn classes from index.css
-  const variantClass =
-    variant === 'primary' ? 'btn-primary' :
-    variant === 'outline' ? 'btn-outline' :
-    'btn-ghost'
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: Variant }
 
-  const classes = ['btn', variantClass, className].filter(Boolean).join(' ')
+export default function Button({ variant = 'primary', className, ...props }: Props) {
+  const byVariant: Record<Variant, string> = {
+    primary: 'btn btn-primary',
+    outline: 'btn btn-outline',
+    ghost: 'btn btn-ghost',
+    secondary: 'btn btn-secondary',
+  }
+  const classes = [byVariant[variant], className].filter(Boolean).join(' ')
   return <button className={classes} {...props} />
 }

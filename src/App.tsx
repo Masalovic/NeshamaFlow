@@ -1,7 +1,8 @@
 // src/App.tsx
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { BrowserRouter, Routes, Route, Outlet, useLocation, Navigate } from 'react-router-dom'
-import { applyTheme, bindSystemThemeReactivity, loadTheme, type Appearance, type Accent } from './lib/theme'
+import { applyTheme, bindSystemThemeReactivity, loadTheme } from './lib/theme'
+
 import ErrorBoundary from './components/ErrorBoundary'
 import Protected from './components/Protected'
 import AuthScreen from './pages/AuthScreen'
@@ -26,10 +27,10 @@ function Layout() {
   const { pathname } = useLocation()
   const hideBar =
     pathname.startsWith('/ritual/start') ||
-    pathname === '/welcome' // no nav on onboarding
+    pathname === '/welcome'
 
   return (
-    <div className="min-h-[100svh] flex flex-col">
+    <div className="min-h-[100svh] flex flex-col bg-[var(--bg)] text-[var(--text)]">
       <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>
@@ -39,35 +40,20 @@ function Layout() {
 }
 
 export default function App() {
-  // Apply theme early to avoid FOUC
-  const [themeReady, setThemeReady] = useState(false)
-  const appearanceRef = useRef<Appearance>('system')
-  const accentRef = useRef<Accent>('berry')
-
+  // Apply saved theme on boot and keep “system” reactive.
+  const unbindRef = useRef<null | (() => void)>(null)
   useEffect(() => {
-    let alive = true
-    ;(async () => {
-      const t = await loadTheme()
-      if (!alive) return
-      appearanceRef.current = t.appearance
-      accentRef.current = t.accent
-      applyTheme(t)
-      setThemeReady(true)
-    })()
-    const unbind = bindSystemThemeReactivity(() => appearanceRef.current)
-    return () => { alive = false; unbind() }
+    const t = loadTheme()
+    applyTheme(t)
+    unbindRef.current = bindSystemThemeReactivity(() => loadTheme().appearance)
+    return () => { unbindRef.current?.() }
   }, [])
-
-  if (!themeReady) return null
 
   return (
     <ErrorBoundary>
       <BrowserRouter>
         <Routes>
-          {/* Public route (outside Protected) */}
           <Route path="/auth" element={<AuthScreen />} />
-
-          {/* Authed app + onboarding gate */}
           <Route
             element={
               <Protected>
@@ -77,26 +63,18 @@ export default function App() {
               </Protected>
             }
           >
-            {/* Onboarding */}
             <Route path="/welcome" element={<Welcome />} />
-
-            {/* Main app */}
             <Route index element={<Navigate to="/log" replace />} />
             <Route path="/log" element={<MoodLog />} />
             <Route path="/ritual" element={<RitualSuggestion />} />
             <Route path="/ritual/start" element={<RitualPlayer />} />
             <Route path="/ritual/done" element={<RitualDone />} />
-
-            {/* 🔹 Ritual Library */}
             <Route path="/rituals" element={<RitualLibrary />} />
             <Route path="/library" element={<RitualLibrary />} />
-
             <Route path="/history" element={<History />} />
             <Route path="/signup" element={<SignupForm />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
-
-            {/* Pro-only routes */}
             <Route
               path="/insights"
               element={
@@ -113,8 +91,6 @@ export default function App() {
                 </RequirePro>
               }
             />
-
-            {/* Fallback */}
             <Route path="*" element={<Navigate to="/log" replace />} />
           </Route>
         </Routes>

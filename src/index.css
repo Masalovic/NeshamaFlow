@@ -2,167 +2,144 @@
 @tailwind components;
 @tailwind utilities;
 
-/* -------------------------------------------------------
-   THEME VARIABLES (accent palettes)
-   - Set by <html data-theme="berry|ocean|forest"> (default: berry)
-   - Dark mode toggled by <html class="dark">
---------------------------------------------------------*/
-:root {
-  /* Berry (current default) */
-  --accent-50:  #fdf2f8;
-  --accent-100: #fce7f3;
-  --accent-200: #fbcfe8;
-  --accent-300: #f9a8d4;
-  --accent-400: #f472b6;
-  --accent-500: #ec4899;
-  --accent-600: #db2777;
-  --accent-700: #be185d;
-  --accent-800: #9d174d;
-  --accent-900: #831843;
-
-  /* Ring color (used by .ring-accent) */
-  --accent-ring: var(--accent-500);
+/* ---- Color scheme hint (helps form controls, scrollbar, etc.) ------- */
+:root { color-scheme: light; }
+[data-appearance="dark"] { color-scheme: dark; }
+ 
+/* ---- App base -------------------------------------------------------- */
+html, body {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial;
 }
 
-/* Ocean (blue) */
-:root[data-theme="ocean"] {
-  --accent-50:  #eff6ff;
-  --accent-100: #dbeafe;
-  --accent-200: #bfdbfe;
-  --accent-300: #93c5fd;
-  --accent-400: #60a5fa;
-  --accent-500: #3b82f6;
-  --accent-600: #2563eb;
-  --accent-700: #1d4ed8;
-  --accent-800: #1e40af;
-  --accent-900: #1e3a8a;
+/* ---- Cards & tiles (shared across pages) ----------------------------- */
+.card {
+  @apply rounded-2xl shadow-soft border p-4;
+  background: var(--surface-1);
+  border-color: var(--border);
+  color: var(--text);
+}
+.tile {
+  @apply p-4 flex items-start gap-3 rounded-2xl shadow-soft border;
+  background: var(--surface-1);
+  border-color: var(--border);
+  color: var(--text);
 }
 
-/* Forest (green) */
-:root[data-theme="forest"] {
-  --accent-50:  #ecfdf5;
-  --accent-100: #d1fae5;
-  --accent-200: #a7f3d0;
-  --accent-300: #6ee7b7;
-  --accent-400: #34d399;
-  --accent-500: #10b981;
-  --accent-600: #059669;
-  --accent-700: #047857;
-  --accent-800: #065f46;
-  --accent-900: #064e3b;
+/* Small chips / pills / badges (stats, filters, etc.) */
+.chip, .pill, .badge, .segment {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 9999px;
 }
 
-/* Accent utilities */
-.text-accent      { color: var(--accent-600); }
-.text-accent-700  { color: var(--accent-700); }
-.bg-accent        { background-color: var(--accent-600); }
-.bg-accent-100    { background-color: var(--accent-100); }
-.border-accent    { border-color: var(--accent-600); }
-.ring-accent      { --tw-ring-color: var(--accent-ring); }
-a.link-accent     { color: var(--accent-700); text-decoration: underline; }
-a.link-accent:hover { color: var(--accent-800); }
+/* ---- Inputs (shared) ------------------------------------------------- */
+.input,
+input[type="text"],
+input[type="number"],
+input[type="time"],
+input[type="password"],
+input[type="email"],
+textarea,
+select {
+  background: var(--surface-2) !important;
+  color: var(--text) !important;         /* ✅ readable in dark */
+  border: 1px solid var(--border) !important;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  outline: none;
+  caret-color: var(--accent-600);
+}
+.input::placeholder,
+textarea::placeholder { color: var(--text-muted); }
 
-/* -------------------------------------------------------
-   BASE
---------------------------------------------------------*/
-/* Soft, airy base */
-body {
-  @apply bg-chiffon text-velvet;
-  font-family: theme("fontFamily.sans");
+/* token-based focus ring (works in light/dark) */
+.input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent-400);
+  box-shadow: 0 0 0 2px var(--accent-400);
 }
 
-/* Dark mode neutrals (kept gentle) */
-.dark body { @apply bg-neutral-950 text-neutral-100; }
-
-/* iPhone frame */
-.screen { @apply w-[375px] h-[812px] mx-auto bg-white rounded-2xl shadow-soft overflow-hidden; }
-.dark .screen { @apply bg-neutral-900; }
-
-/* Large iOS-style title */
-.ios-title { @apply text-[28px] leading-tight font-semibold tracking-tight; }
-
-/* Cards & tiles */
-.card { @apply bg-white rounded-2xl shadow-soft border border-silk/50 p-4; }
-.tile { @apply card p-4 flex items-start gap-3; }
-.dark .card { @apply bg-neutral-900 border-neutral-800; }
-.dark .tile { @apply bg-neutral-900 border-neutral-800; }
-
-/* Inputs */
-.input {
-  @apply w-full h-12 px-4 rounded-xl bg-gray-100/80 placeholder:text-gray-400
-         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white;
-}
-.input:focus { @apply ring-accent; } /* use accent ring */
-.dark .input {
-  @apply bg-neutral-800 placeholder:text-neutral-400 focus:ring-offset-neutral-900;
-}
-
-/* -------------------------------------------------------
-   Buttons (accessible states) — now accent-driven
-   NOTE: We keep your class names but color them via CSS variables.
---------------------------------------------------------*/
+/* ---- Buttons --------------------------------------------------------- */
 .btn {
-  @apply h-12 inline-flex items-center justify-center rounded-pill px-5
-         text-sm font-medium transition-all select-none outline-none
-         focus-visible:ring-2 focus-visible:ring-offset-2
-         disabled:opacity-45 disabled:cursor-not-allowed;
+  @apply inline-flex items-center justify-center h-12 px-5 rounded-pill text-sm font-semibold transition select-none outline-none disabled:opacity-45 disabled:cursor-not-allowed;
+  box-shadow: var(--elev, 0 0 0 rgba(0,0,0,0));
 }
-.btn:focus-visible { @apply ring-accent; }
-.dark .btn { @apply focus-visible:ring-offset-neutral-900; }
 
-/* Primary — accent */
+/* Primary – uses theme.ts contrast tokens */
 .btn-primary {
-  background-color: var(--accent-600);
-  color: #fff;
-  box-shadow: var(--tw-shadow);
+  background: var(--primary-bg);
+  color: var(--primary-fg);              /* black in light, white in dark */
 }
-.btn-primary:hover  { background-color: var(--accent-700); }
-.btn-primary:active { background-color: var(--accent-800); }
+.btn-primary:hover  { background: var(--primary-bg-hover); }
+.btn-primary:active { background: var(--primary-bg-active); box-shadow: inset 0 2px 6px rgba(0,0,0,.25); }
 
-/* Secondary — smoke/velvet (keep neutral) */
+/* Secondary – subtle surface */
 .btn-secondary {
-  @apply bg-smoke text-white shadow-soft
-         hover:bg-black hover:shadow
-         active:bg-black/90 active:shadow-soft-press;
+  background: var(--surface-1);
+  color: var(--text);
+  border: 1px solid var(--border);
 }
-.dark .btn-secondary {
-  @apply bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-700;
-}
+.btn-secondary:hover { background: var(--surface-2); }
 
-/* Outline — white bg, accent border/text */
+/* Outline – neutral with accent border */
 .btn-outline {
-  background-color: #fff;
-  color: var(--accent-800);
+  background: transparent;
+  color: var(--text);
   border: 1px solid var(--accent-300);
 }
-.btn-outline:hover  { border-color: var(--accent-500); color: var(--accent-900); box-shadow: var(--tw-shadow); }
-.btn-outline:active { background-color: var(--accent-50); }
-.dark .btn-outline  { background-color: transparent; }
+.btn-outline:hover { background: var(--hover); }
 
-/* Ghost — very light accent */
-.btn-ghost {
-  background: transparent;
-  color: var(--accent-800);
+/* Small pill CTA inside tiles/cards (e.g. Ritual list “Start”) */
+.tile .btn-primary,
+.btn-chip {
+  background: var(--primary-bg);
+  color: #fff;                           /* keep white for punchy pills */
+  height: 40px;
+  padding-inline: 16px;
 }
-.btn-ghost:hover  { background-color: var(--accent-50); }
-.btn-ghost:active { background-color: var(--accent-100); }
-.dark .btn-ghost:hover  { background-color: rgba(255,255,255,0.05); }
-.dark .btn-ghost:active { background-color: rgba(255,255,255,0.08); }
 
-/* -------------------------------------------------------
-   Safe area + nav spacing
---------------------------------------------------------*/
-/* Safe area padding for bottom nav */
+/* ---- Bottom nav ------------------------------------------------------ */
+:root { --nav-height: 64px; }
 .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-
-/* Height of the fixed bottom nav (64px) + iOS home-indicator safe area */
-:root { --nav-height: 64px; }  /* <-- was 44px */
-
-/* Any scroll area inside the app gets safe bottom padding so it never hides behind nav */
 .screen .overflow-y-auto,
 .min-h-\[100svh\] .overflow-y-auto {
   padding-bottom: calc(var(--nav-height) + env(safe-area-inset-bottom));
 }
-
-/* Optional: gentle top shadow for the fixed bottom nav */
 .safe-bottom-shadow { box-shadow: 0 -6px 16px rgba(15,15,16,0.06); }
+.bottom-nav { background: var(--nav-bg) !important; color: var(--text-dim); }
+
+/* ---- Utilities that respect tokens ---------------------------------- */
+.text-dim   { color: var(--text-dim); }
+.text-muted { color: var(--text-muted); }
+.border-token { border-color: var(--border); }
+.shadow-soft { box-shadow: 0 12px 28px rgba(0,0,0,.12); }
+
+/* Keyboard focus */
+:focus-visible {
+  outline: 2px solid var(--accent-500);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+
+/* === Token utilities (semantic colors) ===================================
+@layer utilities {
+  .bg-app        { background: var(--bg) !important; }
+  .bg-surface-1  { background: var(--surface-1) !important; }
+  .bg-surface-2  { background: var(--surface-2) !important; }
+  .bg-nav        { background: var(--nav-bg) !important; }
+
+  .text-main     { color: var(--text) !important; }
+  .text-dim      { color: var(--text-dim) !important; }
+  .text-muted    { color: var(--text-muted) !important; }
+
+  .border-token  { border-color: var(--border) !important; }
+
+  /* Accent text helper (for links etc.) */
+  /* .text-accent        { color: rgb(var(--accent-600)) !important; }
+  .text-accent:hover  { color: rgb(var(--accent-700)) !important; }
+}  */

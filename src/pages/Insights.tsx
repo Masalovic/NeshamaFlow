@@ -12,7 +12,7 @@ import {
   BarChart, Bar, Legend,
 } from "recharts";
 
-// Small wrapper for consistent card styling
+/** Tokenized card wrapper (doesn't touch chart visuals) */
 function Card({
   title,
   children,
@@ -23,13 +23,13 @@ function Card({
   right?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border bg-white p-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="text-sm font-medium">{title}</div>
+    <section className="card">
+      <div className="mb-3 flex items-center justify-between">
+        <div className="text-sm font-medium text-main">{title}</div>
         {right}
       </div>
       {children}
-    </div>
+    </section>
   );
 }
 
@@ -68,7 +68,6 @@ export default function Insights() {
       const n = Number(preset);
       return { start: today.startOf("day").subtract(n - 1, "day"), end: today };
     }
-    // Custom: fall back to last 28d if invalid
     const s = dayjs(customStart || "").startOf("day");
     const e = dayjs(customEnd || "").endOf("day");
     if (!s.isValid() || !e.isValid() || s.isAfter(e)) {
@@ -160,14 +159,14 @@ export default function Insights() {
   function RangeControls() {
     return (
       <div className="flex flex-wrap items-center gap-2">
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-muted">
           {start.format("MMM D, YYYY")} – {end.format("MMM D, YYYY")}
         </div>
         <div className="ml-auto flex items-center gap-2">
           <select
             value={preset}
             onChange={(e) => setPreset(e.target.value as Preset)}
-            className="rounded-md border px-2 py-1 text-sm"
+            className="input h-12 py-1 px-2 text-sm"
             aria-label="Select range"
           >
             <option value="7">Last 7 days</option>
@@ -182,15 +181,15 @@ export default function Insights() {
                 type="date"
                 value={customStart}
                 onChange={(e) => setCustomStart(e.target.value)}
-                className="rounded-md border px-2 py-1 text-sm"
+                className="input h-8 py-1 px-2 text-sm"
                 aria-label="Start date"
               />
-              <span className="text-gray-400">–</span>
+              <span className="text-muted">–</span>
               <input
                 type="date"
                 value={customEnd}
                 onChange={(e) => setCustomEnd(e.target.value)}
-                className="rounded-md border px-2 py-1 text-sm"
+                className="input h-8 py-1 px-2 text-sm"
                 aria-label="End date"
               />
             </div>
@@ -204,53 +203,54 @@ export default function Insights() {
     <div className="flex min-h-full flex-col">
       <Header title="Insights (Pro)" back />
       <main className="flex-1 p-4">
-        <div className="max-w-[560px] mx-auto space-y-4 pb-24">
+        <div className="mx-auto max-w-[560px] space-y-4 pb-24">
           {/* Summary header */}
-          <div className="rounded-2xl border bg-white p-4">
+          <section className="card">
             <RangeControls />
             <div className="mt-3 flex flex-wrap gap-3 text-sm">
-              <div className="flex-1 min-w-[140px]">
-                <div className="text-gray-500 text-xs">This period</div>
-                <div className="font-medium">
+              <div className="min-w-[140px] flex-1">
+                <div className="text-xs text-muted">This period</div>
+                <div className="font-medium text-main">
                   {Math.round((summary.totalSec ?? 0) / 60)} min · {summary.sessions ?? 0} sessions
                 </div>
               </div>
 
-              <div className="flex-1 min-w-[140px]">
-                <div className="text-gray-500 text-xs">Avg session</div>
-                <div className="font-medium">{summary.avgSec ?? 0}s</div>
+              <div className="min-w-[140px] flex-1">
+                <div className="text-xs text-muted">Avg session</div>
+                <div className="font-medium text-main">{summary.avgSec ?? 0}s</div>
               </div>
 
-              <div className="flex-1 min-w-[140px]">
-                <div className="text-gray-500 text-xs">Top ritual</div>
-                <div className="font-medium truncate">
+              <div className="min-w-[140px] flex-1">
+                <div className="text-xs text-muted">Top ritual</div>
+                <div className="font-medium text-main truncate">
                   {summary.topRitualId
                     ? `${titleForRitualId(summary.topRitualId)} (${summary.topRitualCount})`
                     : "—"}
                 </div>
               </div>
 
-              <div className="flex-1 min-w-[140px]">
-                <div className="text-gray-500 text-xs">Streak</div>
-                <div className="font-medium">
-                  {summary.streak ?? 0}🔥 {summary.hasTodayLog ? "" : <span className="text-gray-400">(no entry today)</span>}
+              <div className="min-w-[140px] flex-1">
+                <div className="text-xs text-muted">Streak</div>
+                <div className="font-medium text-main">
+                  {summary.streak ?? 0}🔥{" "}
+                  {summary.hasTodayLog ? "" : <span className="text-muted">(no entry today)</span>}
                 </div>
               </div>
             </div>
-          </div>
+          </section>
 
           {empty && (
-            <div className="rounded-2xl border bg-white p-4 text-sm text-gray-600">
+            <section className="card text-sm text-muted">
               No data yet — complete a ritual or two and check back!
-            </div>
+            </section>
           )}
 
-          {/* Mood distribution */}
+          {/* Mood distribution (original colors) */}
           <Card
             title="Mood distribution"
             right={
               !!moodChart.length && (
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-muted">
                   {rangeItems.length} entries
                 </span>
               )
@@ -278,11 +278,11 @@ export default function Insights() {
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="text-xs text-gray-500">No data yet.</div>
+              <div className="text-xs text-muted">No data yet.</div>
             )}
           </Card>
 
-          {/* Sessions per day (sparkline) */}
+          {/* Sessions per day (sparkline) – original purple */}
           <Card title="Consistency — sessions per day">
             {daySeries.length ? (
               <div className="h-40">
@@ -303,11 +303,11 @@ export default function Insights() {
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="text-xs text-gray-500">No data yet.</div>
+              <div className="text-xs text-muted">No data yet.</div>
             )}
           </Card>
 
-          {/* Best time blocks */}
+          {/* Best time blocks – original green */}
           <Card title="When you practice — time blocks">
             {blocks.length ? (
               <div className="h-56">
@@ -322,19 +322,19 @@ export default function Insights() {
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="text-xs text-gray-500">No data yet.</div>
+              <div className="text-xs text-muted">No data yet.</div>
             )}
           </Card>
 
           {/* Quick wins */}
           <Card title="Quick wins">
             {!quickWins.length ? (
-              <div className="text-xs text-gray-500">No data yet.</div>
+              <div className="text-xs text-muted">No data yet.</div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="min-w-full text-sm">
                   <thead>
-                    <tr className="text-left text-gray-500">
+                    <tr className="text-left text-muted">
                       <th className="py-1 pr-3">Ritual</th>
                       <th className="py-1 pr-3">Avg time (s)</th>
                       <th className="py-1">Samples</th>
@@ -343,18 +343,18 @@ export default function Insights() {
                   <tbody>
                     {quickWins.map((r) => (
                       <tr key={r.ritualId} className="border-t">
-                        <td className="py-2 pr-3 font-medium">
+                        <td className="py-2 pr-3 font-medium text-main">
                           {titleForRitualId(r.ritualId)}
                         </td>
-                        <td className="py-2 pr-3">{r.avg}</td>
-                        <td className="py-2">{r.n}</td>
+                        <td className="py-2 pr-3 text-main">{r.avg}</td>
+                        <td className="py-2 text-main">{r.n}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             )}
-            <p className="text-xs text-gray-500 mt-2">
+            <p className="mt-2 text-xs text-muted">
               Tip: short rituals reduce friction — a good way to build streaks.
             </p>
           </Card>

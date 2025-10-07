@@ -30,9 +30,7 @@ export default function SmartReminderBanner() {
         markShown();
       }
     })();
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, []);
 
   if (!visible || !isEnabled()) return null;
@@ -41,9 +39,9 @@ export default function SmartReminderBanner() {
     hour == null ? 'a 2-min reset' : `a 2-min ${timeBlock(hour)} reset`;
 
   return (
-    <div className="rounded-xl border bg-white shadow-sm p-3">
-      <div className="text-sm font-medium mb-1">Take a moment?</div>
-      <p className="text-sm text-gray-600">
+    <section className="card p-4">
+      <div className="mb-1 text-sm font-medium text-main">Take a moment?</div>
+      <p className="text-sm text-muted">
         How about {pretty}? You haven’t checked in yet today.
       </p>
 
@@ -57,11 +55,13 @@ export default function SmartReminderBanner() {
         >
           Start now
         </button>
+
         <button className="btn btn-secondary" onClick={() => setVisible(false)}>
           Later
         </button>
+
         <button
-          className="btn btn-ghost"
+          className="btn btn-outline"
           onClick={() => {
             mute(7);
             setVisible(false);
@@ -71,7 +71,7 @@ export default function SmartReminderBanner() {
           Mute 7d
         </button>
       </div>
-    </div>
+    </section>
   );
 }
 

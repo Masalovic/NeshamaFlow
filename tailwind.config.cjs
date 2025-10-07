@@ -1,52 +1,28 @@
+// tailwind.config.cjs
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
-      /* ---- Palette ---- */
       colors: {
-        // Named swatches from your reference
-        chiffon: "#F7F5F2",
-        silk: "#EADFD8",
-        blossom: "#F7D9DF",
-        rose: "#D65DA6",
-        smoke: "#4B4B4D",
-        velvet: "#0F0F10",
-
-        // Brand scale (mapped to rose family for compatibility)
+        // Use rgb(var(--accent-XXX) / <alpha>) so bg-brand-500/20 etc. works
         brand: {
-          50: "#FCFAF9", // near chiffon
-          100: "#F7F0EE",
-          200: "#F7D9DF", // blossom
-          300: "#F0BCC7",
-          400: "#E98DA0",
-          500: "#DF6F83",
-          600: "#D65DA6", // rose (primary)
-          700: "#B94C63",
-          800: "#943E51",
-          900: "#6F2F3E",
-          DEFAULT: "#D65DA6",
+          50: "rgb(var(--accent-50) / <alpha-value>)",
+          100: "rgb(var(--accent-100) / <alpha-value>)",
+          200: "rgb(var(--accent-200) / <alpha-value>)",
+          300: "rgb(var(--accent-300) / <alpha-value>)",
+          400: "rgb(var(--accent-400) / <alpha-value>)",
+          500: "rgb(var(--accent-500) / <alpha-value>)",
+          600: "rgb(var(--accent-600) / <alpha-value>)",
+          700: "rgb(var(--accent-700) / <alpha-value>)",
+          800: "rgb(var(--accent-800) / <alpha-value>)",
+          900: "rgb(var(--accent-900) / <alpha-value>)",
         },
       },
-
-      /* ---- Radius / Shadows ---- */
-      borderRadius: { "2xl": "1.25rem", pill: "9999px" },
+      borderRadius: { pill: "9999px" },
       boxShadow: {
-        soft: "0 12px 36px rgba(15,15,16,0.08)",
-        "soft-press": "inset 0 2px 8px rgba(15,15,16,0.10)",
-      },
-
-      /* ---- Fonts ---- */
-      fontFamily: {
-        sans: [
-          "-apple-system",
-          "BlinkMacSystemFont",
-          "'SF Pro Text'",
-          "'SF Pro Display'",
-          "Inter",
-          "system-ui",
-          "sans-serif",
-        ],
+        soft: "0 6px 20px rgba(15, 15, 20, 0.08)",
+        "soft-press": "inset 0 2px 6px rgba(0,0,0,0.25)",
       },
     },
   },

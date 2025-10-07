@@ -1,6 +1,7 @@
 // src/pages/History.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
+import Header from "../components/ui/Header";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 import { loadHistory, type LogItem } from "../lib/history";
@@ -34,7 +35,6 @@ export default function History() {
   const [items, setItems] = useState<LogItem[] | null>(null);
   const [unlocked, setUnlocked] = useState<boolean>(storageReady());
 
-  // Poll until AppLock sets the in-memory encryption key
   useEffect(() => {
     if (unlocked) return;
     const id = setInterval(() => {
@@ -46,14 +46,12 @@ export default function History() {
     return () => clearInterval(id);
   }, [unlocked]);
 
-  // Load history once unlocked
   useEffect(() => {
     if (!unlocked) return;
     let alive = true;
     (async () => {
-      const list = await loadHistory(); // returns [] if nothing stored
+      const list = await loadHistory();
       if (!alive) return;
-      // newest first
       const sorted = [...list].sort((a, b) => (a.ts < b.ts ? 1 : -1));
       setItems(sorted);
     })();
@@ -69,50 +67,43 @@ export default function History() {
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(it);
     });
-    // newest-day-first array of [dayISO, items[]]
     return Array.from(map.entries()).sort((a, b) => (a[0] < b[0] ? 1 : -1));
   }, [items]);
 
   const empty = (items?.length ?? 0) === 0;
 
   return (
-    <div className="flex h-full flex-col bg-gray-50">
-      <header className="h-12 flex items-center justify-between border-b bg-white px-3">
-        <h1 className="text-lg font-semibold">History</h1>
+    <div className="flex h-full flex-col bg-app">
+      <Header title="History" back />
+      
         <button
           type="button"
           onClick={() => navigate("/insights")}
-          className="text-xs text-brand-700 underline"
+          className="text-xs underline text-accent"
           aria-label="Open Insights"
         >
           Insights
         </button>
-      </header>
+   
 
       <main className="flex-1 overflow-y-auto p-4">
         <div className="max-w-[420px] mx-auto space-y-4">
-          {/* 28-day streak heatmap */}
           <Heatmap28 />
           <InsightChips compact />
 
           {items === null && (
-            <div className="text-center text-gray-400">Loading…</div>
+            <div className="text-center text-muted">Loading…</div>
           )}
 
           {empty && (
-            <div className="card text-center text-gray-600">
+            <div className="card text-center text-dim">
               No sessions yet—start your first ritual to light up the grid.
             </div>
           )}
 
-          {/* Grouped timeline */}
           {grouped.map(([dayISO, rows]) => (
-            <section
-              key={dayISO}
-              className="space-y-2"
-              aria-label={dayLabel(dayISO)}
-            >
-              <div className="sticky top-0 z-[1] -mx-4 px-4 py-1 bg-gray-50/95 backdrop-blur text-xs font-medium text-gray-500">
+            <section key={dayISO} className="space-y-2" aria-label={dayLabel(dayISO)}>
+              <div className="sticky top-0 z-[1] -mx-4 px-4 py-1 bg-nav backdrop-blur text-xs font-medium text-muted">
                 {dayLabel(dayISO)}
               </div>
 
@@ -120,28 +111,25 @@ export default function History() {
                 {rows.map((it) => (
                   <article
                     key={it.id}
-                    className="bg-white rounded-2xl shadow-soft p-3 flex items-start gap-3"
+                    className="rounded-2xl shadow-soft p-3 flex items-start gap-3 bg-surface-1 border border-token"
                   >
-                    <div
-                      className="text-2xl leading-none select-none"
-                      aria-hidden
-                    >
+                    <div className="text-2xl leading-none select-none" aria-hidden>
                       {String(it.mood)}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <div className="text-sm font-medium">
+                        <div className="text-sm font-medium text-main">
                           {fmtTime(it.ts)}
                         </div>
-                        <div className="text-[11px] text-gray-500">
+                        <div className="text-[11px] text-muted">
                           · {fmtDuration(it.durationSec)}
                         </div>
-                        <div className="ml-auto text-[11px] text-gray-400 truncate">
+                        <div className="ml-auto text-[11px] text-muted truncate">
                           {titleForRitualId(it.ritualId)}
                         </div>
                       </div>
                       {it.note && it.note.trim() !== "" && (
-                        <p className="mt-1 text-sm text-gray-700 break-words">
+                        <p className="mt-1 text-sm text-dim break-words">
                           {it.note}
                         </p>
                       )}

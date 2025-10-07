@@ -11,7 +11,7 @@ import {
   recordRepairToday,
 } from '../lib/streak';
 import { isPro, setPro } from '../lib/pro';
-import { track } from '../lib/metrics';
+import { track } from '../lib/metrics'; 
 
 export default function StreakCard() {
   const [list, setList] = useState<LogItem[] | null>(null);
@@ -61,8 +61,8 @@ export default function StreakCard() {
 
   return (
     <div className="card flex items-center gap-3">
-      <div className="h-10 w-10 rounded-xl bg-brand-100/60 flex items-center justify-center">
-        <Flame className="text-brand-700" size={20} />
+      <div className="h-10 w-10 rounded-xl bg-brand-100/10 flex items-center justify-center">
+        <Flame className="text-brand-400" size={20} />
       </div>
 
       <div className="flex-1 min-w-0">
