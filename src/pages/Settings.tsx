@@ -1,17 +1,17 @@
 // src/pages/Settings.tsx
-import React, { useEffect, useState } from 'react';
-import Header from '../components/ui/Header';
-import { clearLock, setLockPIN } from '../lib/appLock';
+import React, { useEffect, useState } from "react";
+import Header from "../components/ui/Header";
+import { clearLock, setLockPIN } from "../lib/appLock";
 import {
   clearAll as secureClearAll,
   getItem as sGet,
   setItem as sSet,
   setEncryptionPassphrase,
-} from '../lib/secureStorage';
-import { supabase } from '../lib/supabase';
-import { loadSettings, setSetting } from '../lib/settings';
-import { isPro, setPro } from '../lib/pro';
-import { isEnabled as remindersOn, toggleEnabled } from '../lib/reminders';
+} from "../lib/secureStorage";
+import { supabase } from "../lib/supabase";
+import { loadSettings, setSetting } from "../lib/settings";
+import { isPro, setPro } from "../lib/pro";
+import { isEnabled as remindersOn, toggleEnabled } from "../lib/reminders";
 
 import {
   loadTheme,
@@ -22,43 +22,58 @@ import {
   type Accent,
   type Theme,
   type BgMode,
-} from '../lib/theme';
+} from "../lib/theme";
 
 // Use one device-local secret when no PIN is set
 function getOrCreateDeviceSecret(): string {
-  let s = localStorage.getItem('secure.device_secret.v1');
+  let s = localStorage.getItem("secure.device_secret.v1");
   if (!s) {
     const bytes = new Uint8Array(16);
     crypto.getRandomValues(bytes);
-    s = Array.from(bytes).map((b) => b.toString(16).padStart(2, '0')).join('');
-    localStorage.setItem('secure.device_secret.v1', s);
+    s = Array.from(bytes)
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+    localStorage.setItem("secure.device_secret.v1", s);
   }
   return s;
 }
 
 const REKEY_KEYS = [
-  'history','settings','mood','note','draft.ritual','events.queue','entitlement.pro',
+  "history",
+  "settings",
+  "mood",
+  "note",
+  "draft.ritual",
+  "events.queue",
+  "entitlement.pro",
 ];
 
 export default function Settings() {
   async function clearAll() {
     secureClearAll();
-    try { await supabase.auth.signOut(); } catch {}
-    alert('All local data cleared.');
+    try {
+      await supabase.auth.signOut();
+    } catch {}
+    alert("All local data cleared.");
   }
 
   // THEME state
-  const [appearance, setAppearance] = useState<Appearance>('system');
-  const [accent, setAccent] = useState<Accent>('berry');
-  const [bgMode, setBgMode] = useState<BgMode>('image');
-  const [bgUrl, setBgUrl] = useState<string>('https://images.pexels.com/photos/7130470/pexels-photo-7130470.jpeg');
+  const [appearance, setAppearance] = useState<Appearance>("custom");
+  const [accent, setAccent] = useState<Accent>("berry");
+  const [bgMode, setBgMode] = useState<BgMode>("image");
+  const [bgUrl, setBgUrl] = useState<string>(
+    "https://images.pexels.com/photos/7130470/pexels-photo-7130470.jpeg"
+  );
 
   useEffect(() => {
     const t = loadTheme();
     setAppearance(t.appearance);
     setAccent(t.accent);
-    setBgMode(t.bgMode ?? 'image');
-    setBgUrl(t.bgImageUrl ?? 'https://images.pexels.com/photos/7130470/pexels-photo-7130470.jpeg');
+    setBgMode(t.bgMode ?? "image");
+    setBgUrl(
+      t.bgImageUrl ??
+        "https://images.pexels.com/photos/7130470/pexels-photo-7130470.jpeg"
+    );
     applyTheme(t);
     const unbind = bindSystemThemeReactivity(() => appearance);
     return () => unbind();
@@ -66,38 +81,39 @@ export default function Settings() {
   }, []);
 
   function updateTheme(next: Partial<Theme>) {
-  // Normalize everything so nothing is possibly undefined
-  const mergedAppearance: Appearance = next.appearance ?? appearance;
-  const mergedAccent: Accent = next.accent ?? accent;
-  const mergedBgMode: BgMode = next.bgMode ?? bgMode;
-  const mergedBgUrl: string | undefined =
-    typeof next.bgImageUrl !== 'undefined' ? next.bgImageUrl : bgUrl;
+    // Normalize everything so nothing is possibly undefined
+    const mergedAppearance: Appearance = next.appearance ?? appearance;
+    const mergedAccent: Accent = next.accent ?? accent;
+    const mergedBgMode: BgMode = next.bgMode ?? bgMode;
+    const mergedBgUrl: string | undefined =
+      typeof next.bgImageUrl !== "undefined" ? next.bgImageUrl : bgUrl;
 
-  const merged: Theme = {
-    appearance: mergedAppearance,
-    accent: mergedAccent,
-    bgMode: mergedBgMode,
-    bgImageUrl: mergedBgUrl,
-  };
+    const merged: Theme = {
+      appearance: mergedAppearance,
+      accent: mergedAccent,
+      bgMode: mergedBgMode,
+      bgImageUrl: mergedBgUrl,
+    };
 
-  saveTheme(merged);
-  applyTheme(merged);
+    saveTheme(merged);
+    applyTheme(merged);
 
-  // Update local state with normalized values
-  setAppearance(mergedAppearance);
-  setAccent(mergedAccent);
-  setBgMode(mergedBgMode);             // <- now always a BgMode
-  setBgUrl(mergedBgUrl ?? '');
-}
-
+    // Update local state with normalized values
+    setAppearance(mergedAppearance);
+    setAccent(mergedAccent);
+    setBgMode(mergedBgMode); // <- now always a BgMode
+    setBgUrl(mergedBgUrl ?? "");
+  }
 
   // Preferences (encrypted)
   const [haptics, setHaptics] = useState(true);
 
   // Practice & reminders
   const [goalMin, setGoalMin] = useState<number>(2);
-  const [reminderTime, setReminderTime] = useState<string>('20:00');
-  const [remindersEnabled, setRemindersEnabled] = useState<boolean>(remindersOn());
+  const [reminderTime, setReminderTime] = useState<string>("20:00");
+  const [remindersEnabled, setRemindersEnabled] = useState<boolean>(
+    remindersOn()
+  );
 
   useEffect(() => {
     let alive = true;
@@ -106,28 +122,30 @@ export default function Settings() {
       if (!alive) return;
       setHaptics(s.haptics);
       setGoalMin(s.goalMin ?? 2);
-      setReminderTime(s.reminderTime ?? '20:00');
+      setReminderTime(s.reminderTime ?? "20:00");
       setRemindersEnabled(remindersOn());
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
   async function toggleHaptics(next: boolean) {
     setHaptics(next);
-    await setSetting('haptics', next);
+    await setSetting("haptics", next);
   }
 
   async function onGoalChange(next: string) {
     const n = Math.max(1, Math.min(60, Number(next) || 0));
     setGoalMin(n);
-    await setSetting('goalMin', n);
+    await setSetting("goalMin", n);
   }
 
   async function onReminderTimeChange(next: string) {
     const valid = /^\d{2}:\d{2}$/.test(next);
-    const hhmm = valid ? next : '20:00';
+    const hhmm = valid ? next : "20:00";
     setReminderTime(hhmm);
-    await setSetting('reminderTime', hhmm);
+    await setSetting("reminderTime", hhmm);
   }
 
   function onToggleReminders() {
@@ -143,7 +161,9 @@ export default function Settings() {
       const val = await isPro();
       if (alive) setProState(val);
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
   async function togglePro(next: boolean) {
     setProState(next);
@@ -151,11 +171,11 @@ export default function Settings() {
   }
 
   // PIN
-  const [pin, setPin] = useState('');
-  const [pin2, setPin2] = useState('');
+  const [pin, setPin] = useState("");
+  const [pin2, setPin2] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const lockEnabled = !!localStorage.getItem('lock.hash');
+  const lockEnabled = !!localStorage.getItem("lock.hash");
 
   async function rekeyAll(newPassphrase: string) {
     const snapshot: Record<string, unknown> = {};
@@ -170,18 +190,27 @@ export default function Settings() {
   async function enablePin() {
     setMsg(null);
     if (busy) return;
-    if (pin.length < 4 || /\D/.test(pin)) { setMsg('PIN must be at least 4 digits (numbers only).'); return; }
-    if (pin !== pin2) { setMsg('PINs do not match.'); return; }
+    if (pin.length < 4 || /\D/.test(pin)) {
+      setMsg("PIN must be at least 4 digits (numbers only).");
+      return;
+    }
+    if (pin !== pin2) {
+      setMsg("PINs do not match.");
+      return;
+    }
     setBusy(true);
     try {
       await rekeyAll(pin);
       await setLockPIN(pin);
-      setPin(''); setPin2('');
-      setMsg('App lock enabled on this device.');
+      setPin("");
+      setPin2("");
+      setMsg("App lock enabled on this device.");
     } catch (e) {
       console.error(e);
-      setMsg('Failed to enable PIN. Please try again.');
-    } finally { setBusy(false); }
+      setMsg("Failed to enable PIN. Please try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   async function disablePin() {
@@ -192,11 +221,13 @@ export default function Settings() {
       const secret = getOrCreateDeviceSecret();
       await rekeyAll(secret);
       clearLock();
-      setMsg('App lock disabled on this device.');
+      setMsg("App lock disabled on this device.");
     } catch (e) {
       console.error(e);
-      setMsg('Failed to disable PIN. Please try again.');
-    } finally { setBusy(false); }
+      setMsg("Failed to disable PIN. Please try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
@@ -210,14 +241,14 @@ export default function Settings() {
 
             {/* Appearance segmented */}
             <div className="grid grid-cols-3 gap-2 mb-3">
-              {(['system','light','dark'] as Appearance[]).map((opt) => (
+              {(["custom", "light", "dark"] as Appearance[]).map((opt) => (
                 <button
                   key={opt}
                   className={
-                    'h-9 rounded-xl border text-sm ' +
+                    "h-9 rounded-xl border text-sm" +
                     (appearance === opt
-                      ? 'border-brand-400 ring-1 ring-brand-300'
-                      : 'border-[var(--border)] hover:bg-[var(--hover)]')
+                      ? "border-brand-400 ring-1 ring-brand-300"
+                      : "border-[var(--border)] hover:bg-[var(--hover)]")
                   }
                   onClick={() => updateTheme({ appearance: opt })}
                   aria-pressed={appearance === opt}
@@ -229,56 +260,63 @@ export default function Settings() {
 
             {/* Accent chips */}
             <div className="flex items-center gap-2 mb-3">
-              {(['berry','ocean','forest'] as Accent[]).map((a) => (
-                <button
-                  key={a}
-                  onClick={() => updateTheme({ accent: a })}
-                  className="h-6 px-3 rounded-full border text-xs"
-                  style={{
-                    background: accent === a ? 'var(--accent-200)' : 'transparent',
-                    borderColor: 'var(--border)',
-                    color: 'var(--text)',
-                    textTransform: 'capitalize',
-                  }}
-                  aria-pressed={accent === a}
-                  title={`Accent: ${a}`}
-                >
-                  {a}
-                </button>
-              ))}
+              {(["berry", "ocean", "forest"] as Accent[]).map((a) => {
+                const isActive = accent === a;
+                return (
+                  <button
+                    key={a}
+                    onClick={() => updateTheme({ accent: a })}
+                    className="h-6 px-3 rounded-full border text-xs"
+                    style={{
+                      background: isActive
+                        ? "var(--accent-200)"
+                        : "transparent",
+                      borderColor: "var(--border)",
+                      color: isActive ? "#000" : "var(--text)", // ← active text goes black
+                      textTransform: "capitalize",
+                    }}
+                    aria-pressed={isActive}
+                    title={`Accent: ${a}`}
+                  >
+                    {a}
+                  </button>
+                );
+              })}
             </div>
 
             {/* Background style */}
             <div className="grid grid-cols-2 gap-2 mb-2">
               <button
                 className={
-                  'h-10 rounded-xl border text-sm ' +
-                  (bgMode === 'gradient'
-                    ? 'border-brand-400 ring-1 ring-brand-300'
-                    : 'border-[var(--border)] hover:bg-[var(--hover)]')
+                  "h-10 rounded-xl border text-sm " +
+                  (bgMode === "gradient"
+                    ? "border-brand-400 ring-1 ring-brand-300"
+                    : "border-[var(--border)] hover:bg-[var(--hover)]")
                 }
-                onClick={() => updateTheme({ bgMode: 'gradient' })}
-                aria-pressed={bgMode === 'gradient'}
+                onClick={() => updateTheme({ bgMode: "gradient" })}
+                aria-pressed={bgMode === "gradient"}
               >
                 Use gradient
               </button>
               <button
                 className={
-                  'h-10 rounded-xl border text-sm ' +
-                  (bgMode === 'image'
-                    ? 'border-brand-400 ring-1 ring-brand-300'
-                    : 'border-[var(--border)] hover:bg-[var(--hover)]')
+                  "h-10 rounded-xl border text-sm " +
+                  (bgMode === "image"
+                    ? "border-brand-400 ring-1 ring-brand-300"
+                    : "border-[var(--border)] hover:bg-[var(--hover)]")
                 }
-                onClick={() => updateTheme({ bgMode: 'image', bgImageUrl: bgUrl })}
-                aria-pressed={bgMode === 'image'}
+                onClick={() =>
+                  updateTheme({ bgMode: "image", bgImageUrl: bgUrl })
+                }
+                aria-pressed={bgMode === "image"}
               >
                 Use photo
               </button>
             </div>
 
-
             <p className="mt-3 text-xs text-muted">
-              Photo background is used only in <strong>System</strong> appearance.
+              Photo background is used only in <strong>System</strong>{" "}
+              appearance.
             </p>
           </section>
 
@@ -286,15 +324,20 @@ export default function Settings() {
           <div className="card p-4">
             <div className="text-sm font-medium text-main">Privacy</div>
             <p className="text-sm text-muted mt-1">
-              Your moods and rituals are stored locally on your device and encrypted.
+              Your moods and rituals are stored locally on your device and
+              encrypted.
             </p>
           </div>
 
           {/* Preferences */}
           <div className="card p-4">
-            <div className="text-sm font-medium text-main mb-2">Preferences</div>
+            <div className="text-sm font-medium text-main mb-2">
+              Preferences
+            </div>
             <label className="flex items-center justify-between py-1">
-              <span className="text-sm text-main">Haptic cues (if supported)</span>
+              <span className="text-sm text-main">
+                Haptic cues (if supported)
+              </span>
               <input
                 type="checkbox"
                 className="h-4 w-4"
@@ -307,7 +350,9 @@ export default function Settings() {
 
           {/* Practice & reminders */}
           <div className="card p-4">
-            <div className="text-sm font-medium text-main mb-2">Practice & reminders</div>
+            <div className="text-sm font-medium text-main mb-2">
+              Practice & reminders
+            </div>
 
             <label className="flex items-center justify-between py-2">
               <span className="text-sm text-main">Daily goal (minutes)</span>
@@ -345,15 +390,20 @@ export default function Settings() {
             </label>
 
             <p className="text-xs text-muted mt-2">
-              We’ll nudge you near your preferred time using lightweight, on-device logic.
+              We’ll nudge you near your preferred time using lightweight,
+              on-device logic.
             </p>
           </div>
 
           {/* Pro (preview) */}
           <div className="card p-4">
-            <div className="text-sm font-medium text-main mb-2">Pro (Preview)</div>
+            <div className="text-sm font-medium text-main mb-2">
+              Pro (Preview)
+            </div>
             <label className="flex items-center justify-between py-1">
-              <span className="text-sm text-main">Enable Pro features (local toggle)</span>
+              <span className="text-sm text-main">
+                Enable Pro features (local toggle)
+              </span>
               <input
                 type="checkbox"
                 className="h-4 w-4"
@@ -366,33 +416,38 @@ export default function Settings() {
               <button
                 className="btn btn-primary w-full mt-3"
                 onClick={async () => {
-                  const { track } = await import('../lib/metrics');
-                  track('upgrade_click', { source: 'settings_pro_card' });
+                  const { track } = await import("../lib/metrics");
+                  track("upgrade_click", { source: "settings_pro_card" });
                   await togglePro(true);
-                  track('pro_enabled');
+                  track("pro_enabled");
                 }}
               >
                 Upgrade to Pro
               </button>
             )}
             <p className="text-xs text-muted mt-2">
-              This is a client-only toggle for testing. We’ll wire it to Stripe later.
+              This is a client-only toggle for testing. We’ll wire it to Stripe
+              later.
             </p>
           </div>
 
           {/* App Lock (PIN) */}
           <div className="card p-4">
-            <div className="text-sm font-medium text-main mb-2">App Lock (PIN)</div>
+            <div className="text-sm font-medium text-main mb-2">
+              App Lock (PIN)
+            </div>
 
             {lockEnabled ? (
               <div className="space-y-2">
-                <p className="text-sm text-muted">A PIN is currently set on this device.</p>
+                <p className="text-sm text-muted">
+                  A PIN is currently set on this device.
+                </p>
                 <button
                   className="btn btn-secondary w-full"
                   onClick={disablePin}
                   disabled={busy}
                 >
-                  {busy ? 'Working…' : 'Disable PIN'}
+                  {busy ? "Working…" : "Disable PIN"}
                 </button>
               </div>
             ) : (
@@ -420,14 +475,15 @@ export default function Settings() {
                   onClick={enablePin}
                   disabled={busy}
                 >
-                  {busy ? 'Saving…' : 'Enable PIN'}
+                  {busy ? "Saving…" : "Enable PIN"}
                 </button>
               </div>
             )}
 
             {msg && <div className="text-sm mt-2 text-main">{msg}</div>}
             <p className="text-xs text-muted mt-2">
-              The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only.
+              The PIN is stored locally as a salted SHA-256 hash. It protects
+              access on this device only.
             </p>
           </div>
 

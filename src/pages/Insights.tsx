@@ -7,9 +7,18 @@ import { loadHistory, type LogItem } from "../lib/history";
 import dayjs, { Dayjs } from "dayjs";
 import {
   ResponsiveContainer,
-  PieChart, Pie, Cell,
-  AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
-  BarChart, Bar, Legend,
+  PieChart,
+  Pie,
+  Cell,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  BarChart,
+  Bar,
+  Legend,
 } from "recharts";
 
 /** Tokenized card wrapper (doesn't touch chart visuals) */
@@ -34,12 +43,18 @@ function Card({
 }
 
 type MoodSlice = { name: string; value: number };
-type DayPoint  = { day: string; count: number };
-type Block     = { block: string; count: number };
+type DayPoint = { day: string; count: number };
+type Block = { block: string; count: number };
 
 const COLORS = [
-  "#7c3aed", "#22c55e", "#f59e0b", "#ef4444",
-  "#06b6d4", "#a78bfa", "#84cc16", "#fb7185",
+  "#7c3aed",
+  "#22c55e",
+  "#f59e0b",
+  "#ef4444",
+  "#06b6d4",
+  "#a78bfa",
+  "#84cc16",
+  "#fb7185",
 ];
 
 type Preset = "7" | "28" | "90" | "custom";
@@ -53,7 +68,9 @@ export default function Insights() {
       const list = await loadHistory();
       if (alive) setHistory(list);
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
   // -------- Range controls --------
@@ -76,12 +93,15 @@ export default function Insights() {
     return { start: s, end: e };
   }, [preset, customStart, customEnd]);
 
-  const windowDays = Math.max(1, end.startOf("day").diff(start.startOf("day"), "day") + 1);
+  const windowDays = Math.max(
+    1,
+    end.startOf("day").diff(start.startOf("day"), "day") + 1
+  );
 
   // -------- Data slicing --------
   const rangeItems: LogItem[] = useMemo(() => {
     const list = history ?? [];
-    return list.filter(x => {
+    return list.filter((x) => {
       const t = dayjs(x.ts);
       return !t.isBefore(start) && !t.isAfter(end);
     });
@@ -94,7 +114,7 @@ export default function Insights() {
   const moodChart: MoodSlice[] = useMemo(() => {
     if (!rangeItems.length) return [];
     const map = new Map<string, number>();
-    rangeItems.forEach(x => map.set(x.mood, (map.get(x.mood) || 0) + 1));
+    rangeItems.forEach((x) => map.set(x.mood, (map.get(x.mood) || 0) + 1));
     return Array.from(map.entries())
       .sort((a, b) => b[1] - a[1])
       .map(([name, value]) => ({ name, value }));
@@ -106,7 +126,7 @@ export default function Insights() {
     for (let i = 0; i < windowDays; i++) {
       counts.set(start.add(i, "day").format("YYYY-MM-DD"), 0);
     }
-    rangeItems.forEach(x => {
+    rangeItems.forEach((x) => {
       const key = dayjs(x.ts).startOf("day").format("YYYY-MM-DD");
       counts.set(key, (counts.get(key) || 0) + 1);
     });
@@ -127,15 +147,19 @@ export default function Insights() {
     const out: Block[] = [];
     for (let i = 0; i < 24; i += 4) {
       const value = buckets.slice(i, i + 4).reduce((a, b) => a + b, 0);
-      const label = `${String(i).padStart(2, "0")}-${String(i + 3).padStart(2, "0")}h`;
+      const label = `${String(i).padStart(2, "0")}-${String(i + 3).padStart(
+        2,
+        "0"
+      )}h`;
       out.push({ block: label, count: value });
     }
-    return out.filter(b => b.count > 0).sort((a, b) => b.count - a.count);
+    return out.filter((b) => b.count > 0).sort((a, b) => b.count - a.count);
   }, [rangeItems]);
 
   // 4) Quick wins
   const quickWins = useMemo(() => {
-    if (!rangeItems.length) return [] as { ritualId: string; avg: number; n: number }[];
+    if (!rangeItems.length)
+      return [] as { ritualId: string; avg: number; n: number }[];
     const map = new Map<string, { sum: number; n: number }>();
     for (const x of rangeItems) {
       const p = map.get(x.ritualId) || { sum: 0, n: 0 };
@@ -211,20 +235,25 @@ export default function Insights() {
               <div className="min-w-[140px] flex-1">
                 <div className="text-xs text-muted">This period</div>
                 <div className="font-medium text-main">
-                  {Math.round((summary.totalSec ?? 0) / 60)} min · {summary.sessions ?? 0} sessions
+                  {Math.round((summary.totalSec ?? 0) / 60)} min ·{" "}
+                  {summary.sessions ?? 0} sessions
                 </div>
               </div>
 
               <div className="min-w-[140px] flex-1">
                 <div className="text-xs text-muted">Avg session</div>
-                <div className="font-medium text-main">{summary.avgSec ?? 0}s</div>
+                <div className="font-medium text-main">
+                  {summary.avgSec ?? 0}s
+                </div>
               </div>
 
               <div className="min-w-[140px] flex-1">
                 <div className="text-xs text-muted">Top ritual</div>
                 <div className="font-medium text-main truncate">
                   {summary.topRitualId
-                    ? `${titleForRitualId(summary.topRitualId)} (${summary.topRitualCount})`
+                    ? `${titleForRitualId(summary.topRitualId)} (${
+                        summary.topRitualCount
+                      })`
                     : "—"}
                 </div>
               </div>
@@ -233,7 +262,11 @@ export default function Insights() {
                 <div className="text-xs text-muted">Streak</div>
                 <div className="font-medium text-main">
                   {summary.streak ?? 0}🔥{" "}
-                  {summary.hasTodayLog ? "" : <span className="text-muted">(no entry today)</span>}
+                  {summary.hasTodayLog ? (
+                    ""
+                  ) : (
+                    <span className="text-muted">(no entry today)</span>
+                  )}
                 </div>
               </div>
             </div>
@@ -287,18 +320,42 @@ export default function Insights() {
             {daySeries.length ? (
               <div className="h-40">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={daySeries} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
+                  <AreaChart
+                    data={daySeries}
+                    margin={{ left: 0, right: 0, top: 10, bottom: 0 }}
+                  >
                     <defs>
                       <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#7c3aed" stopOpacity={0.4} />
-                        <stop offset="100%" stopColor="#7c3aed" stopOpacity={0.05} />
+                        <stop
+                          offset="0%"
+                          stopColor="#7c3aed"
+                          stopOpacity={0.4}
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor="#7c3aed"
+                          stopOpacity={0.05}
+                        />
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={Math.ceil(windowDays / 7)} />
-                    <YAxis allowDecimals={false} tick={{ fontSize: 10 }} width={24} />
+                    <XAxis
+                      dataKey="day"
+                      tick={{ fontSize: 10 }}
+                      interval={Math.ceil(windowDays / 7)}
+                    />
+                    <YAxis
+                      allowDecimals={false}
+                      tick={{ fontSize: 10 }}
+                      width={24}
+                    />
                     <Tooltip />
-                    <Area type="monotone" dataKey="count" stroke="#7c3aed" fill="url(#c)" />
+                    <Area
+                      type="monotone"
+                      dataKey="count"
+                      stroke="#7c3aed"
+                      fill="url(#c)"
+                    />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -312,10 +369,17 @@ export default function Insights() {
             {blocks.length ? (
               <div className="h-56">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={blocks} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
+                  <BarChart
+                    data={blocks}
+                    margin={{ left: 0, right: 0, top: 10, bottom: 0 }}
+                  >
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
                     <XAxis dataKey="block" tick={{ fontSize: 10 }} />
-                    <YAxis allowDecimals={false} tick={{ fontSize: 10 }} width={24} />
+                    <YAxis
+                      allowDecimals={false}
+                      tick={{ fontSize: 10 }}
+                      width={24}
+                    />
                     <Tooltip />
                     <Bar dataKey="count" fill="#22c55e" radius={[6, 6, 0, 0]} />
                   </BarChart>
@@ -342,7 +406,11 @@ export default function Insights() {
                   </thead>
                   <tbody>
                     {quickWins.map((r) => (
-                      <tr key={r.ritualId} className="border-t">
+                      <tr
+                        key={r.ritualId}
+                        className="border-t"
+                        style={{ borderColor: "var(--border)" }} // ← ensure themed border
+                      >
                         <td className="py-2 pr-3 font-medium text-main">
                           {titleForRitualId(r.ritualId)}
                         </td>

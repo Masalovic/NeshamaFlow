@@ -1,5 +1,5 @@
 // src/lib/theme.ts
-export type Appearance = 'system' | 'light' | 'dark';
+export type Appearance = 'custom' | 'light' | 'dark';
 export type Accent = 'berry' | 'ocean' | 'forest';
 export type BgMode = 'gradient' | 'image';
 
@@ -49,7 +49,7 @@ const SURFACES = {
     themeMeta: '#0b0b0c',
     hover:     'rgba(255,255,255,0.06)',
   },
-  system: {
+  custom: {
     // Default morph (only used when bgMode !== 'image')
     bg: `
       radial-gradient(1100px 700px at 8% -8%,  var(--accent-100) 0%, transparent 60%),
@@ -59,7 +59,7 @@ const SURFACES = {
       #ffffff
     `,
     // light translucent cards on colorful bg
-    surface1:  'rgba(255,255,255,0.22)',
+    surface1:  'rgba(255,255,255,0.4)',
     surface2:  '#fafbff',
     border:    'var(--accent-300)',
     text:      '#0f172a',
@@ -98,7 +98,7 @@ export function loadTheme(): Theme {
     if (oldRaw) {
       const old = JSON.parse(oldRaw) as Partial<Theme>;
       const migrated: Theme = {
-        appearance: (old.appearance ?? 'system') as Appearance,
+        appearance: (old.appearance ?? 'custom') as Appearance,
         accent:     (old.accent ?? 'berry') as Accent,
         bgMode:     (old.bgMode ?? 'image') as BgMode,
         bgImageUrl: sanitizeBgUrl(old.bgImageUrl),
@@ -111,7 +111,7 @@ export function loadTheme(): Theme {
   } catch { /* ignore */ }
 
   // Fresh default
-  return { appearance: 'system', accent: 'berry', bgMode: 'image', bgImageUrl: DEFAULT_SYSTEM_BG_URL };
+  return { appearance: 'custom', accent: 'berry', bgMode: 'image', bgImageUrl: DEFAULT_SYSTEM_BG_URL };
 }
 
 export function saveTheme(t: Theme) {
@@ -127,10 +127,10 @@ export function applyTheme(t: Theme): void {
   const root = document.documentElement;
 
   const mql = window.matchMedia?.('(prefers-color-scheme: dark)');
-  const resolved: Exclude<Appearance,'system'> =
-    t.appearance === 'system' ? (mql?.matches ? 'dark' : 'light') : t.appearance;
+  const resolved: Exclude<Appearance,'custom'> =
+    t.appearance === 'custom' ? (mql?.matches ? 'dark' : 'light') : t.appearance;
 
-  const surf = t.appearance === 'system' ? SURFACES.system : SURFACES[resolved];
+  const surf = t.appearance === 'custom' ? SURFACES.custom : SURFACES[resolved];
 
   root.dataset.appearance = t.appearance;
   root.dataset.accent     = t.accent;
@@ -140,7 +140,7 @@ export function applyTheme(t: Theme): void {
   (Object.keys(pal) as Shade[]).forEach(k => set(`--accent-${k}`, pal[k]));
 
   // Background: System + Image → overlay + photo (with cache-bust)
-  if (t.appearance === 'system' && t.bgMode === 'image' && (t.bgImageUrl ?? '').length > 0) {
+  if (t.appearance === 'custom' && t.bgMode === 'image' && (t.bgImageUrl ?? '').length > 0) {
     const url = withVersion(sanitizeBgUrl(t.bgImageUrl));
     const overlay = 'linear-gradient(0deg, rgba(255,255,255,0.42), rgba(255,255,255,0.42))';
     set('--bg-image', `url("${url}")`);
@@ -163,7 +163,7 @@ export function applyTheme(t: Theme): void {
   // Buttons (contrast-aware)
   const isDark = (t.appearance === 'dark');
   if (isDark) {
-    set('--primary-fg', '#ffffff');
+    set('--primary-fg', '#000000');
     set('--primary-bg', 'var(--accent-300)');
     set('--primary-bg-hover', 'var(--accent-400)');
     set('--primary-bg-active','var(--accent-500)');
@@ -201,10 +201,10 @@ export function bindSystemThemeReactivity(getAppearance: () => Appearance): () =
   const mql = window.matchMedia?.('(prefers-color-scheme: dark)');
   if (!mql) return () => {};
   const handler = () => {
-    if (getAppearance() === 'system') {
+    if (getAppearance() === 'custom') {
       const current = loadTheme();
       applyTheme({
-        appearance: 'system',
+        appearance: 'custom',
         accent: current.accent,
         bgMode: current.bgMode,
         bgImageUrl: current.bgImageUrl,

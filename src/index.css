@@ -11,7 +11,11 @@
 }
 
 /* ---- App base -------------------------------------------------------- */
-html, body, #root { min-height: 100%; }
+html,
+body,
+#root {
+  min-height: 100%;
+}
 body {
   min-height: 100%;
   background: var(--bg);
@@ -95,6 +99,7 @@ select:focus {
 /* Primary – uses theme.ts contrast tokens */
 .btn-primary {
   background: var(--accent-200);
+  height: 30px;
   color: var(--primary-fg); /* black in light, white in dark */
 }
 .btn-primary:hover {
@@ -109,6 +114,7 @@ select:focus {
 .btn-secondary {
   background: var(--surface-1);
   color: var(--text);
+   height: 30px;
   border: 1px solid var(--border);
 }
 .btn-secondary:hover {
@@ -119,6 +125,7 @@ select:focus {
 .btn-outline {
   background: transparent;
   color: var(--text);
+  height: 30px;
   border: 1px solid var(--accent-300);
 }
 .btn-outline:hover {
@@ -211,20 +218,40 @@ select:focus {
   border-radius: 10px;
 }
 
-/* === Token utilities (semantic colors) ===================================
+/* === Token utilities (semantic colors) =================================== */
 @layer utilities {
-  .bg-app        { background: var(--bg) !important; }
-  .bg-surface-1  { background: var(--surface-1) !important; }
-  .bg-surface-2  { background: var(--surface-2) !important; }
-  .bg-nav        { background: var(--nav-bg) !important; }
+  .bg-app {
+    background: var(--bg) !important;
+  }
+  .bg-surface-1 {
+    background: var(--surface-1) !important;
+  }
+  .bg-surface-2 {
+    background: var(--surface-2) !important;
+  }
+  .bg-nav {
+    background: var(--nav-bg) !important;
+  }
 
-  .text-main     { color: var(--text) !important; }
-  .text-dim      { color: var(--text-dim) !important; }
-  .text-muted    { color: var(--text-muted) !important; }
+  .text-main {
+    color: var(--text) !important;
+  }
+  .text-dim {
+    color: var(--text-dim) !important;
+  }
+  .text-muted {
+    color: var(--text-muted) !important;
+  }
 
-  .border-token  { border-color: var(--border) !important; }
+  .border-token {
+    border-color: var(--border) !important;
+  }
 
   /* Accent text helper (for links etc.) */
-/* .text-accent        { color: rgb(var(--accent-600)) !important; }
-  .text-accent:hover  { color: rgb(var(--accent-700)) !important; }
-}  */
+  .text-accent {
+    color: rgb(var(--accent-600)) !important;
+  }
+  .text-accent:hover {
+    color: rgb(var(--accent-700)) !important;
+  }
+}

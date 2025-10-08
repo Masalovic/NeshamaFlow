@@ -1,72 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../components/ui/Header";
-import { supabase } from "../lib/supabase";
+// src/pages/Profile.tsx
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Header from '../components/ui/Header';
+import { supabase } from '../lib/supabase';
 
 const AVATARS = [
-  "bird",
-  "branch",
-  "bush",
-  "cactus",
-  "deer",
-  "flamingo",
-  "leaves",
-  "mountain",
-  "pcactus",
-  "pineapple",
+  'bird','branch','bush','cactus','deer','flamingo','leaves','mountain','pcactus','pineapple',
 ] as const;
 
-type AvatarKey = (typeof AVATARS)[number];
+type AvatarKey = typeof AVATARS[number];
 
 function normalizeUsername(v: string) {
-  const x = v.trim().replace(/^@+/, "").toLowerCase();
+  const x = v.trim().replace(/^@+/, '').toLowerCase();
   return x || null;
 }
-
 function isAvatarKey(x: unknown): x is AvatarKey {
-  return typeof x === "string" && (AVATARS as readonly string[]).includes(x);
+  return typeof x === 'string' && (AVATARS as readonly string[]).includes(x);
 }
 
 export default function Profile() {
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [display, setDisplay] = useState("");
-  const [username, setUsername] = useState("");
-  const [avatar, setAvatar] = useState<AvatarKey>("bird");
-  const [msg, setMsg] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
+  const [email, setEmail]       = useState('');
+  const [display, setDisplay]   = useState('');
+  const [username, setUsername] = useState('');
+  const [avatar, setAvatar]     = useState<AvatarKey>('bird');
+  const [msg, setMsg]           = useState<string | null>(null);
+  const [saving, setSaving]     = useState(false);
 
   useEffect(() => {
     (async () => {
-      const {
-        data: { user },
-        error: userErr,
-      } = await supabase.auth.getUser();
-      if (userErr) {
-        setMsg(userErr.message);
-        return;
-      }
+      const { data: { user }, error: userErr } = await supabase.auth.getUser();
+      if (userErr) { setMsg(userErr.message); return; }
       if (!user) return;
 
-      setEmail(user.email ?? "");
+      setEmail(user.email ?? '');
 
       const { data, error } = await supabase
-        .from("profiles")
-        .select("display_name, username, avatar_key")
-        .eq("user_id", user.id)
+        .from('profiles')
+        .select('display_name, username, avatar_key')
+        .eq('user_id', user.id)
         .maybeSingle();
 
-      if (error) {
-        setMsg(error.message);
-        return;
-      }
+      if (error) { setMsg(error.message); return; }
       if (data) {
-        setDisplay(data.display_name ?? "");
-        setUsername(data.username ?? "");
-        setAvatar(
-          isAvatarKey(data.avatar_key) ? (data.avatar_key as AvatarKey) : "bird",
-        );
+        setDisplay(data.display_name ?? '');
+        setUsername(data.username ?? '');
+        setAvatar(isAvatarKey(data.avatar_key) ? (data.avatar_key as AvatarKey) : 'bird');
       }
     })();
   }, []);
@@ -75,52 +55,34 @@ export default function Profile() {
     setMsg(null);
     setSaving(true);
 
-    const {
-      data: { user },
-      error: userErr,
-    } = await supabase.auth.getUser();
-    if (userErr) {
-      setMsg(userErr.message);
-      setSaving(false);
-      return;
-    }
-    if (!user) {
-      setSaving(false);
-      return;
-    }
-
-    const avatar_key: AvatarKey = isAvatarKey(avatar) ? avatar : "bird";
+    const { data: { user }, error: userErr } = await supabase.auth.getUser();
+    if (userErr) { setMsg(userErr.message); setSaving(false); return; }
+    if (!user) { setSaving(false); return; }
 
     const payload = {
       user_id: user.id,
       display_name: display || null,
       username: normalizeUsername(username),
-      avatar_key,
+      avatar_key: isAvatarKey(avatar) ? avatar : 'bird',
     };
 
-    const { error } = await supabase
-      .from("profiles")
-      .upsert(payload, { onConflict: "user_id" });
+    const { error } = await supabase.from('profiles').upsert(payload, { onConflict: 'user_id' });
 
     if (error) {
-      if ((error as any).code === "23505") {
-        setMsg("That username is already taken.");
-      } else if ((error as any).code === "23514") {
-        setMsg("Avatar selection is not allowed by server policy.");
-      } else {
-        setMsg(error.message);
-      }
+      if ((error as any).code === '23505')      setMsg('That username is already taken.');
+      else if ((error as any).code === '23514') setMsg('Avatar selection is not allowed by server policy.');
+      else                                      setMsg(error.message);
       setSaving(false);
       return;
     }
 
-    setMsg("Profile saved!");
+    setMsg('Profile saved!');
     setSaving(false);
   }
 
   async function signOut() {
     await supabase.auth.signOut();
-    navigate("/auth", { replace: true });
+    navigate('/auth', { replace: true });
   }
 
   return (
@@ -135,7 +97,7 @@ export default function Profile() {
             <img
               src={`/avatars/${avatar}.svg`}
               alt={avatar}
-              className="h-16 w-16 rounded-xl border border-token mb-0 bg-surface-1"
+              className="h-16 w-16 rounded-xl border border-token mb-0 bg-white"
             />
             <div>
               <div className="text-sm text-muted">Signed in as</div>
@@ -147,7 +109,7 @@ export default function Profile() {
           <section className="rounded-2xl border border-token bg-surface-1 p-4 space-y-3 shadow-soft">
             <label className="block text-sm text-dim">Display name</label>
             <input
-              className="input w-full"
+              className="input w-full h-10"
               value={display}
               onChange={(e) => setDisplay(e.target.value)}
               placeholder="Your name"
@@ -155,7 +117,7 @@ export default function Profile() {
 
             <label className="block text-sm mt-3 text-dim">Username</label>
             <input
-              className="input w-full"
+              className="input w-full h-10"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="@username"
@@ -171,11 +133,10 @@ export default function Profile() {
                     type="button"
                     onClick={() => setAvatar(k)}
                     className={[
-                      "rounded-xl border border-token p-2 grid place-items-center",
-                      "hover:bg-[var(--hover)] focus:outline-none",
-                      selected ? "ring-2 ring-[var(--ring)]" : "",
-                      "bg-surface-2",
-                    ].join(" ")}
+                      'rounded-xl border border-token p-2 grid place-items-center bg-surface-2',
+                      'hover:bg-[var(--hover)] focus:outline-none',
+                      selected ? 'ring-2 ring-[var(--ring)]' : '',
+                    ].join(' ')}
                     aria-label={`Choose ${k} avatar`}
                   >
                     <img src={`/avatars/${k}.svg`} alt={k} className="h-12 w-12" />
@@ -189,7 +150,7 @@ export default function Profile() {
               disabled={saving}
               className="btn btn-primary w-full mt-4 disabled:opacity-60"
             >
-              {saving ? "Saving…" : "Save profile"}
+              {saving ? 'Saving…' : 'Save profile'}
             </button>
             {msg && <div className="text-sm mt-2 text-main">{msg}</div>}
           </section>
@@ -200,7 +161,7 @@ export default function Profile() {
             <p className="text-sm text-dim">Sign out on this device.</p>
             <button
               onClick={signOut}
-              className="btn btn-primary w-full mt-4 disabled:opacity-60"
+              className="btn btn-primary w-full mt-2"
             >
               Sign out
             </button>
