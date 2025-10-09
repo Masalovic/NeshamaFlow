@@ -1,0 +1,52 @@
+{
+  "suggestion": {
+    "title": "Your Ritual",
+    "basedOnMood": "Based on your mood",
+    "start": "Start",
+    "orPick": "Or pick from Library",
+    "actions": {
+      "seeSteps": "See steps",
+      "whyWorks": "Why it works",
+      "browse": "Browse rituals",
+      "startRitual": "Start Ritual"
+    },
+    "modals": {
+      "how": "How to do it",
+      "noSteps": "No steps available.",
+      "why": "Why it works"
+    }
+  },
+  "player": {
+    "restMsg": "Rest — close your eyes and breathe.",
+    "restHint": "Take a 20s breathing break",
+    "rest20": "Rest 20s",
+    "start": "Start",
+    "pause": "Pause",
+    "finishNow": "Finish Now",
+    "saving": "Saving…",
+    "tipTitle": "Tip"
+  },
+  "done": {
+    "title": "Ritual done",
+    "sessionComplete": "Session complete",
+    "logged": "Logged <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Saved.",
+    "afterCare": "After-care",
+    "logAnother": "Log another",
+    "seeHistory": "See history",
+    "setReminder": "Set a smart reminder",
+    "share": {
+      "title": "My ritual session"
+    },
+    "generic": "ritual"
+  },
+  "after": {
+    "boxBreath": { "1": "Take one slower breath and unclench your jaw.", "2": "Soften the next exhale; notice shoulders drop.", "3": "If helpful, do 1–2 quiet cycles later today." },
+    "478": { "1": "If light-headed, breathe normally for a minute.", "2": "Use 4-7-8 at bedtime: 3–4 rounds is plenty.", "3": "Sip water and avoid standing up too fast." },
+    "bodyScan": { "1": "Roll shoulders once; soften forehead and tongue.", "2": "Note one area to revisit for 30s later today.", "3": "Take a sip of water and stretch gently." },
+    "ground": { "1": "Pick one tiny next action and do it slowly.", "2": "Open your hands; relax the tongue from the palate.", "3": "If agitation returns, take a slow, longer exhale." },
+    "compassion": { "1": "Place a hand on your heart and offer one kind phrase.", "2": "Remember “common humanity”: others feel this too.", "3": "Write one supportive line you can reuse later." },
+    "gratitude": { "1": "Savor one concrete detail for ~10 seconds.", "2": "If possible, send a 1-line thank-you message.", "3": "Smile softly to help encode the memory." },
+    "default": { "1": "Take one slower breath and relax your shoulders.", "2": "Drink a sip of water (tiny rituals stick better!).", "3": "Optional: jot a 1-line note in History." }
+  }
+}

@@ -1,8 +1,8 @@
-// src/pages/Profile.tsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/ui/Header';
 import { supabase } from '../lib/supabase';
+import { useTranslation } from 'react-i18next';
 
 const AVATARS = [
   'bird','branch','bush','cactus','deer','flamingo','leaves','mountain','pcactus','pineapple',
@@ -20,6 +20,7 @@ function isAvatarKey(x: unknown): x is AvatarKey {
 
 export default function Profile() {
   const navigate = useNavigate();
+  const { t } = useTranslation(['profile', 'common']);
 
   const [email, setEmail]       = useState('');
   const [display, setDisplay]   = useState('');
@@ -69,14 +70,14 @@ export default function Profile() {
     const { error } = await supabase.from('profiles').upsert(payload, { onConflict: 'user_id' });
 
     if (error) {
-      if ((error as any).code === '23505')      setMsg('That username is already taken.');
-      else if ((error as any).code === '23514') setMsg('Avatar selection is not allowed by server policy.');
+      if ((error as any).code === '23505')      setMsg(t('profile:errors.usernameTaken', 'That username is already taken.'));
+      else if ((error as any).code === '23514') setMsg(t('profile:errors.avatarNotAllowed', 'Avatar selection is not allowed by server policy.'));
       else                                      setMsg(error.message);
       setSaving(false);
       return;
     }
 
-    setMsg('Profile saved!');
+    setMsg(t('profile:saved', 'Profile saved!'));
     setSaving(false);
   }
 
@@ -87,7 +88,7 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col h-full bg-app">
-      <Header title="Profile" back />
+      <Header title={t('profile:title', 'Profile')} back />
 
       <main className="flex-1 overflow-y-auto px-6 py-6">
         <div className="max-w-md mx-auto space-y-8">
@@ -100,30 +101,32 @@ export default function Profile() {
               className="h-16 w-16 rounded-xl border border-token mb-0 bg-white"
             />
             <div>
-              <div className="text-sm text-muted">Signed in as</div>
+              <div className="text-sm text-muted">{t('profile:signedInAs', 'Signed in as')}</div>
               <div className="text-sm font-medium text-main">{email}</div>
             </div>
           </div>
 
           {/* Profile form */}
           <section className="rounded-2xl border border-token bg-surface-1 p-4 space-y-3 shadow-soft">
-            <label className="block text-sm text-dim">Display name</label>
+            <label className="block text-sm text-dim">{t('profile:fields.display', 'Display name')}</label>
             <input
               className="input w-full h-10"
               value={display}
               onChange={(e) => setDisplay(e.target.value)}
-              placeholder="Your name"
+              placeholder={t('profile:placeholders.name', 'Your name')}
+              aria-label={t('profile:fields.display', 'Display name')}
             />
 
-            <label className="block text-sm mt-3 text-dim">Username</label>
+            <label className="block text-sm mt-3 text-dim">{t('profile:fields.username', 'Username')}</label>
             <input
               className="input w-full h-10"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="@username"
+              placeholder={t('profile:placeholders.username', '@username')}
+              aria-label={t('profile:fields.username', 'Username')}
             />
 
-            <label className="block text-sm mt-3 text-dim">Choose avatar</label>
+            <label className="block text-sm mt-3 text-dim">{t('profile:fields.avatar', 'Choose avatar')}</label>
             <div className="grid grid-cols-5 gap-3">
               {AVATARS.map((k) => {
                 const selected = avatar === k;
@@ -137,7 +140,7 @@ export default function Profile() {
                       'hover:bg-[var(--hover)] focus:outline-none',
                       selected ? 'ring-2 ring-[var(--ring)]' : '',
                     ].join(' ')}
-                    aria-label={`Choose ${k} avatar`}
+                    aria-label={t('profile:a11y.chooseAvatar', 'Choose {{name}} avatar', { name: k })}
                   >
                     <img src={`/avatars/${k}.svg`} alt={k} className="h-12 w-12" />
                   </button>
@@ -150,20 +153,20 @@ export default function Profile() {
               disabled={saving}
               className="btn btn-primary w-full mt-4 disabled:opacity-60"
             >
-              {saving ? 'Saving…' : 'Save profile'}
+              {saving ? t('common:saving', 'Saving…') : t('profile:save', 'Save profile')}
             </button>
             {msg && <div className="text-sm mt-2 text-main">{msg}</div>}
           </section>
 
           {/* Account actions */}
           <section className="rounded-2xl border border-token bg-surface-1 p-4 space-y-3 shadow-soft">
-            <div className="text-sm font-medium text-main">Account</div>
-            <p className="text-sm text-dim">Sign out on this device.</p>
+            <div className="text-sm font-medium text-main">{t('profile:account.title', 'Account')}</div>
+            <p className="text-sm text-dim">{t('profile:account.signOutHint', 'Sign out on this device.')}</p>
             <button
               onClick={signOut}
               className="btn btn-primary w-full mt-2"
             >
-              Sign out
+              {t('profile:account.signOut', 'Sign out')}
             </button>
           </section>
 

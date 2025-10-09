@@ -1,4 +1,3 @@
-// src/pages/History.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
 import Header from "../components/ui/Header";
@@ -9,20 +8,13 @@ import { ready as storageReady } from "../lib/secureStorage";
 import { titleForRitualId } from "../lib/ritualEngine";
 import InsightChips from "../components/InsightChips";
 import Heatmap28 from "../components/Heatmap28";
+import { useTranslation } from "react-i18next";
 
 dayjs.extend(relativeTime);
-
-function dayLabel(dISO: string): string {
-  const d = dayjs(dISO);
-  if (d.isSame(dayjs(), "day")) return "Today";
-  if (d.isSame(dayjs().subtract(1, "day"), "day")) return "Yesterday";
-  return d.format("ddd, MMM D");
-}
 
 function fmtTime(ts: string): string {
   return dayjs(ts).format("HH:mm");
 }
-
 function fmtDuration(sec: number): string {
   const s = Math.max(0, Math.floor(sec));
   if (s < 60) return `${s}s`;
@@ -32,8 +24,16 @@ function fmtDuration(sec: number): string {
 
 export default function History() {
   const navigate = useNavigate();
+  const { t } = useTranslation(["history", "common"]);
   const [items, setItems] = useState<LogItem[] | null>(null);
   const [unlocked, setUnlocked] = useState<boolean>(storageReady());
+
+  function dayLabel(dISO: string): string {
+    const d = dayjs(dISO);
+    if (d.isSame(dayjs(), "day")) return t("history:labels.today", "Today");
+    if (d.isSame(dayjs().subtract(1, "day"), "day")) return t("history:labels.yesterday", "Yesterday");
+    return d.format("ddd, MMM D");
+  }
 
   useEffect(() => {
     if (unlocked) return;
@@ -74,17 +74,16 @@ export default function History() {
 
   return (
     <div className="flex h-full flex-col bg-app">
-      <Header title="History" back />
-      
-        <button 
-          type="button"
-          onClick={() => navigate("/insights")}
-          className="text-xs underline text-accent"
-          aria-label="Open Insights"
-        >
-          Insights
-        </button>
-   
+      <Header title={t("history:title", "History")} back />
+
+      <button 
+        type="button"
+        onClick={() => navigate("/insights")}
+        className="text-xs underline text-accent"
+        aria-label={t("history:openInsights", "Open Insights")}
+      >
+        {t("common:nav.insights", "Insights")}
+      </button>
 
       <main className="flex-1 overflow-y-auto p-4">
         <div className="max-w-[420px] mx-auto space-y-4">
@@ -92,12 +91,12 @@ export default function History() {
           <InsightChips compact />
 
           {items === null && (
-            <div className="text-center text-muted">Loading…</div>
+            <div className="text-center text-muted">{t("history:loading", "Loading…")}</div>
           )}
 
           {empty && (
             <div className="card text-center text-dim">
-              No sessions yet—start your first ritual to light up the grid.
+              {t("history:empty", "No sessions yet—start your first ritual to light up the grid.")}
             </div>
           )}
 

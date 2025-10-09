@@ -1,0 +1,71 @@
+{
+  "title": "Settings",
+  "language": {
+    "title": "Language",
+    "choose": "Choose app language"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "body": "Your moods and rituals are stored locally on your device and encrypted."
+  },
+  "prefs": {
+    "title": "Preferences",
+    "haptics": "Haptic cues (if supported)"
+  },
+  "practice": {
+    "title": "Practice & reminders",
+    "goal": "Daily goal (minutes)",
+    "time": "Preferred reminder time",
+    "smart": "Smart reminders",
+    "note": "We’ll nudge you near your preferred time using lightweight, on-device logic."
+  },
+  "pro": {
+    "title": "Pro (Preview)",
+    "toggle": "Enable Pro features (local toggle)",
+    "upgradeCta": "Upgrade to Pro",
+    "note": "This is a client-only toggle for testing. We’ll wire it to Stripe later."
+  },
+  "pin": {
+    "title": "App Lock (PIN)",
+    "already": "A PIN is currently set on this device.",
+    "disable": "Disable PIN",
+    "new": "New PIN",
+    "confirm": "Confirm PIN",
+    "enable": "Enable PIN",
+    "note": "The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only.",
+    "minDigits": "PIN must be at least 4 digits (numbers only).",
+    "mismatch": "PINs do not match.",
+    "enabled": "App lock enabled on this device.",
+    "disabled": "App lock disabled on this device.",
+    "enableFail": "Failed to enable PIN. Please try again.",
+    "disableFail": "Failed to disable PIN. Please try again."
+  },
+  "clearAll": {
+    "cta": "Clear all local data",
+    "confirmed": "All local data cleared."
+  },
+  "common": {
+    "saving": "Saving…",
+    "working": "Working…",
+    "appearance": {
+      "title": "Appearance",
+      "useGradient": "Use gradient",
+      "usePhoto": "Use photo",
+      "photoNoteCustom": "Photo background is used only in Custom appearance.",
+      "custom": "Custom",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "accent": {
+      "titleWithName": "Accent: {{name}}",
+      "berry": "berry",
+      "ocean": "ocean",
+      "forest": "forest"
+    },
+    "nav": {
+      "settings": "Settings",
+      "history": "History",
+      "insights": "Insights"
+    }
+  }
+}

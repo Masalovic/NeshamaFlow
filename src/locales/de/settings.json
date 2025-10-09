@@ -1,0 +1,71 @@
+{
+  "title": "Einstellungen",
+  "language": {
+    "title": "Sprache",
+    "choose": "App-Sprache wählen"
+  },
+  "privacy": {
+    "title": "Datenschutz",
+    "body": "Deine Stimmungen und Rituale werden lokal auf deinem Gerät gespeichert und verschlüsselt."
+  },
+  "prefs": {
+    "title": "Voreinstellungen",
+    "haptics": "Haptisches Feedback (falls unterstützt)"
+  },
+  "practice": {
+    "title": "Praxis & Erinnerungen",
+    "goal": "Tagesziel (Minuten)",
+    "time": "Bevorzugte Erinnerungszeit",
+    "smart": "Smart-Erinnerungen",
+    "note": "Wir stupsen dich zur bevorzugten Zeit mit On-Device-Logik an."
+  },
+  "pro": {
+    "title": "Pro (Vorschau)",
+    "toggle": "Pro-Funktionen aktivieren (lokal)",
+    "upgradeCta": "Upgrade auf Pro",
+    "note": "Nur clientseitig zum Testen. Stripe wird später angebunden."
+  },
+  "pin": {
+    "title": "App-Sperre (PIN)",
+    "already": "Auf diesem Gerät ist eine PIN gesetzt.",
+    "disable": "PIN deaktivieren",
+    "new": "Neue PIN",
+    "confirm": "PIN bestätigen",
+    "enable": "PIN aktivieren",
+    "note": "Die PIN wird lokal als gesalzter SHA-256-Hash gespeichert. Sie schützt nur dieses Gerät.",
+    "minDigits": "Die PIN muss mindestens 4 Ziffern haben (nur Zahlen).",
+    "mismatch": "PINs stimmen nicht überein.",
+    "enabled": "App-Sperre auf diesem Gerät aktiviert.",
+    "disabled": "App-Sperre auf diesem Gerät deaktiviert.",
+    "enableFail": "PIN konnte nicht aktiviert werden. Bitte erneut versuchen.",
+    "disableFail": "PIN konnte nicht deaktiviert werden. Bitte erneut versuchen."
+  },
+  "clearAll": {
+    "cta": "Alle lokalen Daten löschen",
+    "confirmed": "Alle lokalen Daten wurden gelöscht."
+  },
+  "common": {
+    "saving": "Speichern…",
+    "working": "Arbeitet…",
+    "appearance": {
+      "title": "Darstellung",
+      "useGradient": "Farbverlauf verwenden",
+      "usePhoto": "Foto verwenden",
+      "photoNoteCustom": "Fotohintergrund wird nur im Modus „Benutzerdefiniert“ verwendet.",
+      "custom": "Benutzerdefiniert",
+      "light": "Hell",
+      "dark": "Dunkel"
+    },
+    "accent": {
+      "titleWithName": "Akzent: {{name}}",
+      "berry": "berry",
+      "ocean": "ocean",
+      "forest": "forest"
+    },
+    "nav": {
+      "settings": "Einstellungen",
+      "history": "Verlauf",
+      "insights": "Einblicke"
+    }
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "appName": "Neshama Flow",
+  "a11y": {
+    "primaryNav": "Primarna navigacija",
+    "openSettings": "Otvori Podešavanja"
+  },
+  "nav": {
+    "home": "Početna",
+    "rituals": "Rituali",
+    "history": "Kalendar",
+    "insights": "Uvidi",
+    "profile": "Profil",
+    "settings": "Podešavanja"
+  },
+  "buttons": {
+    "start": "Počni",
+    "pause": "Pauza",
+    "resume": "Nastavi",
+    "finishNow": "Završi odmah",
+    "saving": "Čuvanje…",
+    "save": "Sačuvaj",
+    "clear": "Očisti",
+    "cancel": "Otkaži",
+    "continue": "Nastavi",
+    "close": "Zatvori",
+    "details": "Detalji",
+    "startThis": "Pokreni ovo",
+    "startSuggestion": "Pokreni predlog",
+    "startNow": "Počni sada",
+    "later": "Kasnije",
+    "mute7d": "Utišaj 7d",
+    "repair": "Popravi",
+    "goPro": "Go Pro",
+    "signOut": "Odjavi se",
+    "enablePin": "Uključi PIN",
+    "disablePin": "Isključi PIN",
+    "upgradeToPro": "Nadogradi na Pro",
+    "logAnother": "Zabeleži još",
+    "seeHistory": "Vidi istoriju",
+    "setSmartReminder": "Podesi pametni podsetnik",
+    "skip": "Preskoči za sada",
+    "share": "Podeli",
+    "copy": "Kopiraj",
+    "copied": "Kopirano!"
+  },
+  "generic": {
+    "loading": "Učitavanje…",
+    "optional": "opciono",
+    "tip": "Savet",
+    "none": "—",
+    "pleaseWait": "Molimo sačekajte…",
+    "working": "Radim…"
+  },
+  "units": {
+    "min": "min",
+    "secondsSuffix": "s"
+  },
+  "appearance": {
+    "title": "Izgled",
+    "useGradient": "Koristi gradijent",
+    "usePhoto": "Koristi fotografiju",
+    "photoNoteCustom": "Pozadinska fotografija se koristi samo u prilagođenom izgledu."
+  },
+  "accent": {
+    "titleWithName": "Akcenat: {{name}}",
+    "berry": "berry",
+    "ocean": "ocean",
+    "forest": "forest"
+  },
+  "home": {
+    "title": "Kako se osećaš?",
+    "selectMood": "Izaberi raspoloženje",
+    "settings": "Podešavanja",
+    "addNote": "Dodaj belešku (opciono)",
+    "notePlaceholder": "Šta ti je na umu?",
+    "quickSaveTitle": "Brzo čuvanje",
+    "quickSaveDesc": "trenutno beleži raspoloženje i preskače ritual. Sačuvaćemo izabrano raspoloženje i opcionalnu belešku u <em>Istoriju</em>.",
+    "lastLoggedMood": "Poslednje raspoloženje: {{emoji}} — {{date}}",
+    "startRitual": "Pokreni ritual",
+    "quickSave": "Brzo čuvanje"
+  },
+  "todayPanel": {
+    "greetings": {
+      "lateNight": "Kasno veče",
+      "goodMorning": "Dobro jutro",
+      "goodAfternoon": "Dobar dan",
+      "goodEvening": "Dobro veče"
+    },
+    "suggestedToday": "Predlog za danas: {{suggestion}}",
+    "goalDone": "Cilj: {{goalMin}} min · <strong>{{minutesToday}} min</strong> urađeno"
+  },
+  "smartReminder": {
+    "title": "Mali predah?",
+    "body": "Šta kažeš na {{pretty}}? Danas se još nisi prijavio/la.",
+    "prettyReset": "2-min reset",
+    "prettyBlock": "2-min {{block}} reset",
+    "blocks": {
+      "morning": "ujutru",
+      "afternoon": "popodne",
+      "evening": "uveče",
+      "night": "noću"
+    }
+  },
+  "streak": {
+    "title": "Dnevni niz",
+    "onTrack": "Na dobrom si putu danas",
+    "logToKeep": "Zabeleži raspoloženje da nastaviš niz",
+    "cooldown": "Popravka za {{count}}d"
+  },
+  "history": {
+    "title": "Istorija",
+    "insights": "Uvidi",
+    "today": "Danas",
+    "yesterday": "Juče",
+    "empty": "Još nema sesija — pokreni prvi ritual da upališ mrežu."
+  },
+  "heatmap": {
+    "title": "Poslednjih 28 dana",
+    "legend": "Legenda",
+    "repaired": "popravljeno",
+    "tooltip": "{{date}}: {{count, plural, one {# sesija} other {# sesija}}}{{repaired, select, true { (popravljeno)} other {}}}"
+  },
+  "library": {
+    "title": "Rituali",
+    "searchPlaceholder": "Pretraži rituale…",
+    "all": "Sve",
+    "noMatches": "Nema rezultata. Pokušaj drugi upit ili filter.",
+    "approxMinutes": "~ {{minutes}} min",
+    "why": "Zašto",
+    "steps": "Koraci",
+    "detailLink": "Detalji",
+    "libraryOpenedEvent": "library_opened",
+    "detailViewedEvent": "library_detail_viewed",
+    "startClickedEvent": "library_start_clicked"
+  },
+  "player": {
+    "restingPrompt": "Odmor — zatvori oči i diši.",
+    "rest20s": "Odmor 20s",
+    "finishNow": "Završi odmah",
+    "saving": "Čuvanje…"
+  },
+  "done": {
+    "title": "Ritual završen",
+    "sessionComplete": "Sesija završena",
+    "loggedLine": "Zabeleženo <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Sačuvano.",
+    "afterCare": "Nakon sesije"
+  },
+  "settings": {
+    "title": "Podešavanja",
+    "privacyTitle": "Privatnost",
+    "privacyBody": "Tvoja raspoloženja i rituali čuvaju se lokalno na uređaju i šifrovani su.",
+    "preferencesTitle": "Preferencije",
+    "haptics": "Haptički signali (ako su podržani)",
+    "practiceTitle": "Praksa i podsetnici",
+    "dailyGoal": "Dnevni cilj (minuti)",
+    "preferredTime": "Željeno vreme podsetnika",
+    "smartReminders": "Pametni podsetnici",
+    "nudgeNote": "Blago ćemo te podsetiti oko željenog vremena koristeći logiku na uređaju.",
+    "proTitle": "Pro (pregled)",
+    "proToggle": "Uključi Pro opcije (lokalno)",
+    "proNote": "Ovo je samo za testiranje na klijentu. Kasnije povezujemo Stripe.",
+    "lockTitle": "Zaključavanje aplikacije (PIN)",
+    "pinSet": "PIN je postavljen na ovom uređaju.",
+    "newPin": "Novi PIN",
+    "confirmPin": "Potvrdi PIN",
+    "pinStoredInfo": "PIN se čuva lokalno kao solirani SHA-256 heš. Štiti pristup samo na ovom uređaju.",
+    "clearAll": "Obriši sve lokalne podatke",
+    "language": "Jezik",
+    "accent": "Akcenat",
+    "appearance": "Izgled",
+    "custom": "Prilagođeno",
+    "system": "Sistem",
+    "light": "Svetlo",
+    "dark": "Tamno"
+  },
+  "profile": {
+    "title": "Profil",
+    "signedInAs": "Prijavljen/a kao",
+    "displayName": "Ime za prikaz",
+    "username": "Korisničko ime",
+    "chooseAvatar": "Izaberi avatar",
+    "saveProfile": "Sačuvaj profil",
+    "profileSaved": "Profil sačuvan!",
+    "account": "Nalog",
+    "errors": {
+      "usernameTaken": "To korisničko ime je zauzeto.",
+      "avatarNotAllowed": "Izabrani avatar nije dozvoljen pravilima servera."
+    }
+  },
+  "welcome": {
+    "title": "Dobrodošao/la",
+    "goalQuestion": "Koji ti je glavni cilj?",
+    "goalHelp": "To pomaže da prilagodimo smernice.",
+    "goals": {
+      "reduceStress": "Smanji stres",
+      "buildHabit": "Izgradi naviku",
+      "sleepBetter": "Bolji san",
+      "feelSteadier": "Više stabilnosti"
+    },
+    "hapticCues": "Haptički signali",
+    "hapticDesc": "Kratka vibracija na početku/kraju",
+    "smartReminder": "Pametni podsetnik",
+    "smartReminderDesc": "Blagi podsetnik u tvoje uobičajeno vreme prakse. Potpuno na uređaju.",
+    "enableReminder": "Uključi podsetnik",
+    "changeAnytime": "Sve možeš promeniti kasnije u <em>Podešavanjima</em>."
+  },
+  "insights": {
+    "title": "Uvidi (Pro)",
+    "thisPeriod": "Ovaj period",
+    "avgSession": "Prosečna sesija",
+    "topRitual": "Najčešći ritual",
+    "streak": "Niz",
+    "noData": "Još nema podataka — uradi jedan/dva rituala pa svratite opet!",
+    "moodDistribution": "Distribucija raspoloženja",
+    "entries": "{{count}} unosa",
+    "consistency": "Doslednost — sesije po danu",
+    "timeBlocks": "Kada vežbaš — vremenski blokovi",
+    "quickWins": "Brze pobede",
+    "table": {
+      "ritual": "Ritual",
+      "avgTime": "Prosek (s)",
+      "samples": "Uzorci"
+    },
+    "tipShortRituals": "Savet: kratki rituali smanjuju otpor — dobar način za gradnju niza."
+  },
+  "export": {
+    "title": "Izvoz",
+    "json": "Izvezi JSON",
+    "csv": "Izvezi CSV"
+  }
+}

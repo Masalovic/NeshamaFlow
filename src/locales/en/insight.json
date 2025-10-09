@@ -1,0 +1,34 @@
+{
+  "title": "Insights (Pro)",
+  "range": {
+    "label": "{{start}} – {{end}}",
+    "last7": "Last 7 days",
+    "last28": "Last 28 days",
+    "last90": "Last 90 days",
+    "custom": "Custom…",
+    "startDate": "Start date",
+    "endDate": "End date"
+  },
+  "summary": {
+    "thisPeriod": "This period",
+    "minutesSessions": "{{minutes}} min · {{sessions}} sessions",
+    "avgSession": "Avg session",
+    "topRitual": "Top ritual",
+    "streak": "Streak",
+    "noEntryToday": "(no entry today)"
+  },
+  "empty": "No data yet — complete a ritual or two and check back!",
+  "charts": {
+    "moodDistribution": "Mood distribution",
+    "sessionsPerDay": "Consistency — sessions per day",
+    "timeBlocks": "When you practice — time blocks",
+    "quickWins": "Quick wins",
+    "noData": "No data yet."
+  },
+  "table": {
+    "ritual": "Ritual",
+    "avgSec": "Avg time (s)",
+    "samples": "Samples",
+    "tip": "Tip: short rituals reduce friction — a good way to build streaks."
+  }
+}

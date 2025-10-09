@@ -1,0 +1,34 @@
+{
+  "title": "Einblicke (Pro)",
+  "range": {
+    "label": "{{start}} – {{end}}",
+    "last7": "Letzte 7 Tage",
+    "last28": "Letzte 28 Tage",
+    "last90": "Letzte 90 Tage",
+    "custom": "Benutzerdefiniert…",
+    "startDate": "Startdatum",
+    "endDate": "Enddatum"
+  },
+  "summary": {
+    "thisPeriod": "Dieser Zeitraum",
+    "minutesSessions": "{{minutes}} Min · {{sessions}} Sitzungen",
+    "avgSession": "Durchschnittliche Sitzung",
+    "topRitual": "Top-Ritual",
+    "streak": "Serie",
+    "noEntryToday": "(kein Eintrag heute)"
+  },
+  "empty": "Noch keine Daten — mach ein/zwei Rituale und schau wieder rein!",
+  "charts": {
+    "moodDistribution": "Stimmungsverteilung",
+    "sessionsPerDay": "Konstanz — Sitzungen pro Tag",
+    "timeBlocks": "Wann du übst — Zeitblöcke",
+    "quickWins": "Schnelle Erfolge",
+    "noData": "Noch keine Daten."
+  },
+  "table": {
+    "ritual": "Ritual",
+    "avgSec": "Durchschn. (s)",
+    "samples": "Stichproben",
+    "tip": "Tipp: Kurze Rituale verringern Reibung — gut für Serien."
+  }
+}

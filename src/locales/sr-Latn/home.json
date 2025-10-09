@@ -1,0 +1,51 @@
+{
+  "title": "Kako se osećaš?",
+  "todayPanel": {
+    "greeting": {
+      "lateNight": "Kasno veče",
+      "morning": "Dobro jutro",
+      "afternoon": "Dobar dan",
+      "evening": "Dobro veče"
+    },
+    "suggestedToday": "Predlog za danas",
+    "goal": "Cilj",
+    "done": "urađeno",
+    "startSuggestion": "Pokreni predlog"
+  },
+  "moodPicker": {
+    "title": "Izaberi raspoloženje",
+    "settings": "Podešavanja",
+    "noteLabel": "Dodaj belešku (opciono)",
+    "placeholder": "Šta ti je na umu?",
+    "quickSaveHint_html": "<strong>Brzo čuvanje</strong> odmah beleži raspoloženje i preskače ritual. Sačuvaćemo izabrano raspoloženje i opcionalnu belešku u <em>Istoriji</em>.",
+    "lastLogged": "Poslednje raspoloženje:",
+    "onDate": "— {{date}}"
+  },
+  "actions": {
+    "startRitual": "Pokreni ritual",
+    "quickSave": "Brzo čuvanje"
+  },
+  "reminder": {
+    "takeAMoment": "Mali predah?",
+    "suggestion": "Šta kažeš na {{pretty}}? Danas se još nisi prijavio/la.",
+    "startNow": "Počni sada",
+    "later": "Kasnije",
+    "mute7d": "Utišaj 7d"
+  },
+  "streak": {
+    "title": "Dnevni niz",
+    "onTrack": "Na dobrom si putu danas",
+    "logToKeep": "Zabeleži raspoloženje da nastaviš niz",
+    "repair": "Popravi",
+    "repairIn": "Popravka za {{days}}d",
+    "goPro": "Go Pro",
+    "proFeature": "Pro opcija: popravi propušten dan"
+  },
+  "selectMood": "Izaberi raspoloženje",
+  "noteLabelOptional": "Dodaj belešku (opciono)",
+  "notePlaceholder": "Šta ti je na umu?",
+  "startRitual": "Pokreni ritual",
+  "quickSave": "Brzo čuvanje",
+  "quickSaveHelpPrefix": "odmah beleži raspoloženje i preskače ritual. Sačuvaćemo izabrano raspoloženje i belešku u",
+  "lastLogged": "Poslednje raspoloženje: {{emoji}} — {{date}}"
+}

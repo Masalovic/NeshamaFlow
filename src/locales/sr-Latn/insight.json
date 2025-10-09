@@ -1,0 +1,34 @@
+{
+  "title": "Uvidi (Pro)",
+  "range": {
+    "label": "{{start}} – {{end}}",
+    "last7": "Poslednjih 7 dana",
+    "last28": "Poslednjih 28 dana",
+    "last90": "Poslednjih 90 dana",
+    "custom": "Prilagođeno…",
+    "startDate": "Početni datum",
+    "endDate": "Krajnji datum"
+  },
+  "summary": {
+    "thisPeriod": "Ovaj period",
+    "minutesSessions": "{{minutes}} min · {{sessions}} sesija",
+    "avgSession": "Prosečna sesija",
+    "topRitual": "Najčešći ritual",
+    "streak": "Niz",
+    "noEntryToday": "(nema unosa danas)"
+  },
+  "empty": "Još nema podataka — uradi jedan/dva rituala pa svratite opet!",
+  "charts": {
+    "moodDistribution": "Distribucija raspoloženja",
+    "sessionsPerDay": "Doslednost — sesije po danu",
+    "timeBlocks": "Kada vežbaš — vremenski blokovi",
+    "quickWins": "Brze pobede",
+    "noData": "Još nema podataka."
+  },
+  "table": {
+    "ritual": "Ritual",
+    "avgSec": "Prosek (s)",
+    "samples": "Uzorci",
+    "tip": "Savet: kratki rituali smanjuju otpor — dobar način za gradnju niza."
+  }
+}

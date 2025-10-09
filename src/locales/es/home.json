@@ -1,0 +1,51 @@
+{
+  "title": "¿Cómo te sientes?",
+  "todayPanel": {
+    "greeting": {
+      "lateNight": "Noche tardía",
+      "morning": "Buenos días",
+      "afternoon": "Buenas tardes",
+      "evening": "Buenas noches"
+    },
+    "suggestedToday": "Sugerido hoy",
+    "goal": "Meta",
+    "done": "hechos",
+    "startSuggestion": "Iniciar sugerencia"
+  },
+  "moodPicker": {
+    "title": "Selecciona tu estado de ánimo",
+    "settings": "Configuración",
+    "noteLabel": "Añadir una nota (opcional)",
+    "placeholder": "¿Qué tienes en mente?",
+    "quickSaveHint_html": "<strong>Guardado rápido</strong> registra tu ánimo al instante y omite el ritual. Guardaremos el ánimo y la nota en el <em>Historial</em>.",
+    "lastLogged": "Último ánimo registrado:",
+    "onDate": "el {{date}}"
+  },
+  "actions": {
+    "startRitual": "Iniciar ritual",
+    "quickSave": "Guardado rápido"
+  },
+  "reminder": {
+    "takeAMoment": "¿Un momento?",
+    "suggestion": "¿Qué tal {{pretty}}? Aún no has hecho check-in hoy.",
+    "startNow": "Empezar ahora",
+    "later": "Más tarde",
+    "mute7d": "Silenciar 7d"
+  },
+  "streak": {
+    "title": "Racha diaria",
+    "onTrack": "Vas bien hoy",
+    "logToKeep": "Registra un ánimo para mantenerla",
+    "repair": "Reparar",
+    "repairIn": "Reparar en {{days}}d",
+    "goPro": "Go Pro",
+    "proFeature": "Función Pro: reparar día perdido"
+  },
+  "selectMood": "Selecciona tu estado de ánimo",
+  "noteLabelOptional": "Añadir una nota (opcional)",
+  "notePlaceholder": "¿Qué tienes en mente?",
+  "startRitual": "Iniciar ritual",
+  "quickSave": "Guardado rápido",
+  "quickSaveHelpPrefix": "registra tu ánimo al instante y omite el ritual. Guardaremos el ánimo y la nota en",
+  "lastLogged": "Último ánimo: {{emoji}} el {{date}}"
+}

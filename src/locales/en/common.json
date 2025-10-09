@@ -1,0 +1,232 @@
+{
+  "appName": "Neshama Flow",
+  "a11y": {
+    "primaryNav": "Primary navigation",
+    "openSettings": "Open Settings"
+  },
+  "nav": {
+    "home": "Home",
+    "rituals": "Rituals",
+    "history": "Calendar",
+    "insights": "Insights",
+    "profile": "Profile",
+    "settings": "Settings"
+  },
+  "buttons": {
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Resume",
+    "finishNow": "Finish Now",
+    "saving": "Saving…",
+    "save": "Save",
+    "clear": "Clear",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "close": "Close",
+    "details": "Details",
+    "startThis": "Start this",
+    "startSuggestion": "Start suggestion",
+    "startNow": "Start now",
+    "later": "Later",
+    "mute7d": "Mute 7d",
+    "repair": "Repair",
+    "goPro": "Go Pro",
+    "signOut": "Sign out",
+    "enablePin": "Enable PIN",
+    "disablePin": "Disable PIN",
+    "upgradeToPro": "Upgrade to Pro",
+    "logAnother": "Log another",
+    "seeHistory": "See history",
+    "setSmartReminder": "Set a smart reminder",
+    "skip": "Skip for now",
+    "share": "Share",
+    "copy": "Copy",
+    "copied": "Copied!"
+  },
+  "generic": {
+    "loading": "Loading…",
+    "optional": "optional",
+    "tip": "Tip",
+    "none": "—",
+    "pleaseWait": "Please wait…",
+    "working": "Working…"
+  },
+  "units": {
+    "min": "min",
+    "secondsSuffix": "s"
+  },
+  "appearance": {
+    "title": "Appearance",
+    "useGradient": "Use gradient",
+    "usePhoto": "Use photo",
+    "photoNoteCustom": "Photo background is used only in Custom appearance."
+  },
+  "accent": {
+    "titleWithName": "Accent: {{name}}",
+    "berry": "berry",
+    "ocean": "ocean",
+    "forest": "forest"
+  },
+  "home": {
+    "title": "How are you feeling?",
+    "selectMood": "Select your mood",
+    "settings": "Settings",
+    "addNote": "Add a note (optional)",
+    "notePlaceholder": "What’s on your mind?",
+    "quickSaveTitle": "Quick Save",
+    "quickSaveDesc": "logs your mood instantly and skips the ritual. We’ll save your selected mood and optional note to <em>History</em>.",
+    "lastLoggedMood": "Last Logged Mood: {{emoji}} on {{date}}",
+    "startRitual": "Start Ritual",
+    "quickSave": "Quick Save"
+  },
+  "todayPanel": {
+    "greetings": {
+      "lateNight": "Late night",
+      "goodMorning": "Good morning",
+      "goodAfternoon": "Good afternoon",
+      "goodEvening": "Good evening"
+    },
+    "suggestedToday": "Suggested today: {{suggestion}}",
+    "goalDone": "Goal: {{goalMin}} min · <strong>{{minutesToday}} min</strong> done"
+  },
+  "smartReminder": {
+    "title": "Take a moment?",
+    "body": "How about {{pretty}}? You haven’t checked in yet today.",
+    "prettyReset": "a 2-min reset",
+    "prettyBlock": "a 2-min {{block}} reset",
+    "blocks": {
+      "morning": "morning",
+      "afternoon": "afternoon",
+      "evening": "evening",
+      "night": "night"
+    }
+  },
+  "streak": {
+    "title": "Daily streak",
+    "onTrack": "You’re on track today",
+    "logToKeep": "Log a mood to keep it going",
+    "cooldown": "Repair in {{count}}d"
+  },
+  "history": {
+    "title": "History",
+    "insights": "Insights",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "empty": "No sessions yet—start your first ritual to light up the grid."
+  },
+  "heatmap": {
+    "title": "Past 28 days",
+    "legend": "Legend",
+    "repaired": "repaired",
+    "tooltip": "{{date}}: {{count, plural, one {# session} other {# sessions}}}{{repaired, select, true { (repaired)} other {}}}"
+  },
+  "library": {
+    "title": "Rituals",
+    "searchPlaceholder": "Search rituals…",
+    "all": "All",
+    "noMatches": "No matches. Try a different search or filter.",
+    "approxMinutes": "~ {{minutes}} min",
+    "why": "Why",
+    "steps": "Steps",
+    "detailLink": "Details",
+    "libraryOpenedEvent": "library_opened",
+    "detailViewedEvent": "library_detail_viewed",
+    "startClickedEvent": "library_start_clicked"
+  },
+  "player": {
+    "restingPrompt": "Rest — close your eyes and breathe.",
+    "rest20s": "Rest 20s",
+    "finishNow": "Finish Now",
+    "saving": "Saving…"
+  },
+  "done": {
+    "title": "Ritual done",
+    "sessionComplete": "Session complete",
+    "loggedLine": "Logged <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Saved.",
+    "afterCare": "After-care"
+  },
+  "settings": {
+    "title": "Settings",
+    "privacyTitle": "Privacy",
+    "privacyBody": "Your moods and rituals are stored locally on your device and encrypted.",
+    "preferencesTitle": "Preferences",
+    "haptics": "Haptic cues (if supported)",
+    "practiceTitle": "Practice & reminders",
+    "dailyGoal": "Daily goal (minutes)",
+    "preferredTime": "Preferred reminder time",
+    "smartReminders": "Smart reminders",
+    "nudgeNote": "We’ll nudge you near your preferred time using lightweight, on-device logic.",
+    "proTitle": "Pro (Preview)",
+    "proToggle": "Enable Pro features (local toggle)",
+    "proNote": "This is a client-only toggle for testing. We’ll wire it to Stripe later.",
+    "lockTitle": "App Lock (PIN)",
+    "pinSet": "A PIN is currently set on this device.",
+    "newPin": "New PIN",
+    "confirmPin": "Confirm PIN",
+    "pinStoredInfo": "The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only.",
+    "clearAll": "Clear all local data",
+    "language": "Language",
+    "accent": "Accent",
+    "appearance": "Appearance",
+    "custom": "Custom",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "profile": {
+    "title": "Profile",
+    "signedInAs": "Signed in as",
+    "displayName": "Display name",
+    "username": "Username",
+    "chooseAvatar": "Choose avatar",
+    "saveProfile": "Save profile",
+    "profileSaved": "Profile saved!",
+    "account": "Account",
+    "errors": {
+      "usernameTaken": "That username is already taken.",
+      "avatarNotAllowed": "Avatar selection is not allowed by server policy."
+    }
+  },
+  "welcome": {
+    "title": "Welcome",
+    "goalQuestion": "What’s your main goal?",
+    "goalHelp": "This helps tailor guidance.",
+    "goals": {
+      "reduceStress": "Reduce stress",
+      "buildHabit": "Build a habit",
+      "sleepBetter": "Sleep better",
+      "feelSteadier": "Feel steadier"
+    },
+    "hapticCues": "Haptic cues",
+    "hapticDesc": "Small vibration at start/end",
+    "smartReminder": "Smart reminder",
+    "smartReminderDesc": "A gentle nudge near your usual practice time. Fully on-device.",
+    "enableReminder": "Enable reminder",
+    "changeAnytime": "You can change these anytime in <em>Settings</em>."
+  },
+  "insights": {
+    "title": "Insights (Pro)",
+    "thisPeriod": "This period",
+    "avgSession": "Avg session",
+    "topRitual": "Top ritual",
+    "streak": "Streak",
+    "noData": "No data yet — complete a ritual or two and check back!",
+    "moodDistribution": "Mood distribution",
+    "entries": "{{count}} entries",
+    "consistency": "Consistency — sessions per day",
+    "timeBlocks": "When you practice — time blocks",
+    "quickWins": "Quick wins",
+    "table": {
+      "ritual": "Ritual",
+      "avgTime": "Avg time (s)",
+      "samples": "Samples"
+    },
+    "tipShortRituals": "Tip: short rituals reduce friction — a good way to build streaks."
+  },
+  "export": {
+    "title": "Export",
+    "json": "Export JSON",
+    "csv": "Export CSV"
+  }
+}

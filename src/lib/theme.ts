@@ -59,7 +59,7 @@ const SURFACES = {
       #ffffff
     `,
     // light translucent cards on colorful bg
-    surface1:  'rgba(255,255,255,0.4)',
+    surface1:  'rgba(255,255,255,0.40)',
     surface2:  '#fafbff',
     border:    'var(--accent-300)',
     text:      '#0f172a',
@@ -86,37 +86,50 @@ function sanitizeBgUrl(url: string | undefined): string {
   }
 }
 
+function normalizeAppearance(a: unknown): Appearance {
+  return a === 'light' || a === 'dark' ? a : 'custom';
+}
+
 // ---- Load / Save (with migration from v1) ----
 export function loadTheme(): Theme {
+  let t: Partial<Theme> | null = null;
+
   try {
-    // Try v2
     const raw = localStorage.getItem(THEME_KEY);
-    if (raw) return JSON.parse(raw) as Theme;
-
-    // Migrate from v1 if present
-    const oldRaw = localStorage.getItem('ui.theme.v1');
-    if (oldRaw) {
-      const old = JSON.parse(oldRaw) as Partial<Theme>;
-      const migrated: Theme = {
-        appearance: (old.appearance ?? 'custom') as Appearance,
-        accent:     (old.accent ?? 'berry') as Accent,
-        bgMode:     (old.bgMode ?? 'image') as BgMode,
-        bgImageUrl: sanitizeBgUrl(old.bgImageUrl),
-      };
-      localStorage.setItem(THEME_KEY, JSON.stringify(migrated));
-      // optional cleanup
-      localStorage.removeItem('ui.theme.v1');
-      return migrated;
+    if (raw) t = JSON.parse(raw) as Partial<Theme>;
+    else {
+      const oldRaw = localStorage.getItem('ui.theme.v1');
+      if (oldRaw) {
+        const old = JSON.parse(oldRaw) as Partial<Theme>;
+        t = {
+          appearance: old.appearance, // 'system' maps to 'custom' below
+          accent: old.accent,
+          bgMode: old.bgMode,
+          bgImageUrl: old.bgImageUrl,
+        };
+        localStorage.removeItem('ui.theme.v1');
+      }
     }
-  } catch { /* ignore */ }
+  } catch {
+    // ignore
+  }
 
-  // Fresh default
-  return { appearance: 'custom', accent: 'berry', bgMode: 'image', bgImageUrl: DEFAULT_SYSTEM_BG_URL };
+  const out: Theme = {
+    appearance: normalizeAppearance(t?.appearance),
+    accent:     (t?.accent ?? 'berry') as Accent,
+    bgMode:     (t?.bgMode ?? 'image') as BgMode,
+    bgImageUrl: sanitizeBgUrl(t?.bgImageUrl),
+  };
+
+  // Persist normalized theme so future reads are safe
+  localStorage.setItem(THEME_KEY, JSON.stringify(out));
+  return out;
 }
 
 export function saveTheme(t: Theme) {
   const safe: Theme = {
     ...t,
+    appearance: normalizeAppearance(t.appearance),
     bgImageUrl: t.bgImageUrl ? sanitizeBgUrl(t.bgImageUrl) : DEFAULT_SYSTEM_BG_URL,
   };
   localStorage.setItem(THEME_KEY, JSON.stringify(safe));
@@ -126,6 +139,7 @@ export function saveTheme(t: Theme) {
 export function applyTheme(t: Theme): void {
   const root = document.documentElement;
 
+  // Resolve OS mode for contrast when appearance='custom'
   const mql = window.matchMedia?.('(prefers-color-scheme: dark)');
   const resolved: Exclude<Appearance,'custom'> =
     t.appearance === 'custom' ? (mql?.matches ? 'dark' : 'light') : t.appearance;
@@ -137,9 +151,9 @@ export function applyTheme(t: Theme): void {
 
   // Accent scale → CSS vars
   const pal = ACCENTS[t.accent];
-  (Object.keys(pal) as Shade[]).forEach(k => set(`--accent-${k}`, pal[k]));
+  (Object.keys(pal) as Shade[]).forEach(k => set('--accent-' + k, pal[k]));
 
-  // Background: System + Image → overlay + photo (with cache-bust)
+  // Background: Custom + Image → overlay + photo (with cache-bust)
   if (t.appearance === 'custom' && t.bgMode === 'image' && (t.bgImageUrl ?? '').length > 0) {
     const url = withVersion(sanitizeBgUrl(t.bgImageUrl));
     const overlay = 'linear-gradient(0deg, rgba(255,255,255,0.42), rgba(255,255,255,0.42))';
@@ -160,10 +174,9 @@ export function applyTheme(t: Theme): void {
   set('--nav-bg',     surf.navBg);
   set('--hover',      surf.hover);
 
-  // Buttons (contrast-aware)
-  const isDark = (t.appearance === 'dark');
-  if (isDark) {
-    set('--primary-fg', '#000000');
+  // Primary buttons (use resolved mode for correct contrast)
+  if (resolved === 'dark') {
+    set('--primary-fg', '#ffffff');
     set('--primary-bg', 'var(--accent-300)');
     set('--primary-bg-hover', 'var(--accent-400)');
     set('--primary-bg-active','var(--accent-500)');
@@ -183,9 +196,9 @@ export function applyTheme(t: Theme): void {
     set('--accent-nav-press', 'var(--accent-700)');
   }
 
-  // meta theme-color
+  // Browser chrome color
   const themeMeta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
-  if (themeMeta) themeMeta.content = typeof (surf as any).themeMeta === 'string' ? (surf as any).themeMeta : '#ffffff';
+  if (themeMeta) themeMeta.content = (surf as any).themeMeta ?? '#ffffff';
 
   function set(name: string, value: string) {
     root.style.setProperty(name, value);
@@ -196,7 +209,7 @@ export function applyTheme(t: Theme): void {
   }
 }
 
-// Keep UI synced with OS mode when appearance='system'
+// Keep UI synced with OS mode when appearance='custom'
 export function bindSystemThemeReactivity(getAppearance: () => Appearance): () => void {
   const mql = window.matchMedia?.('(prefers-color-scheme: dark)');
   if (!mql) return () => {};

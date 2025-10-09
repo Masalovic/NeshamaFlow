@@ -1,0 +1,51 @@
+{
+  "title": "How are you feeling?",
+  "todayPanel": {
+    "greeting": {
+      "lateNight": "Late night",
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
+    },
+    "suggestedToday": "Suggested today",
+    "goal": "Goal",
+    "done": "done",
+    "startSuggestion": "Start suggestion"
+  },
+  "moodPicker": {
+    "title": "Select your mood",
+    "settings": "Settings",
+    "noteLabel": "Add a note (optional)",
+    "placeholder": "What’s on your mind?",
+    "quickSaveHint_html": "<strong>Quick Save</strong> logs your mood instantly and skips the ritual. We’ll save your selected mood and optional note to <em>History</em>.",
+    "lastLogged": "Last Logged Mood:",
+    "onDate": "on {{date}}"
+  },
+  "actions": {
+    "startRitual": "Start Ritual",
+    "quickSave": "Quick Save"
+  },
+  "reminder": {
+    "takeAMoment": "Take a moment?",
+    "suggestion": "How about {{pretty}}? You haven’t checked in yet today.",
+    "startNow": "Start now",
+    "later": "Later",
+    "mute7d": "Mute 7d"
+  },
+  "streak": {
+    "title": "Daily streak",
+    "onTrack": "You’re on track today",
+    "logToKeep": "Log a mood to keep it going",
+    "repair": "Repair",
+    "repairIn": "Repair in {{days}}d",
+    "goPro": "Go Pro",
+    "proFeature": "Pro feature: repair missed day"
+  },
+  "selectMood": "Select your mood",
+  "noteLabelOptional": "Add a note (optional)",
+  "notePlaceholder": "What’s on your mind?",
+  "startRitual": "Start Ritual",
+  "quickSave": "Quick Save",
+  "quickSaveHelpPrefix": "logs your mood instantly and skips the ritual. We’ll save your selected mood and optional note to",
+  "lastLogged": "Last logged mood: {{emoji}} on {{date}}"
+}

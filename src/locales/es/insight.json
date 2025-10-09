@@ -1,0 +1,34 @@
+{
+  "title": "Insights (Pro)",
+  "range": {
+    "label": "{{start}} – {{end}}",
+    "last7": "Últimos 7 días",
+    "last28": "Últimos 28 días",
+    "last90": "Últimos 90 días",
+    "custom": "Personalizado…",
+    "startDate": "Fecha inicio",
+    "endDate": "Fecha fin"
+  },
+  "summary": {
+    "thisPeriod": "Este período",
+    "minutesSessions": "{{minutes}} min · {{sessions}} sesiones",
+    "avgSession": "Sesión promedio",
+    "topRitual": "Ritual principal",
+    "streak": "Racha",
+    "noEntryToday": "(sin entrada hoy)"
+  },
+  "empty": "Aún no hay datos — completa uno o dos rituales y vuelve.",
+  "charts": {
+    "moodDistribution": "Distribución de ánimo",
+    "sessionsPerDay": "Constancia — sesiones por día",
+    "timeBlocks": "Cuándo practicas — bloques horarios",
+    "quickWins": "Victorias rápidas",
+    "noData": "Aún no hay datos."
+  },
+  "table": {
+    "ritual": "Ritual",
+    "avgSec": "Promedio (s)",
+    "samples": "Muestras",
+    "tip": "Consejo: los rituales cortos reducen la fricción — ideales para construir racha."
+  }
+}

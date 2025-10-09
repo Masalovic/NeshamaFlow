@@ -1,0 +1,51 @@
+{
+  "title": "Wie fühlst du dich?",
+  "todayPanel": {
+    "greeting": {
+      "lateNight": "Späte Nacht",
+      "morning": "Guten Morgen",
+      "afternoon": "Guten Tag",
+      "evening": "Guten Abend"
+    },
+    "suggestedToday": "Heute vorgeschlagen",
+    "goal": "Ziel",
+    "done": "erledigt",
+    "startSuggestion": "Vorschlag starten"
+  },
+  "moodPicker": {
+    "title": "Wähle deine Stimmung",
+    "settings": "Einstellungen",
+    "noteLabel": "Notiz hinzufügen (optional)",
+    "placeholder": "Woran denkst du?",
+    "quickSaveHint_html": "<strong>Schnellspeichern</strong> protokolliert deine Stimmung sofort und überspringt das Ritual. Wir speichern Stimmung und Notiz im <em>Verlauf</em>.",
+    "lastLogged": "Zuletzt protokolliert:",
+    "onDate": "am {{date}}"
+  },
+  "actions": {
+    "startRitual": "Ritual starten",
+    "quickSave": "Schnellspeichern"
+  },
+  "reminder": {
+    "takeAMoment": "Kurz innehalten?",
+    "suggestion": "Wie wäre es mit {{pretty}}? Heute noch kein Check-in.",
+    "startNow": "Jetzt starten",
+    "later": "Später",
+    "mute7d": "7 T. stummsch."
+  },
+  "streak": {
+    "title": "Tages-Serie",
+    "onTrack": "Heute liegst du im Plan",
+    "logToKeep": "Protokolliere eine Stimmung, um die Serie zu halten",
+    "repair": "Reparieren",
+    "repairIn": "Reparatur in {{days}} T.",
+    "goPro": "Go Pro",
+    "proFeature": "Pro-Funktion: verpassten Tag reparieren"
+  },
+  "selectMood": "Wähle deine Stimmung",
+  "noteLabelOptional": "Notiz hinzufügen (optional)",
+  "notePlaceholder": "Woran denkst du?",
+  "startRitual": "Ritual starten",
+  "quickSave": "Schnellspeichern",
+  "quickSaveHelpPrefix": "protokolliert deine Stimmung sofort und überspringt das Ritual. Wir speichern Stimmung und Notiz in",
+  "lastLogged": "Zuletzt: {{emoji}} am {{date}}"
+}

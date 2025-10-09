@@ -1,0 +1,52 @@
+{
+  "suggestion": {
+    "title": "Dein Ritual",
+    "basedOnMood": "Basierend auf deiner Stimmung",
+    "start": "Start",
+    "orPick": "Oder aus der Bibliothek wählen",
+    "actions": {
+      "seeSteps": "Schritte ansehen",
+      "whyWorks": "Warum es wirkt",
+      "browse": "Rituale durchsuchen",
+      "startRitual": "Ritual starten"
+    },
+    "modals": {
+      "how": "So geht’s",
+      "noSteps": "Keine Schritte verfügbar.",
+      "why": "Warum es wirkt"
+    }
+  },
+  "player": {
+    "restMsg": "Ruh dich aus — schließe die Augen und atme.",
+    "restHint": "20-Sekunden-Atempause",
+    "rest20": "Pause 20s",
+    "start": "Start",
+    "pause": "Pause",
+    "finishNow": "Jetzt beenden",
+    "saving": "Speichern…",
+    "tipTitle": "Tipp"
+  },
+  "done": {
+    "title": "Ritual fertig",
+    "sessionComplete": "Sitzung abgeschlossen",
+    "logged": "<strong>{{duration}}</strong> protokolliert — {{ritualTitle}}.",
+    "saved": "Gespeichert.",
+    "afterCare": "Nachsorge",
+    "logAnother": "Weiteres protokollieren",
+    "seeHistory": "Verlauf ansehen",
+    "setReminder": "Smart-Erinnerung setzen",
+    "share": {
+      "title": "Meine Ritual-Sitzung"
+    },
+    "generic": "Ritual"
+  },
+  "after": {
+    "boxBreath": { "1": "Einmal langsamer einatmen und Kiefer lösen.", "2": "Nächste Ausatmung weicher; Schultern sinken lassen.", "3": "Bei Bedarf 1–2 ruhige Runden später." },
+    "478": { "1": "Bei Schwindel normal atmen für eine Minute.", "2": "4-7-8 zum Einschlafen: 3–4 Runden reichen.", "3": "Einen Schluck Wasser, langsam aufstehen." },
+    "bodyScan": { "1": "Schultern rollen; Stirn und Zunge entspannen.", "2": "Einen Bereich notieren und später 30s beachten.", "3": "Einen Schluck Wasser und sanft dehnen." },
+    "ground": { "1": "Einen kleinen nächsten Schritt langsam tun.", "2": "Hände öffnen; Zunge vom Gaumen lösen.", "3": "Bei Unruhe: langsam länger ausatmen." },
+    "compassion": { "1": "Hand aufs Herz und einen freundlichen Satz.", "2": "„Gemeinsame Menschlichkeit“ erinnern.", "3": "Einen unterstützenden Satz notieren." },
+    "gratitude": { "1": "Ein konkretes Detail ~10s genießen.", "2": "Wenn möglich, eine kurze Dankesnachricht senden.", "3": "Sanft lächeln, um die Erinnerung zu festigen." },
+    "default": { "1": "Einmal langsamer einatmen, Schultern entspannen.", "2": "Einen Schluck Wasser (kleine Rituale halten besser!).", "3": "Optional: eine Zeile im Verlauf notieren." }
+  }
+}

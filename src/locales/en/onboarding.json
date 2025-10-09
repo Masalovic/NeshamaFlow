@@ -1,0 +1,30 @@
+{
+  "welcome": {
+    "title": "Welcome"
+  },
+  "goal": {
+    "title": "What’s your main goal?",
+    "subtitle": "This helps tailor guidance.",
+    "options": {
+      "reduceStress": "Reduce stress",
+      "buildHabit": "Build a habit",
+      "sleepBetter": "Sleep better",
+      "feelSteadier": "Feel steadier"
+    }
+  },
+  "haptics": {
+    "title": "Haptic cues",
+    "desc": "Small vibration at start/end"
+  },
+  "reminder": {
+    "title": "Smart reminder",
+    "desc": "A gentle nudge near your usual practice time. Fully on-device.",
+    "enable": "Enable reminder"
+  },
+  "actions": {
+    "skip": "Skip for now",
+    "continue": "Continue",
+    "saving": "Saving…",
+    "footnote": "You can change these anytime in <em>Settings</em>."
+  }
+}

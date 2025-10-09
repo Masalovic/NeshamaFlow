@@ -1,0 +1,52 @@
+{
+  "suggestion": {
+    "title": "Tvoj ritual",
+    "basedOnMood": "Na osnovu raspoloženja",
+    "start": "Počni",
+    "orPick": "Ili izaberi iz Biblioteke",
+    "actions": {
+      "seeSteps": "Vidi korake",
+      "whyWorks": "Zašto funkcioniše",
+      "browse": "Pregledaj rituale",
+      "startRitual": "Pokreni ritual"
+    },
+    "modals": {
+      "how": "Kako se radi",
+      "noSteps": "Nema dostupnih koraka.",
+      "why": "Zašto funkcioniše"
+    }
+  },
+  "player": {
+    "restMsg": "Odmor — zatvori oči i diši.",
+    "restHint": "Napravi pauzu za disanje od 20s",
+    "rest20": "Odmor 20s",
+    "start": "Počni",
+    "pause": "Pauza",
+    "finishNow": "Završi odmah",
+    "saving": "Čuvanje…",
+    "tipTitle": "Savet"
+  },
+  "done": {
+    "title": "Ritual završen",
+    "sessionComplete": "Sesija završena",
+    "logged": "Zabeleženo <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Sačuvano.",
+    "afterCare": "Nakon sesije",
+    "logAnother": "Zabeleži još",
+    "seeHistory": "Vidi istoriju",
+    "setReminder": "Podesi pametni podsetnik",
+    "share": {
+      "title": "Moja ritual sesija"
+    },
+    "generic": "ritual"
+  },
+  "after": {
+    "boxBreath": { "1": "Udahni sporije i opusti vilicu.", "2": "Omekšaj sledeći izdah; primeti spuštanje ramena.", "3": "Ako prija, uradi 1–2 tiha ciklusa kasnije danas." },
+    "478": { "1": "Ako si malo ošamućen/a, diši normalno minut.", "2": "4-7-8 pre spavanja: 3–4 kruga je dovoljno.", "3": "Popij malo vode i ne ustaj naglo." },
+    "bodyScan": { "1": "Rotiraj ramena; opusti čelo i jezik.", "2": "Zabeleži jedno mesto za 30s kasnije danas.", "3": "Popij gutljaj vode i istegni se." },
+    "ground": { "1": "Odaberi mali sledeći korak i uradi ga polako.", "2": "Otvori šake; opusti jezik sa nepca.", "3": "Ako se uznemirenost vrati, sporiji duži izdah." },
+    "compassion": { "1": "Dlan na srce i jedna ljubazna fraza.", "2": "Seti se „zajedničkog čovečanstva”.", "3": "Zapiši jednu podržavajuću rečenicu." },
+    "gratitude": { "1": "Uživi se u jedan detalj ~10s.", "2": "Ako možeš, pošalji kratku zahvalnicu.", "3": "Blago se nasmeši da učvrstiš sećanje." },
+    "default": { "1": "Udahni sporije i opusti ramena.", "2": "Popij gutljaj vode (sitni rituali se lakše drže!).", "3": "Po želji: zabeleži 1 red u Istoriji." }
+  }
+}

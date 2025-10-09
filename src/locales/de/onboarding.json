@@ -1,0 +1,30 @@
+{
+  "welcome": {
+    "title": "Willkommen"
+  },
+  "goal": {
+    "title": "Was ist dein Hauptziel?",
+    "subtitle": "Hilft uns, die Hinweise anzupassen.",
+    "options": {
+      "reduceStress": "Stress reduzieren",
+      "buildHabit": "Gewohnheit aufbauen",
+      "sleepBetter": "Besser schlafen",
+      "feelSteadier": "Stabiler fühlen"
+    }
+  },
+  "haptics": {
+    "title": "Haptisches Feedback",
+    "desc": "Kurze Vibration zu Beginn/Ende"
+  },
+  "reminder": {
+    "title": "Smart-Erinnerung",
+    "desc": "Sanfter Stupser nahe deiner Übungszeit. Komplett auf dem Gerät.",
+    "enable": "Erinnerung aktivieren"
+  },
+  "actions": {
+    "skip": "Jetzt überspringen",
+    "continue": "Weiter",
+    "saving": "Speichern…",
+    "footnote": "Du kannst das jederzeit in den <em>Einstellungen</em> ändern."
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Verlauf",
+  "openInsights": "Einblicke öffnen",
+  "loading": "Laden…",
+  "empty": "Noch keine Sitzungen — starte dein erstes Ritual, um das Raster zu füllen.",
+  "labels": {
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "format": "ddd, D. MMM"
+  },
+  "heatmap": {
+    "title": "Letzte 28 Tage",
+    "legend": "Legende",
+    "repaired": "repariert"
+  },
+  "item": {
+    "minutesSep": "· {{minutes}} Min",
+    "ritualSep": "· {{title}}"
+  }
+}

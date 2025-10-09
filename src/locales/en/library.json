@@ -1,0 +1,20 @@
+{
+  "title": "Rituals",
+  "searchPlaceholder": "Search rituals…",
+  "chips": {
+    "all": "All"
+  },
+  "empty": "No matches. Try a different search or filter.",
+  "card": {
+    "start": "Start",
+    "details": "Details",
+    "approxMin": "~ {{min}} min",
+    "why": "Why this helps",
+    "steps": "Steps",
+    "tip": "Tip"
+  },
+  "modal": {
+    "startThis": "Start this",
+    "steps": "Steps"
+  }
+}

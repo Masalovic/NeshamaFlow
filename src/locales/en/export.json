@@ -1,0 +1,12 @@
+{
+  "title": "Export",
+  "yourData": "Your data",
+  "unlocking": "Unlocking secure storage…",
+  "loading": "Loading sessions…",
+  "countLine": "You currently have {{count}} sessions stored on this device.",
+  "actions": {
+    "exportJSON": "Export JSON",
+    "exportCSV": "Export CSV"
+  },
+  "note": "Exports include only your own logs from this device (synced entries included). On mobile, we’ll try to open the system Share sheet; otherwise the file will download."
+}

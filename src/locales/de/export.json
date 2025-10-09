@@ -1,0 +1,12 @@
+{
+  "title": "Export",
+  "yourData": "Deine Daten",
+  "unlocking": "Sichere Speicherung wird entsperrt…",
+  "loading": "Sitzungen werden geladen…",
+  "countLine": "Du hast derzeit {{count}} Sitzungen auf diesem Gerät gespeichert.",
+  "actions": {
+    "exportJSON": "JSON exportieren",
+    "exportCSV": "CSV exportieren"
+  },
+  "note": "Der Export enthält nur deine eigenen Einträge von diesem Gerät (inklusive synchronisierter). Auf Mobilgeräten öffnen wir nach Möglichkeit die System-Freigabe; sonst wird die Datei heruntergeladen."
+}

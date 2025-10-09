@@ -1,0 +1,30 @@
+{
+  "welcome": {
+    "title": "Bienvenido/a"
+  },
+  "goal": {
+    "title": "¿Cuál es tu objetivo principal?",
+    "subtitle": "Nos ayuda a adaptar la guía.",
+    "options": {
+      "reduceStress": "Reducir el estrés",
+      "buildHabit": "Crear un hábito",
+      "sleepBetter": "Dormir mejor",
+      "feelSteadier": "Sentirte más estable"
+    }
+  },
+  "haptics": {
+    "title": "Vibración háptica",
+    "desc": "Pequeña vibración al inicio/fin"
+  },
+  "reminder": {
+    "title": "Recordatorio inteligente",
+    "desc": "Un empujón suave cerca de tu hora habitual. Todo en el dispositivo.",
+    "enable": "Activar recordatorio"
+  },
+  "actions": {
+    "skip": "Omitir por ahora",
+    "continue": "Continuar",
+    "saving": "Guardando…",
+    "footnote": "Puedes cambiarlo cuando quieras en <em>Configuración</em>."
+  }
+}

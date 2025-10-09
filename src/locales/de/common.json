@@ -1,0 +1,232 @@
+{
+  "appName": "Neshama Flow",
+  "a11y": {
+    "primaryNav": "Hauptnavigation",
+    "openSettings": "Einstellungen öffnen"
+  },
+  "nav": {
+    "home": "Start",
+    "rituals": "Rituale",
+    "history": "Kalender",
+    "insights": "Einblicke",
+    "profile": "Profil",
+    "settings": "Einstellungen"
+  },
+  "buttons": {
+    "start": "Start",
+    "pause": "Pause",
+    "resume": "Fortsetzen",
+    "finishNow": "Jetzt beenden",
+    "saving": "Speichern…",
+    "save": "Speichern",
+    "clear": "Leeren",
+    "cancel": "Abbrechen",
+    "continue": "Weiter",
+    "close": "Schließen",
+    "details": "Details",
+    "startThis": "Dieses starten",
+    "startSuggestion": "Vorschlag starten",
+    "startNow": "Jetzt starten",
+    "later": "Später",
+    "mute7d": "7 T. stummsch.",
+    "repair": "Reparieren",
+    "goPro": "Go Pro",
+    "signOut": "Abmelden",
+    "enablePin": "PIN aktivieren",
+    "disablePin": "PIN deaktivieren",
+    "upgradeToPro": "Upgrade auf Pro",
+    "logAnother": "Weiteres protokollieren",
+    "seeHistory": "Verlauf ansehen",
+    "setSmartReminder": "Smart-Erinnerung setzen",
+    "skip": "Jetzt überspringen",
+    "share": "Teilen",
+    "copy": "Kopieren",
+    "copied": "Kopiert!"
+  },
+  "generic": {
+    "loading": "Laden…",
+    "optional": "optional",
+    "tip": "Tipp",
+    "none": "—",
+    "pleaseWait": "Bitte warten…",
+    "working": "Arbeitet…"
+  },
+  "units": {
+    "min": "Min",
+    "secondsSuffix": "s"
+  },
+  "appearance": {
+    "title": "Darstellung",
+    "useGradient": "Farbverlauf verwenden",
+    "usePhoto": "Foto verwenden",
+    "photoNoteCustom": "Fotohintergrund wird nur im Modus „Benutzerdefiniert“ verwendet."
+  },
+  "accent": {
+    "titleWithName": "Akzent: {{name}}",
+    "berry": "berry",
+    "ocean": "ocean",
+    "forest": "forest"
+  },
+  "home": {
+    "title": "Wie fühlst du dich?",
+    "selectMood": "Wähle deine Stimmung",
+    "settings": "Einstellungen",
+    "addNote": "Notiz hinzufügen (optional)",
+    "notePlaceholder": "Woran denkst du?",
+    "quickSaveTitle": "Schnellspeichern",
+    "quickSaveDesc": "protokolliert deine Stimmung sofort und überspringt das Ritual. Wir speichern Stimmung und optionale Notiz im <em>Verlauf</em>.",
+    "lastLoggedMood": "Zuletzt protokolliert: {{emoji}} am {{date}}",
+    "startRitual": "Ritual starten",
+    "quickSave": "Schnellspeichern"
+  },
+  "todayPanel": {
+    "greetings": {
+      "lateNight": "Späte Nacht",
+      "goodMorning": "Guten Morgen",
+      "goodAfternoon": "Guten Tag",
+      "goodEvening": "Guten Abend"
+    },
+    "suggestedToday": "Heute vorgeschlagen: {{suggestion}}",
+    "goalDone": "Ziel: {{goalMin}} Min · <strong>{{minutesToday}} Min</strong> erledigt"
+  },
+  "smartReminder": {
+    "title": "Kurz innehalten?",
+    "body": "Wie wäre es mit {{pretty}}? Heute noch kein Check-in.",
+    "prettyReset": "einem 2-Min-Reset",
+    "prettyBlock": "einem 2-Min-{{block}}-Reset",
+    "blocks": {
+      "morning": "Morgen",
+      "afternoon": "Nachmittag",
+      "evening": "Abend",
+      "night": "Nacht"
+    }
+  },
+  "streak": {
+    "title": "Tages-Serie",
+    "onTrack": "Heute liegst du im Plan",
+    "logToKeep": "Protokolliere eine Stimmung, um die Serie zu halten",
+    "cooldown": "Reparatur in {{count}} T."
+  },
+  "history": {
+    "title": "Verlauf",
+    "insights": "Einblicke",
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "empty": "Noch keine Sitzungen — starte dein erstes Ritual, um das Raster zu füllen."
+  },
+  "heatmap": {
+    "title": "Letzte 28 Tage",
+    "legend": "Legende",
+    "repaired": "repariert",
+    "tooltip": "{{date}}: {{count, plural, one {# Sitzung} other {# Sitzungen}}}{{repaired, select, true { (repariert)} other {}}}"
+  },
+  "library": {
+    "title": "Rituale",
+    "searchPlaceholder": "Rituale suchen…",
+    "all": "Alle",
+    "noMatches": "Keine Treffer. Probiere eine andere Suche oder Filter.",
+    "approxMinutes": "~ {{minutes}} Min",
+    "why": "Warum",
+    "steps": "Schritte",
+    "detailLink": "Details",
+    "libraryOpenedEvent": "library_opened",
+    "detailViewedEvent": "library_detail_viewed",
+    "startClickedEvent": "library_start_clicked"
+  },
+  "player": {
+    "restingPrompt": "Ruh dich aus — schließe die Augen und atme.",
+    "rest20s": "Pause 20s",
+    "finishNow": "Jetzt beenden",
+    "saving": "Speichern…"
+  },
+  "done": {
+    "title": "Ritual fertig",
+    "sessionComplete": "Sitzung abgeschlossen",
+    "loggedLine": "<strong>{{duration}}</strong> protokolliert — {{ritualTitle}}.",
+    "saved": "Gespeichert.",
+    "afterCare": "Nachsorge"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "privacyTitle": "Datenschutz",
+    "privacyBody": "Deine Stimmungen und Rituale werden lokal auf deinem Gerät gespeichert und verschlüsselt.",
+    "preferencesTitle": "Voreinstellungen",
+    "haptics": "Haptisches Feedback (falls unterstützt)",
+    "practiceTitle": "Praxis & Erinnerungen",
+    "dailyGoal": "Tagesziel (Minuten)",
+    "preferredTime": "Bevorzugte Erinnerungszeit",
+    "smartReminders": "Smart-Erinnerungen",
+    "nudgeNote": "Wir stupsen dich zur bevorzugten Zeit mit On-Device-Logik an.",
+    "proTitle": "Pro (Vorschau)",
+    "proToggle": "Pro-Funktionen aktivieren (lokal)",
+    "proNote": "Nur clientseitig zum Testen. Stripe wird später angebunden.",
+    "lockTitle": "App-Sperre (PIN)",
+    "pinSet": "Auf diesem Gerät ist eine PIN gesetzt.",
+    "newPin": "Neue PIN",
+    "confirmPin": "PIN bestätigen",
+    "pinStoredInfo": "Die PIN wird lokal als gesalzter SHA-256-Hash gespeichert. Sie schützt nur dieses Gerät.",
+    "clearAll": "Alle lokalen Daten löschen",
+    "language": "Sprache",
+    "accent": "Akzent",
+    "appearance": "Darstellung",
+    "custom": "Benutzerdefiniert",
+    "system": "System",
+    "light": "Hell",
+    "dark": "Dunkel"
+  },
+  "profile": {
+    "title": "Profil",
+    "signedInAs": "Angemeldet als",
+    "displayName": "Anzeigename",
+    "username": "Benutzername",
+    "chooseAvatar": "Avatar wählen",
+    "saveProfile": "Profil speichern",
+    "profileSaved": "Profil gespeichert!",
+    "account": "Konto",
+    "errors": {
+      "usernameTaken": "Dieser Benutzername ist bereits vergeben.",
+      "avatarNotAllowed": "Avatar laut Serverrichtlinie nicht erlaubt."
+    }
+  },
+  "welcome": {
+    "title": "Willkommen",
+    "goalQuestion": "Was ist dein Hauptziel?",
+    "goalHelp": "Hilft uns, die Hinweise anzupassen.",
+    "goals": {
+      "reduceStress": "Stress reduzieren",
+      "buildHabit": "Gewohnheit aufbauen",
+      "sleepBetter": "Besser schlafen",
+      "feelSteadier": "Stabiler fühlen"
+    },
+    "hapticCues": "Haptisches Feedback",
+    "hapticDesc": "Kurze Vibration zu Beginn/Ende",
+    "smartReminder": "Smart-Erinnerung",
+    "smartReminderDesc": "Sanfter Stupser nahe deiner Übungszeit. Komplett auf dem Gerät.",
+    "enableReminder": "Erinnerung aktivieren",
+    "changeAnytime": "Du kannst das jederzeit in den <em>Einstellungen</em> ändern."
+  },
+  "insights": {
+    "title": "Einblicke (Pro)",
+    "thisPeriod": "Dieser Zeitraum",
+    "avgSession": "Durchschnittliche Sitzung",
+    "topRitual": "Top-Ritual",
+    "streak": "Serie",
+    "noData": "Noch keine Daten — mach ein/zwei Rituale und schau wieder rein!",
+    "moodDistribution": "Stimmungsverteilung",
+    "entries": "{{count}} Einträge",
+    "consistency": "Konstanz — Sitzungen pro Tag",
+    "timeBlocks": "Wann du übst — Zeitblöcke",
+    "quickWins": "Schnelle Erfolge",
+    "table": {
+      "ritual": "Ritual",
+      "avgTime": "Durchschn. (s)",
+      "samples": "Stichproben"
+    },
+    "tipShortRituals": "Tipp: Kurze Rituale verringern Reibung — gut für Serien."
+  },
+  "export": {
+    "title": "Export",
+    "json": "JSON exportieren",
+    "csv": "CSV exportieren"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "title": "Izvoz",
+  "yourData": "Tvoji podaci",
+  "unlocking": "Otključavam bezbednu memoriju…",
+  "loading": "Učitavam sesije…",
+  "countLine": "Trenutno imaš {{count}} sesija sačuvanih na ovom uređaju.",
+  "actions": {
+    "exportJSON": "Izvezi JSON",
+    "exportCSV": "Izvezi CSV"
+  },
+  "note": "Izvoz uključuje samo tvoje sopstvene zapise sa ovog uređaja (uključujući sinhronizovane unose). Na telefonu ćemo pokušati da otvorimo sistemski \"Share\"; u suprotnom fajl će se preuzeti."
+}

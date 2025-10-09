@@ -1,0 +1,20 @@
+{
+  "title": "History",
+  "openInsights": "Open Insights",
+  "loading": "Loading…",
+  "empty": "No sessions yet—start your first ritual to light up the grid.",
+  "labels": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "format": "ddd, MMM D"
+  },
+  "heatmap": {
+    "title": "Past 28 days",
+    "legend": "Legend",
+    "repaired": "repaired"
+  },
+  "item": {
+    "minutesSep": "· {{minutes}} min",
+    "ritualSep": "· {{title}}"
+  }
+}

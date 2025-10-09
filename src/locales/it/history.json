@@ -1,0 +1,20 @@
+{
+  "title": "Cronologia",
+  "openInsights": "Apri Approfondimenti",
+  "loading": "Caricamento…",
+  "empty": "Nessuna sessione — avvia il tuo primo rituale per illuminare la griglia.",
+  "labels": {
+    "today": "Oggi",
+    "yesterday": "Ieri",
+    "format": "ddd, D MMM"
+  },
+  "heatmap": {
+    "title": "Ultimi 28 giorni",
+    "legend": "Legenda",
+    "repaired": "riparato"
+  },
+  "item": {
+    "minutesSep": "· {{minutes}} min",
+    "ritualSep": "· {{title}}"
+  }
+}

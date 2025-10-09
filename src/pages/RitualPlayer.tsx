@@ -1,4 +1,3 @@
-// src/pages/RitualPlayer.tsx
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -17,6 +16,7 @@ import { track } from '../lib/metrics'
 import { logLocal, loadHistory } from '../lib/history'
 import { syncHistoryUp } from '../lib/sync'
 import { loadSettings } from '../lib/settings'
+import { useTranslation } from 'react-i18next'
 
 function vibrate(pattern: number[] | number, enabled: boolean) {
   if (!enabled) return
@@ -27,6 +27,7 @@ function vibrate(pattern: number[] | number, enabled: boolean) {
 
 export default function RitualPlayer() {
   const navigate = useNavigate()
+  const { t } = useTranslation(['ritual', 'common'])
 
   const [mood, setMood] = useState<MoodKey | null>(null)
   const [note, setNote] = useState<string>('')
@@ -34,7 +35,6 @@ export default function RitualPlayer() {
   const [haptics, setHaptics] = useState(true)
   const [draftRitualId, setDraftRitualId] = useState<string | null>(null)
 
-  // Load settings, mood, note, and any one-shot draft ritual selection
   useEffect(() => {
     let alive = true
     ;(async () => {
@@ -55,9 +55,8 @@ export default function RitualPlayer() {
       setNote(n)
       setDraftRitualId(draft || null)
 
-      // one-shot: clear the stored draft pick so next run falls back to the suggestion flow
       if (draft) {
-        sSet('draft.ritual', '').catch(() => {}) // fire-and-forget
+        sSet('draft.ritual', '').catch(() => {})
       }
 
       setLoaded(true)
@@ -65,18 +64,15 @@ export default function RitualPlayer() {
     return () => { alive = false }
   }, [navigate])
 
-  // Choose ritual: draft override > mood suggestion
   const ritual: Ritual | null = useMemo(() => {
     return draftRitualId ? getRitualById(draftRitualId) : (mood ? getRitualForMood(mood) : null)
   }, [draftRitualId, mood])
 
-  // Timer state
   const total = ritual?.durationSec ?? 120
   const [remaining, setRemaining] = useState<number>(total)
   const [running, setRunning] = useState(false)
   const timerRef = useRef<number | null>(null)
 
-  // 20s rest
   const REST_LEN = 20
   const [resting, setResting] = useState(false)
   const [restRemaining, setRestRemaining] = useState(REST_LEN)
@@ -90,7 +86,6 @@ export default function RitualPlayer() {
     if (loaded && !ritual) navigate('/log', { replace: true })
   }, [loaded, ritual, navigate])
 
-  // Main timer
   useEffect(() => {
     if (!running || resting) return
     vibrate(24, haptics)
@@ -110,7 +105,6 @@ export default function RitualPlayer() {
     }
   }, [running, resting, haptics])
 
-  // Rest timer
   useEffect(() => {
     if (!resting) return
     const id = window.setInterval(() => {
@@ -128,7 +122,6 @@ export default function RitualPlayer() {
     return () => window.clearInterval(id)
   }, [resting, haptics])
 
-  // Pause when page/tab is hidden (prevents background running)
   useEffect(() => {
     const onVis = () => {
       if (document.hidden && running) setRunning(false)
@@ -137,14 +130,12 @@ export default function RitualPlayer() {
     return () => document.removeEventListener('visibilitychange', onVis)
   }, [running])
 
-  // Clear any timers on unmount
   useEffect(() => {
     return () => {
       if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null }
     }
   }, [])
 
-  // Auto-finish when timer hits zero
   useEffect(() => {
     if (remaining <= 0 && !completing) {
       setRunning(false)
@@ -161,7 +152,7 @@ export default function RitualPlayer() {
     try {
       if (mood && ritual) {
         const durationSec = Math.max(0, Math.min(total, total - remaining))
-        await logLocal({ mood, ritualId: ritual.id, durationSec, note }) // single write
+        await logLocal({ mood, ritualId: ritual.id, durationSec, note })
         track('ritual_completed', {
           ritualId: ritual.id,
           durationSec,
@@ -226,7 +217,7 @@ export default function RitualPlayer() {
             {/* Guidance */}
             <div className="mt-4 w-full text-gray-700 text-sm text-center">
               {resting ? (
-                <div>Rest — close your eyes and breathe.</div>
+                <div>{t('ritual:player.restMsg', 'Rest — close your eyes and breathe.')}</div>
               ) : (
                 <div className="text-left">
                   <div className="font-medium mb-1">{guide.title}</div>
@@ -244,11 +235,11 @@ export default function RitualPlayer() {
             <div className="mt-8 w-full grid grid-cols-3 gap-3">
               {!running ? (
                 <Button className="col-span-1" variant="primary" onClick={onStartPause}>
-                  Start
+                  {t('common:start', 'Start')}
                 </Button>
               ) : (
                 <Button className="col-span-1" variant="ghost" onClick={onPause}>
-                  Pause
+                  {t('common:pause', 'Pause')}
                 </Button>
               )}
               <Button
@@ -256,9 +247,9 @@ export default function RitualPlayer() {
                 variant="outline"
                 onClick={onRest}
                 disabled={!running || resting}
-                title="Take a 20s breathing break"
+                title={t('ritual:player.restHint', 'Take a 20s breathing break')}
               >
-                Rest 20s
+                {t('ritual:player.rest20', 'Rest 20s')}
               </Button>
               <Button
                 className="col-span-1"
@@ -271,7 +262,7 @@ export default function RitualPlayer() {
                 disabled={completing}
                 aria-busy={completing}
               >
-                {completing ? 'Saving…' : 'Finish Now'}
+                {completing ? t('common:saving', 'Saving…') : t('ritual:player.finishNow', 'Finish Now')}
               </Button>
             </div>
           </div>

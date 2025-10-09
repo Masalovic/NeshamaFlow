@@ -1,115 +1,137 @@
-import React, { useState } from "react";
+// src/components/AppLock.tsx
+import React, { useEffect, useRef, useState } from "react";
 import { verifyPIN } from "../lib/appLock";
 import {
   setEncryptionPassphrase,
   migrateFromLegacy,
   clearEncryptionKey,
 } from "../lib/secureStorage";
+import { useTranslation } from "react-i18next";
 
 type Props = { onUnlock: () => void };
 
 export default function AppLock({ onUnlock }: Props) {
+  const { t } = useTranslation(["common"]);
   const [pin, setPin] = useState("");
   const [err, setErr] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    // Focus the PIN field on show
+    inputRef.current?.focus();
+  }, []);
 
   async function submit(e?: React.FormEvent) {
     e?.preventDefault();
-    if (!pin) return;
+    if (!pin || busy) return;
 
     setErr(null);
     setBusy(true);
     try {
-      // 1) Verify the PIN (reads salt/hash from localStorage; no secrets stored)
+      // 1) Verify the PIN (salt/hash is in localStorage; no secrets stored)
       const ok = await verifyPIN(pin);
       if (!ok) {
-        setErr("Wrong PIN");
+        setErr(t("common:appLock.error.wrongPin"));
         return;
+        // busy resets in finally
       }
 
       // 2) Arm secureStorage with a key derived from the PIN (PBKDF2 → AES-GCM)
       await setEncryptionPassphrase(pin);
 
       // 3) One-time migration: re-encrypt legacy/plaintext localStorage values
-      //    Add/remove keys as your app evolves.
       await migrateFromLegacy([
-        "history",        // local session history
-        "settings",       // local app settings (if any)
-        "draft.ritual",   // draft data
-        "ritual.history", // legacy key name (safe if missing)
+        "history",
+        "settings",
+        "draft.ritual",
+        "ritual.history",
       ]);
 
-      // 4) Proceed to the app
+      // 4) Proceed
+      setPin(""); // clear from memory as we leave this screen
       onUnlock();
     } catch (e) {
       console.error(e);
-      setErr("Unexpected error during unlock. Please try again.");
+      setErr(t("common:appLock.error.unexpected"));
     } finally {
       setBusy(false);
     }
   }
 
-  // Optional: expose a dev-only manual lock to drop the in-memory key
+  // Optional: dev-only manual lock to drop the in-memory key
   function forceLock() {
-    clearEncryptionKey(); // forget encryption key in memory
+    clearEncryptionKey();
     setPin("");
     setErr(null);
+    inputRef.current?.focus();
   }
 
   return (
-    <div className="min-h-screen grid place-items-center bg-gray-50 p-6">
+    <div className="min-h-[100svh] grid place-items-center bg-[var(--bg)] text-[var(--text)] p-6">
       <form
         onSubmit={submit}
-        className="w-full max-w-sm bg-white rounded-2xl shadow-lg p-6 space-y-4"
+        className="card w-full max-w-sm p-6 space-y-4"
+        aria-busy={busy}
+        aria-label={t("common:appLock.a11y.form")}
       >
         <header className="text-center">
-          <h1 className="text-xl font-semibold">Enter PIN</h1>
-          <p className="text-sm text-gray-500">
-            Unlock encrypted data to continue.
+          <h1 className="text-lg font-semibold text-main">
+            {t("common:appLock.title")}
+          </h1>
+          <p className="text-sm text-muted">
+            {t("common:appLock.subtitle")}
           </p>
         </header>
 
         <div className="space-y-2">
-          <label htmlFor="pin" className="text-sm font-medium text-gray-700">
-            PIN
+          <label htmlFor="pin" className="text-sm font-medium text-main">
+            {t("common:appLock.pinLabel")}
           </label>
           <input
             id="pin"
-            className="w-full border rounded-xl px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-200"
+            ref={inputRef}
+            className={`input w-full ${err ? "ring-1 ring-red-500" : ""}`}
             type="password"
             inputMode="numeric"
-            pattern="[0-9]*"
+            pattern="\\d*"
             autoComplete="one-time-code"
             value={pin}
             onChange={(e) => setPin(e.target.value)}
             placeholder="••••"
             disabled={busy}
+            aria-invalid={!!err}
+            aria-describedby={err ? "pin-error" : undefined}
+            aria-label={t("common:appLock.a11y.pinField")}
           />
         </div>
 
         {err && (
-          <div className="text-sm text-red-600" role="alert">
+          <div id="pin-error" className="text-sm text-red-600" role="alert">
             {err}
           </div>
         )}
 
         <button
           type="submit"
-          onClick={() => void 0}
           disabled={busy || pin.length < 4}
-          className="w-full rounded-xl py-2 bg-indigo-600 text-white font-medium disabled:opacity-50"
+          className="btn btn-primary w-full"
+          aria-label={busy ? t("common:buttons.unlocking") : t("common:buttons.unlock")}
+          title={busy ? t("common:buttons.unlocking") : t("common:buttons.unlock")}
         >
-          {busy ? "Unlocking…" : "Unlock"}
+          {busy ? t("common:buttons.unlocking") : t("common:buttons.unlock")}
         </button>
 
-        {/* Dev-only: remove in production */}
-        <button
-          type="button"
-          onClick={forceLock}
-          className="w-full text-xs text-gray-500 underline mt-2"
-        >
-          Force lock (dev)
-        </button>
+        {/* Dev-only helper (won’t render in production builds) */}
+        {import.meta.env.DEV && (
+          <button
+            type="button"
+            onClick={forceLock}
+            className="w-full text-xs text-muted underline"
+          >
+            {t("common:dev.forceLock")}
+          </button>
+        )}
       </form>
     </div>
   );

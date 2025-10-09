@@ -1,0 +1,26 @@
+{
+  "title": "Perfil",
+  "signedInAs": "Conectado como",
+  "displayName": "Nombre a mostrar",
+  "username": "Usuario",
+  "chooseAvatar": "Elegir avatar",
+  "placeholders": {
+    "name": "Tu nombre",
+    "username": "@usuario"
+  },
+  "save": "Guardar perfil",
+  "saving": "Guardando…",
+  "saved": "¡Perfil guardado!",
+  "account": {
+    "title": "Cuenta",
+    "signOut": "Cerrar sesión",
+    "signOutDesc": "Cerrar sesión en este dispositivo."
+  },
+  "errors": {
+    "usernameTaken": "Ese usuario ya está en uso.",
+    "avatarPolicy": "Avatar no permitido por la política del servidor."
+  },
+  "a11y": {
+    "chooseAvatar": "Elegir avatar {{name}}"
+  }
+}

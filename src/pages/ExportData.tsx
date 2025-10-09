@@ -1,4 +1,3 @@
-// src/pages/ExportData.tsx
 import React, { useEffect, useMemo, useState } from 'react';
 import dayjs from 'dayjs';
 import Header from '../components/ui/Header';
@@ -6,6 +5,7 @@ import { loadHistory, type LogItem } from '../lib/history';
 import { ready as storageReady } from '../lib/secureStorage';
 import { track } from '../lib/metrics';
 import { titleForRitualId } from '../lib/ritualEngine';
+import { useTranslation } from 'react-i18next';
 
 function toCSV(rows: (string | number | null)[][], header: string[]): string {
   const esc = (v: string | number | null) => {
@@ -17,7 +17,6 @@ function toCSV(rows: (string | number | null)[][], header: string[]): string {
   return '\uFEFF' + lines.join('\n');
 }
 
-// Share if possible (mobile), else download
 async function shareOrDownload(filename: string, mime: string, data: string) {
   const blob = new Blob([data], { type: mime });
   const file = new File([blob], filename, { type: mime });
@@ -42,10 +41,10 @@ async function shareOrDownload(filename: string, mime: string, data: string) {
 }
 
 export default function ExportData() {
+  const { t } = useTranslation(['export', 'common']);
   const [unlocked, setUnlocked] = useState<boolean>(storageReady());
   const [list, setList] = useState<LogItem[] | null>(null);
 
-  // Wait for secureStorage key (after AppLock)
   useEffect(() => {
     if (unlocked) return;
     const id = setInterval(() => {
@@ -57,7 +56,6 @@ export default function ExportData() {
     return () => clearInterval(id);
   }, [unlocked]);
 
-  // Load history
   useEffect(() => {
     if (!unlocked) return;
     let alive = true;
@@ -86,7 +84,7 @@ export default function ExportData() {
       h.ts,
       h.mood,
       h.ritualId,
-      titleForRitualId(h.ritualId), // friendly name
+      titleForRitualId(h.ritualId),
       h.durationSec,
       h.note ?? '',
       h.source ?? '',
@@ -112,24 +110,24 @@ export default function ExportData() {
 
   return (
     <div className="flex h-full flex-col">
-      <Header title="Export (Pro)" back />
+      <Header title={t('export:titlePro', 'Export (Pro)')} back />
       <main className="flex-1 overflow-y-auto p-4">
         <div className="max-w-[420px] mx-auto space-y-4">
           <div className="rounded-2xl border bg-white p-4">
-            <div className="text-sm font-medium">Your data</div>
+            <div className="text-sm font-medium">{t('export:yourData', 'Your data')}</div>
 
             {!unlocked && (
-              <p className="text-sm text-gray-600 mt-1">Unlocking secure storage…</p>
+              <p className="text-sm text-gray-600 mt-1">{t('export:unlocking', 'Unlocking secure storage…')}</p>
             )}
 
             {loading && (
-              <p className="text-sm text-gray-600 mt-1">Loading sessions…</p>
+              <p className="text-sm text-gray-600 mt-1">{t('export:loading', 'Loading sessions…')}</p>
             )}
 
             {list !== null && (
               <>
                 <p className="text-sm text-gray-600 mt-1">
-                  You currently have <span className="font-semibold">{count}</span> sessions stored on this device.
+                  {t('export:countLine', 'You currently have {{count}} sessions stored on this device.', { count })}
                 </p>
 
                 <div className="mt-4 grid grid-cols-2 gap-3">
@@ -138,20 +136,22 @@ export default function ExportData() {
                     onClick={exportJSON}
                     disabled={count === 0}
                   >
-                    Export JSON
+                    {t('export:actions.exportJSON', 'Export JSON')}
                   </button>
                   <button
                     className="btn btn-outline w-full"
                     onClick={exportCSV}
                     disabled={count === 0}
                   >
-                    Export CSV
+                    {t('export:actions.exportCSV', 'Export CSV')}
                   </button>
                 </div>
 
                 <p className="text-xs text-gray-500 mt-3">
-                  Exports include only your own logs from this device (synced entries included).
-                  On mobile, we’ll try to open the system Share sheet; otherwise the file will download.
+                  {t(
+                    'export:note',
+                    'Exports include only your own logs from this device (synced entries included). On mobile, we’ll try to open the system Share sheet; otherwise the file will download.'
+                  )}
                 </p>
               </>
             )}

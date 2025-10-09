@@ -1,0 +1,52 @@
+{
+  "suggestion": {
+    "title": "Tu ritual",
+    "basedOnMood": "Según tu ánimo",
+    "start": "Iniciar",
+    "orPick": "O elige de la Biblioteca",
+    "actions": {
+      "seeSteps": "Ver pasos",
+      "whyWorks": "Por qué funciona",
+      "browse": "Explorar rituales",
+      "startRitual": "Iniciar ritual"
+    },
+    "modals": {
+      "how": "Cómo hacerlo",
+      "noSteps": "No hay pasos disponibles.",
+      "why": "Por qué funciona"
+    }
+  },
+  "player": {
+    "restMsg": "Descansa — cierra los ojos y respira.",
+    "restHint": "Toma una pausa de respiración de 20s",
+    "rest20": "Descanso 20s",
+    "start": "Iniciar",
+    "pause": "Pausar",
+    "finishNow": "Finalizar ahora",
+    "saving": "Guardando…",
+    "tipTitle": "Consejo"
+  },
+  "done": {
+    "title": "Ritual completado",
+    "sessionComplete": "Sesión completada",
+    "logged": "Registrado <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Guardado.",
+    "afterCare": "Después",
+    "logAnother": "Registrar otro",
+    "seeHistory": "Ver historial",
+    "setReminder": "Configurar recordatorio inteligente",
+    "share": {
+      "title": "Mi sesión de ritual"
+    },
+    "generic": "ritual"
+  },
+  "after": {
+    "boxBreath": { "1": "Da una respiración más lenta y relaja la mandíbula.", "2": "Suaviza la próxima exhalación; nota los hombros bajar.", "3": "Si ayuda, haz 1–2 ciclos tranquilos más tarde." },
+    "478": { "1": "Si te mareas, respira normal durante un minuto.", "2": "Usa 4-7-8 al dormir: 3–4 rondas bastan.", "3": "Bebe agua y evita levantarte rápido." },
+    "bodyScan": { "1": "Rota hombros; suaviza frente y lengua.", "2": "Anota un área para 30s más tarde.", "3": "Bebe un sorbo de agua y estira suavemente." },
+    "ground": { "1": "Elige una pequeña acción y hazla despacio.", "2": "Abre las manos; relaja la lengua del paladar.", "3": "Si vuelve la agitación, exhala más lento y largo." },
+    "compassion": { "1": "Mano al corazón y una frase amable.", "2": "Recuerda la “humanidad común”.", "3": "Escribe una línea de apoyo reutilizable." },
+    "gratitude": { "1": "Saborea un detalle concreto ~10s.", "2": "Si puedes, envía un agradecimiento de una línea.", "3": "Sonríe suavemente para fijar el recuerdo." },
+    "default": { "1": "Da una respiración más lenta y relaja los hombros.", "2": "Bebe un sorbo de agua (los rituales cortos se mantienen mejor).", "3": "Opcional: anota una línea en Historial." }
+  }
+}

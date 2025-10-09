@@ -1,0 +1,71 @@
+{
+  "title": "Configuración",
+  "language": {
+    "title": "Idioma",
+    "choose": "Elige el idioma de la app"
+  },
+  "privacy": {
+    "title": "Privacidad",
+    "body": "Tus ánimos y rituales se almacenan localmente en tu dispositivo y están cifrados."
+  },
+  "prefs": {
+    "title": "Preferencias",
+    "haptics": "Vibración háptica (si está disponible)"
+  },
+  "practice": {
+    "title": "Práctica y recordatorios",
+    "goal": "Meta diaria (minutos)",
+    "time": "Hora preferida del recordatorio",
+    "smart": "Recordatorios inteligentes",
+    "note": "Te daremos un pequeño empujón cerca de tu hora preferida usando lógica en el dispositivo."
+  },
+  "pro": {
+    "title": "Pro (Vista previa)",
+    "toggle": "Activar funciones Pro (solo local)",
+    "upgradeCta": "Subir a Pro",
+    "note": "Solo para pruebas en el cliente. Más adelante conectaremos Stripe."
+  },
+  "pin": {
+    "title": "Bloqueo de app (PIN)",
+    "already": "Hay un PIN configurado en este dispositivo.",
+    "disable": "Desactivar PIN",
+    "new": "Nuevo PIN",
+    "confirm": "Confirmar PIN",
+    "enable": "Activar PIN",
+    "note": "El PIN se guarda localmente como un hash SHA-256 con sal. Protege solo este dispositivo.",
+    "minDigits": "El PIN debe tener al menos 4 dígitos (solo números).",
+    "mismatch": "Los PIN no coinciden.",
+    "enabled": "Bloqueo de app activado en este dispositivo.",
+    "disabled": "Bloqueo de app desactivado en este dispositivo.",
+    "enableFail": "No se pudo activar el PIN. Inténtalo de nuevo.",
+    "disableFail": "No se pudo desactivar el PIN. Inténtalo de nuevo."
+  },
+  "clearAll": {
+    "cta": "Borrar todos los datos locales",
+    "confirmed": "Todos los datos locales se han borrado."
+  },
+  "common": {
+    "saving": "Guardando…",
+    "working": "Trabajando…",
+    "appearance": {
+      "title": "Apariencia",
+      "useGradient": "Usar degradado",
+      "usePhoto": "Usar foto",
+      "photoNoteCustom": "La foto de fondo solo se usa en Apariencia Personalizada.",
+      "custom": "Personalizado",
+      "light": "Claro",
+      "dark": "Oscuro"
+    },
+    "accent": {
+      "titleWithName": "Acento: {{name}}",
+      "berry": "berry",
+      "ocean": "ocean",
+      "forest": "forest"
+    },
+    "nav": {
+      "settings": "Configuración",
+      "history": "Historial",
+      "insights": "Insights"
+    }
+  }
+}

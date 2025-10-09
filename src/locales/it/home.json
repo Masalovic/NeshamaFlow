@@ -1,0 +1,51 @@
+{
+  "title": "Come ti senti?",
+  "todayPanel": {
+    "greeting": {
+      "lateNight": "Notte fonda",
+      "morning": "Buongiorno",
+      "afternoon": "Buon pomeriggio",
+      "evening": "Buonasera"
+    },
+    "suggestedToday": "Suggerito oggi",
+    "goal": "Obiettivo",
+    "done": "fatti",
+    "startSuggestion": "Avvia suggerimento"
+  },
+  "moodPicker": {
+    "title": "Seleziona il tuo umore",
+    "settings": "Impostazioni",
+    "noteLabel": "Aggiungi una nota (opzionale)",
+    "placeholder": "A cosa stai pensando?",
+    "quickSaveHint_html": "<strong>Salvataggio rapido</strong> registra subito l’umore e salta il rituale. Salveremo umore e nota nella <em>Cronologia</em>.",
+    "lastLogged": "Ultimo umore registrato:",
+    "onDate": "il {{date}}"
+  },
+  "actions": {
+    "startRitual": "Avvia rituale",
+    "quickSave": "Salvataggio rapido"
+  },
+  "reminder": {
+    "takeAMoment": "Un momento?",
+    "suggestion": "Che ne dici di {{pretty}}? Oggi non hai ancora fatto check-in.",
+    "startNow": "Inizia ora",
+    "later": "Più tardi",
+    "mute7d": "Silenzia 7g"
+  },
+  "streak": {
+    "title": "Serie giornaliera",
+    "onTrack": "Sei in linea oggi",
+    "logToKeep": "Registra un umore per mantenerla",
+    "repair": "Ripara",
+    "repairIn": "Ripara tra {{days}}g",
+    "goPro": "Go Pro",
+    "proFeature": "Funzione Pro: ripara giorno perso"
+  },
+  "selectMood": "Seleziona il tuo umore",
+  "noteLabelOptional": "Aggiungi una nota (opzionale)",
+  "notePlaceholder": "A cosa stai pensando?",
+  "startRitual": "Avvia rituale",
+  "quickSave": "Salvataggio rapido",
+  "quickSaveHelpPrefix": "registra subito l’umore e salta il rituale. Salveremo umore e nota in",
+  "lastLogged": "Ultimo umore: {{emoji}} il {{date}}"
+}

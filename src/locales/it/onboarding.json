@@ -1,0 +1,30 @@
+{
+  "welcome": {
+    "title": "Benvenuto/a"
+  },
+  "goal": {
+    "title": "Qual è il tuo obiettivo principale?",
+    "subtitle": "Ci aiuta a personalizzare le indicazioni.",
+    "options": {
+      "reduceStress": "Ridurre lo stress",
+      "buildHabit": "Creare un’abitudine",
+      "sleepBetter": "Dormire meglio",
+      "feelSteadier": "Sentirti più stabile"
+    }
+  },
+  "haptics": {
+    "title": "Feedback aptico",
+    "desc": "Breve vibrazione all’inizio/fine"
+  },
+  "reminder": {
+    "title": "Promemoria smart",
+    "desc": "Un promemoria gentile vicino al tuo orario abituale. Tutto on-device.",
+    "enable": "Abilita promemoria"
+  },
+  "actions": {
+    "skip": "Salta per ora",
+    "continue": "Continua",
+    "saving": "Salvataggio…",
+    "footnote": "Puoi modificare tutto in <em>Impostazioni</em>."
+  }
+}

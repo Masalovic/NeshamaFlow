@@ -1,0 +1,52 @@
+{
+  "suggestion": {
+    "title": "Il tuo rituale",
+    "basedOnMood": "In base al tuo umore",
+    "start": "Avvia",
+    "orPick": "Oppure scegli dalla Libreria",
+    "actions": {
+      "seeSteps": "Vedi passi",
+      "whyWorks": "Perché funziona",
+      "browse": "Sfoglia rituali",
+      "startRitual": "Avvia rituale"
+    },
+    "modals": {
+      "how": "Come si fa",
+      "noSteps": "Nessun passo disponibile.",
+      "why": "Perché funziona"
+    }
+  },
+  "player": {
+    "restMsg": "Riposa — chiudi gli occhi e respira.",
+    "restHint": "Fai una pausa respiro di 20s",
+    "rest20": "Pausa 20s",
+    "start": "Avvia",
+    "pause": "Pausa",
+    "finishNow": "Termina ora",
+    "saving": "Salvataggio…",
+    "tipTitle": "Suggerimento"
+  },
+  "done": {
+    "title": "Rituale completato",
+    "sessionComplete": "Sessione completata",
+    "logged": "Registrati <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Salvato.",
+    "afterCare": "Dopo la sessione",
+    "logAnother": "Registra un altro",
+    "seeHistory": "Vedi cronologia",
+    "setReminder": "Imposta promemoria smart",
+    "share": {
+      "title": "La mia sessione di rituale"
+    },
+    "generic": "rituale"
+  },
+  "after": {
+    "boxBreath": { "1": "Fai un respiro più lento e rilassa la mandibola.", "2": "Ammorbidisci l’espirazione; nota le spalle che scendono.", "3": "Se utile, 1–2 cicli tranquilli più tardi." },
+    "478": { "1": "Se ti senti leggero/a, respira normalmente per un minuto.", "2": "Usa 4-7-8 a letto: 3–4 giri bastano.", "3": "Sorseggia acqua ed evita di alzarti troppo in fretta." },
+    "bodyScan": { "1": "Ruota le spalle; ammorbidisci fronte e lingua.", "2": "Nota un’area da rivedere per 30s più tardi.", "3": "Un sorso d’acqua e un leggero stretching." },
+    "ground": { "1": "Scegli una piccola azione e falla lentamente.", "2": "Apri le mani; rilassa la lingua dal palato.", "3": "Se torna l’agitazione, espira più lungo e lento." },
+    "compassion": { "1": "Una mano sul cuore e una frase gentile.", "2": "Ricorda la “comune umanità”.", "3": "Scrivi una frase di supporto da riusare." },
+    "gratitude": { "1": "Assapora un dettaglio concreto per ~10s.", "2": "Se puoi, invia un grazie di una riga.", "3": "Un lieve sorriso per fissare il ricordo." },
+    "default": { "1": "Un respiro più lento e rilassa le spalle.", "2": "Un sorso d’acqua (i rituali brevi restano meglio!).", "3": "Facoltativo: annota una riga in Cronologia." }
+  }
+}

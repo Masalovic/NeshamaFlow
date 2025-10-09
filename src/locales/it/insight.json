@@ -1,0 +1,34 @@
+{
+  "title": "Approfondimenti (Pro)",
+  "range": {
+    "label": "{{start}} – {{end}}",
+    "last7": "Ultimi 7 giorni",
+    "last28": "Ultimi 28 giorni",
+    "last90": "Ultimi 90 giorni",
+    "custom": "Personalizzato…",
+    "startDate": "Data inizio",
+    "endDate": "Data fine"
+  },
+  "summary": {
+    "thisPeriod": "Questo periodo",
+    "minutesSessions": "{{minutes}} min · {{sessions}} sessioni",
+    "avgSession": "Sessione media",
+    "topRitual": "Rituale principale",
+    "streak": "Serie",
+    "noEntryToday": "(nessun inserimento oggi)"
+  },
+  "empty": "Nessun dato — completa uno o due rituali e torna!",
+  "charts": {
+    "moodDistribution": "Distribuzione umori",
+    "sessionsPerDay": "Costanza — sessioni al giorno",
+    "timeBlocks": "Quando pratichi — fasce orarie",
+    "quickWins": "Vittorie rapide",
+    "noData": "Nessun dato."
+  },
+  "table": {
+    "ritual": "Rituale",
+    "avgSec": "Media (s)",
+    "samples": "Campioni",
+    "tip": "Suggerimento: i rituali brevi riducono l’attrito — ottimi per creare costanza."
+  }
+}

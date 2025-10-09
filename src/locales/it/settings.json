@@ -1,0 +1,71 @@
+{
+  "title": "Impostazioni",
+  "language": {
+    "title": "Lingua",
+    "choose": "Scegli la lingua dell’app"
+  },
+  "privacy": {
+    "title": "Privacy",
+    "body": "Umore e rituali sono archiviati localmente sul tuo dispositivo e crittografati."
+  },
+  "prefs": {
+    "title": "Preferenze",
+    "haptics": "Feedback aptico (se supportato)"
+  },
+  "practice": {
+    "title": "Pratica e promemoria",
+    "goal": "Obiettivo giornaliero (minuti)",
+    "time": "Orario preferito del promemoria",
+    "smart": "Promemoria smart",
+    "note": "Ti daremo un leggero promemoria vicino all’orario scelto usando logica on-device."
+  },
+  "pro": {
+    "title": "Pro (Anteprima)",
+    "toggle": "Abilita funzioni Pro (solo locale)",
+    "upgradeCta": "Passa a Pro",
+    "note": "Solo per test lato client. In seguito collegheremo Stripe."
+  },
+  "pin": {
+    "title": "Blocco app (PIN)",
+    "already": "Un PIN è attivo su questo dispositivo.",
+    "disable": "Disabilita PIN",
+    "new": "Nuovo PIN",
+    "confirm": "Conferma PIN",
+    "enable": "Abilita PIN",
+    "note": "Il PIN è salvato in locale come hash SHA-256 con salt. Protegge l’accesso solo su questo dispositivo.",
+    "minDigits": "Il PIN deve avere almeno 4 cifre (solo numeri).",
+    "mismatch": "I PIN non corrispondono.",
+    "enabled": "Blocco app abilitato su questo dispositivo.",
+    "disabled": "Blocco app disabilitato su questo dispositivo.",
+    "enableFail": "Impossibile abilitare il PIN. Riprova.",
+    "disableFail": "Impossibile disabilitare il PIN. Riprova."
+  },
+  "clearAll": {
+    "cta": "Cancella tutti i dati locali",
+    "confirmed": "Tutti i dati locali sono stati cancellati."
+  },
+  "common": {
+    "saving": "Salvataggio…",
+    "working": "Elaborazione…",
+    "appearance": {
+      "title": "Aspetto",
+      "useGradient": "Usa gradiente",
+      "usePhoto": "Usa foto",
+      "photoNoteCustom": "Lo sfondo con foto è usato solo con Aspetto personalizzato.",
+      "custom": "Personalizzato",
+      "light": "Chiaro",
+      "dark": "Scuro"
+    },
+    "accent": {
+      "titleWithName": "Accento: {{name}}",
+      "berry": "berry",
+      "ocean": "ocean",
+      "forest": "forest"
+    },
+    "nav": {
+      "settings": "Impostazioni",
+      "history": "Cronologia",
+      "insights": "Approfondimenti"
+    }
+  }
+}

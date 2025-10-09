@@ -12,9 +12,11 @@ import Card from "../components/ui/Card";
 import Modal from "../components/ui/Modal";
 import { getItem as sGet } from "../lib/secureStorage";
 import { track } from "../lib/metrics";
+import { useTranslation } from "react-i18next";
 
 export default function RitualSuggestion() {
   const navigate = useNavigate();
+  const { t } = useTranslation(["ritual", "common"]);
   const [ritual, setRitual] = useState<Ritual | null>(null);
   const [whyOpen, setWhyOpen] = useState(false);
   const [stepsOpen, setStepsOpen] = useState(false);
@@ -31,9 +33,7 @@ export default function RitualSuggestion() {
       if (!alive) return;
       setRitual(getRitualForMood(mood));
     })();
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, [navigate]);
 
   const guide: RitualGuide | null = useMemo(
@@ -46,7 +46,7 @@ export default function RitualSuggestion() {
 
   return (
     <div className="flex flex-col h-full">
-      <Header title="Your Ritual" back />
+      <Header title={t("ritual:suggestion.title", "Your Ritual")} back />
       <main className="flex-1 overflow-y-auto px-4">
         <div className="max-w-[340px] mx-auto">
           <Card>
@@ -56,7 +56,7 @@ export default function RitualSuggestion() {
               </h2>
               {!!ritual.durationSec && (
                 <span className="ml-3 shrink-0 inline-flex items-center rounded-full border px-2 py-0.5 text-xs text-gray-600">
-                  ~ {minutes} min
+                  ~ {minutes} {t('common:units.min', 'min')}
                 </span>
               )}
             </div>
@@ -70,11 +70,8 @@ export default function RitualSuggestion() {
             ) : null}
 
             <div className="mt-4 grid grid-cols-2 gap-3">
-              <Link
-                to="/ritual/start"
-                className="btn btn-primary col-span-2 text-center"
-              >
-                Start Ritual
+              <Link to="/ritual/start" className="btn btn-primary col-span-2 text-center">
+                {t("ritual:actions.startRitual", "Start Ritual")}
               </Link>
 
               <button
@@ -84,7 +81,7 @@ export default function RitualSuggestion() {
                 }}
                 className="col-span-1 text-sm link-accent"
               >
-                See steps
+                {t("ritual:actions.seeSteps", "See steps")}
               </button>
               <button
                 onClick={() => {
@@ -93,30 +90,24 @@ export default function RitualSuggestion() {
                 }}
                 className="col-span-1 text-sm link-accent text-right"
               >
-                Why it works
+                {t("ritual:actions.whyWorks", "Why it works")}
               </button>
             </div>
 
             <div className="mt-3 text-center">
               <Link to="/rituals" className="text-sm link-accent">
-                Browse rituals
+                {t("ritual:actions.browse", "Browse rituals")}
               </Link>
             </div>
 
             {/* Steps modal */}
-            <Modal
-              open={stepsOpen}
-              onClose={() => setStepsOpen(false)}
-              title="How to do it"
-            >
+            <Modal open={stepsOpen} onClose={() => setStepsOpen(false)} title={t("ritual:modals.how", "How to do it")}>
               {guide?.steps?.length ? (
                 <ol className="list-decimal pl-5 space-y-1 text-gray-700 text-sm">
-                  {guide.steps.map((s: string, i: number) => (
-                    <li key={i}>{s}</li>
-                  ))}
+                  {guide.steps.map((s: string, i: number) => (<li key={i}>{s}</li>))}
                 </ol>
               ) : (
-                <p className="text-sm text-gray-600">No steps available.</p>
+                <p className="text-sm text-gray-600">{t("ritual:modals.noSteps", "No steps available.")}</p>
               )}
               {guide?.tip && (
                 <p className="text-xs text-gray-500 mt-2">{guide.tip}</p>
@@ -124,19 +115,11 @@ export default function RitualSuggestion() {
             </Modal>
 
             {/* Why modal */}
-            <Modal
-              open={whyOpen}
-              onClose={() => setWhyOpen(false)}
-              title="Why it works"
-            >
-              {ritual.why ? (
-                <p className="text-sm text-gray-700">{ritual.why}</p>
-              ) : null}
+            <Modal open={whyOpen} onClose={() => setWhyOpen(false)} title={t("ritual:modals.why", "Why it works")}>
+              {ritual.why ? <p className="text-sm text-gray-700">{ritual.why}</p> : null}
               {ritual.whyBullets?.length ? (
                 <ul className="mt-3 list-disc pl-5 space-y-1 text-gray-600 text-sm">
-                  {ritual.whyBullets.map((b: string, i: number) => (
-                    <li key={i}>{b}</li>
-                  ))}
+                  {ritual.whyBullets.map((b: string, i: number) => (<li key={i}>{b}</li>))}
                 </ul>
               ) : null}
             </Modal>

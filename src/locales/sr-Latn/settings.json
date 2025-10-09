@@ -1,0 +1,71 @@
+{
+  "title": "Podešavanja",
+  "language": {
+    "title": "Jezik",
+    "choose": "Izaberi jezik aplikacije"
+  },
+  "privacy": {
+    "title": "Privatnost",
+    "body": "Tvoja raspoloženja i rituali čuvaju se lokalno na uređaju i šifrovani su."
+  },
+  "prefs": {
+    "title": "Preferencije",
+    "haptics": "Haptički signali (ako su podržani)"
+  },
+  "practice": {
+    "title": "Praksa i podsetnici",
+    "goal": "Dnevni cilj (minuti)",
+    "time": "Željeno vreme podsetnika",
+    "smart": "Pametni podsetnici",
+    "note": "Blago ćemo te podsetiti oko željenog vremena koristeći logiku na uređaju."
+  },
+  "pro": {
+    "title": "Pro (pregled)",
+    "toggle": "Uključi Pro opcije (lokalno)",
+    "upgradeCta": "Nadogradi na Pro",
+    "note": "Ovo je samo za testiranje na klijentu. Kasnije povezujemo Stripe."
+  },
+  "pin": {
+    "title": "Zaključavanje aplikacije (PIN)",
+    "already": "PIN je trenutno postavljen na ovom uređaju.",
+    "disable": "Isključi PIN",
+    "new": "Novi PIN",
+    "confirm": "Potvrdi PIN",
+    "enable": "Uključi PIN",
+    "note": "PIN se čuva lokalno kao solirani SHA-256 heš. Štiti pristup samo na ovom uređaju.",
+    "minDigits": "PIN mora imati najmanje 4 cifre (samo brojevi).",
+    "mismatch": "PIN-ovi se ne poklapaju.",
+    "enabled": "Zaključavanje je uključeno na ovom uređaju.",
+    "disabled": "Zaključavanje je isključeno na ovom uređaju.",
+    "enableFail": "Nije moguće uključiti PIN. Pokušaj ponovo.",
+    "disableFail": "Nije moguće isključiti PIN. Pokušaj ponovo."
+  },
+  "clearAll": {
+    "cta": "Obriši sve lokalne podatke",
+    "confirmed": "Svi lokalni podaci su obrisani."
+  },
+  "common": {
+    "saving": "Čuvanje…",
+    "working": "Radim…",
+    "appearance": {
+      "title": "Izgled",
+      "useGradient": "Koristi gradijent",
+      "usePhoto": "Koristi fotografiju",
+      "photoNoteCustom": "Pozadinska fotografija se koristi samo u prilagođenom izgledu.",
+      "custom": "Prilagođeno",
+      "light": "Svetlo",
+      "dark": "Tamno"
+    },
+    "accent": {
+      "titleWithName": "Akcenat: {{name}}",
+      "berry": "berry",
+      "ocean": "ocean",
+      "forest": "forest"
+    },
+    "nav": {
+      "settings": "Podešavanja",
+      "history": "Istorija",
+      "insights": "Uvidi"
+    }
+  }
+}

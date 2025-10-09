@@ -1,0 +1,20 @@
+{
+  "title": "Historial",
+  "openInsights": "Abrir Insights",
+  "loading": "Cargando…",
+  "empty": "Sin sesiones todavía — inicia tu primer ritual para encender la cuadrícula.",
+  "labels": {
+    "today": "Hoy",
+    "yesterday": "Ayer",
+    "format": "ddd, D MMM"
+  },
+  "heatmap": {
+    "title": "Últimos 28 días",
+    "legend": "Leyenda",
+    "repaired": "reparado"
+  },
+  "item": {
+    "minutesSep": "· {{minutes}} min",
+    "ritualSep": "· {{title}}"
+  }
+}

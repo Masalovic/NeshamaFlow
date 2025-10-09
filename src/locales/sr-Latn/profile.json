@@ -1,0 +1,26 @@
+{
+  "title": "Profil",
+  "signedInAs": "Prijavljen/a kao",
+  "displayName": "Ime za prikaz",
+  "username": "Korisničko ime",
+  "chooseAvatar": "Izaberi avatar",
+  "placeholders": {
+    "name": "Tvoje ime",
+    "username": "@korisnik"
+  },
+  "save": "Sačuvaj profil",
+  "saving": "Čuvanje…",
+  "saved": "Profil sačuvan!",
+  "account": {
+    "title": "Nalog",
+    "signOut": "Odjavi se",
+    "signOutDesc": "Odjava na ovom uređaju."
+  },
+  "errors": {
+    "usernameTaken": "To korisničko ime je zauzeto.",
+    "avatarPolicy": "Izabrani avatar nije dozvoljen pravilima servera."
+  },
+  "a11y": {
+    "chooseAvatar": "Izaberi {{name}} avatar"
+  }
+}

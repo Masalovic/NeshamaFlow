@@ -1,0 +1,26 @@
+{
+  "title": "Profile",
+  "signedInAs": "Signed in as",
+  "displayName": "Display name",
+  "username": "Username",
+  "chooseAvatar": "Choose avatar",
+  "placeholders": {
+    "name": "Your name",
+    "username": "@username"
+  },
+  "save": "Save profile",
+  "saving": "Saving…",
+  "saved": "Profile saved!",
+  "account": {
+    "title": "Account",
+    "signOut": "Sign out",
+    "signOutDesc": "Sign out on this device."
+  },
+  "errors": {
+    "usernameTaken": "That username is already taken.",
+    "avatarPolicy": "Avatar selection is not allowed by server policy."
+  },
+  "a11y": {
+    "chooseAvatar": "Choose {{name}} avatar"
+  }
+}

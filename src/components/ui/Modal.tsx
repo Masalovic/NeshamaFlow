@@ -1,5 +1,6 @@
 // src/components/ui/Modal.tsx
 import React, { useEffect, useId } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   open: boolean;
@@ -17,14 +18,16 @@ export default function Modal({
   children,
   centerOnDesktop = false,
 }: Props) {
-  // ❗ Always call hooks in a consistent order
-  const titleId = useId();
+  const { t } = useTranslation('common');
+  const titleId = useId(); // keep hook order stable
 
-  // Lock body scroll when open (effect runs each render, toggles by `open`)
+  // Lock body scroll when open
   useEffect(() => {
     const prev = document.body.style.overflow;
     if (open) document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
+    return () => {
+      document.body.style.overflow = prev;
+    };
   }, [open]);
 
   // Close on Escape
@@ -41,17 +44,18 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-[60] "
+      className="fixed inset-0 z-[60]"
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? titleId : undefined}
     >
       {/* Scrim */}
       <button
-        aria-label="Close"
+        aria-label={t('a11y.close')}
         onClick={onClose}
         className="absolute inset-0 cursor-default"
         style={{ background: 'var(--scrim, rgba(0,0,0,.35))', backdropFilter: 'blur(2px)' }}
+        title={t('a11y.close')}
       />
 
       {/* Sheet / Card */}
@@ -76,21 +80,25 @@ export default function Modal({
             text-main
           "
         >
-          <div className="flex items-center justify-between mb-2 ">
-            {title ? <h3 id={titleId} className="text-base font-semibold text-main">{title}</h3> : <span aria-hidden className="w-5" />}
+          <div className="flex items-center justify-between mb-2">
+            {title ? (
+              <h3 id={titleId} className="text-base font-semibold text-main">
+                {title}
+              </h3>
+            ) : (
+              <span aria-hidden className="w-5" />
+            )}
             <button
               onClick={onClose}
               className="rounded-full p-1 text-base hover:bg-[var(--hover)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-300)]"
-              aria-label="Close modal"
-              title="Close"
+              aria-label={t('a11y.close')}
+              title={t('a11y.close')}
             >
               ×
             </button>
           </div>
 
-          <div className="text-dim">
-            {children}
-          </div>
+          <div className="text-dim">{children}</div>
         </div>
       </div>
     </div>

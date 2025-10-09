@@ -11,14 +11,21 @@
     "prebuild": "node scripts/gen-icons.mjs"
   },
   "dependencies": {
+    "@formatjs/icu-messageformat-parser": "^2.11.3",
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.7.0",
     "@supabase/supabase-js": "^2.54.0",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.13",
+    "i18next": "^25.5.3",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-http-backend": "^3.0.2",
+    "i18next-icu": "^2.4.0",
+    "i18next-resources-to-backend": "^1.2.1",
     "lucide-react": "^0.539.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^16.0.0",
     "react-router-dom": "^6.26.2",
     "recharts": "^3.2.1"
   },

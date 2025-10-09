@@ -1,0 +1,20 @@
+{
+  "title": "Rituali",
+  "searchPlaceholder": "Cerca rituali…",
+  "chips": {
+    "all": "Tutti"
+  },
+  "empty": "Nessun risultato. Prova un’altra ricerca o filtro.",
+  "card": {
+    "start": "Avvia",
+    "details": "Dettagli",
+    "approxMin": "~ {{min}} min",
+    "why": "Perché aiuta",
+    "steps": "Passi",
+    "tip": "Suggerimento"
+  },
+  "modal": {
+    "startThis": "Avvia questo",
+    "steps": "Passi"
+  }
+}

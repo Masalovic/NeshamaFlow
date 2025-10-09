@@ -1,0 +1,12 @@
+{
+  "title": "Esporta",
+  "yourData": "I tuoi dati",
+  "unlocking": "Sblocco dell’archiviazione sicura…",
+  "loading": "Caricamento sessioni…",
+  "countLine": "Attualmente hai {{count}} sessioni salvate su questo dispositivo.",
+  "actions": {
+    "exportJSON": "Esporta JSON",
+    "exportCSV": "Esporta CSV"
+  },
+  "note": "L’esportazione include solo i tuoi registri da questo dispositivo (inclusi quelli sincronizzati). Su mobile proveremo ad aprire la condivisione di sistema; altrimenti il file verrà scaricato."
+}

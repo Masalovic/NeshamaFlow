@@ -1,0 +1,26 @@
+{
+  "title": "Profil",
+  "signedInAs": "Angemeldet als",
+  "displayName": "Anzeigename",
+  "username": "Benutzername",
+  "chooseAvatar": "Avatar wählen",
+  "placeholders": {
+    "name": "Dein Name",
+    "username": "@benutzer"
+  },
+  "save": "Profil speichern",
+  "saving": "Speichern…",
+  "saved": "Profil gespeichert!",
+  "account": {
+    "title": "Konto",
+    "signOut": "Abmelden",
+    "signOutDesc": "Auf diesem Gerät abmelden."
+  },
+  "errors": {
+    "usernameTaken": "Dieser Benutzername ist bereits vergeben.",
+    "avatarPolicy": "Avatar laut Serverrichtlinie nicht erlaubt."
+  },
+  "a11y": {
+    "chooseAvatar": "{{name}}-Avatar wählen"
+  }
+}

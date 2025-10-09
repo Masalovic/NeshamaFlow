@@ -1,0 +1,12 @@
+{
+  "title": "Exportar",
+  "yourData": "Tus datos",
+  "unlocking": "Desbloqueando almacenamiento seguro…",
+  "loading": "Cargando sesiones…",
+  "countLine": "Actualmente tienes {{count}} sesiones guardadas en este dispositivo.",
+  "actions": {
+    "exportJSON": "Exportar JSON",
+    "exportCSV": "Exportar CSV"
+  },
+  "note": "La exportación incluye solo tus registros de este dispositivo (incluidos los sincronizados). En móvil intentaremos abrir la hoja de compartir del sistema; de lo contrario, se descargará el archivo."
+}
