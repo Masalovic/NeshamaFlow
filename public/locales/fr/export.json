@@ -1,0 +1,12 @@
+{
+  "title": "Exporter",
+  "yourData": "Vos données",
+  "unlocking": "Déverrouillage du stockage sécurisé…",
+  "loading": "Chargement des sessions…",
+  "countLine": "Vous avez actuellement {{count}} sessions stockées sur cet appareil.",
+  "actions": {
+    "exportJSON": "Exporter JSON",
+    "exportCSV": "Exporter CSV"
+  },
+  "note": "Les exports incluent uniquement vos propres journaux depuis cet appareil (entrées synchronisées incluses). Sur mobile, nous tenterons d’ouvrir la feuille de partage du système ; sinon le fichier sera téléchargé."
+}

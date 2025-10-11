@@ -1,52 +1,204 @@
 {
-  "suggestion": {
-    "title": "Dein Ritual",
-    "basedOnMood": "Basierend auf deiner Stimmung",
-    "start": "Start",
-    "orPick": "Oder aus der Bibliothek wählen",
-    "actions": {
-      "seeSteps": "Schritte ansehen",
-      "whyWorks": "Warum es wirkt",
-      "browse": "Rituale durchsuchen",
-      "startRitual": "Ritual starten"
+  "suggestion": { "title": "Dein Ritual" },
+
+  "actions": {
+    "startRitual": "Ritual starten",
+    "seeSteps": "Schritte ansehen",
+    "whyWorks": "Warum es wirkt",
+    "browse": "Rituale durchsuchen"
+  },
+
+  "modals": {
+    "how": "So geht’s",
+    "why": "Warum es wirkt",
+    "noSteps": "Keine Schritte verfügbar."
+  },
+
+  "player": {
+    "restMsg": "Pause — schließe die Augen und atme.",
+    "restHint": "20-Sekunden-Atempause",
+    "rest20": "Pause 20 s",
+    "finishNow": "Jetzt beenden"
+  },
+
+  "done": {
+    "title": "Ritual abgeschlossen",
+    "sessionComplete": "Sitzung abgeschlossen",
+    "logged": "<strong>{{duration}}</strong> erfasst — {{ritualTitle}}.",
+    "saved": "Gespeichert.",
+    "summary": "Zusammenfassung",
+    "afterCare": "Nachsorge",
+    "logAnother": "Weitere erfassen",
+    "seeHistory": "Verlauf ansehen",
+    "share": "Teilen",
+    "copy": "Kopieren",
+    "copied": "Kopiert!",
+    "setReminder": "Intelligente Erinnerung einstellen",
+    "labels": {
+    "sessionComplete": "Sitzung abgeschlossen",
+    "ritual": "Ritual",
+    "duration": "Dauer",
+    "mood": "Stimmung",
+    "when": "Wann",
+    "note": "Notiz"
+  }
+  },
+
+  "share": { "title": "Meine Ritual-Sitzung" },
+
+  "generic": "Ritual",
+
+  "titles": {
+    "box-breath-2m": "Box-Atmung",
+    "478-pace-2m": "4-7-8-Atmung",
+    "body-scan-1m": "1-min-Body-Scan",
+    "ground-54321": "5-4-3-2-1-Grounding",
+    "compassion-break": "Mitgefühls-Pause",
+    "gratitude-3": "Dankbarkeit ×3"
+  },
+
+  "guides": {
+    "box-breath-2m": {
+      "title": "Was tun",
+      "why": "Langsame, gleich lange Ein-, Halte- und Ausatmen zielen auf ~6 Atemzüge/Min., erhöhen den Vagus-Ton und verlagern das Gleichgewicht zum Parasympathikus („Ruhe und Verdauung“). Wird bei akutem Stress genutzt, um Amygdala-Reaktivität zu senken und HRV zu stabilisieren.",
+      "whyBullets": [
+        "Aktiviert den Parasympathikus",
+        "Stabilisiert HRV unter Stress",
+        "Einfaches 4-4-4-4-Tempo"
+      ],
+      "steps": [
+        "Aufrecht sitzen; Schultern und Kiefer lockern.",
+        "Durch die Nase 4 zählen einatmen.",
+        "Atem 4 zählen halten.",
+        "Durch die Nase (oder gespitzte Lippen) 4 zählen ausatmen.",
+        "Leer 4 zählen halten. „Box“ 4–8 Zyklen wiederholen."
+      ],
+      "tip": "Wenn 4 s lang ist, 3-3-3-3 probieren. Der Atem bleibt weich."
     },
-    "modals": {
-      "how": "So geht’s",
-      "noSteps": "Keine Schritte verfügbar.",
-      "why": "Warum es wirkt"
+
+    "478-pace-2m": {
+      "title": "Was tun",
+      "why": "Die verlängerte Ausatmung aktiviert den Vagusnerv und dämpft die sympathische Erregung. Das 4-7-8-Muster erhöht kurzzeitig die CO₂-Toleranz und kann Angst und Einschlafzeit reduzieren.",
+      "whyBullets": [
+        "Lange Ausatmung → Vagus-Aktivierung",
+        "Mehr CO₂-Toleranz",
+        "Hilfreich bei Angst & Schlaf"
+      ],
+      "steps": [
+        "Bequem sitzen; Zungenspitze leicht hinter den oberen Zähnen (optional).",
+        "Leise durch die Nase 4 zählen einatmen.",
+        "7 zählen halten.",
+        "Sanft durch den Mund 8 zählen ausatmen.",
+        "Den 4-7-8-Zyklus ruhig fortsetzen."
+      ],
+      "tip": "Abends genügen 3–4 Runden."
+    },
+
+    "body-scan-1m": {
+      "title": "Was tun",
+      "why": "Ein kurzer interozeptiver Check aktiviert somatosensorische Netzwerke und löst Aufmerksamkeit aus Grübelschleifen. Kurze Body-Scans sind mit weniger Stress und besserer Emotionsregulation verbunden.",
+      "whyBullets": [
+        "Unterbricht Grübeln schnell",
+        "Stärkt Körperwahrnehmung",
+        "Überall machbar"
+      ],
+      "steps": [
+        "Bequem machen (sitzen/liegen); Blick entspannen oder Augen schließen.",
+        "Auf Füße richten; Kontakt, Temperatur, Kribbeln bemerken.",
+        "Langsam aufwärts: Waden, Knie, Oberschenkel, Hüften, Bauch, Brust, Schultern, Arme, Hände, Nacken, Gesicht, Kopfhaut.",
+        "Empfindungen benennen (Druck, Wärme, gespannt/locker, neutral) ohne zu urteilen.",
+        "Wenn der Geist abschweift, freundlich zurückkehren."
+      ],
+      "tip": "Kurz und häufig schlägt lang und selten."
+    },
+
+    "ground-54321": {
+      "title": "Was tun",
+      "why": "Sich an den fünf Sinnen zu orientieren, aktiviert präfrontale Aufmerksamkeitsnetzwerke und senkt die limbische Bedrohungsbewertung. Weit verbreitet in KVT bei Panik-/Ärgerspitzen.",
+      "whyBullets": [
+        "Sensorischer Fokus senkt Bedrohungsreaktion",
+        "KVT-freundlich, schnell gelernt",
+        "Super bei Panik/Ärger"
+      ],
+      "steps": [
+        "Umschauen: 5 Dinge benennen, die du siehst.",
+        "4 Dinge fühlen (Stuhl, Kleidung, Luft …).",
+        "3 Geräusche identifizieren (nah & fern).",
+        "2 Gerüche bemerken.",
+        "1 Geschmack bemerken (oder einen Schluck Wasser)."
+      ],
+      "tip": "Leises Aussprechen verankert zusätzlich."
+    },
+
+    "compassion-break": {
+      "title": "Was tun",
+      "why": "Kurze Sätze der Selbstfreundlichkeit senken Cortisol und Selbstkritik. „Geteilte Menschlichkeit“ unterstützt kognitive Neubewertung.",
+      "whyBullets": [
+        "Reduziert Selbstkritik",
+        "Fördert kognitive Neubewertung",
+        "Kurzes, merkbares Skript"
+      ],
+      "steps": [
+        "Anerkennen: „Das ist ein Moment des Leidens / Das ist schwer.“",
+        "Geteilte Menschlichkeit: „Ich bin nicht allein; anderen geht es auch so.“",
+        "Freundlichkeit: Hand aufs Herz (oder anderer beruhigender Kontakt).",
+        "Sätze anbieten: „Möge ich freundlich zu mir sein; möge ich mich annehmen; möge ich geduldig sein.“"
+      ],
+      "tip": "Mit warmer Stimme sprechen, wie zu einem guten Freund."
+    },
+
+    "gratitude-3": {
+      "title": "Was tun",
+      "why": "Mikro-Dankbarkeitsübungen steigern positiven Affekt und erweitern den Aufmerksamkeitsfokus. Wiederholung korreliert mit besserer Stimmung und Schlaf.",
+      "whyBullets": [
+        "Steigert positiven Affekt",
+        "Erweitert Aufmerksamkeitsfokus",
+        "Einfache tägliche Mikro-Praxis"
+      ],
+      "steps": [
+        "Etwas Konkretes ins Bewusstsein rufen, wofür du dankbar bist (z. B. „Sonne auf dem Tisch“).",
+        "In einem Satz sagen, warum es zählt.",
+        "Mit zwei weiteren Konkreta wiederholen (insgesamt drei)."
+      ],
+      "tip": "Konkret schlägt allgemein. Stell es dir vor und spüre den Körper."
     }
   },
-  "player": {
-    "restMsg": "Ruh dich aus — schließe die Augen und atme.",
-    "restHint": "20-Sekunden-Atempause",
-    "rest20": "Pause 20s",
-    "start": "Start",
-    "pause": "Pause",
-    "finishNow": "Jetzt beenden",
-    "saving": "Speichern…",
-    "tipTitle": "Tipp"
-  },
-  "done": {
-    "title": "Ritual fertig",
-    "sessionComplete": "Sitzung abgeschlossen",
-    "logged": "<strong>{{duration}}</strong> protokolliert — {{ritualTitle}}.",
-    "saved": "Gespeichert.",
-    "afterCare": "Nachsorge",
-    "logAnother": "Weiteres protokollieren",
-    "seeHistory": "Verlauf ansehen",
-    "setReminder": "Smart-Erinnerung setzen",
-    "share": {
-      "title": "Meine Ritual-Sitzung"
-    },
-    "generic": "Ritual"
-  },
+
   "after": {
-    "boxBreath": { "1": "Einmal langsamer einatmen und Kiefer lösen.", "2": "Nächste Ausatmung weicher; Schultern sinken lassen.", "3": "Bei Bedarf 1–2 ruhige Runden später." },
-    "478": { "1": "Bei Schwindel normal atmen für eine Minute.", "2": "4-7-8 zum Einschlafen: 3–4 Runden reichen.", "3": "Einen Schluck Wasser, langsam aufstehen." },
-    "bodyScan": { "1": "Schultern rollen; Stirn und Zunge entspannen.", "2": "Einen Bereich notieren und später 30s beachten.", "3": "Einen Schluck Wasser und sanft dehnen." },
-    "ground": { "1": "Einen kleinen nächsten Schritt langsam tun.", "2": "Hände öffnen; Zunge vom Gaumen lösen.", "3": "Bei Unruhe: langsam länger ausatmen." },
-    "compassion": { "1": "Hand aufs Herz und einen freundlichen Satz.", "2": "„Gemeinsame Menschlichkeit“ erinnern.", "3": "Einen unterstützenden Satz notieren." },
-    "gratitude": { "1": "Ein konkretes Detail ~10s genießen.", "2": "Wenn möglich, eine kurze Dankesnachricht senden.", "3": "Sanft lächeln, um die Erinnerung zu festigen." },
-    "default": { "1": "Einmal langsamer einatmen, Schultern entspannen.", "2": "Einen Schluck Wasser (kleine Rituale halten besser!).", "3": "Optional: eine Zeile im Verlauf notieren." }
+    "default": {
+      "1": "Ein Atemzug etwas langsamer; Schultern lockern.",
+      "2": "Einen Schluck Wasser trinken (kleine Rituale halten besser!).",
+      "3": "Optional: Eine Zeile im Verlauf notieren."
+    },
+    "boxBreath": {
+      "1": "Ein ruhiger Atem und den Kiefer lösen.",
+      "2": "Den nächsten Ausatem weicher machen; Schultern sinken lassen.",
+      "3": "Bei Bedarf 1–2 leise Zyklen später am Tag."
+    },
+    "478": {
+      "1": "Bei Schwindel eine Minute normal atmen.",
+      "2": "4-7-8 zum Einschlafen: 3–4 Runden reichen.",
+      "3": "Wasser trinken und nicht zu schnell aufstehen."
+    },
+    "bodyScan": {
+      "1": "Schultern kreisen; Stirn und Zunge entspannen.",
+      "2": "Einen Bereich wählen, zu dem du später 30 s zurückkehrst.",
+      "3": "Einen Schluck Wasser und sanft dehnen."
+    },
+    "ground": {
+      "1": "Eine winzige nächste Handlung wählen und langsam ausführen.",
+      "2": "Hände öffnen; Zunge vom Gaumen lösen.",
+      "3": "Bei Unruhe länger ausatmen."
+    },
+    "compassion": {
+      "1": "Hand aufs Herz und einen freundlichen Satz anbieten.",
+      "2": "Geteilte Menschlichkeit erinnern: Andere fühlen das auch.",
+      "3": "Eine unterstützende Zeile zum Wiederverwenden notieren."
+    },
+    "gratitude": {
+      "1": "Ein konkretes Detail ~10 s genießen.",
+      "2": "Wenn möglich, eine kurze Dankesnachricht senden.",
+      "3": "Sanft lächeln, um die Erinnerung zu festigen."
+    }
   }
 }

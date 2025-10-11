@@ -4,6 +4,20 @@
   "chips": {
     "all": "All"
   },
+  "noMatches": "No matches. Try a different search or filter.",
+  "start": "Start",
+  "details": "Details",
+  "steps": "Steps",
+  "tags": {
+    "awareness": "Awareness",
+    "breath": "Breath",
+    "calm": "Calm",
+    "gratitude": "Gratitude",
+    "grounding": "Grounding",
+    "kindness": "Kindness",
+    "panic": "Panic",
+    "sleep": "Sleep"
+  },
   "empty": "No matches. Try a different search or filter.",
   "card": {
     "start": "Start",

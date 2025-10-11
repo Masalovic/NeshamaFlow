@@ -27,8 +27,24 @@
   },
   "table": {
     "ritual": "Ritual",
-    "avgSec": "Avg time (s)",
+    "avgSec": "Avg time (s)", 
     "samples": "Samples",
     "tip": "Tip: short rituals reduce friction — a good way to build streaks."
+  },
+  "chips": {
+    "lastN": "Last {{n}}d",
+    "sessions_one": "{{count}} session",
+    "sessions_few": "{{count}} sessions",
+    "sessions_other": "{{count}} sessions",
+    "avgTime": "Avg time",
+    "bestTime": "Best time",
+    "mostFrequent": "Most frequent"
+  },
+  "heatmap": {
+    "title28d": "Past 28 days",
+    "badge": "{{total}} sessions • {{streak}}-day streak",
+    "legend": "Legend",
+    "repaired": "repaired",
+    "cellTitle": "{{date}}: {{count}} session(s){{repaired}}"
   }
 }

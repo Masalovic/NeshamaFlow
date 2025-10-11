@@ -2,7 +2,8 @@
   "appName": "Neshama Flow",
   "a11y": {
     "primaryNav": "Primarna navigacija",
-    "openSettings": "Otvori Podešavanja"
+    "openSettings": "Otvori Podešavanja",
+    "back": "Nazad"
   },
   "nav": {
     "home": "Početna",
@@ -55,18 +56,23 @@
     "min": "min",
     "secondsSuffix": "s"
   },
+
   "appearance": {
     "title": "Izgled",
+    "custom": "Prilagođeno",
+    "light": "Svetlo",
+    "dark": "Tamno",
     "useGradient": "Koristi gradijent",
     "usePhoto": "Koristi fotografiju",
     "photoNoteCustom": "Pozadinska fotografija se koristi samo u prilagođenom izgledu."
   },
   "accent": {
     "titleWithName": "Akcenat: {{name}}",
-    "berry": "berry",
-    "ocean": "ocean",
-    "forest": "forest"
+    "berry": "Bobičasto",
+    "ocean": "Okean",
+    "forest": "Šuma"
   },
+
   "home": {
     "title": "Kako se osećaš?",
     "selectMood": "Izaberi raspoloženje",
@@ -89,6 +95,7 @@
     "suggestedToday": "Predlog za danas: {{suggestion}}",
     "goalDone": "Cilj: {{goalMin}} min · <strong>{{minutesToday}} min</strong> urađeno"
   },
+
   "smartReminder": {
     "title": "Mali predah?",
     "body": "Šta kažeš na {{pretty}}? Danas se još nisi prijavio/la.",
@@ -101,12 +108,7 @@
       "night": "noću"
     }
   },
-  "streak": {
-    "title": "Dnevni niz",
-    "onTrack": "Na dobrom si putu danas",
-    "logToKeep": "Zabeleži raspoloženje da nastaviš niz",
-    "cooldown": "Popravka za {{count}}d"
-  },
+
   "history": {
     "title": "Istorija",
     "insights": "Uvidi",
@@ -114,12 +116,26 @@
     "yesterday": "Juče",
     "empty": "Još nema sesija — pokreni prvi ritual da upališ mrežu."
   },
+
   "heatmap": {
     "title": "Poslednjih 28 dana",
     "legend": "Legenda",
     "repaired": "popravljeno",
-    "tooltip": "{{date}}: {{count, plural, one {# sesija} other {# sesija}}}{{repaired, select, true { (popravljeno)} other {}}}"
+    "tooltip": "{{date}}: {{count, plural, one {# sesija} few {# sesije} other {# sesija}}}{{repaired, select, true { (popravljeno)} other {}}}",
+    "sessionsCount_one": "{{count}} sesija",
+    "sessionsCount_few": "{{count}} sesije",
+    "sessionsCount_other": "{{count}} sesija"
   },
+  "streak": {
+    "title": "Dnevni niz",
+    "onTrack": "Na dobrom si putu danas",
+    "logToKeep": "Zabeleži raspoloženje da nastaviš niz",
+    "cooldown": "Popravka za {{count}}d",
+    "days_one": "{{count}} dan niz",
+    "days_few": "{{count}} dana niz",
+    "days_other": "{{count}} dana niz"
+  },
+
   "library": {
     "title": "Rituali",
     "searchPlaceholder": "Pretraži rituale…",
@@ -133,12 +149,14 @@
     "detailViewedEvent": "library_detail_viewed",
     "startClickedEvent": "library_start_clicked"
   },
+
   "player": {
     "restingPrompt": "Odmor — zatvori oči i diši.",
     "rest20s": "Odmor 20s",
     "finishNow": "Završi odmah",
     "saving": "Čuvanje…"
   },
+
   "done": {
     "title": "Ritual završen",
     "sessionComplete": "Sesija završena",
@@ -146,6 +164,7 @@
     "saved": "Sačuvano.",
     "afterCare": "Nakon sesije"
   },
+
   "settings": {
     "title": "Podešavanja",
     "privacyTitle": "Privatnost",
@@ -174,6 +193,7 @@
     "light": "Svetlo",
     "dark": "Tamno"
   },
+
   "profile": {
     "title": "Profil",
     "signedInAs": "Prijavljen/a kao",
@@ -188,6 +208,7 @@
       "avatarNotAllowed": "Izabrani avatar nije dozvoljen pravilima servera."
     }
   },
+
   "welcome": {
     "title": "Dobrodošao/la",
     "goalQuestion": "Koji ti je glavni cilj?",
@@ -205,6 +226,7 @@
     "enableReminder": "Uključi podsetnik",
     "changeAnytime": "Sve možeš promeniti kasnije u <em>Podešavanjima</em>."
   },
+
   "insights": {
     "title": "Uvidi (Pro)",
     "thisPeriod": "Ovaj period",
@@ -222,8 +244,18 @@
       "avgTime": "Prosek (s)",
       "samples": "Uzorci"
     },
+    "chips": {
+      "past28d": "Poslednjih 28d",
+      "sessions_one": "{{count}} sesija",
+      "sessions_few": "{{count}} sesije",
+      "sessions_other": "{{count}} sesija",
+      "avgTime": "Prosečno vreme",
+      "bestTime": "Najbolje vreme",
+      "mostFrequent": "Najčešće"
+    },
     "tipShortRituals": "Savet: kratki rituali smanjuju otpor — dobar način za gradnju niza."
   },
+
   "export": {
     "title": "Izvoz",
     "json": "Izvezi JSON",

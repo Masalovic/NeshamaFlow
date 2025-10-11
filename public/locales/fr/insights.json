@@ -1,0 +1,50 @@
+{
+  "title": "Analyses (Pro)",
+  "range": {
+    "label": "{{start}} – {{end}}",
+    "last7": "7 derniers jours",
+    "last28": "28 derniers jours",
+    "last90": "90 derniers jours",
+    "custom": "Personnalisé…",
+    "startDate": "Date de début",
+    "endDate": "Date de fin"
+  },
+  "summary": {
+    "thisPeriod": "Cette période",
+    "minutesSessions": "{{minutes}} min · {{sessions}} sessions",
+    "avgSession": "Session moyenne",
+    "topRitual": "Rituel principal",
+    "streak": "Série",
+    "noEntryToday": "(aucune entrée aujourd’hui)"
+  },
+  "empty": "Pas encore de données — faites un rituel ou deux et revenez !",
+  "charts": {
+    "moodDistribution": "Répartition des humeurs",
+    "sessionsPerDay": "Régularité — sessions par jour",
+    "timeBlocks": "Quand vous pratiquez — créneaux",
+    "quickWins": "Gains rapides",
+    "noData": "Pas encore de données."
+  },
+  "table": {
+    "ritual": "Rituel",
+    "avgSec": "Temps moy. (s)",
+    "samples": "Échantillons",
+    "tip": "Astuce : les rituels courts réduisent la friction — une bonne façon de bâtir des séries."
+  },
+  "chips": {
+    "lastN": "Derniers {{n}} j",
+    "sessions_one": "{{count}} session",
+    "sessions_few": "{{count}} sessions",
+    "sessions_other": "{{count}} sessions",
+    "avgTime": "Temps moy.",
+    "bestTime": "Meilleur moment",
+    "mostFrequent": "Le plus fréquent"
+  },
+  "heatmap": {
+    "title28d": "Derniers 28 jours",
+    "badge": "{{total}} sessions • série de {{streak}} jours",
+    "legend": "Légende",
+    "repaired": "réparé",
+    "cellTitle": "{{date}} : {{count}} session(s){{repaired}}"
+  }
+}

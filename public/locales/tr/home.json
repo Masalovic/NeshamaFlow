@@ -1,0 +1,37 @@
+{
+  "title": "Nasıl hissediyorsun?",
+  "todayPanel": {
+    "greeting": { "lateNight": "Gece geç", "morning": "Günaydın", "afternoon": "İyi öğleden sonra", "evening": "İyi akşamlar" },
+    "suggestedToday": "Bugünün önerisi",
+    "goal": "Hedef",
+    "done": "tamamlandı",
+    "startSuggestion": "Öneriyi başlat"
+  },
+  "moodPicker": {
+    "title": "Ruh hâli seç",
+    "settings": "Ayarlar",
+    "noteLabel": "Not ekle (isteğe bağlı)",
+    "placeholder": "Aklında ne var?",
+    "quickSaveHint_html": "<strong>Hızlı kaydet</strong> ruh hâlini anında kaydeder ve ritüeli atlar. Seçilen ruh hâlini ve isteğe bağlı notu <em>Geçmiş</em>’e kaydederiz.",
+    "lastLogged": "Son ruh hâli:",
+    "onDate": "— {{date}}"
+  },
+  "actions": { "startRitual": "Ritüeli başlat", "quickSave": "Hızlı kaydet" },
+  "reminder": { "takeAMoment": "Bir mola verelim mi?", "suggestion": "{{pretty}} nasıl olur? Bugün henüz giriş yapmadın.", "startNow": "Hemen başla", "later": "Daha sonra", "mute7d": "7 g kapat" },
+  "streak": {
+    "title": "Günlük seri",
+    "onTrack": "Bugün yolundasın",
+    "logToKeep": "Devam etmek için bir ruh hâli kaydet",
+    "repair": "Onar",
+    "repairIn": "{{days}} günde onar",
+    "goPro": "Pro’ya geç",
+    "proFeature": "Pro özelliği: kaçırılan günü onar"
+  },
+  "selectMood": "Ruh hâli seç",
+  "noteLabelOptional": "Not ekle (isteğe bağlı)",
+  "notePlaceholder": "Aklında ne var?",
+  "startRitual": "Ritüeli başlat",
+  "quickSave": "Hızlı kaydet",
+  "quickSaveHelpPrefix": "ruh hâlini anında kaydeder ve ritüeli atlar. Ruh hâlini ve notu şuraya kaydederiz:",
+  "lastLogged": "Son ruh hâli: {{emoji}} — {{date}}"
+}

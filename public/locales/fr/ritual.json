@@ -1,0 +1,204 @@
+{
+  "suggestion": { "title": "Votre rituel" },
+
+  "actions": {
+    "startRitual": "Démarrer le rituel",
+    "seeSteps": "Voir les étapes",
+    "whyWorks": "Pourquoi ça marche",
+    "browse": "Parcourir les rituels"
+  },
+
+  "modals": {
+    "how": "Comment faire",
+    "why": "Pourquoi ça marche",
+    "noSteps": "Aucune étape disponible."
+  },
+
+  "player": {
+    "restMsg": "Repos — fermez les yeux et respirez.",
+    "restHint": "Faites une pause respiration de 20 s",
+    "rest20": "Repos 20 s",
+    "finishNow": "Terminer maintenant"
+  },
+
+  "done": {
+    "title": "Rituel terminé",
+    "sessionComplete": "Session terminée",
+    "logged": "Enregistré <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Enregistré.",
+    "summary": "Récapitulatif",
+    "afterCare": "Après-soins",
+    "logAnother": "Enregistrer un autre",
+    "seeHistory": "Voir l’historique",
+    "share": "Partager",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "setReminder": "Définir un rappel intelligent",
+    "labels": {
+      "sessionComplete": "Session terminée",
+      "ritual": "Rituel",
+      "duration": "Durée",
+      "mood": "Humeur",
+      "when": "Quand",
+      "note": "Note"
+    }
+  },
+
+  "share": { "title": "Ma session de rituel" },
+
+  "generic": "rituel",
+
+  "titles": {
+    "box-breath-2m": "Respiration carrée",
+    "478-pace-2m": "Respiration 4-7-8",
+    "body-scan-1m": "Scan corporel 1 min",
+    "ground-54321": "Ancrage 5-4-3-2-1",
+    "compassion-break": "Pause compassion",
+    "gratitude-3": "Gratitude ×3"
+  },
+
+  "guides": {
+    "box-breath-2m": {
+      "title": "Que faire",
+      "why": "Des inspirations/rétentions/expirations de durée égale visent ~6 respirations/min, augmentent le tonus vagal et rééquilibrent vers le parasympathique « repos-digestion ». Utilisé en clinique pour le stress aigu afin de réduire la réactivité de l’amygdale et stabiliser la VRC.",
+      "whyBullets": [
+        "Active le parasympathique (« repos & digestion »)",
+        "Stabilise la VRC sous stress",
+        "Cadence simple 4-4-4-4"
+      ],
+      "steps": [
+        "Asseyez-vous droit ; relâchez épaules et mâchoire.",
+        "Inspirez par le nez pendant 4.",
+        "Retenez la respiration pendant 4.",
+        "Expirez par le nez (ou lèvres pincées) pendant 4.",
+        "Poumons vides pendant 4. Répétez le « carré » 4-8 cycles."
+      ],
+      "tip": "Si 4 s paraît long, essayez 3-3-3-3. Respiration douce, jamais forcée."
+    },
+
+    "478-pace-2m": {
+      "title": "Que faire",
+      "why": "L’expiration prolongée active le nerf vague et atténue l’activation sympathique. Le schéma 4-7-8 augmente brièvement la tolérance au CO₂ et peut réduire l’anxiété perçue et le temps d’endormissement dans de petites études.",
+      "whyBullets": [
+        "Longue expiration → activation vagale",
+        "Développe la tolérance au CO₂",
+        "Utile pour l’anxiété & le sommeil"
+      ],
+      "steps": [
+        "Position confortable ; pointe de la langue derrière les dents supérieures (optionnel).",
+        "Inspirez doucement par le nez pendant 4.",
+        "Retenez pendant 7.",
+        "Expirez doucement par la bouche pendant 8.",
+        "Poursuivez le cycle 4-7-8 à un rythme souple, sans effort."
+      ],
+      "tip": "À l’heure du coucher : 3–4 cycles suffisent."
+    },
+
+    "body-scan-1m": {
+      "title": "Que faire",
+      "why": "Un bref check-in intéroceptif mobilise les réseaux somatosensoriels et détourne l’attention des ruminations. Les scans corporels courts sont associés à moins de stress perçu et à une meilleure régulation émotionnelle.",
+      "whyBullets": [
+        "Interrompt rapidement la rumination",
+        "Améliore l’attention au corps",
+        "Fonctionne partout, sans outil"
+      ],
+      "steps": [
+        "Installez-vous (assis ou allongé) ; adoucissez le regard ou fermez les yeux.",
+        "Portez l’attention sur les pieds ; contact, température, picotements.",
+        "Remontez lentement : mollets, genoux, cuisses, hanches, ventre, poitrine, épaules, bras, mains, cou, visage, cuir chevelu.",
+        "Nommez les sensations (pression, chaleur, serré/détendu, neutre) sans juger ni changer.",
+        "Quand l’esprit part, revenez doucement à la dernière zone."
+      ],
+      "tip": "Court et fréquent > long et rare."
+    },
+
+    "ground-54321": {
+      "title": "Que faire",
+      "why": "S’orienter par les cinq sens mobilise l’attention préfrontale et down-régule l’évaluation de menace limbique. Courant en TCC pour les pics de panique et de colère afin d’interrompre la catastrophisation.",
+      "whyBullets": [
+        "Le focus sensoriel réduit la menace",
+        "Compatible TCC, rapide à apprendre",
+        "Super pour les pics panique/colère"
+      ],
+      "steps": [
+        "Regardez autour : nommez 5 choses que vous voyez.",
+        "Remarquez 4 choses que vous sentez (chaise, vêtements, air…).",
+        "Identifiez 3 sons que vous entendez (près et loin).",
+        "Remarquez 2 choses que vous sentez (odeur).",
+        "Remarquez 1 chose que vous goûtez (ou buvez une gorgée d’eau)."
+      ],
+      "tip": "Dire doucement les éléments aide à ancrer l’attention."
+    },
+
+    "compassion-break": {
+      "title": "Que faire",
+      "why": "De brèves phrases de bienveillance envers soi réduisent le cortisol et l’auto-critique. Situer la difficulté dans « l’humanité commune » soutient la réévaluation cognitive et la résilience.",
+      "whyBullets": [
+        "Réduit l’auto-critique",
+        "Favorise la réévaluation cognitive",
+        "Petit script mémorisable"
+      ],
+      "steps": [
+        "Reconnaître : « C’est un moment difficile / C’est dur. »",
+        "Humanité commune : « Je ne suis pas seul·e ; d’autres ressentent cela. »",
+        "Bienveillance : main sur le cœur (ou autre geste apaisant).",
+        "Offrir des phrases : « Que je sois bon·ne avec moi-même ; que je m’accepte tel·le que je suis ; que je sois patient·e. »"
+      ],
+      "tip": "Employez un ton chaleureux comme pour un ami cher."
+    },
+
+    "gratitude-3": {
+      "title": "Que faire",
+      "why": "La micro-gratitude augmente l’affect positif et élargit le champ attentionnel. La pratique répétée est corrélée à une meilleure humeur et qualité de sommeil dans plusieurs ECR.",
+      "whyBullets": [
+        "Renforce l’affect positif",
+        "Élargit le champ attentionnel",
+        "Micro-pratique quotidienne simple"
+      ],
+      "steps": [
+        "Évoquez une chose précise que vous appréciez (p. ex. « le soleil sur la table de cuisine »).",
+        "Dites en une phrase pourquoi cela compte.",
+        "Répétez avec deux autres éléments (trois au total)."
+      ],
+      "tip": "Le spécifique l’emporte sur le général. Visualisez-le et remarquez les sensations corporelles."
+    }
+  },
+
+  "after": {
+    "default": {
+      "1": "Prenez une respiration plus lente et relâchez les épaules.",
+      "2": "Buvez une gorgée d’eau (les mini-rituels tiennent mieux !).",
+      "3": "Optionnel : notez une ligne dans l’Historique."
+    },
+    "boxBreath": {
+      "1": "Prenez une respiration plus lente et desserrez la mâchoire.",
+      "2": "Adoucissez la prochaine expiration ; remarquez les épaules qui tombent.",
+      "3": "Si utile, faites 1–2 cycles calmes plus tard dans la journée."
+    },
+    "478": {
+      "1": "Si étourdi·e, respirez normalement pendant une minute.",
+      "2": "Au coucher, 4-7-8 : 3–4 cycles suffisent.",
+      "3": "Buvez de l’eau et évitez de vous lever trop vite."
+    },
+    "bodyScan": {
+      "1": "Roulez les épaules ; détendez front et langue.",
+      "2": "Repérez une zone à revisiter 30 s plus tard aujourd’hui.",
+      "3": "Prenez une gorgée d’eau et étirez-vous doucement."
+    },
+    "ground": {
+      "1": "Choisissez une minuscule action suivante et faites-la lentement.",
+      "2": "Ouvrez les mains ; décollez la langue du palais.",
+      "3": "Si l’agitation revient, expirez plus longuement et lentement."
+    },
+    "compassion": {
+      "1": "Main sur le cœur et offrez une phrase bienveillante.",
+      "2": "Souvenez-vous : « humanité commune » — d’autres ressentent cela aussi.",
+      "3": "Écrivez une ligne de soutien à réutiliser plus tard."
+    },
+    "gratitude": {
+      "1": "Savourez un détail concret pendant ~10 s.",
+      "2": "Si possible, envoyez un message de remerciement en une ligne.",
+      "3": "Souriez doucement pour aider à mémoriser."
+    }
+  }
+}

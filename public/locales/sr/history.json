@@ -11,7 +11,9 @@
   "heatmap": {
     "title": "Poslednjih 28 dana",
     "legend": "Legenda",
-    "repaired": "popravljeno"
+    "repaired": "popravljeno",
+    "empty": "Još nema sesija — započni prvi ritual da upališ mrežu."
+
   },
   "item": {
     "minutesSep": "· {{minutes}} min",

@@ -1,0 +1,39 @@
+{
+  "title": "Ayarlar",
+  "language": { "title": "Dil", "choose": "Uygulama dilini seç" },
+  "privacy": { "title": "Gizlilik", "body": "Ruh hâllerin ve ritüellerin cihazında yerel olarak saklanır ve şifrelenir." },
+  "prefs": { "title": "Tercihler", "haptics": "Dokunsal uyarılar (destekleniyorsa)" },
+  "practice": { "title": "Pratik & hatırlatıcılar", "goal": "Günlük hedef (dakika)", "time": "Tercih edilen hatırlatma saati", "smart": "Akıllı hatırlatıcılar", "note": "Tercih ettiğin saate yakın, cihaz içi hafif bir mantıkla dürteceğiz." },
+  "pro": { "title": "Pro (Önizleme)", "toggle": "Pro özellikleri etkinleştir (yerel anahtar)", "upgradeCta": "Pro’ya yükselt", "note": "Yalnızca test için istemci tarafı anahtar. Stripe daha sonra bağlanacak." },
+  "pin": {
+    "title": "Uygulama Kilidi (PIN)",
+    "already": "Bu cihazda şu anda bir PIN ayarlı.",
+    "disable": "PIN’i devre dışı bırak",
+    "new": "Yeni PIN",
+    "confirm": "PIN’i doğrula",
+    "enable": "PIN’i etkinleştir",
+    "note": "PIN yerel olarak tuzlanmış SHA-256 özeti olarak saklanır. Yalnızca bu cihazdaki erişimi korur.",
+    "minDigits": "PIN en az 4 haneli olmalıdır (yalnızca rakam).",
+    "mismatch": "PIN’ler eşleşmiyor.",
+    "enabled": "Bu cihazda kilit etkin.",
+    "disabled": "Bu cihazda kilit devre dışı.",
+    "enableFail": "PIN etkinleştirilemedi. Lütfen tekrar deneyin.",
+    "disableFail": "PIN devre dışı bırakılamadı. Lütfen tekrar deneyin."
+  },
+  "clearAll": { "cta": "Tüm yerel verileri temizle", "confirmed": "Tüm yerel veriler temizlendi." },
+  "common": {
+    "saving": "Kaydediliyor…",
+    "working": "Çalışıyor…",
+    "appearance": {
+      "title": "Görünüm",
+      "useGradient": "Gradyan kullan",
+      "usePhoto": "Fotoğraf kullan",
+      "photoNoteCustom": "Fotoğraf arka plan yalnızca Özel görünümde kullanılır.",
+      "custom": "Özel",
+      "light": "Açık",
+      "dark": "Koyu"
+    },
+    "accent": { "titleWithName": "Vurgu: {{name}}", "berry": "meyve", "ocean": "okyanus", "forest": "orman" },
+    "nav": { "settings": "Ayarlar", "history": "Geçmiş", "insights": "Analizler" }
+  }
+}

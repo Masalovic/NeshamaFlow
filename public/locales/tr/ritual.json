@@ -1,0 +1,89 @@
+{
+  "suggestion": { "title": "Ritüelin" },
+  "actions": {
+    "startRitual": "Ritüeli başlat",
+    "seeSteps": "Adımları gör",
+    "whyWorks": "Neden işe yarar",
+    "browse": "Ritüellere göz at"
+  },
+  "modals": { "how": "Nasıl yapılır", "why": "Neden işe yarar", "noSteps": "Adım yok." },
+  "player": { "restMsg": "Dinlen — gözlerini kapat ve nefes al.", "restHint": "20 sn nefes molası ver", "rest20": "20 sn dinlen", "finishNow": "Şimdi bitir" },
+  "done": {
+    "title": "Ritüel tamamlandı",
+    "sessionComplete": "Oturum tamamlandı",
+    "logged": "<strong>{{duration}}</strong> kaydedildi — {{ritualTitle}}.",
+    "saved": "Kaydedildi.",
+    "summary": "Özet",
+    "afterCare": "Sonrası",
+    "logAnother": "Bir tane daha kaydet",
+    "seeHistory": "Geçmişi gör",
+    "share": "Paylaş",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı!",
+    "setReminder": "Akıllı hatırlatıcı ayarla",
+    "labels": { "sessionComplete": "Oturum tamamlandı", "ritual": "Ritüel", "duration": "Süre", "mood": "Ruh hâli", "when": "Ne zaman", "note": "Not" }
+  },
+  "share": { "title": "Ritüel oturumum" },
+  "generic": "ritüel",
+  "titles": {
+    "box-breath-2m": "Kutu Nefesi",
+    "478-pace-2m": "4-7-8 Nefesi",
+    "body-scan-1m": "1 dk Beden Taraması",
+    "ground-54321": "5-4-3-2-1 Topraklama",
+    "compassion-break": "Şefkat Molası",
+    "gratitude-3": "Şükran ×3"
+  },
+  "guides": {
+    "box-breath-2m": {
+      "title": "Ne yapmalı",
+      "why": "Eşit süreli nefes alma/tutma/verme ~dakikada 6 nefesi hedefler, vagal tonu artırır ve otonom dengeyi parasempatiğe kaydırır. Kliniklerde akut stres için amigdala reaktivitesini azaltmak ve HRV’yi dengelemek amacıyla kullanılır.",
+      "whyBullets": ["Parasempatik sistemi etkinleştirir", "Stres altında HRV’yi dengeler", "Basit 4-4-4-4 tempo"],
+      "steps": ["Dik oturun; omuz ve çeneyi gevşetin.", "Burundan 4’e kadar sayarak nefes alın.", "4’e kadar sayarak nefesi tutun.", "Burundan (veya dudakları büzerek) 4’e kadar sayarak verin.", "4’e kadar boşta kalın. 4–8 döngü tekrarlayın."],
+      "tip": "4 sn uzun geliyorsa 3-3-3-3 deneyin. Nefes pürüzsüz olsun, zorlanmasın."
+    },
+    "478-pace-2m": {
+      "title": "Ne yapmalı",
+      "why": "Uzun nefes verme vagusu etkinleştirir ve sempatik uyarımı azaltır. 4-7-8 kalıbı CO₂ toleransını geçici olarak artırır; küçük çalışmalarda kaygı ve uykuya geçiş süresini azaltabilir.",
+      "whyBullets": ["Uzun verme → vagal aktivasyon", "CO₂ toleransını geliştirir", "Kaygı & uyku için faydalı"],
+      "steps": ["Rahat oturun; dil ucu üst dişlerin arkasında (isteğe bağlı).", "Burundan sessizce 4 sayıda alın.", "7 sayıda tutun.", "Ağızdan yumuşakça 8 sayıda verin.", "Zorlamadan, akıcı bir tempoda 4-7-8’e devam edin."],
+      "tip": "Yatmadan önce 3–4 tur yeterlidir."
+    },
+    "body-scan-1m": {
+      "title": "Ne yapmalı",
+      "why": "Hızlı bir bedensel yoklama, duyusal ağları devreye sokar ve dikkati geviş getirmeden uzaklaştırır. Kısa beden taramaları daha az algılanan stres ve daha iyi duygu düzeniyle ilişkilidir.",
+      "whyBullets": ["Ruminasyonu hızlı keser", "İç algıyı güçlendirir", "Her yerde, araçsız"],
+      "steps": ["Rahat edin (otur/uzan); bakışı yumuşatın veya gözleri kapatın.", "Dikkati ayaklara getirin; temas, sıcaklık, karıncalanma.", "Yavaşça yukarı çıkın — baldırlar, dizler, uyluklar, kalçalar, karın, göğüs, omuzlar, kollar, eller, boyun, yüz, saçlı deri.", "Yargılamadan duyumları adlandırın (basınç, sıcaklık, sıkı/gevşek, nötr).", "Zihin dağılırsa son bölgeye nazikçe dönün."],
+      "tip": "Kısa ve sık, uzun ve seyreğe üstün."
+    },
+    "ground-54321": {
+      "title": "Ne yapmalı",
+      "why": "Beş duyuyla yönelmek, prefrontal dikkat ağlarını devreye sokar ve limbik tehdit değerlendirmesini azaltır. Panik/öfkede felaketleştirmeyi kesmek için BDT’de yaygın.",
+      "whyBullets": ["Duyusal odak tehdit yanıtını düşürür", "BDT’ye uygun, öğrenmesi hızlı", "Panik/öfke sıçramaları için harika"],
+      "steps": ["Etrafa bakın: gördüğünüz 5 şeyi adlandırın.", "Hissettiğiniz 4 şeyi fark edin (sandalye, kıyafet, hava…).", "Duyduğunuz 3 şeyi tanımlayın (yakın/uzak).", "Kokladığınız 2 şeyi fark edin.", "Tattığınız 1 şeyi fark edin (veya bir yudum su için)."],
+      "tip": "Öğeleri alçak sesle söylemek dikkati sabitler."
+    },
+    "compassion-break": {
+      "title": "Ne yapmalı",
+      "why": "Kısa öz-şefkat cümleleri kortizolu ve öz-eleştiriyi azaltır. Zorluğu “ortak insanlık” çerçevesinde görmek bilişsel yeniden değerlendirmeyi ve dayanıklılığı destekler.",
+      "whyBullets": ["Öz-eleştiriyi azaltır", "Bilişsel yeniden değerlendirmeyi destekler", "Kısa, ezberlenebilir metin"],
+      "steps": ["Kabul: “Bu zor bir an.”", "Ortak insanlık: “Yalnız değilim; başkaları da böyle hissediyor.”", "Şefkat: elini kalbine koy (veya yatıştırıcı bir temas).", "Cümleler: “Kendime nazik olayım; olduğum gibi kabul edeyim; sabırlı olayım.”"],
+      "tip": "Yakın bir arkadaşına konuşur gibi sıcak bir ton kullan."
+    },
+    "gratitude-3": {
+      "title": "Ne yapmalı",
+      "why": "Mikro-şükran, olumlu duyguyu artırır ve dikkat alanını genişletir. Tekrarlayan pratik, daha iyi ruh hâli ve uyku kalitesiyle ilişkilidir.",
+      "whyBullets": ["Olumlu duyguyu artırır", "Dikkat alanını genişletir", "Kolay günlük mikro-pratik"],
+      "steps": ["Takdir ettiğin belirli bir şeyi aklına getir (örn. “mutfak masasındaki güneş”).", "Neden önemli olduğunu tek cümleyle söyle.", "İki somut şey daha ekle (toplam üç)."],
+      "tip": "Spesifik olan geneli yener. Hayal et ve bedensel hislere dikkat et."
+    }
+  },
+  "after": {
+    "default": { "1": "Bir nefesi yavaşlat ve omuzlarını gevşet.", "2": "Bir yudum su iç (mini ritüeller daha iyi yerleşir!).", "3": "İsteğe bağlı: Geçmiş’e tek satırlık bir not düş." },
+    "boxBreath": { "1": "Bir nefesi yavaşlat ve çeneni gevşet.", "2": "Sonraki verişi yumuşat; omuzların düşsün.", "3": "Gerekirse gün içinde 1–2 sessiz tur yap." },
+    "478": { "1": "Başın dönerse bir dakika normal nefes al.", "2": "Yatarken 4-7-8: 3–4 tur yeterli.", "3": "Su iç ve birden ayağa kalkma." },
+    "bodyScan": { "1": "Omuzları yuvarla; alın ve dili yumuşat.", "2": "Bugün sonra 30 sn döneceğin bir alan seç.", "3": "Bir yudum su iç ve nazikçe esne." },
+    "ground": { "1": "Küçücük bir sonraki eylem seç ve yavaş yap.", "2": "Ellerini aç; dili damaktan bırak.", "3": "Ajitasyon dönerse, daha uzun yavaş bir veriş yap." },
+    "compassion": { "1": "Elini kalbine koy ve nazik bir cümle söyle.", "2": "“Ortak insanlık”ı hatırla: başkaları da böyle hissediyor.", "3": "Sonra kullanmak için destekleyici bir cümle yaz." },
+    "gratitude": { "1": "~10 sn somut bir ayrıntıyı tat.", "2": "Mümkünse tek satırlık teşekkür mesajı yolla.", "3": "Hatırlamayı güçlendirmek için hafifçe gülümse." }
+  }
+}

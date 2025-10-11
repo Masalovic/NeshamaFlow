@@ -1,0 +1,26 @@
+{
+  "title": "Профиль",
+  "signedInAs": "Вошёл(а) как",
+  "displayName": "Отображаемое имя",
+  "username": "Имя пользователя",
+  "chooseAvatar": "Выбрать аватар",
+  "placeholders": {
+    "name": "Твоё имя",
+    "username": "@username"
+  },
+  "save": "Сохранить профиль",
+  "saving": "Сохранение…",
+  "saved": "Профиль сохранён!",
+  "account": {
+    "title": "Аккаунт",
+    "signOut": "Выйти",
+    "signOutDesc": "Выйти из приложения на этом устройстве."
+  },
+  "errors": {
+    "usernameTaken": "Это имя пользователя уже занято.",
+    "avatarPolicy": "Выбор аватара запрещён политикой сервера."
+  },
+  "a11y": {
+    "chooseAvatar": "Выбрать аватар {{name}}"
+  }
+}

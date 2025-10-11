@@ -11,7 +11,8 @@
   "heatmap": {
     "title": "Letzte 28 Tage",
     "legend": "Legende",
-    "repaired": "repariert"
+    "repaired": "repariert",
+    "empty": "Noch keine Sitzungen — starte dein erstes Ritual, um das Raster zu füllen."
   },
   "item": {
     "minutesSep": "· {{minutes}} Min",

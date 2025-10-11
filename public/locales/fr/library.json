@@ -1,0 +1,34 @@
+{
+  "title": "Rituels",
+  "searchPlaceholder": "Rechercher des rituels…",
+  "chips": {
+    "all": "Tous"
+  },
+  "noMatches": "Aucun résultat. Essayez une autre recherche ou un autre filtre.",
+  "start": "Démarrer",
+  "details": "Détails",
+  "steps": "Étapes",
+  "tags": {
+    "awareness": "Conscience",
+    "breath": "Respiration",
+    "calm": "Calme",
+    "gratitude": "Gratitude",
+    "grounding": "Ancrage",
+    "kindness": "Bienveillance",
+    "panic": "Panique",
+    "sleep": "Sommeil"
+  },
+  "empty": "Aucun résultat. Essayez une autre recherche ou un autre filtre.",
+  "card": {
+    "start": "Démarrer",
+    "details": "Détails",
+    "approxMin": "~ {{min}} min",
+    "why": "Pourquoi cela aide",
+    "steps": "Étapes",
+    "tip": "Astuce"
+  },
+  "modal": {
+    "startThis": "Lancer celui-ci",
+    "steps": "Étapes"
+  }
+}

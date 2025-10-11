@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { loadHistory, type LogItem } from "../lib/history";
 import { ready as storageReady } from "../lib/secureStorage";
 import { titleForRitualId } from "../lib/ritualEngine";
+import { localizedTitleForRitualId } from "../lib/ritualEngine";
 import InsightChips from "../components/InsightChips";
 import Heatmap28 from "../components/Heatmap28";
 import { useTranslation } from "react-i18next";
@@ -31,7 +32,8 @@ export default function History() {
   function dayLabel(dISO: string): string {
     const d = dayjs(dISO);
     if (d.isSame(dayjs(), "day")) return t("history:labels.today", "Today");
-    if (d.isSame(dayjs().subtract(1, "day"), "day")) return t("history:labels.yesterday", "Yesterday");
+    if (d.isSame(dayjs().subtract(1, "day"), "day"))
+      return t("history:labels.yesterday", "Yesterday");
     return d.format("ddd, MMM D");
   }
 
@@ -76,7 +78,7 @@ export default function History() {
     <div className="flex h-full flex-col bg-app">
       <Header title={t("history:title", "History")} back />
 
-      <button 
+      <button
         type="button"
         onClick={() => navigate("/insights")}
         className="text-xs underline text-accent"
@@ -91,17 +93,26 @@ export default function History() {
           <InsightChips compact />
 
           {items === null && (
-            <div className="text-center text-muted">{t("history:loading", "Loading…")}</div>
+            <div className="text-center text-muted">
+              {t("history:loading", "Loading…")}
+            </div>
           )}
 
           {empty && (
             <div className="card text-center text-dim">
-              {t("history:empty", "No sessions yet—start your first ritual to light up the grid.")}
+              {t(
+                "history:empty",
+                "No sessions yet—start your first ritual to light up the grid."
+              )}
             </div>
           )}
 
           {grouped.map(([dayISO, rows]) => (
-            <section key={dayISO} className="space-y-2" aria-label={dayLabel(dayISO)}>
+            <section
+              key={dayISO}
+              className="space-y-2"
+              aria-label={dayLabel(dayISO)}
+            >
               <div className="sticky top-0 z-[1] -mx-4 px-4 py-1 bg-nav backdrop-blur text-xs font-medium text-muted">
                 {dayLabel(dayISO)}
               </div>
@@ -112,7 +123,10 @@ export default function History() {
                     key={it.id}
                     className="rounded-2xl shadow-soft p-3 flex items-start gap-3 bg-surface-1 border border-token"
                   >
-                    <div className="text-2xl leading-none select-none" aria-hidden>
+                    <div
+                      className="text-2xl leading-none select-none"
+                      aria-hidden
+                    >
                       {String(it.mood)}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -124,7 +138,7 @@ export default function History() {
                           · {fmtDuration(it.durationSec)}
                         </div>
                         <div className="ml-auto text-[11px] text-muted truncate">
-                          {titleForRitualId(it.ritualId)}
+                          {localizedTitleForRitualId(t, it.ritualId)}
                         </div>
                       </div>
                       {it.note && it.note.trim() !== "" && (

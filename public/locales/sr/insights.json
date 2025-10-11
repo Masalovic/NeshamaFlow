@@ -30,5 +30,21 @@
     "avgSec": "Prosek (s)",
     "samples": "Uzorci",
     "tip": "Savet: kratki rituali smanjuju otpor — dobar način za gradnju niza."
+  },
+  "chips": {
+    "lastN": "Poslednjih {{n}}d",
+    "sessions_one": "{{count}} sesija",
+    "sessions_few": "{{count}} sesije",
+    "sessions_other": "{{count}} sesija",
+    "avgTime": "Prosečno vreme",
+    "bestTime": "Najbolje vreme",
+    "mostFrequent": "Najčešće"
+  },
+  "heatmap": {
+    "title28d": "Poslednjih 28 dana",
+    "badge": "{{total}} sesija • niz od {{streak}} dana",
+    "legend": "Legenda",
+    "repaired": "popravljeno",
+    "cellTitle": "{{date}}: {{count}} sesija{{repaired}}"
   }
 }

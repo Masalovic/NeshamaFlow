@@ -1,6 +1,6 @@
-// src/components/Heatmap28.tsx
 import React, { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 import { loadHistory } from '../lib/history';
 import { getRepairSet } from '../lib/streak';
 
@@ -19,6 +19,7 @@ function calcStreak(dates: string[]): number {
 }
 
 export default function Heatmap28() {
+  const { t } = useTranslation(['history', 'insights', 'common']);
   const [cells, setCells] = useState<Cell[]>([]);
   const [total, setTotal] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -62,21 +63,27 @@ export default function Heatmap28() {
     return 'var(--accent-500)';                       // strongest
   };
 
+  // Use i18next pluralization (sessions_one/few/other)
+  const sessionsLabel = t('insights:chips.sessions', {
+    count: total,
+    defaultValue: '{{count}} sessions'
+  });
+
   return (
     <div className="card p-3">
       <div className="flex items-center justify-between mb-2">
-        <div className="text-sm font-medium">Past 28 days</div>
+        <div className="text-sm font-medium">
+          {t('history:heatmap.title', 'Past 28 days')}
+        </div>
         <div className="text-xs text-muted">
-          {total} sessions • {streak}-day streak
+          {sessionsLabel} · {streak}🔥
         </div>
       </div>
 
       <div className="grid grid-cols-7 gap-1.5">
         {cells.map((c, i) => {
           const bg = shadeColor(c.count);
-          const title = `${dayjs(c.d).format('MMM D')}: ${c.count} session(s)${
-            c.repaired ? ' (repaired)' : ''
-          }`;
+          const title = `${dayjs(c.d).format('MMM D')}: ${c.count} ${t('insights:chips.sessions', { count: c.count, defaultValue: 'sessions' })}${c.repaired ? ` (${t('history:heatmap.repaired', 'repaired')})` : ''}`;
           return (
             <div
               key={i}
@@ -95,7 +102,7 @@ export default function Heatmap28() {
 
       {/* Legend */}
       <div className="flex items-center gap-2 mt-3 text-[10px] text-muted">
-        <span>Legend</span>
+        <span>{t('history:heatmap.legend', 'Legend')}</span>
         <span
           className="h-3 w-3 rounded"
           style={{ background: 'var(--surface-1, #ffffff)', boxShadow: 'inset 0 0 0 1px rgba(0,0,0,0.06)' }}
@@ -107,14 +114,14 @@ export default function Heatmap28() {
         <span
           className="h-3 w-3 rounded"
           style={{ background: 'var(--accent-100)', outline: '2px solid var(--accent-400)' }}
-          title="repaired"
+          title={t('history:heatmap.repaired', 'repaired')}
         />
-        <span className="ml-1">• repaired</span>
+        <span className="ml-1">• {t('history:heatmap.repaired', 'repaired')}</span>
       </div>
 
       {!total && (
         <p className="text-xs text-muted mt-3">
-          No sessions yet—start your first ritual to light up the grid.
+          {t('history:heatmap.empty', 'No sessions yet—start your first ritual to light up the grid.')}
         </p>
       )}
     </div>

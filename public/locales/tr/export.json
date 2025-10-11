@@ -1,0 +1,12 @@
+{
+  "title": "Dışa aktar",
+  "yourData": "Verilerin",
+  "unlocking": "Güvenli depolama açılıyor…",
+  "loading": "Oturumlar yükleniyor…",
+  "countLine": "Şu anda bu cihazda {{count}} oturum kayıtlı.",
+  "actions": {
+    "exportJSON": "JSON dışa aktar",
+    "exportCSV": "CSV dışa aktar"
+  },
+  "note": "Dışa aktarmalar yalnızca bu cihazdaki kendi günlüklerini içerir (senkronize edilenler dâhil). Mobilde sistem Paylaş sayfasını açmayı deneriz; aksi hâlde dosya indirilir."
+}

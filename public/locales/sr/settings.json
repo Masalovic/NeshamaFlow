@@ -43,29 +43,5 @@
   "clearAll": {
     "cta": "Obriši sve lokalne podatke",
     "confirmed": "Svi lokalni podaci su obrisani."
-  },
-  "common": {
-    "saving": "Čuvanje…",
-    "working": "Radim…",
-    "appearance": {
-      "title": "Izgled",
-      "useGradient": "Koristi gradijent",
-      "usePhoto": "Koristi fotografiju",
-      "photoNoteCustom": "Pozadinska fotografija se koristi samo u prilagođenom izgledu.",
-      "custom": "Prilagođeno",
-      "light": "Svetlo",
-      "dark": "Tamno"
-    },
-    "accent": {
-      "titleWithName": "Akcenat: {{name}}",
-      "berry": "berry",
-      "ocean": "ocean",
-      "forest": "forest"
-    },
-    "nav": {
-      "settings": "Podešavanja",
-      "history": "Istorija",
-      "insights": "Uvidi"
-    }
   }
 }

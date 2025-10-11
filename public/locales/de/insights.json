@@ -18,7 +18,7 @@
     "noEntryToday": "(kein Eintrag heute)"
   },
   "empty": "Noch keine Daten — mach ein/zwei Rituale und schau wieder rein!",
-  "charts": {
+  "charts": { 
     "moodDistribution": "Stimmungsverteilung",
     "sessionsPerDay": "Konstanz — Sitzungen pro Tag",
     "timeBlocks": "Wann du übst — Zeitblöcke",
@@ -30,5 +30,21 @@
     "avgSec": "Durchschn. (s)",
     "samples": "Stichproben",
     "tip": "Tipp: Kurze Rituale verringern Reibung — gut für Serien."
+  },
+  "chips": {
+    "lastN": "Letzte {{n}}T",
+    "sessions_one": "{{count}} Sitzung",
+    "sessions_few": "{{count}} Sitzungen",
+    "sessions_other": "{{count}} Sitzungen",
+    "avgTime": "Durchschn. Zeit",
+    "bestTime": "Beste Zeit",
+    "mostFrequent": "Am häufigsten"
+  },
+  "heatmap": {
+    "title28d": "Letzte 28 Tage",
+    "badge": "{{total}} Sitzungen • {{streak}}-Tage Serie",
+    "legend": "Legende",
+    "repaired": "repariert",
+    "cellTitle": "{{date}}: {{count}} Sitzung(en){{repaired}}"
   }
 }

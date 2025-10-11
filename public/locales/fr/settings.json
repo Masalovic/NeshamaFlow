@@ -1,0 +1,71 @@
+{
+  "title": "Réglages",
+  "language": {
+    "title": "Langue",
+    "choose": "Choisir la langue de l’app"
+  },
+  "privacy": {
+    "title": "Confidentialité",
+    "body": "Vos humeurs et rituels sont stockés localement sur votre appareil et chiffrés."
+  },
+  "prefs": {
+    "title": "Préférences",
+    "haptics": "Retour haptique (si disponible)"
+  },
+  "practice": {
+    "title": "Pratique & rappels",
+    "goal": "Objectif quotidien (minutes)",
+    "time": "Heure de rappel préférée",
+    "smart": "Rappels intelligents",
+    "note": "Nous vous rappellerons près de l’heure choisie avec une logique légère, sur l’appareil."
+  },
+  "pro": {
+    "title": "Pro (Aperçu)",
+    "toggle": "Activer les fonctions Pro (bascule locale)",
+    "upgradeCta": "Passer à Pro",
+    "note": "Bascule côté client uniquement pour test. Stripe sera relié plus tard."
+  },
+  "pin": {
+    "title": "Verrouillage (PIN)",
+    "already": "Un code PIN est actuellement défini sur cet appareil.",
+    "disable": "Désactiver le PIN",
+    "new": "Nouveau PIN",
+    "confirm": "Confirmer le PIN",
+    "enable": "Activer le PIN",
+    "note": "Le PIN est stocké localement sous forme de hachage SHA-256 salé. Il protège l’accès uniquement sur cet appareil.",
+    "minDigits": "Le PIN doit contenir au moins 4 chiffres (nombres uniquement).",
+    "mismatch": "Les PIN ne correspondent pas.",
+    "enabled": "Verrouillage activé sur cet appareil.",
+    "disabled": "Verrouillage désactivé sur cet appareil.",
+    "enableFail": "Échec de l’activation du PIN. Veuillez réessayer.",
+    "disableFail": "Échec de la désactivation du PIN. Veuillez réessayer."
+  },
+  "clearAll": {
+    "cta": "Effacer toutes les données locales",
+    "confirmed": "Toutes les données locales ont été effacées."
+  },
+  "common": {
+    "saving": "Enregistrement…",
+    "working": "Traitement…",
+    "appearance": {
+      "title": "Apparence",
+      "useGradient": "Utiliser un dégradé",
+      "usePhoto": "Utiliser une photo",
+      "photoNoteCustom": "L’arrière-plan photo n’est utilisé qu’avec l’apparence Personnalisé.",
+      "custom": "Personnalisé",
+      "light": "Clair",
+      "dark": "Sombre"
+    },
+    "accent": {
+      "titleWithName": "Accent : {{name}}",
+      "berry": "baie",
+      "ocean": "océan",
+      "forest": "forêt"
+    },
+    "nav": {
+      "settings": "Réglages",
+      "history": "Historique",
+      "insights": "Analyses"
+    }
+  }
+}

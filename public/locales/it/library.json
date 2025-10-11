@@ -4,17 +4,31 @@
   "chips": {
     "all": "Tutti"
   },
-  "empty": "Nessun risultato. Prova un’altra ricerca o filtro.",
+  "noMatches": "Nessuna corrispondenza. Prova un'altra ricerca o filtro.",
+  "start": "Avvia",
+  "details": "Dettagli",
+  "steps": "Passaggi",
+  "tags": {
+    "awareness": "Consapevolezza",
+    "breath": "Respiro",
+    "calm": "Calma",
+    "gratitude": "Gratitudine",
+    "grounding": "Radicamento",
+    "kindness": "Gentilezza",
+    "panic": "Panico",
+    "sleep": "Sonno"
+  },
+  "empty": "Nessuna corrispondenza. Prova un'altra ricerca o filtro.",
   "card": {
     "start": "Avvia",
     "details": "Dettagli",
     "approxMin": "~ {{min}} min",
     "why": "Perché aiuta",
-    "steps": "Passi",
+    "steps": "Passaggi",
     "tip": "Suggerimento"
   },
   "modal": {
-    "startThis": "Avvia questo",
-    "steps": "Passi"
+    "startThis": "Avvia",
+    "steps": "Passaggi"
   }
 }

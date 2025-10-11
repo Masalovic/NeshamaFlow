@@ -1,0 +1,30 @@
+{
+  "welcome": {
+    "title": "Dobrodošao/la"
+  },
+  "goal": {
+    "title": "Koji ti je glavni cilj?",
+    "subtitle": "To pomaže prilagoditi smjernice.",
+    "options": {
+      "reduceStress": "Smanjiti stres",
+      "buildHabit": "Izgraditi naviku",
+      "sleepBetter": "Bolje spavati",
+      "feelSteadier": "Osjećati se stabilnije"
+    }
+  },
+  "haptics": {
+    "title": "Haptičke povratne informacije",
+    "desc": "Mala vibracija na početku/kraju"
+  },
+  "reminder": {
+    "title": "Pametni podsjetnik",
+    "desc": "Blagi poticaj blizu uobičajenog vremena prakse. Potpuno na uređaju.",
+    "enable": "Uključi podsjetnik"
+  },
+  "actions": {
+    "skip": "Preskoči zasad",
+    "continue": "Nastavi",
+    "saving": "Spremanje…",
+    "footnote": "Sve ovo možeš promijeniti bilo kada u <em>Postavkama</em>."
+  }
+}

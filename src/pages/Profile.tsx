@@ -71,7 +71,7 @@ export default function Profile() {
 
     if (error) {
       if ((error as any).code === '23505')      setMsg(t('profile:errors.usernameTaken', 'That username is already taken.'));
-      else if ((error as any).code === '23514') setMsg(t('profile:errors.avatarNotAllowed', 'Avatar selection is not allowed by server policy.'));
+      else if ((error as any).code === '23514') setMsg(t('profile:errors.avatarPolicy', 'Avatar selection is not allowed by server policy.'));
       else                                      setMsg(error.message);
       setSaving(false);
       return;
@@ -108,25 +108,25 @@ export default function Profile() {
 
           {/* Profile form */}
           <section className="rounded-2xl border border-token bg-surface-1 p-4 space-y-3 shadow-soft">
-            <label className="block text-sm text-dim">{t('profile:fields.display', 'Display name')}</label>
+            <label className="block text-sm text-dim">{t('profile:displayName', 'Display name')}</label>
             <input
               className="input w-full h-10"
               value={display}
               onChange={(e) => setDisplay(e.target.value)}
               placeholder={t('profile:placeholders.name', 'Your name')}
-              aria-label={t('profile:fields.display', 'Display name')}
+              aria-label={t('profile:displayName', 'Display name')}
             />
 
-            <label className="block text-sm mt-3 text-dim">{t('profile:fields.username', 'Username')}</label>
+            <label className="block text-sm mt-3 text-dim">{t('profile:username', 'Username')}</label>
             <input
               className="input w-full h-10"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder={t('profile:placeholders.username', '@username')}
-              aria-label={t('profile:fields.username', 'Username')}
+              aria-label={t('profile:username', 'Username')}
             />
 
-            <label className="block text-sm mt-3 text-dim">{t('profile:fields.avatar', 'Choose avatar')}</label>
+            <label className="block text-sm mt-3 text-dim">{t('profile:chooseAvatar', 'Choose avatar')}</label>
             <div className="grid grid-cols-5 gap-3">
               {AVATARS.map((k) => {
                 const selected = avatar === k;
@@ -140,7 +140,7 @@ export default function Profile() {
                       'hover:bg-[var(--hover)] focus:outline-none',
                       selected ? 'ring-2 ring-[var(--ring)]' : '',
                     ].join(' ')}
-                    aria-label={t('profile:a11y.chooseAvatar', 'Choose {{name}} avatar', { name: k })}
+                    aria-label={t('profile:a11y.chooseAvatarWithName', { defaultValue: 'Choose {{name}} avatar', name: k })}
                   >
                     <img src={`/avatars/${k}.svg`} alt={k} className="h-12 w-12" />
                   </button>
@@ -161,7 +161,7 @@ export default function Profile() {
           {/* Account actions */}
           <section className="rounded-2xl border border-token bg-surface-1 p-4 space-y-3 shadow-soft">
             <div className="text-sm font-medium text-main">{t('profile:account.title', 'Account')}</div>
-            <p className="text-sm text-dim">{t('profile:account.signOutHint', 'Sign out on this device.')}</p>
+            <p className="text-sm text-dim">{t('profile:account.signOutDesc', 'Sign out on this device.')}</p>
             <button
               onClick={signOut}
               className="btn btn-primary w-full mt-2"

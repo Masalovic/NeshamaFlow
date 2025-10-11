@@ -1,0 +1,16 @@
+{
+  "welcome": { "title": "Hoş geldin" },
+  "goal": {
+    "title": "Ana hedefin ne?",
+    "subtitle": "Bu, rehberliği uyarlamamıza yardımcı olur.",
+    "options": {
+      "reduceStress": "Stresi azalt",
+      "buildHabit": "Alışkanlık oluştur",
+      "sleepBetter": "Daha iyi uyu",
+      "feelSteadier": "Daha dengeli hisset"
+    }
+  },
+  "haptics": { "title": "Dokunsal uyarılar", "desc": "Başta/sonda küçük titreşim" },
+  "reminder": { "title": "Akıllı hatırlatıcı", "desc": "Alışılmış saatine yakın nazik bir dürtme. Tamamen cihaz içinde.", "enable": "Hatırlatıcıyı etkinleştir" },
+  "actions": { "skip": "Şimdilik atla", "continue": "Devam et", "saving": "Kaydediliyor…", "footnote": "Bunları istediğin zaman <em>Ayarlar</em>’dan değiştirebilirsin." }
+}

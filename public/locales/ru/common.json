@@ -1,0 +1,254 @@
+{
+  "appName": "Neshama Flow",
+  "a11y": {
+    "primaryNav": "Основная навигация",
+    "openSettings": "Открыть настройки",
+    "back": "Назад"
+  },
+  "nav": {
+    "home": "Главная",
+    "rituals": "Ритуалы",
+    "history": "История",
+    "insights": "Аналитика",
+    "profile": "Профиль",
+    "settings": "Настройки"
+  },
+  "buttons": {
+    "start": "Начать",
+    "pause": "Пауза",
+    "resume": "Продолжить",
+    "finishNow": "Завершить сейчас",
+    "saving": "Сохранение…",
+    "save": "Сохранить",
+    "clear": "Очистить",
+    "cancel": "Отмена",
+    "continue": "Продолжить",
+    "close": "Закрыть",
+    "details": "Подробнее",
+    "startThis": "Запустить это",
+    "startSuggestion": "Начать по подсказке",
+    "startNow": "Начать сейчас",
+    "later": "Позже",
+    "mute7d": "Отключить на 7 дн",
+    "repair": "Восстановить",
+    "goPro": "Перейти на Pro",
+    "signOut": "Выйти",
+    "enablePin": "Включить PIN",
+    "disablePin": "Отключить PIN",
+    "upgradeToPro": "Обновить до Pro",
+    "logAnother": "Записать ещё",
+    "seeHistory": "Открыть историю",
+    "setSmartReminder": "Включить умное напоминание",
+    "skip": "Пропустить",
+    "share": "Поделиться",
+    "copy": "Копировать",
+    "copied": "Скопировано!"
+  },
+  "generic": {
+    "loading": "Загрузка…",
+    "optional": "необязательно",
+    "tip": "Подсказка",
+    "none": "—",
+    "pleaseWait": "Пожалуйста, подождите…",
+    "working": "Выполняется…"
+  },
+  "units": { "min": "мин", "secondsSuffix": "с" },
+
+  "appearance": {
+    "title": "Оформление",
+    "custom": "Пользовательское",
+    "light": "Светлое",
+    "dark": "Тёмное",
+    "useGradient": "Использовать градиент",
+    "usePhoto": "Использовать фото",
+    "photoNoteCustom": "Фоновое фото используется только в пользовательском оформлении."
+  },
+  "accent": {
+    "titleWithName": "Акцент: {{name}}",
+    "berry": "Ягоды",
+    "ocean": "Океан",
+    "forest": "Лес"
+  },
+
+  "home": {
+    "title": "Как ты себя чувствуешь?",
+    "selectMood": "Выбери настроение",
+    "settings": "Настройки",
+    "addNote": "Добавить заметку (необязательно)",
+    "notePlaceholder": "О чём думаешь?",
+    "quickSaveTitle": "Быстрая запись",
+    "quickSaveDesc": "сразу сохраняет настроение и пропускает ритуал. Мы сохраним выбранное настроение и (при наличии) заметку в <em>Историю</em>.",
+    "lastLoggedMood": "Последнее настроение: {{emoji}} — {{date}}",
+    "startRitual": "Начать ритуал",
+    "quickSave": "Быстрая запись"
+  },
+  "todayPanel": {
+    "greetings": {
+      "lateNight": "Поздняя ночь",
+      "goodMorning": "Доброе утро",
+      "goodAfternoon": "Добрый день",
+      "goodEvening": "Добрый вечер"
+    },
+    "suggestedToday": "Сегодня предлагается: {{suggestion}}",
+    "goalDone": "Цель: {{goalMin}} мин · выполнено <strong>{{minutesToday}} мин</strong>"
+  },
+
+  "smartReminder": {
+    "title": "Есть минутка?",
+    "body": "Как насчёт {{pretty}}? Сегодня ещё не было отметки.",
+    "prettyReset": "2-мин перезапуск",
+    "prettyBlock": "2-мин {{block}}-перезапуск",
+    "blocks": {
+      "morning": "утро",
+      "afternoon": "день",
+      "evening": "вечер",
+      "night": "ночь"
+    }
+  },
+
+  "history": {
+    "title": "История",
+    "insights": "Аналитика",
+    "today": "Сегодня",
+    "yesterday": "Вчера",
+    "empty": "Пока нет сессий — начни свой первый ритуал, чтобы «подсветить» сетку."
+  },
+
+  "heatmap": {
+    "title": "Последние 28 дней",
+    "legend": "Условные обозначения",
+    "repaired": "восстановлено",
+    "tooltip": "{{date}}: {{count, plural, one {# сессия} few {# сессии} many {# сессий} other {# сессии}}}{{repaired, select, true { (восстановлено)} other {}}}",
+    "sessionsCount_one": "{{count}} сессия",
+    "sessionsCount_few": "{{count}} сессии",
+    "sessionsCount_other": "{{count}} сессий"
+  },
+
+  "streak": {
+    "title": "Ежедневная серия",
+    "onTrack": "Сегодня ты в графике",
+    "logToKeep": "Отметь настроение, чтобы продолжить серию",
+    "cooldown": "Восстановление через {{count}} дн",
+    "days_one": "Серия {{count}} день",
+    "days_few": "Серия {{count}} дня",
+    "days_other": "Серия {{count}} дней"
+  },
+
+  "library": {
+    "title": "Ритуалы",
+    "searchPlaceholder": "Поиск ритуалов…",
+    "all": "Все",
+    "noMatches": "Совпадений нет. Попробуй другой запрос или фильтр.",
+    "approxMinutes": "~ {{minutes}} мин",
+    "why": "Почему",
+    "steps": "Шаги",
+    "detailLink": "Подробнее",
+    "libraryOpenedEvent": "library_opened",
+    "detailViewedEvent": "library_detail_viewed",
+    "startClickedEvent": "library_start_clicked"
+  },
+
+  "player": {
+    "restingPrompt": "Пауза — закрой глаза и дыши.",
+    "rest20s": "Пауза 20 с",
+    "finishNow": "Завершить сейчас",
+    "saving": "Сохранение…"
+  },
+
+  "done": {
+    "title": "Ритуал завершён",
+    "sessionComplete": "Сессия завершена",
+    "loggedLine": "Сохранено <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Сохранено.",
+    "afterCare": "Забота после"
+  },
+
+  "settings": {
+    "title": "Настройки",
+    "privacyTitle": "Конфиденциальность",
+    "privacyBody": "Твои настроения и ритуалы хранятся локально на устройстве и зашифрованы.",
+    "preferencesTitle": "Предпочтения",
+    "haptics": "Вибро-подсказки (если поддерживается)",
+    "practiceTitle": "Практика и напоминания",
+    "dailyGoal": "Ежедневная цель (минуты)",
+    "preferredTime": "Предпочтительное время напоминания",
+    "smartReminders": "Умные напоминания",
+    "nudgeNote": "Напомним рядом с твоим обычным временем — полностью локально на устройстве.",
+    "proTitle": "Pro (предпросмотр)",
+    "proToggle": "Включить функции Pro (локальный переключатель)",
+    "proNote": "Только на клиенте для теста. Позже подключим Stripe.",
+    "lockTitle": "Блокировка приложения (PIN)",
+    "pinSet": "PIN установлен на этом устройстве.",
+    "newPin": "Новый PIN",
+    "confirmPin": "Подтверждение PIN",
+    "pinStoredInfo": "PIN хранится локально как соль-SHA-256. Защищает доступ только на этом устройстве.",
+    "clearAll": "Очистить все локальные данные",
+    "language": "Язык",
+    "accent": "Акцент",
+    "appearance": "Оформление",
+    "custom": "Пользовательское",
+    "system": "Система",
+    "light": "Светлое",
+    "dark": "Тёмное"
+  },
+
+  "profile": {
+    "title": "Профиль",
+    "signedInAs": "Вошёл(а) как",
+    "displayName": "Отображаемое имя",
+    "username": "Имя пользователя",
+    "chooseAvatar": "Выбрать аватар",
+    "saveProfile": "Сохранить профиль",
+    "profileSaved": "Профиль сохранён!",
+    "account": "Аккаунт",
+    "errors": {
+      "usernameTaken": "Это имя пользователя уже занято.",
+      "avatarNotAllowed": "Выбор аватара запрещён политикой сервера."
+    }
+  },
+
+  "welcome": {
+    "title": "Добро пожаловать",
+    "goalQuestion": "Какова твоя главная цель?",
+    "goalHelp": "Это поможет настроить рекомендации.",
+    "goals": {
+      "reduceStress": "Снизить стресс",
+      "buildHabit": "Сформировать привычку",
+      "sleepBetter": "Лучше спать",
+      "feelSteadier": "Больше устойчивости"
+    },
+    "hapticCues": "Вибро-подсказки",
+    "hapticDesc": "Небольшая вибрация в начале/конце",
+    "smartReminder": "Умное напоминание",
+    "smartReminderDesc": "Мягкий толчок близко к твоему обычному времени. Полностью на устройстве.",
+    "enableReminder": "Включить напоминание",
+    "changeAnytime": "Можно изменить в любое время в <em>Настройках</em>."
+  },
+
+  "insights": {
+    "title": "Аналитика (Pro)",
+    "thisPeriod": "Этот период",
+    "avgSession": "Средняя сессия",
+    "topRitual": "Самый частый ритуал",
+    "streak": "Серия",
+    "noData": "Данных пока нет — сделай один-два ритуала и загляни снова!",
+    "moodDistribution": "Распределение настроений",
+    "entries": "{{count}} записей",
+    "consistency": "Стабильность — сессий в день",
+    "timeBlocks": "Когда ты практикуешь — блоки времени",
+    "quickWins": "Быстрые победы",
+    "table": { "ritual": "Ритуал", "avgTime": "Средн. (с)", "samples": "Примеры" },
+    "tipShortRituals": "Подсказка: короткие ритуалы снижают трение — отличный способ построить серию.",
+    "chips": {
+      "past28d": "Последние 28 дн",
+      "sessions_one": "{{count}} сессия",
+      "sessions_few": "{{count}} сессии",
+      "sessions_other": "{{count}} сессий",
+      "avgTime": "Среднее время",
+      "bestTime": "Лучшее время",
+      "mostFrequent": "Самый частый"
+    }
+  },
+
+  "export": { "title": "Экспорт", "json": "Экспорт JSON", "csv": "Экспорт CSV" }
+}

@@ -1,0 +1,34 @@
+{
+  "title": "Rituali",
+  "searchPlaceholder": "Pretraži rituale…",
+  "chips": {
+    "all": "Svi"
+  },
+  "noMatches": "Nema podudaranja. Pokušaj s drugim pojmom ili filtrom.",
+  "start": "Pokreni",
+  "details": "Detalji",
+  "steps": "Koraci",
+  "tags": {
+    "awareness": "Svjesnost",
+    "breath": "Disanje",
+    "calm": "Smirenost",
+    "gratitude": "Zahvalnost",
+    "grounding": "Uzemljenje",
+    "kindness": "Dobrota",
+    "panic": "Panika",
+    "sleep": "San"
+  },
+  "empty": "Nema podudaranja. Pokušaj s drugim pojmom ili filtrom.",
+  "card": {
+    "start": "Pokreni",
+    "details": "Detalji",
+    "approxMin": "~ {{min}} min",
+    "why": "Zašto ovo pomaže",
+    "steps": "Koraci",
+    "tip": "Savjet"
+  },
+  "modal": {
+    "startThis": "Pokreni ovo",
+    "steps": "Koraci"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "title": "Povijest",
+  "openInsights": "Otvori Uvide",
+  "loading": "Učitavanje…",
+  "empty": "Još nema sesija — pokreni svoj prvi ritual i upali mrežu.",
+  "labels": {
+    "today": "Danas",
+    "yesterday": "Jučer",
+    "format": "ddd, D. MMM"
+  },
+  "heatmap": {
+    "title": "Zadnjih 28 dana",
+    "legend": "Legenda",
+    "repaired": "popravljeno",
+    "empty": "Još nema sesija — pokreni svoj prvi ritual i upali mrežu."
+  },
+  "item": {
+    "minutesSep": "· {{minutes}} min",
+    "ritualSep": "· {{title}}"
+  }
+}

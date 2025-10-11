@@ -11,7 +11,8 @@
   "heatmap": {
     "title": "Últimos 28 días",
     "legend": "Leyenda",
-    "repaired": "reparado"
+    "repaired": "reparado",
+    "empty": "Sin sesiones todavía — inicia tu primer ritual para encender la cuadrícula."
   },
   "item": {
     "minutesSep": "· {{minutes}} min",

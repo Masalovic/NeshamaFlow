@@ -1,0 +1,262 @@
+{
+  "appName": "Neshama Flow",
+  "a11y": {
+    "primaryNav": "Κύρια πλοήγηση",
+    "openSettings": "Άνοιγμα Ρυθμίσεων",
+    "back": "Πίσω"
+  },
+  "nav": {
+    "home": "Αρχική",
+    "rituals": "Ριτουάλ",
+    "history": "Ιστορικό",
+    "insights": "Insights",
+    "profile": "Προφίλ",
+    "settings": "Ρυθμίσεις"
+  },
+  "buttons": {
+    "start": "Έναρξη",
+    "pause": "Παύση",
+    "resume": "Συνέχιση",
+    "finishNow": "Ολοκλήρωση τώρα",
+    "saving": "Αποθήκευση…",
+    "save": "Αποθήκευση",
+    "clear": "Εκκαθάριση",
+    "cancel": "Ακύρωση",
+    "continue": "Συνέχεια",
+    "close": "Κλείσιμο",
+    "details": "Λεπτομέρειες",
+    "startThis": "Ξεκίνα αυτό",
+    "startSuggestion": "Έναρξη πρότασης",
+    "startNow": "Ξεκίνα τώρα",
+    "later": "Αργότερα",
+    "mute7d": "Σίγαση 7 ημ",
+    "repair": "Επιδιόρθωση",
+    "goPro": "Μετάβαση σε Pro",
+    "signOut": "Αποσύνδεση",
+    "enablePin": "Ενεργοποίηση PIN",
+    "disablePin": "Απενεργοποίηση PIN",
+    "upgradeToPro": "Αναβάθμιση σε Pro",
+    "logAnother": "Καταχώριση άλλης",
+    "seeHistory": "Προβολή ιστορικού",
+    "setSmartReminder": "Ορισμός έξυπνης υπενθύμισης",
+    "skip": "Παράλειψη προς το παρόν",
+    "share": "Κοινοποίηση",
+    "copy": "Αντιγραφή",
+    "copied": "Αντιγράφηκε!"
+  },
+  "generic": {
+    "loading": "Φόρτωση…",
+    "optional": "προαιρετικό",
+    "tip": "Συμβουλή",
+    "none": "—",
+    "pleaseWait": "Παρακαλώ περίμενε…",
+    "working": "Επεξεργασία…"
+  },
+  "units": {
+    "min": "λεπ",
+    "secondsSuffix": "δλ"
+  },
+
+  "appearance": {
+    "title": "Εμφάνιση",
+    "custom": "Προσαρμοσμένη",
+    "light": "Φωτεινή",
+    "dark": "Σκουρόχρωμη",
+    "useGradient": "Χρήση gradient",
+    "usePhoto": "Χρήση φωτογραφίας",
+    "photoNoteCustom": "Φωτογραφικό φόντο χρησιμοποιείται μόνο στην Προσαρμοσμένη εμφάνιση."
+  },
+  "accent": {
+    "titleWithName": "Τονισμός: {{name}}",
+    "berry": "Berry",
+    "ocean": "Ocean",
+    "forest": "Forest"
+  },
+
+  "home": {
+    "title": "Πώς αισθάνεσαι;",
+    "selectMood": "Επίλεξε διάθεση",
+    "settings": "Ρυθμίσεις",
+    "addNote": "Πρόσθεσε σημείωση (προαιρετικό)",
+    "notePlaceholder": "Τι έχεις στο μυαλό σου;",
+    "quickSaveTitle": "Γρήγορη αποθήκευση",
+    "quickSaveDesc": "καταγράφει άμεσα τη διάθεση και παρακάμπτει το ριτουάλ. Θα αποθηκεύσουμε τη διάθεση και την προαιρετική σημείωση στο <em>Ιστορικό</em>.",
+    "lastLoggedMood": "Τελευταία διάθεση: {{emoji}} — {{date}}",
+    "startRitual": "Έναρξη ριτουάλ",
+    "quickSave": "Γρήγορη αποθήκευση"
+  },
+  "todayPanel": {
+    "greetings": {
+      "lateNight": "Αργά τη νύχτα",
+      "goodMorning": "Καλημέρα",
+      "goodAfternoon": "Καλό απόγευμα",
+      "goodEvening": "Καλησπέρα"
+    },
+    "suggestedToday": "Σημερινή πρόταση: {{suggestion}}",
+    "goalDone": "Στόχος: {{goalMin}} λεπ · ολοκληρώθηκαν <strong>{{minutesToday}} λεπ</strong>"
+  },
+
+  "smartReminder": {
+    "title": "Ένα λεπτό;",
+    "body": "Τι λες για {{pretty}}; Σήμερα δεν έχεις κάνει ακόμη καταγραφή.",
+    "prettyReset": "2′ επαναφορά",
+    "prettyBlock": "2′ επαναφορά {{block}}",
+    "blocks": {
+      "morning": "πρωί",
+      "afternoon": "απόγευμα",
+      "evening": "βράδυ",
+      "night": "νύχτα"
+    }
+  },
+
+  "history": {
+    "title": "Ιστορικό",
+    "insights": "Insights",
+    "today": "Σήμερα",
+    "yesterday": "Χθες",
+    "empty": "Δεν υπάρχουν ακόμη συνεδρίες — ξεκίνα το πρώτο σου ριτουάλ για να «ανάψει» το πλέγμα."
+  },
+
+  "heatmap": {
+    "title": "Τελευταίες 28 ημέρες",
+    "legend": "Υπόμνημα",
+    "repaired": "διορθωμένο",
+    "tooltip": "{{date}}: {{count, plural, one {# συνεδρία} other {# συνεδρίες}}}{{repaired, select, true { (διορθωμένο)} other {}}}",
+    "sessionsCount_one": "{{count}} συνεδρία",
+    "sessionsCount_other": "{{count}} συνεδρίες"
+  },
+
+  "streak": {
+    "title": "Καθημερινό σερί",
+    "onTrack": "Είσαι εντός στόχου σήμερα",
+    "logToKeep": "Κατάγραψε μια διάθεση για να συνεχίσει",
+    "cooldown": "Επιδιόρθωση σε {{count}} ημ",
+    "days_one": "Σερί {{count}} ημέρας",
+    "days_other": "Σερί {{count}} ημερών"
+  },
+
+  "library": {
+    "title": "Ριτουάλ",
+    "searchPlaceholder": "Αναζήτηση ριτουάλ…",
+    "all": "Όλα",
+    "noMatches": "Καμία αντιστοίχιση. Δοκίμασε άλλη αναζήτηση ή φίλτρο.",
+    "approxMinutes": "~ {{minutes}} λεπ",
+    "why": "Γιατί",
+    "steps": "Βήματα",
+    "detailLink": "Λεπτομέρειες",
+    "libraryOpenedEvent": "library_opened",
+    "detailViewedEvent": "library_detail_viewed",
+    "startClickedEvent": "library_start_clicked"
+  },
+
+  "player": {
+    "restingPrompt": "Διάλειμμα — κλείσε τα μάτια και ανάπνεε.",
+    "rest20s": "Διάλειμμα 20 δλ",
+    "finishNow": "Ολοκλήρωση τώρα",
+    "saving": "Αποθήκευση…"
+  },
+
+  "done": {
+    "title": "Το ριτουάλ ολοκληρώθηκε",
+    "sessionComplete": "Η συνεδρία ολοκληρώθηκε",
+    "loggedLine": "Καταγράφηκε <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Αποθηκεύτηκε.",
+    "afterCare": "Φροντίδα μετά"
+  },
+
+  "settings": {
+    "title": "Ρυθμίσεις",
+    "privacyTitle": "Απόρρητο",
+    "privacyBody": "Οι διαθέσεις και τα ριτουάλ σου αποθηκεύονται τοπικά στη συσκευή και είναι κρυπτογραφημένα.",
+    "preferencesTitle": "Προτιμήσεις",
+    "haptics": "Δονητικές ενδείξεις (αν υποστηρίζεται)",
+    "practiceTitle": "Πρακτική & υπενθυμίσεις",
+    "dailyGoal": "Ημερήσιος στόχος (λεπτά)",
+    "preferredTime": "Προτιμώμενη ώρα υπενθύμισης",
+    "smartReminders": "Έξυπνες υπενθυμίσεις",
+    "nudgeNote": "Θα σε ειδοποιούμε κοντά στην προτιμώμενη ώρα με τοπική λογική στη συσκευή.",
+    "proTitle": "Pro (Προεπισκόπηση)",
+    "proToggle": "Ενεργοποίηση λειτουργιών Pro (τοπικός διακόπτης)",
+    "proNote": "Μόνο στο client για δοκιμή. Η σύνδεση με Stripe θα προστεθεί αργότερα.",
+    "lockTitle": "Κλείδωμα εφαρμογής (PIN)",
+    "pinSet": "Έχει οριστεί PIN σε αυτήν τη συσκευή.",
+    "newPin": "Νέο PIN",
+    "confirmPin": "Επιβεβαίωση PIN",
+    "pinStoredInfo": "Το PIN αποθηκεύεται τοπικά ως αλατισμένο SHA-256. Προστατεύει την πρόσβαση μόνο σε αυτήν τη συσκευή.",
+    "clearAll": "Διαγραφή όλων των τοπικών δεδομένων",
+    "language": "Γλώσσα",
+    "accent": "Τονισμός",
+    "appearance": "Εμφάνιση",
+    "custom": "Προσαρμοσμένη",
+    "system": "Σύστημα",
+    "light": "Φωτεινή",
+    "dark": "Σκουρόχρωμη"
+  },
+
+  "profile": {
+    "title": "Προφίλ",
+    "signedInAs": "Συνδεδεμένος/η ως",
+    "displayName": "Όνομα προβολής",
+    "username": "Όνομα χρήστη",
+    "chooseAvatar": "Επιλογή άβαταρ",
+    "saveProfile": "Αποθήκευση προφίλ",
+    "profileSaved": "Το προφίλ αποθηκεύτηκε!",
+    "account": "Λογαριασμός",
+    "errors": {
+      "usernameTaken": "Αυτό το όνομα χρήστη χρησιμοποιείται ήδη.",
+      "avatarNotAllowed": "Η επιλογή άβαταρ δεν επιτρέπεται από την πολιτική του διακομιστή."
+    }
+  },
+
+  "welcome": {
+    "title": "Καλώς ήρθες",
+    "goalQuestion": "Ποιος είναι ο βασικός σου στόχος;",
+    "goalHelp": "Μας βοηθά να προσαρμόσουμε την καθοδήγηση.",
+    "goals": {
+      "reduceStress": "Μείωση άγχους",
+      "buildHabit": "Δημιουργία συνήθειας",
+      "sleepBetter": "Καλύτερος ύπνος",
+      "feelSteadier": "Περισσότερη σταθερότητα"
+    },
+    "hapticCues": "Δονητικές ενδείξεις",
+    "hapticDesc": "Μικρή δόνηση στην αρχή/στο τέλος",
+    "smartReminder": "Έξυπνη υπενθύμιση",
+    "smartReminderDesc": "Ήπια νύξη κοντά στην ώρα που συνηθίζεις. Εξ ολοκλήρου στη συσκευή.",
+    "enableReminder": "Ενεργοποίηση υπενθύμισης",
+    "changeAnytime": "Μπορείς να αλλάξεις αυτά οποτεδήποτε στις <em>Ρυθμίσεις</em>."
+  },
+
+  "insights": {
+    "title": "Insights (Pro)",
+    "thisPeriod": "Αυτή η περίοδος",
+    "avgSession": "Μέση συνεδρία",
+    "topRitual": "Συχνότερο ριτουάλ",
+    "streak": "Σερί",
+    "noData": "Δεν υπάρχουν ακόμη δεδομένα — κάνε ένα-δυο ριτουάλ και ξαναέλα!",
+    "moodDistribution": "Κατανομή διάθεσης",
+    "entries": "{{count}} καταγραφές",
+    "consistency": "Συνέπεια — συνεδρίες ανά ημέρα",
+    "timeBlocks": "Πότε εξασκείσαι — χρονικά μπλοκ",
+    "quickWins": "Γρήγορες νίκες",
+    "table": {
+      "ritual": "Ριτουάλ",
+      "avgTime": "Μ.Ο. (δλ)",
+      "samples": "Δείγματα"
+    },
+    "tipShortRituals": "Συμβουλή: τα σύντομα ριτουάλ μειώνουν την τριβή — εξαιρετικά για να χτίσεις σερί.",
+    "chips": {
+      "past28d": "Τελευταίες 28 ημ",
+      "sessions_one": "{{count}} συνεδρία",
+      "sessions_other": "{{count}} συνεδρίες",
+      "avgTime": "Μέσος χρόνος",
+      "bestTime": "Καλύτερη ώρα",
+      "mostFrequent": "Συχνότερο"
+    }
+  },
+
+  "export": {
+    "title": "Εξαγωγή",
+    "json": "Εξαγωγή JSON",
+    "csv": "Εξαγωγή CSV"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "title": "Ritüeller",
+  "searchPlaceholder": "Ritüel ara…",
+  "chips": { "all": "Tümü" },
+  "noMatches": "Eşleşme yok. Farklı bir arama ya da filtre deneyin.",
+  "start": "Başlat",
+  "details": "Ayrıntılar",
+  "steps": "Adımlar",
+  "tags": {
+    "awareness": "Farkındalık",
+    "breath": "Nefes",
+    "calm": "Sakinlik",
+    "gratitude": "Şükran",
+    "grounding": "Topraklanma",
+    "kindness": "Nezaket",
+    "panic": "Panik",
+    "sleep": "Uyku"
+  },
+  "empty": "Eşleşme yok. Farklı bir arama ya da filtre deneyin.",
+  "card": {
+    "start": "Başlat",
+    "details": "Ayrıntılar",
+    "approxMin": "~ {{min}} dk",
+    "why": "Neden yardımcı olur",
+    "steps": "Adımlar",
+    "tip": "İpucu"
+  },
+  "modal": {
+    "startThis": "Bunu başlat",
+    "steps": "Adımlar"
+  }
+}

@@ -16,7 +16,7 @@
     "topRitual": "Ritual principal",
     "streak": "Racha",
     "noEntryToday": "(sin entrada hoy)"
-  },
+  }, 
   "empty": "Aún no hay datos — completa uno o dos rituales y vuelve.",
   "charts": {
     "moodDistribution": "Distribución de ánimo",
@@ -30,5 +30,21 @@
     "avgSec": "Promedio (s)",
     "samples": "Muestras",
     "tip": "Consejo: los rituales cortos reducen la fricción — ideales para construir racha."
+  },
+  "chips": {
+    "past28d": "Últimos 28 d",
+    "sessions_one": "{{count}} sesión",
+    "sessions_few": "{{count}} sesiones",
+    "sessions_other": "{{count}} sesiones",
+    "avgTime": "Tiempo prom.",
+    "bestTime": "Mejor hora",
+    "mostFrequent": "Más frecuente"
+  },
+  "heatmap": {
+    "title28d": "Últimos 28 días",
+    "badge": "{{total}} sesiones • racha de {{streak}} días",
+    "legend": "Leyenda",
+    "repaired": "reparado",
+    "cellTitle": "{{date}}: {{count}} sesión(es){{repaired}}"
   }
 }

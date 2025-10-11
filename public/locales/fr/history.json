@@ -1,0 +1,21 @@
+{
+  "title": "Historique",
+  "openInsights": "Ouvrir Analyses",
+  "loading": "Chargement…",
+  "empty": "Aucune session pour l’instant — commencez votre premier rituel pour allumer la grille.",
+  "labels": {
+    "today": "Aujourd’hui",
+    "yesterday": "Hier",
+    "format": "ddd D MMM"
+  },
+  "heatmap": {
+    "title": "Derniers 28 jours",
+    "legend": "Légende",
+    "repaired": "réparé",
+    "empty": "Aucune session pour l’instant — commencez votre premier rituel pour allumer la grille."
+  },
+  "item": {
+    "minutesSep": "· {{minutes}} min",
+    "ritualSep": "· {{title}}"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "title": "Uvidi (Pro)",
+  "range": {
+    "label": "{{start}} – {{end}}",
+    "last7": "Zadnjih 7 dana",
+    "last28": "Zadnjih 28 dana",
+    "last90": "Zadnjih 90 dana",
+    "custom": "Prilagođeno…",
+    "startDate": "Početni datum",
+    "endDate": "Završni datum"
+  },
+  "summary": {
+    "thisPeriod": "Ovo razdoblje",
+    "minutesSessions": "{{minutes}} min · {{sessions}} sesija",
+    "avgSession": "Prosj. sesija",
+    "topRitual": "Najčešći ritual",
+    "streak": "Niz",
+    "noEntryToday": "(nema unosa danas)"
+  },
+  "empty": "Još nema podataka — napravi jedan-dva rituala i navrati opet!",
+  "charts": {
+    "moodDistribution": "Raspodjela raspoloženja",
+    "sessionsPerDay": "Dosljednost — sesija po danu",
+    "timeBlocks": "Kada prakticiraš — vremenski blokovi",
+    "quickWins": "Brze pobjede",
+    "noData": "Još nema podataka."
+  },
+  "table": {
+    "ritual": "Ritual",
+    "avgSec": "Prosj. vrijeme (s)",
+    "samples": "Uzorci",
+    "tip": "Savjet: kratki rituali smanjuju trenje — dobar način za izgradnju niza."
+  },
+  "chips": {
+    "lastN": "Zadnjih {{n}} d",
+    "sessions_one": "{{count}} sesija",
+    "sessions_few": "{{count}} sesije",
+    "sessions_other": "{{count}} sesija",
+    "avgTime": "Prosj. vrijeme",
+    "bestTime": "Najbolje vrijeme",
+    "mostFrequent": "Najčešće"
+  },
+  "heatmap": {
+    "title28d": "Zadnjih 28 dana",
+    "badge": "{{total}} sesija • niz od {{streak}} dana",
+    "legend": "Legenda",
+    "repaired": "popravljeno",
+    "cellTitle": "{{date}}: {{count}} sesija{{repaired}}"
+  }
+}

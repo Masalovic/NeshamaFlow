@@ -1,52 +1,204 @@
 {
-  "suggestion": {
-    "title": "Tu ritual",
-    "basedOnMood": "Según tu ánimo",
-    "start": "Iniciar",
-    "orPick": "O elige de la Biblioteca",
-    "actions": {
-      "seeSteps": "Ver pasos",
-      "whyWorks": "Por qué funciona",
-      "browse": "Explorar rituales",
-      "startRitual": "Iniciar ritual"
-    },
-    "modals": {
-      "how": "Cómo hacerlo",
-      "noSteps": "No hay pasos disponibles.",
-      "why": "Por qué funciona"
-    }
+  "suggestion": { "title": "Tu ritual" },
+
+  "actions": {
+    "startRitual": "Iniciar ritual",
+    "seeSteps": "Ver pasos",
+    "whyWorks": "Por qué funciona",
+    "browse": "Explorar rituales"
   },
+
+  "modals": {
+    "how": "Cómo hacerlo",
+    "why": "Por qué funciona",
+    "noSteps": "No hay pasos disponibles."
+  },
+
   "player": {
-    "restMsg": "Descansa — cierra los ojos y respira.",
-    "restHint": "Toma una pausa de respiración de 20s",
-    "rest20": "Descanso 20s",
-    "start": "Iniciar",
-    "pause": "Pausar",
-    "finishNow": "Finalizar ahora",
-    "saving": "Guardando…",
-    "tipTitle": "Consejo"
+    "restMsg": "Descansa: cierra los ojos y respira.",
+    "restHint": "Toma una pausa de respiración de 20 s",
+    "rest20": "Descanso 20 s",
+    "finishNow": "Terminar ahora"
   },
+
   "done": {
     "title": "Ritual completado",
     "sessionComplete": "Sesión completada",
     "logged": "Registrado <strong>{{duration}}</strong> — {{ritualTitle}}.",
     "saved": "Guardado.",
-    "afterCare": "Después",
+    "summary": "Resumen",
+    "afterCare": "Cuidados posteriores",
     "logAnother": "Registrar otro",
     "seeHistory": "Ver historial",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
     "setReminder": "Configurar recordatorio inteligente",
-    "share": {
-      "title": "Mi sesión de ritual"
-    },
-    "generic": "ritual"
+    "labels": {
+    "sessionComplete": "Sessione completata",
+    "ritual": "Rituale",
+    "duration": "Durata",
+    "mood": "Umore",
+    "when": "Quando",
+    "note": "Nota"
+  }
   },
+
+  "share": { "title": "Mi sesión de ritual" },
+
+  "generic": "ritual",
+
+  "titles": {
+    "box-breath-2m": "Respiración en caja",
+    "478-pace-2m": "Respiración 4-7-8",
+    "body-scan-1m": "Escaneo corporal de 1 min",
+    "ground-54321": "Anclaje 5-4-3-2-1",
+    "compassion-break": "Pausa de autocompasión",
+    "gratitude-3": "Gratitud ×3"
+  },
+
+  "guides": {
+    "box-breath-2m": {
+      "title": "Qué hacer",
+      "why": "Inhalaciones, pausas y exhalaciones lentas y de igual duración apuntan a ~6 respiraciones/min, aumentan el tono vagal y desplazan el equilibrio hacia el parasimpático (descanso y digestión). Se usa en estrés agudo para reducir la reactividad amigdalina y estabilizar la VFC.",
+      "whyBullets": [
+        "Activa el parasimpático (descanso y digestión)",
+        "Estabiliza la VFC bajo estrés",
+        "Ritmo simple 4-4-4-4"
+      ],
+      "steps": [
+        "Siéntate erguido; relaja hombros y mandíbula.",
+        "Inhala por la nariz contando 4.",
+        "Mantén el aire 4.",
+        "Exhala por la nariz (o con labios fruncidos) 4.",
+        "Mantén vacío 4. Repite la «caja» 4–8 ciclos."
+      ],
+      "tip": "Si 4 s es largo, prueba 3-3-3-3. Mantén la respiración suave."
+    },
+
+    "478-pace-2m": {
+      "title": "Qué hacer",
+      "why": "El exhalar más largo activa el nervio vago y reduce la activación simpática. El patrón 4-7-8 aumenta temporalmente la tolerancia al CO₂ y puede reducir la ansiedad y el tiempo para dormir.",
+      "whyBullets": [
+        "Exhalación larga → activación vagal",
+        "Mejora la tolerancia al CO₂",
+        "Útil para ansiedad y sueño"
+      ],
+      "steps": [
+        "Siéntate cómodo; punta de la lengua detrás de los dientes superiores (opcional).",
+        "Inhala por la nariz contando 4.",
+        "Retén el aire 7.",
+        "Exhala suavemente por la boca 8.",
+        "Continúa el ciclo 4-7-8 a un ritmo tranquilo."
+      ],
+      "tip": "Para dormir: 3–4 rondas son suficientes."
+    },
+
+    "body-scan-1m": {
+      "title": "Qué hacer",
+      "why": "Un chequeo interoceptivo rápido activa redes somatosensoriales y saca la atención de la rumiación. Los escaneos breves se asocian con menos estrés percibido y mejor regulación emocional.",
+      "whyBullets": [
+        "Interrumpe la rumiación",
+        "Mejora la conciencia corporal",
+        "Funciona en cualquier lugar"
+      ],
+      "steps": [
+        "Colócate cómodo (sentado o acostado); suaviza la mirada o cierra los ojos.",
+        "Lleva la atención a los pies; nota contacto, temperatura y cosquilleo.",
+        "Sube lentamente: pantorrillas, rodillas, muslos, caderas, abdomen, pecho, hombros, brazos, manos, cuello, cara, cuero cabelludo.",
+        "Pon nombre a las sensaciones (presión, calor, tenso/suelto, neutral) sin juzgar ni cambiar.",
+        "Cuando la mente se vaya, vuelve con suavidad al área anterior."
+      ],
+      "tip": "Corto y frecuente vence a largo y esporádico."
+    },
+
+    "ground-54321": {
+      "title": "Qué hacer",
+      "why": "Orientarse a los cinco sentidos activa redes atencionales prefrontales y reduce la evaluación límbica de amenaza. Usado en TCC para picos de pánico e ira.",
+      "whyBullets": [
+        "El foco sensorial baja la respuesta de amenaza",
+        "Compatible con TCC, fácil de aprender",
+        "Genial para pánico/ira"
+      ],
+      "steps": [
+        "Mira alrededor: nombra 5 cosas que ves.",
+        "Nota 4 cosas que sientes (silla, ropa, aire…).",
+        "Identifica 3 sonidos (cerca y lejos).",
+        "Nota 2 olores.",
+        "Nota 1 sabor (o toma un sorbo de agua)."
+      ],
+      "tip": "Decir las cosas en voz baja ancla la atención."
+    },
+
+    "compassion-break": {
+      "title": "Qué hacer",
+      "why": "Frases breves de amabilidad propia reducen el cortisol y la autocrítica. Enmarcar la dificultad como «humanidad compartida» apoya la reevaluación cognitiva.",
+      "whyBullets": [
+        "Reduce la autocrítica",
+        "Favorece la reevaluación cognitiva",
+        "Guion corto para memorizar"
+      ],
+      "steps": [
+        "Reconoce: «Este es un momento de sufrimiento / Esto es difícil».",
+        "Humanidad compartida: «No estoy solo/a; otros sienten esto también».",
+        "Amabilidad: coloca una mano en el corazón (u otro toque calmante).",
+        "Ofrece frases: «Que sea amable conmigo; que me acepte; que tenga paciencia»."
+      ],
+      "tip": "Usa un tono cálido, como con una amistad querida."
+    },
+
+    "gratitude-3": {
+      "title": "Qué hacer",
+      "why": "Los micro-ejercicios de gratitud aumentan el afecto positivo y amplían el foco atencional. La práctica repetida se asocia con mejor estado de ánimo y sueño.",
+      "whyBullets": [
+        "Aumenta el afecto positivo",
+        "Amplía el foco atencional",
+        "Micro-práctica diaria sencilla"
+      ],
+      "steps": [
+        "Trae a la mente algo específico que agradeces (p. ej., «sol sobre la mesa»).",
+        "Di en una frase por qué importa.",
+        "Repite con dos cosas más (total de tres)."
+      ],
+      "tip": "Lo específico gana a lo general. Imagínalo y nota el cuerpo."
+    }
+  },
+
   "after": {
-    "boxBreath": { "1": "Da una respiración más lenta y relaja la mandíbula.", "2": "Suaviza la próxima exhalación; nota los hombros bajar.", "3": "Si ayuda, haz 1–2 ciclos tranquilos más tarde." },
-    "478": { "1": "Si te mareas, respira normal durante un minuto.", "2": "Usa 4-7-8 al dormir: 3–4 rondas bastan.", "3": "Bebe agua y evita levantarte rápido." },
-    "bodyScan": { "1": "Rota hombros; suaviza frente y lengua.", "2": "Anota un área para 30s más tarde.", "3": "Bebe un sorbo de agua y estira suavemente." },
-    "ground": { "1": "Elige una pequeña acción y hazla despacio.", "2": "Abre las manos; relaja la lengua del paladar.", "3": "Si vuelve la agitación, exhala más lento y largo." },
-    "compassion": { "1": "Mano al corazón y una frase amable.", "2": "Recuerda la “humanidad común”.", "3": "Escribe una línea de apoyo reutilizable." },
-    "gratitude": { "1": "Saborea un detalle concreto ~10s.", "2": "Si puedes, envía un agradecimiento de una línea.", "3": "Sonríe suavemente para fijar el recuerdo." },
-    "default": { "1": "Da una respiración más lenta y relaja los hombros.", "2": "Bebe un sorbo de agua (los rituales cortos se mantienen mejor).", "3": "Opcional: anota una línea en Historial." }
+    "default": {
+      "1": "Da una respiración más lenta y relaja los hombros.",
+      "2": "Bebe un sorbo de agua (¡los hábitos pequeños se fijan mejor!).",
+      "3": "Opcional: anota una línea en Historial."
+    },
+    "boxBreath": {
+      "1": "Una respiración lenta y afloja la mandíbula.",
+      "2": "Suaviza la próxima exhalación; nota cómo bajan los hombros.",
+      "3": "Si ayuda, haz 1–2 ciclos tranquilos más tarde."
+    },
+    "478": {
+      "1": "Si hay mareo, respira normal durante un minuto.",
+      "2": "Usa 4-7-8 para dormir: 3–4 rondas bastan.",
+      "3": "Bebe agua y evita levantarte rápido."
+    },
+    "bodyScan": {
+      "1": "Rota los hombros; suaviza frente y lengua.",
+      "2": "Elige un área para volver 30 s más tarde.",
+      "3": "Bebe un sorbo de agua y estírate suave."
+    },
+    "ground": {
+      "1": "Elige una acción mínima y hazla despacio.",
+      "2": "Abre las manos; suelta la lengua del paladar.",
+      "3": "Si vuelve la agitación, haz un exhalar más largo."
+    },
+    "compassion": {
+      "1": "Mano en el corazón y una frase amable.",
+      "2": "Recuerda la humanidad compartida: otros también sienten esto.",
+      "3": "Escribe una línea de apoyo para reutilizar."
+    },
+    "gratitude": {
+      "1": "Saborea un detalle concreto ~10 s.",
+      "2": "Si puedes, envía un agradecimiento de una línea.",
+      "3": "Sonríe suavemente para fijar el recuerdo."
+    }
   }
 }

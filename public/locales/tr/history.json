@@ -1,0 +1,21 @@
+{
+  "title": "Geçmiş",
+  "openInsights": "Analizleri aç",
+  "loading": "Yükleniyor…",
+  "empty": "Henüz oturum yok — ızgarayı aydınlatmak için ilk ritüeline başla.",
+  "labels": {
+    "today": "Bugün",
+    "yesterday": "Dün",
+    "format": "ddd, D MMM"
+  },
+  "heatmap": {
+    "title": "Son 28 gün",
+    "legend": "Açıklama",
+    "repaired": "onarılmış",
+    "empty": "Henüz oturum yok — ızgarayı aydınlatmak için ilk ritüeline başla."
+  },
+  "item": {
+    "minutesSep": "· {{minutes}} dk",
+    "ritualSep": "· {{title}}"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "welcome": {
+    "title": "Bienvenue"
+  },
+  "goal": {
+    "title": "Quel est votre objectif principal ?",
+    "subtitle": "Cela aide à personnaliser les conseils.",
+    "options": {
+      "reduceStress": "Réduire le stress",
+      "buildHabit": "Construire une habitude",
+      "sleepBetter": "Mieux dormir",
+      "feelSteadier": "Se sentir plus stable"
+    }
+  },
+  "haptics": {
+    "title": "Retour haptique",
+    "desc": "Légère vibration au début/à la fin"
+  },
+  "reminder": {
+    "title": "Rappel intelligent",
+    "desc": "Un petit coup de pouce près de votre heure habituelle. 100 % sur l’appareil.",
+    "enable": "Activer le rappel"
+  },
+  "actions": {
+    "skip": "Ignorer pour l’instant",
+    "continue": "Continuer",
+    "saving": "Enregistrement…",
+    "footnote": "Vous pourrez modifier ces réglages à tout moment dans les <em>Réglages</em>."
+  }
+}

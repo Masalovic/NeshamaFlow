@@ -1,0 +1,250 @@
+{
+  "appName": "Neshama Flow",
+  "a11y": {
+    "primaryNav": "Birincil gezinme",
+    "openSettings": "Ayarları aç",
+    "back": "Geri"
+  },
+  "nav": {
+    "home": "Ana sayfa",
+    "rituals": "Ritüeller",
+    "history": "Geçmiş",
+    "insights": "Analizler",
+    "profile": "Profil",
+    "settings": "Ayarlar"
+  },
+  "buttons": {
+    "start": "Başlat",
+    "pause": "Duraklat",
+    "resume": "Sürdür",
+    "finishNow": "Şimdi bitir",
+    "saving": "Kaydediliyor…",
+    "save": "Kaydet",
+    "clear": "Temizle",
+    "cancel": "İptal",
+    "continue": "Devam et",
+    "close": "Kapat",
+    "details": "Ayrıntılar",
+    "startThis": "Bunu başlat",
+    "startSuggestion": "Öneriyi başlat",
+    "startNow": "Hemen başla",
+    "later": "Daha sonra",
+    "mute7d": "7 g kapat",
+    "repair": "Onar",
+    "goPro": "Pro’ya geç",
+    "signOut": "Çıkış yap",
+    "enablePin": "PIN’i etkinleştir",
+    "disablePin": "PIN’i devre dışı bırak",
+    "upgradeToPro": "Pro’ya yükselt",
+    "logAnother": "Bir tane daha kaydet",
+    "seeHistory": "Geçmişi gör",
+    "setSmartReminder": "Akıllı hatırlatıcı ayarla",
+    "skip": "Şimdilik atla",
+    "share": "Paylaş",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı!"
+  },
+  "generic": {
+    "loading": "Yükleniyor…",
+    "optional": "isteğe bağlı",
+    "tip": "İpucu",
+    "none": "—",
+    "pleaseWait": "Lütfen bekleyin…",
+    "working": "Çalışıyor…"
+  },
+  "units": { "min": "dk", "secondsSuffix": "sn" },
+
+  "appearance": {
+    "title": "Görünüm",
+    "custom": "Özel",
+    "light": "Açık",
+    "dark": "Koyu",
+    "useGradient": "Gradyan kullan",
+    "usePhoto": "Fotoğraf kullan",
+    "photoNoteCustom": "Fotoğraf arka plan yalnızca Özel görünümde kullanılır."
+  },
+  "accent": {
+    "titleWithName": "Vurgu: {{name}}",
+    "berry": "Meyve",
+    "ocean": "Okyanus",
+    "forest": "Orman"
+  },
+
+  "home": {
+    "title": "Nasıl hissediyorsun?",
+    "selectMood": "Ruh hâli seç",
+    "settings": "Ayarlar",
+    "addNote": "Not ekle (isteğe bağlı)",
+    "notePlaceholder": "Aklında ne var?",
+    "quickSaveTitle": "Hızlı kaydet",
+    "quickSaveDesc": "ruh hâlini anında kaydeder ve ritüeli atlar. Seçilen ruh hâlini ve isteğe bağlı notu <em>Geçmiş</em>’e kaydederiz.",
+    "lastLoggedMood": "Son ruh hâli: {{emoji}} — {{date}}",
+    "startRitual": "Ritüeli başlat",
+    "quickSave": "Hızlı kaydet"
+  },
+  "todayPanel": {
+    "greetings": {
+      "lateNight": "Gece geç",
+      "goodMorning": "Günaydın",
+      "goodAfternoon": "İyi öğleden sonra",
+      "goodEvening": "İyi akşamlar"
+    },
+    "suggestedToday": "Bugünün önerisi: {{suggestion}}",
+    "goalDone": "Hedef: {{goalMin}} dk · <strong>{{minutesToday}} dk</strong> tamamlandı"
+  },
+
+  "smartReminder": {
+    "title": "Bir mola verelim mi?",
+    "body": "{{pretty}} nasıl olur? Bugün henüz giriş yapmadın.",
+    "prettyReset": "2 dk yenilenme",
+    "prettyBlock": "2 dk {{block}} yenilenme",
+    "blocks": {
+      "morning": "sabah",
+      "afternoon": "öğleden sonra",
+      "evening": "akşam",
+      "night": "gece"
+    }
+  },
+
+  "history": {
+    "title": "Geçmiş",
+    "insights": "Analizler",
+    "today": "Bugün",
+    "yesterday": "Dün",
+    "empty": "Henüz oturum yok — ızgarayı aydınlatmak için ilk ritüeline başla."
+  },
+
+  "heatmap": {
+    "title": "Son 28 gün",
+    "legend": "Açıklama",
+    "repaired": "onarılmış",
+    "tooltip": "{{date}}: {{count, plural, one {# oturum} other {# oturum}}}{{repaired, select, true { (onarılmış)} other {}}}",
+    "sessionsCount_one": "{{count}} oturum",
+    "sessionsCount_other": "{{count}} oturum"
+  },
+  "streak": {
+    "title": "Günlük seri",
+    "onTrack": "Bugün yolundasın",
+    "logToKeep": "Devam etmek için bir ruh hâli kaydet",
+    "cooldown": "{{count}} günde onar",
+    "days_one": "{{count}} günlük seri",
+    "days_other": "{{count}} günlük seri"
+  },
+
+  "library": {
+    "title": "Ritüeller",
+    "searchPlaceholder": "Ritüel ara…",
+    "all": "Tümü",
+    "noMatches": "Eşleşme yok. Farklı bir arama ya da filtre deneyin.",
+    "approxMinutes": "~ {{minutes}} dk",
+    "why": "Neden",
+    "steps": "Adımlar",
+    "detailLink": "Ayrıntılar",
+    "libraryOpenedEvent": "library_opened",
+    "detailViewedEvent": "library_detail_viewed",
+    "startClickedEvent": "library_start_clicked"
+  },
+
+  "player": {
+    "restingPrompt": "Dinlen — gözlerini kapat ve nefes al.",
+    "rest20s": "20 sn dinlen",
+    "finishNow": "Şimdi bitir",
+    "saving": "Kaydediliyor…"
+  },
+
+  "done": {
+    "title": "Ritüel tamamlandı",
+    "sessionComplete": "Oturum tamamlandı",
+    "loggedLine": "<strong>{{duration}}</strong> kaydedildi — {{ritualTitle}}.",
+    "saved": "Kaydedildi.",
+    "afterCare": "Sonrası"
+  },
+
+  "settings": {
+    "title": "Ayarlar",
+    "privacyTitle": "Gizlilik",
+    "privacyBody": "Ruh hâllerin ve ritüellerin cihazında yerel olarak saklanır ve şifrelenir.",
+    "preferencesTitle": "Tercihler",
+    "haptics": "Dokunsal uyarılar (destekleniyorsa)",
+    "practiceTitle": "Pratik & hatırlatıcılar",
+    "dailyGoal": "Günlük hedef (dakika)",
+    "preferredTime": "Tercih edilen hatırlatma saati",
+    "smartReminders": "Akıllı hatırlatıcılar",
+    "nudgeNote": "Tercih ettiğin saate yakın, cihaz içi mantıkla dürteceğiz.",
+    "proTitle": "Pro (Önizleme)",
+    "proToggle": "Pro özellikleri etkinleştir (yerel anahtar)",
+    "proNote": "Şimdilik yalnızca istemci tarafında test. Stripe sonra bağlanacak.",
+    "lockTitle": "Uygulama Kilidi (PIN)",
+    "pinSet": "Bu cihazda bir PIN ayarlı.",
+    "newPin": "Yeni PIN",
+    "confirmPin": "PIN’i doğrula",
+    "pinStoredInfo": "PIN, cihazda tuzlanmış SHA-256 özeti olarak saklanır. Yalnızca bu cihazdaki erişimi korur.",
+    "clearAll": "Tüm yerel verileri temizle",
+    "language": "Dil",
+    "accent": "Vurgu",
+    "appearance": "Görünüm",
+    "custom": "Özel",
+    "system": "Sistem",
+    "light": "Açık",
+    "dark": "Koyu"
+  },
+
+  "profile": {
+    "title": "Profil",
+    "signedInAs": "Giriş yapılan hesap",
+    "displayName": "Görünen ad",
+    "username": "Kullanıcı adı",
+    "chooseAvatar": "Avatar seç",
+    "saveProfile": "Profili kaydet",
+    "profileSaved": "Profil kaydedildi!",
+    "account": "Hesap",
+    "errors": {
+      "usernameTaken": "Bu kullanıcı adı zaten alınmış.",
+      "avatarNotAllowed": "Sunucu ilkesi avatar seçimine izin vermiyor."
+    }
+  },
+
+  "welcome": {
+    "title": "Hoş geldin",
+    "goalQuestion": "Ana hedefin ne?",
+    "goalHelp": "Bu, rehberliği uyarlamamıza yardımcı olur.",
+    "goals": {
+      "reduceStress": "Stresi azalt",
+      "buildHabit": "Alışkanlık oluştur",
+      "sleepBetter": "Daha iyi uyu",
+      "feelSteadier": "Daha dengeli hisset"
+    },
+    "hapticCues": "Dokunsal uyarılar",
+    "hapticDesc": "Başta/sonda küçük titreşim",
+    "smartReminder": "Akıllı hatırlatıcı",
+    "smartReminderDesc": "Alışılmış saatine yakın nazik bir dürtme. Tamamen cihaz içinde.",
+    "enableReminder": "Hatırlatıcıyı etkinleştir",
+    "changeAnytime": "Bunları istediğin zaman <em>Ayarlar</em>’dan değiştirebilirsin."
+  },
+
+  "insights": {
+    "title": "Analizler (Pro)",
+    "thisPeriod": "Bu dönem",
+    "avgSession": "Ortalama oturum",
+    "topRitual": "En sık ritüel",
+    "streak": "Seri",
+    "noData": "Henüz veri yok — bir iki ritüel yap ve tekrar bak!",
+    "moodDistribution": "Ruh hâli dağılımı",
+    "entries": "{{count}} kayıt",
+    "consistency": "Tutarlılık — günde oturum",
+    "timeBlocks": "Ne zaman pratik — zaman blokları",
+    "quickWins": "Hızlı kazançlar",
+    "table": { "ritual": "Ritüel", "avgTime": "Ort. (sn)", "samples": "Örnek" },
+    "tipShortRituals": "İpucu: kısa ritüeller sürtünmeyi azaltır — seri oluşturmak için harika.",
+    "chips": {
+      "past28d": "Son 28 g",
+      "sessions_one": "{{count}} oturum",
+      "sessions_other": "{{count}} oturum",
+      "avgTime": "Ort. süre",
+      "bestTime": "En iyi zaman",
+      "mostFrequent": "En sık"
+    }
+  },
+
+  "export": { "title": "Dışa aktar", "json": "JSON dışa aktar", "csv": "CSV dışa aktar" }
+}

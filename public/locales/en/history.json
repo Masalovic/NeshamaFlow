@@ -11,7 +11,8 @@
   "heatmap": {
     "title": "Past 28 days",
     "legend": "Legend",
-    "repaired": "repaired"
+    "repaired": "repaired",
+    "empty": "No sessions yet—start your first ritual to light up the grid."
   },
   "item": {
     "minutesSep": "· {{minutes}} min",

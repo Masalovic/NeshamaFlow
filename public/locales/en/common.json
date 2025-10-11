@@ -2,12 +2,13 @@
   "appName": "Neshama Flow",
   "a11y": {
     "primaryNav": "Primary navigation",
-    "openSettings": "Open Settings"
+    "openSettings": "Open Settings",
+    "back": "Back"
   },
   "nav": {
     "home": "Home",
     "rituals": "Rituals",
-    "history": "Calendar",
+    "history": "History",
     "insights": "Insights",
     "profile": "Profile",
     "settings": "Settings"
@@ -16,7 +17,7 @@
     "start": "Start",
     "pause": "Pause",
     "resume": "Resume",
-    "finishNow": "Finish Now",
+    "finishNow": "Finish now",
     "saving": "Saving…",
     "save": "Save",
     "clear": "Clear",
@@ -37,7 +38,7 @@
     "upgradeToPro": "Upgrade to Pro",
     "logAnother": "Log another",
     "seeHistory": "See history",
-    "setSmartReminder": "Set a smart reminder",
+    "setSmartReminder": "Set smart reminder",
     "skip": "Skip for now",
     "share": "Share",
     "copy": "Copy",
@@ -51,33 +52,35 @@
     "pleaseWait": "Please wait…",
     "working": "Working…"
   },
-  "units": {
-    "min": "min",
-    "secondsSuffix": "s"
-  },
+  "units": { "min": "min", "secondsSuffix": "s" },
+
   "appearance": {
     "title": "Appearance",
+    "custom": "Custom",
+    "light": "Light",
+    "dark": "Dark",
     "useGradient": "Use gradient",
     "usePhoto": "Use photo",
     "photoNoteCustom": "Photo background is used only in Custom appearance."
   },
   "accent": {
     "titleWithName": "Accent: {{name}}",
-    "berry": "berry",
-    "ocean": "ocean",
-    "forest": "forest"
+    "berry": "Berry",
+    "ocean": "Ocean",
+    "forest": "Forest"
   },
+
   "home": {
     "title": "How are you feeling?",
-    "selectMood": "Select your mood",
+    "selectMood": "Select mood",
     "settings": "Settings",
     "addNote": "Add a note (optional)",
     "notePlaceholder": "What’s on your mind?",
-    "quickSaveTitle": "Quick Save",
-    "quickSaveDesc": "logs your mood instantly and skips the ritual. We’ll save your selected mood and optional note to <em>History</em>.",
-    "lastLoggedMood": "Last Logged Mood: {{emoji}} on {{date}}",
-    "startRitual": "Start Ritual",
-    "quickSave": "Quick Save"
+    "quickSaveTitle": "Quick save",
+    "quickSaveDesc": "instantly logs mood and skips the ritual. We’ll save the chosen mood and optional note to <em>History</em>.",
+    "lastLoggedMood": "Last mood: {{emoji}} — {{date}}",
+    "startRitual": "Start ritual",
+    "quickSave": "Quick save"
   },
   "todayPanel": {
     "greetings": {
@@ -89,11 +92,12 @@
     "suggestedToday": "Suggested today: {{suggestion}}",
     "goalDone": "Goal: {{goalMin}} min · <strong>{{minutesToday}} min</strong> done"
   },
+
   "smartReminder": {
     "title": "Take a moment?",
     "body": "How about {{pretty}}? You haven’t checked in yet today.",
-    "prettyReset": "a 2-min reset",
-    "prettyBlock": "a 2-min {{block}} reset",
+    "prettyReset": "2-min reset",
+    "prettyBlock": "2-min {{block}} reset",
     "blocks": {
       "morning": "morning",
       "afternoon": "afternoon",
@@ -101,12 +105,7 @@
       "night": "night"
     }
   },
-  "streak": {
-    "title": "Daily streak",
-    "onTrack": "You’re on track today",
-    "logToKeep": "Log a mood to keep it going",
-    "cooldown": "Repair in {{count}}d"
-  },
+
   "history": {
     "title": "History",
     "insights": "Insights",
@@ -114,12 +113,24 @@
     "yesterday": "Yesterday",
     "empty": "No sessions yet—start your first ritual to light up the grid."
   },
+
   "heatmap": {
     "title": "Past 28 days",
     "legend": "Legend",
     "repaired": "repaired",
-    "tooltip": "{{date}}: {{count, plural, one {# session} other {# sessions}}}{{repaired, select, true { (repaired)} other {}}}"
+    "tooltip": "{{date}}: {{count, plural, one {# session} other {# sessions}}}{{repaired, select, true { (repaired)} other {}}}",
+    "sessionsCount_one": "{{count}} session",
+    "sessionsCount_other": "{{count}} sessions"
   },
+  "streak": {
+    "title": "Daily streak",
+    "onTrack": "You’re on track today",
+    "logToKeep": "Log a mood to keep it going",
+    "cooldown": "Repair in {{count}}d",
+    "days_one": "{{count}} day streak",
+    "days_other": "{{count}}-day streak"
+  },
+
   "library": {
     "title": "Rituals",
     "searchPlaceholder": "Search rituals…",
@@ -133,12 +144,14 @@
     "detailViewedEvent": "library_detail_viewed",
     "startClickedEvent": "library_start_clicked"
   },
+
   "player": {
-    "restingPrompt": "Rest — close your eyes and breathe.",
+    "restingPrompt": "Rest — close eyes and breathe.",
     "rest20s": "Rest 20s",
-    "finishNow": "Finish Now",
+    "finishNow": "Finish now",
     "saving": "Saving…"
   },
+
   "done": {
     "title": "Ritual done",
     "sessionComplete": "Session complete",
@@ -146,6 +159,7 @@
     "saved": "Saved.",
     "afterCare": "After-care"
   },
+
   "settings": {
     "title": "Settings",
     "privacyTitle": "Privacy",
@@ -156,15 +170,15 @@
     "dailyGoal": "Daily goal (minutes)",
     "preferredTime": "Preferred reminder time",
     "smartReminders": "Smart reminders",
-    "nudgeNote": "We’ll nudge you near your preferred time using lightweight, on-device logic.",
+    "nudgeNote": "We’ll nudge you near your preferred time using on-device logic.",
     "proTitle": "Pro (Preview)",
     "proToggle": "Enable Pro features (local toggle)",
-    "proNote": "This is a client-only toggle for testing. We’ll wire it to Stripe later.",
+    "proNote": "Client-only for testing. We’ll wire Stripe later.",
     "lockTitle": "App Lock (PIN)",
-    "pinSet": "A PIN is currently set on this device.",
+    "pinSet": "A PIN is set on this device.",
     "newPin": "New PIN",
     "confirmPin": "Confirm PIN",
-    "pinStoredInfo": "The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only.",
+    "pinStoredInfo": "PIN is stored locally as a salted SHA-256 hash. It protects access on this device only.",
     "clearAll": "Clear all local data",
     "language": "Language",
     "accent": "Accent",
@@ -174,6 +188,7 @@
     "light": "Light",
     "dark": "Dark"
   },
+
   "profile": {
     "title": "Profile",
     "signedInAs": "Signed in as",
@@ -188,6 +203,7 @@
       "avatarNotAllowed": "Avatar selection is not allowed by server policy."
     }
   },
+
   "welcome": {
     "title": "Welcome",
     "goalQuestion": "What’s your main goal?",
@@ -205,28 +221,30 @@
     "enableReminder": "Enable reminder",
     "changeAnytime": "You can change these anytime in <em>Settings</em>."
   },
+
   "insights": {
     "title": "Insights (Pro)",
     "thisPeriod": "This period",
-    "avgSession": "Avg session",
-    "topRitual": "Top ritual",
+    "avgSession": "Average session",
+    "topRitual": "Most frequent ritual",
     "streak": "Streak",
-    "noData": "No data yet — complete a ritual or two and check back!",
+    "noData": "No data yet—do one or two rituals and check back!",
     "moodDistribution": "Mood distribution",
     "entries": "{{count}} entries",
     "consistency": "Consistency — sessions per day",
     "timeBlocks": "When you practice — time blocks",
     "quickWins": "Quick wins",
-    "table": {
-      "ritual": "Ritual",
-      "avgTime": "Avg time (s)",
-      "samples": "Samples"
-    },
-    "tipShortRituals": "Tip: short rituals reduce friction — a good way to build streaks."
+    "table": { "ritual": "Ritual", "avgTime": "Avg (s)", "samples": "Samples" },
+    "tipShortRituals": "Tip: short rituals reduce friction — a great way to build a streak.",
+    "chips": {
+      "past28d": "Past 28d",
+      "sessions_one": "{{count}} session",
+      "sessions_other": "{{count}} sessions",
+      "avgTime": "Avg time",
+      "bestTime": "Best time",
+      "mostFrequent": "Most frequent"
+    }
   },
-  "export": {
-    "title": "Export",
-    "json": "Export JSON",
-    "csv": "Export CSV"
-  }
+
+  "export": { "title": "Export", "json": "Export JSON", "csv": "Export CSV" }
 }

@@ -24,9 +24,9 @@ import {
   type BgMode,
 } from "../lib/theme";
 
-import i18n from "../lib/i18n";
+import i18n, { SUPPORTED_LNGS, type SupportedLng } from "../lib/i18n";
 import { useTranslation } from "react-i18next";
-import { SUPPORTED_LNGS, type SupportedLng } from "../lib/i18n";
+import LanguageSelect from "../components/LanguageSelect";
 
 const REKEY_KEYS = [
   "history",
@@ -37,14 +37,6 @@ const REKEY_KEYS = [
   "events.queue",
   "entitlement.pro",
 ];
-
-const LANG_LABELS: Record<SupportedLng, string> = {
-  en: "English",
-  sr: "Srpski",
-  it: "Italiano",
-  es: "Español",
-  de: "Deutsch",
-};
 
 export default function Settings() {
   const { t } = useTranslation(["settings", "common"]);
@@ -69,7 +61,7 @@ export default function Settings() {
     const t0 = loadTheme();
     setAppearance(t0.appearance);
     setAccent(t0.accent);
-    setBgMode(t0.bgMode ?? "image");
+    setBgMode((t0.bgMode ?? "image") as BgMode);
     setBgUrl(
       t0.bgImageUrl ??
         "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&q=80&w=1200"
@@ -86,7 +78,7 @@ export default function Settings() {
     // Normalize before saving/applying
     const mergedAppearance: Appearance = next.appearance ?? appearance;
     const mergedAccent: Accent = next.accent ?? accent;
-    const mergedBgMode: BgMode = next.bgMode ?? bgMode;
+    const mergedBgMode: BgMode = (next.bgMode ?? bgMode) as BgMode;
     const mergedBgUrl: string | undefined =
       typeof next.bgImageUrl !== "undefined" ? next.bgImageUrl : bgUrl;
 
@@ -193,7 +185,12 @@ export default function Settings() {
     setMsg(null);
     if (busy) return;
     if (pin.length < 4 || /\D/.test(pin)) {
-      setMsg(t("settings:pin.minDigits", "PIN must be at least 4 digits (numbers only)."));
+      setMsg(
+        t(
+          "settings:pin.minDigits",
+          "PIN must be at least 4 digits (numbers only)."
+        )
+      );
       return;
     }
     if (pin !== pin2) {
@@ -209,7 +206,12 @@ export default function Settings() {
       setMsg(t("settings:pin.enabled", "App lock enabled on this device."));
     } catch (e) {
       console.error(e);
-      setMsg(t("settings:pin.enableFail", "Failed to enable PIN. Please try again."));
+      setMsg(
+        t(
+          "settings:pin.enableFail",
+          "Failed to enable PIN. Please try again."
+        )
+      );
     } finally {
       setBusy(false);
     }
@@ -226,14 +228,21 @@ export default function Settings() {
       setMsg(t("settings:pin.disabled", "App lock disabled on this device."));
     } catch (e) {
       console.error(e);
-      setMsg(t("settings:pin.disableFail", "Failed to disable PIN. Please try again."));
+      setMsg(
+        t(
+          "settings:pin.disableFail",
+          "Failed to disable PIN. Please try again."
+        )
+      );
     } finally {
       setBusy(false);
     }
   }
 
   // Language selector
-  const [lng, setLng] = useState<SupportedLng>((i18n.resolvedLanguage as SupportedLng) || "en");
+  const [lng, setLng] = useState<SupportedLng>(
+    ((i18n.resolvedLanguage as SupportedLng) || "en") as SupportedLng
+  );
   function changeLanguage(next: SupportedLng) {
     setLng(next);
     i18n.changeLanguage(next);
@@ -254,16 +263,11 @@ export default function Settings() {
               <span className="text-sm text-main">
                 {t("settings:language.choose", "Choose app language")}
               </span>
-              <select
-                className="input h-9 text-sm"
+              <LanguageSelect
                 value={lng}
-                onChange={(e) => changeLanguage(e.target.value as SupportedLng)}
-                aria-label={t("settings:language.choose", "Choose app language")}
-              >
-                {SUPPORTED_LNGS.map((code) => (
-                  <option key={code} value={code}>{LANG_LABELS[code]}</option>
-                ))}
-              </select>
+                onChange={changeLanguage}
+                className="min-w-[180px]"
+              />
             </label>
           </section>
 
@@ -287,7 +291,10 @@ export default function Settings() {
                   onClick={() => updateTheme({ appearance: opt })}
                   aria-pressed={appearance === opt}
                 >
-                  {t(`common:appearance.${opt}`, opt[0].toUpperCase() + opt.slice(1))}
+                  {t(
+                    `common:appearance.${opt}`,
+                    opt[0].toUpperCase() + opt.slice(1)
+                  )}
                 </button>
               ))}
             </div>
@@ -308,7 +315,10 @@ export default function Settings() {
                       textTransform: "capitalize",
                     }}
                     aria-pressed={isActive}
-                    title={t("common:accent.titleWithName", { defaultValue: "Accent: {{name}}", name: a })}
+                    title={t("common:accent.titleWithName", {
+                      defaultValue: "Accent: {{name}}",
+                      name: a,
+                    })}
                   >
                     {t(`common:accent.${a}`, a)}
                   </button>
@@ -337,7 +347,9 @@ export default function Settings() {
                     ? "border-brand-400 ring-1 ring-brand-300"
                     : "border-[var(--border)] hover:bg-[var(--hover)]")
                 }
-                onClick={() => updateTheme({ bgMode: "image", bgImageUrl: bgUrl })}
+                onClick={() =>
+                  updateTheme({ bgMode: "image", bgImageUrl: bgUrl })
+                }
                 aria-pressed={bgMode === "image"}
               >
                 {t("common:appearance.usePhoto", "Use photo")}
@@ -345,7 +357,10 @@ export default function Settings() {
             </div>
 
             <p className="mt-3 text-xs text-muted">
-              {t("common:appearance.photoNoteCustom", "Photo background is used only in Custom appearance.")}
+              {t(
+                "common:appearance.photoNoteCustom",
+                "Photo background is used only in Custom appearance."
+              )}
             </p>
           </section>
 
@@ -355,7 +370,10 @@ export default function Settings() {
               {t("settings:privacy.title", "Privacy")}
             </div>
             <p className="text-sm text-muted mt-1">
-              {t("settings:privacy.body", "Your moods and rituals are stored locally on your device and encrypted.")}
+              {t(
+                "settings:privacy.body",
+                "Your moods and rituals are stored locally on your device and encrypted."
+              )}
             </p>
           </div>
 
@@ -373,7 +391,10 @@ export default function Settings() {
                 className="h-4 w-4"
                 checked={haptics}
                 onChange={(e) => toggleHaptics(e.target.checked)}
-                aria-label={t("settings:prefs.haptics", "Haptic cues (if supported)")}
+                aria-label={t(
+                  "settings:prefs.haptics",
+                  "Haptic cues (if supported)"
+                )}
               />
             </label>
           </div>
@@ -385,7 +406,9 @@ export default function Settings() {
             </div>
 
             <label className="flex items-center justify-between py-2">
-              <span className="text-sm text-main">{t("settings:practice.goal", "Daily goal (minutes)")}</span>
+              <span className="text-sm text-main">
+                {t("settings:practice.goal", "Daily goal (minutes)")}
+              </span>
               <input
                 type="number"
                 min={1}
@@ -398,29 +421,42 @@ export default function Settings() {
             </label>
 
             <label className="flex items-center justify-between py-2">
-              <span className="text-sm text-main">{t("settings:practice.time", "Preferred reminder time")}</span>
+              <span className="text-sm text-main">
+                {t("settings:practice.time", "Preferred reminder time")}
+              </span>
               <input
                 type="time"
                 value={reminderTime}
                 onChange={(e) => onReminderTimeChange(e.target.value)}
                 className="input h-8 text-sm"
-                aria-label={t("settings:practice.time", "Preferred reminder time")}
+                aria-label={t(
+                  "settings:practice.time",
+                  "Preferred reminder time"
+                )}
               />
             </label>
 
             <label className="flex items-center justify-between py-2">
-              <span className="text-sm text-main">{t("settings:practice.smart", "Smart reminders")}</span>
+              <span className="text-sm text-main">
+                {t("settings:practice.smart", "Smart reminders")}
+              </span>
               <input
                 type="checkbox"
                 className="h-4 w-4"
                 checked={remindersEnabled}
                 onChange={onToggleReminders}
-                aria-label={t("settings:practice.smart", "Smart reminders")}
+                aria-label={t(
+                  "settings:practice.smart",
+                  "Smart reminders"
+                )}
               />
             </label>
 
             <p className="text-xs text-muted mt-2">
-              {t("settings:practice.note", "We’ll nudge you near your preferred time using lightweight, on-device logic.")}
+              {t(
+                "settings:practice.note",
+                "We’ll nudge you near your preferred time using lightweight, on-device logic."
+              )}
             </p>
           </div>
 
@@ -431,14 +467,20 @@ export default function Settings() {
             </div>
             <label className="flex items-center justify-between py-1">
               <span className="text-sm text-main">
-                {t("settings:pro.toggle", "Enable Pro features (local toggle)")}
+                {t(
+                  "settings:pro.toggle",
+                  "Enable Pro features (local toggle)"
+                )}
               </span>
               <input
                 type="checkbox"
                 className="h-4 w-4"
                 checked={pro}
                 onChange={(e) => togglePro(e.target.checked)}
-                aria-label={t("settings:pro.toggle", "Enable Pro features (local toggle)")}
+                aria-label={t(
+                  "settings:pro.toggle",
+                  "Enable Pro features (local toggle)"
+                )}
               />
             </label>
             {!pro && (
@@ -455,7 +497,10 @@ export default function Settings() {
               </button>
             )}
             <p className="text-xs text-muted mt-2">
-              {t("settings:pro.note", "This is a client-only toggle for testing. We’ll wire it to Stripe later.")}
+              {t(
+                "settings:pro.note",
+                "This is a client-only toggle for testing. We’ll wire it to Stripe later."
+              )}
             </p>
           </div>
 
@@ -468,19 +513,26 @@ export default function Settings() {
             {lockEnabled ? (
               <div className="space-y-2">
                 <p className="text-sm text-muted">
-                  {t("settings:pin.already", "A PIN is currently set on this device.")}
+                  {t(
+                    "settings:pin.already",
+                    "A PIN is currently set on this device."
+                  )}
                 </p>
                 <button
                   className="btn btn-secondary w-full"
                   onClick={disablePin}
                   disabled={busy}
                 >
-                  {busy ? t("common:working", "Working…") : t("settings:pin.disable", "Disable PIN")}
+                  {busy
+                    ? t("common:working", "Working…")
+                    : t("settings:pin.disable", "Disable PIN")}
                 </button>
               </div>
             ) : (
               <div className="space-y-3">
-                <label className="block text-sm text-main">{t("settings:pin.new", "New PIN")}</label>
+                <label className="block text-sm text-main">
+                  {t("settings:pin.new", "New PIN")}
+                </label>
                 <input
                   className="input w-full"
                   type="password"
@@ -489,7 +541,9 @@ export default function Settings() {
                   value={pin}
                   onChange={(e) => setPin(e.target.value)}
                 />
-                <label className="block text-sm text-main">{t("settings:pin.confirm", "Confirm PIN")}</label>
+                <label className="block text-sm text-main">
+                  {t("settings:pin.confirm", "Confirm PIN")}
+                </label>
                 <input
                   className="input w-full"
                   type="password"
@@ -503,14 +557,19 @@ export default function Settings() {
                   onClick={enablePin}
                   disabled={busy}
                 >
-                  {busy ? t("common:saving", "Saving…") : t("settings:pin.enable", "Enable PIN")}
+                  {busy
+                    ? t("common:saving", "Saving…")
+                    : t("settings:pin.enable", "Enable PIN")}
                 </button>
               </div>
             )}
 
             {msg && <div className="text-sm mt-2 text-main">{msg}</div>}
             <p className="text-xs text-muted mt-2">
-              {t("settings:pin.note", "The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only.")}
+              {t(
+                "settings:pin.note",
+                "The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only."
+              )}
             </p>
           </div>
 

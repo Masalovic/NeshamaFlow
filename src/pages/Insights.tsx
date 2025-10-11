@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Header from "../components/ui/Header";
 import { summarize } from "../lib/insights";
-import { titleForRitualId } from "../lib/ritualEngine";
+import { localizedTitleForRitualId } from "../lib/ritualEngine";
 import { loadHistory, type LogItem } from "../lib/history";
 import dayjs, { Dayjs } from "dayjs";
 import {
@@ -124,14 +124,14 @@ export default function Insights() {
   }, [rangeItems, start, windowDays]);
 
   // 3) Time-of-day blocks (0–3h, 4–7h, …)
-  const blocks: Block[] = useMemo(() => {
-    if (!rangeItems.length) return [];
+  const blocks = useMemo(() => {
+    if (!rangeItems.length) return [] as { block: string; count: number }[];
     const buckets = Array.from({ length: 24 }, () => 0);
     for (const x of rangeItems) {
       const h = new Date(x.ts).getHours();
       buckets[h]++;
     }
-    const out: Block[] = [];
+    const out: { block: string; count: number }[] = [];
     for (let i = 0; i < 24; i += 4) {
       const value = buckets.slice(i, i + 4).reduce((a, b) => a + b, 0);
       const label = `${String(i).padStart(2, "0")}-${String(i + 3).padStart(2, "0")}h`;
@@ -184,7 +184,7 @@ export default function Insights() {
                 value={customStart}
                 onChange={(e) => setCustomStart(e.target.value)}
                 className="input h-8 py-1 px-2 text-sm"
-                aria-label={t("insights:range.start", "Start date")}
+                aria-label={t("insights:range.startDate", "Start date")}
               />
               <span className="text-muted">–</span>
               <input
@@ -192,7 +192,7 @@ export default function Insights() {
                 value={customEnd}
                 onChange={(e) => setCustomEnd(e.target.value)}
                 className="input h-8 py-1 px-2 text-sm"
-                aria-label={t("insights:range.end", "End date")}
+                aria-label={t("insights:range.endDate", "End date")}
               />
             </div>
           )}
@@ -203,7 +203,7 @@ export default function Insights() {
 
   return (
     <div className="flex min-h-full flex-col">
-      <Header title={t("insights:titlePro", "Insights (Pro)")} back />
+      <Header title={t("insights:title", "Insights (Pro)")} back />
       <main className="flex-1 p-4">
         <div className="mx-auto max-w-[560px] space-y-4 pb-24">
           {/* Summary header */}
@@ -213,14 +213,14 @@ export default function Insights() {
               <div className="min-w-[140px] flex-1">
                 <div className="text-xs text-muted">{t("insights:thisPeriod", "This period")}</div>
                 <div className="font-medium text-main">
-                  {Math.round((summary.totalSec ?? 0) / 60)} {t("insights:units.min", "min")} · {summary.sessions ?? 0} {t("insights:units.sessions", "sessions")}
+                  {Math.round((summary.totalSec ?? 0) / 60)} {t("common:units.min", "min")} · {summary.sessions ?? 0} {t("insights:chips.sessions_other", "sessions")}
                 </div>
               </div>
 
               <div className="min-w-[140px] flex-1">
                 <div className="text-xs text-muted">{t("insights:avgSession", "Avg session")}</div>
                 <div className="font-medium text-main">
-                  {summary.avgSec ?? 0}{t("insights:units.secondsSuffix", "s")}
+                  {summary.avgSec ?? 0}{t("common:units.secondsSuffix", "s")}
                 </div>
               </div>
 
@@ -228,7 +228,7 @@ export default function Insights() {
                 <div className="text-xs text-muted">{t("insights:topRitual", "Top ritual")}</div>
                 <div className="font-medium text-main truncate">
                   {summary.topRitualId
-                    ? `${titleForRitualId(summary.topRitualId)} (${summary.topRitualCount})`
+                    ? `${localizedTitleForRitualId(t, summary.topRitualId)} (${summary.topRitualCount})`
                     : "—"}
                 </div>
               </div>
@@ -253,11 +253,11 @@ export default function Insights() {
 
           {/* Mood distribution */}
           <Card
-            title={t("insights:moodDist", "Mood distribution")}
+            title={t("insights:moodDistribution", "Mood distribution")}
             right={
               !!moodChart.length && (
                 <span className="text-xs text-muted">
-                  {t("insights:entries", "{{n}} entries", { n: rangeItems.length })}
+                  {t("insights:entries", "{{count}} entries", { count: rangeItems.length })}
                 </span>
               )
             }
@@ -340,7 +340,7 @@ export default function Insights() {
                   <tbody>
                     {quickWins.map((r) => (
                       <tr key={r.ritualId} className="border-t" style={{ borderColor: "var(--border)" }}>
-                        <td className="py-2 pr-3 font-medium text-main">{titleForRitualId(r.ritualId)}</td>
+                        <td className="py-2 pr-3 font-medium text-main">{localizedTitleForRitualId(t, r.ritualId)}</td>
                         <td className="py-2 pr-3 text-main">{r.avg}</td>
                         <td className="py-2 text-main">{r.n}</td>
                       </tr>

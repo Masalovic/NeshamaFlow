@@ -1,5 +1,6 @@
 // src/lib/ritualGuides.ts
 import type { Ritual } from './ritualEngine'
+import type { TFunction } from 'i18next'
 
 export type RitualGuide = {
   title: string
@@ -168,7 +169,7 @@ const PATTERNS: Array<{ re: RegExp; key: keyof typeof CANON }> = [
   { re: /\bname|label\b/i,                 key: 'name_it_to_tame_it' },
 ]
 
-/** Public: pick the right guide for a ritual object */
+/** Existing (language-agnostic) export – unchanged */
 export function guideFor(ritual: Ritual | null | undefined): RitualGuide {
   if (!ritual) return CANON.generic_2m_checkin
   const byId = norm(ritual.id)
@@ -186,6 +187,21 @@ export function guideFor(ritual: Ritual | null | undefined): RitualGuide {
     if (p.re.test(titleRaw)) return CANON[p.key]
   }
   return CANON.generic_2m_checkin
+}
+
+/** NEW: localized guide using i18n keys with fallbacks to CANON */
+export function guideForLocalized(t: TFunction, ritual: Ritual | null | undefined): RitualGuide {
+  const base = guideFor(ritual) // pick which guide shape first
+  const key = Object.entries(CANON).find(([, v]) => v === base)?.[0] ?? 'generic_2m_checkin'
+  const title = t('ritual:player.whatToDo', base.title)
+
+  // steps: ritual:guides.<key>.steps.0/1/2...
+  const steps: string[] = base.steps.map((def, idx) =>
+    t(`ritual:guides.${key}.steps.${idx}`, def)
+  )
+
+  const tip = base.tip ? t(`ritual:guides.${key}.tip`, base.tip) : undefined
+  return { title, steps, tip }
 }
 
 export const DEFAULT_GUIDE: RitualGuide = CANON.generic_2m_checkin

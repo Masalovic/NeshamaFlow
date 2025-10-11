@@ -1,0 +1,250 @@
+{
+  "appName": "Neshama Flow",
+  "a11y": {
+    "primaryNav": "Glavna navigacija",
+    "openSettings": "Otvori postavke",
+    "back": "Natrag"
+  },
+  "nav": {
+    "home": "Početna",
+    "rituals": "Rituali",
+    "history": "Povijest",
+    "insights": "Uvidi",
+    "profile": "Profil",
+    "settings": "Postavke"
+  },
+  "buttons": {
+    "start": "Pokreni",
+    "pause": "Pauza",
+    "resume": "Nastavi",
+    "finishNow": "Završi sada",
+    "saving": "Spremanje…",
+    "save": "Spremi",
+    "clear": "Očisti",
+    "cancel": "Odustani",
+    "continue": "Nastavi",
+    "close": "Zatvori",
+    "details": "Detalji",
+    "startThis": "Pokreni ovo",
+    "startSuggestion": "Pokreni prijedlog",
+    "startNow": "Pokreni sada",
+    "later": "Kasnije",
+    "mute7d": "Isključi 7 d",
+    "repair": "Popravi",
+    "goPro": "Prijeđi na Pro",
+    "signOut": "Odjavi se",
+    "enablePin": "Uključi PIN",
+    "disablePin": "Isključi PIN",
+    "upgradeToPro": "Nadogradi na Pro",
+    "logAnother": "Zabilježi još jedan",
+    "seeHistory": "Pogledaj povijest",
+    "setSmartReminder": "Postavi pametni podsjetnik",
+    "skip": "Preskoči zasad",
+    "share": "Podijeli",
+    "copy": "Kopiraj",
+    "copied": "Kopirano!"
+  },
+  "generic": {
+    "loading": "Učitavanje…",
+    "optional": "neobavezno",
+    "tip": "Savjet",
+    "none": "—",
+    "pleaseWait": "Molimo pričekajte…",
+    "working": "Obrada…"
+  },
+  "units": { "min": "min", "secondsSuffix": "s" },
+
+  "appearance": {
+    "title": "Izgled",
+    "custom": "Prilagođeno",
+    "light": "Svijetlo",
+    "dark": "Tamno",
+    "useGradient": "Koristi gradijent",
+    "usePhoto": "Koristi fotografiju",
+    "photoNoteCustom": "Pozadina s fotografijom koristi se samo u Prilagođenom izgledu."
+  },
+  "accent": {
+    "titleWithName": "Akcent: {{name}}",
+    "berry": "Bobica",
+    "ocean": "Ocean",
+    "forest": "Šuma"
+  },
+
+  "home": {
+    "title": "Kako se osjećaš?",
+    "selectMood": "Odaberi raspoloženje",
+    "settings": "Postavke",
+    "addNote": "Dodaj bilješku (neobavezno)",
+    "notePlaceholder": "Što ti je na pameti?",
+    "quickSaveTitle": "Brzo spremanje",
+    "quickSaveDesc": "odmah zapisuje raspoloženje i preskače ritual. Odabrano raspoloženje i bilješku spremamo u <em>Povijest</em>.",
+    "lastLoggedMood": "Zadnje raspoloženje: {{emoji}} — {{date}}",
+    "startRitual": "Pokreni ritual",
+    "quickSave": "Brzo spremi"
+  },
+  "todayPanel": {
+    "greetings": {
+      "lateNight": "Kasna noć",
+      "goodMorning": "Dobro jutro",
+      "goodAfternoon": "Dobar dan",
+      "goodEvening": "Dobra večer"
+    },
+    "suggestedToday": "Današnji prijedlog: {{suggestion}}",
+    "goalDone": "Cilj: {{goalMin}} min · <strong>{{minutesToday}} min</strong> odrađeno"
+  },
+
+  "smartReminder": {
+    "title": "Mala pauza?",
+    "body": "Što kažeš na {{pretty}}? Danas se još nisi prijavio/la.",
+    "prettyReset": "2-min osvježenje",
+    "prettyBlock": "2-min {{block}} osvježenje",
+    "blocks": {
+      "morning": "jutro",
+      "afternoon": "poslijepodne",
+      "evening": "večer",
+      "night": "noć"
+    }
+  },
+
+  "history": {
+    "title": "Povijest",
+    "insights": "Uvidi",
+    "today": "Danas",
+    "yesterday": "Jučer",
+    "empty": "Još nema sesija — pokreni svoj prvi ritual i upali mrežu."
+  },
+
+  "heatmap": {
+    "title": "Zadnjih 28 dana",
+    "legend": "Legenda",
+    "repaired": "popravljeno",
+    "tooltip": "{{date}}: {{count, plural, one {# sesija} other {# sesija}}}{{repaired, select, true { (popravljeno)} other {}}}",
+    "sessionsCount_one": "{{count}} sesija",
+    "sessionsCount_other": "{{count}} sesija"
+  },
+  "streak": {
+    "title": "Dnevni niz",
+    "onTrack": "Danas si na dobrom putu",
+    "logToKeep": "Zabilježi raspoloženje da nastaviš",
+    "cooldown": "Popravak za {{count}} d",
+    "days_one": "Niz od {{count}} dan",
+    "days_other": "Niz od {{count}} dana"
+  },
+
+  "library": {
+    "title": "Rituali",
+    "searchPlaceholder": "Pretraži rituale…",
+    "all": "Svi",
+    "noMatches": "Nema podudaranja. Pokušaj s drugim pojmom ili filtrom.",
+    "approxMinutes": "~ {{minutes}} min",
+    "why": "Zašto",
+    "steps": "Koraci",
+    "detailLink": "Detalji",
+    "libraryOpenedEvent": "library_opened",
+    "detailViewedEvent": "library_detail_viewed",
+    "startClickedEvent": "library_start_clicked"
+  },
+
+  "player": {
+    "restingPrompt": "Odmor — zatvori oči i diši.",
+    "rest20s": "Odmor 20 s",
+    "finishNow": "Završi sada",
+    "saving": "Spremanje…"
+  },
+
+  "done": {
+    "title": "Ritual završen",
+    "sessionComplete": "Sesija završena",
+    "loggedLine": "Zabilježeno <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Spremljeno.",
+    "afterCare": "Njega nakon"
+  },
+
+  "settings": {
+    "title": "Postavke",
+    "privacyTitle": "Privatnost",
+    "privacyBody": "Tvoja raspoloženja i rituali pohranjuju se lokalno na ovom uređaju i šifrirani su.",
+    "preferencesTitle": "Postavke",
+    "haptics": "Haptičke povratne informacije (ako je podržano)",
+    "practiceTitle": "Praksa i podsjetnici",
+    "dailyGoal": "Dnevni cilj (minute)",
+    "preferredTime": "Preferirano vrijeme podsjetnika",
+    "smartReminders": "Pametni podsjetnici",
+    "nudgeNote": "Poticat ćemo te u blizini odabranog vremena koristeći lokalnu logiku na uređaju.",
+    "proTitle": "Pro (Pregled)",
+    "proToggle": "Uključi Pro značajke (lokalno)",
+    "proNote": "Samo za testiranje na klijentu. Stripe ćemo povezati kasnije.",
+    "lockTitle": "Zaključavanje aplikacije (PIN)",
+    "pinSet": "PIN je postavljen na ovom uređaju.",
+    "newPin": "Novi PIN",
+    "confirmPin": "Potvrdi PIN",
+    "pinStoredInfo": "PIN se lokalno pohranjuje kao soljeni SHA-256 sažetak. Štiti pristup samo na ovom uređaju.",
+    "clearAll": "Obriši sve lokalne podatke",
+    "language": "Jezik",
+    "accent": "Akcent",
+    "appearance": "Izgled",
+    "custom": "Prilagođeno",
+    "system": "Sustav",
+    "light": "Svijetlo",
+    "dark": "Tamno"
+  },
+
+  "profile": {
+    "title": "Profil",
+    "signedInAs": "Prijavljen kao",
+    "displayName": "Prikazano ime",
+    "username": "Korisničko ime",
+    "chooseAvatar": "Odaberi avatar",
+    "saveProfile": "Spremi profil",
+    "profileSaved": "Profil spremljen!",
+    "account": "Račun",
+    "errors": {
+      "usernameTaken": "To korisničko ime je već zauzeto.",
+      "avatarNotAllowed": "Odabir avatara nije dopušten pravilima poslužitelja."
+    }
+  },
+
+  "welcome": {
+    "title": "Dobrodošao/la",
+    "goalQuestion": "Koji ti je glavni cilj?",
+    "goalHelp": "To pomaže prilagoditi smjernice.",
+    "goals": {
+      "reduceStress": "Smanjiti stres",
+      "buildHabit": "Izgraditi naviku",
+      "sleepBetter": "Bolje spavati",
+      "feelSteadier": "Osjećati se stabilnije"
+    },
+    "hapticCues": "Haptičke povratne informacije",
+    "hapticDesc": "Mala vibracija na početku/kraju",
+    "smartReminder": "Pametni podsjetnik",
+    "smartReminderDesc": "Blagi poticaj blizu uobičajenog vremena prakse. Potpuno na uređaju.",
+    "enableReminder": "Uključi podsjetnik",
+    "changeAnytime": "To možeš promijeniti u <em>Postavkama</em> kad god poželiš."
+  },
+
+  "insights": {
+    "title": "Uvidi (Pro)",
+    "thisPeriod": "Ovo razdoblje",
+    "avgSession": "Prosj. sesija",
+    "topRitual": "Najčešći ritual",
+    "streak": "Niz",
+    "noData": "Još nema podataka — napravi jedan-dva rituala i navrati opet!",
+    "moodDistribution": "Raspodjela raspoloženja",
+    "entries": "{{count}} unosa",
+    "consistency": "Dosljednost — sesija po danu",
+    "timeBlocks": "Kada prakticiraš — vremenski blokovi",
+    "quickWins": "Brze pobjede",
+    "table": { "ritual": "Ritual", "avgTime": "Prosj. (s)", "samples": "Uzorci" },
+    "tipShortRituals": "Savjet: kratki rituali smanjuju trenje — odlični za izgradnju niza.",
+    "chips": {
+      "past28d": "Zadnjih 28 d",
+      "sessions_one": "{{count}} sesija",
+      "sessions_other": "{{count}} sesija",
+      "avgTime": "Prosj. vrijeme",
+      "bestTime": "Najbolje vrijeme",
+      "mostFrequent": "Najčešće"
+    }
+  },
+
+  "export": { "title": "Izvoz", "json": "Izvezi JSON", "csv": "Izvezi CSV" }
+}

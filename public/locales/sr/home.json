@@ -25,6 +25,24 @@
     "startRitual": "Pokreni ritual",
     "quickSave": "Brzo čuvanje"
   },
+  "moods": {
+    "happy": "Srećan/na",
+    "content": "Zadovoljan/na",
+    "calm": "Smiren/a",
+    "sad": "Tužan/na",
+    "neutral": "Neutralno",
+    "reflective": "Promišljen/a",
+    "stressed": "Pod stresom",
+    "angry": "Ljut/a"
+  },
+  "insightChips": {
+    "last28d": "Poslednjih 28d",
+    "sessions_one": "{{count}} sesija",
+    "sessions_other": "{{count}} sesija",
+    "avgTime": "Prosečno vreme",
+    "bestTime": "Najbolje vreme",
+    "mostFrequent": "Najčešće"
+  },
   "reminder": {
     "takeAMoment": "Mali predah?",
     "suggestion": "Šta kažeš na {{pretty}}? Danas se još nisi prijavio/la.",

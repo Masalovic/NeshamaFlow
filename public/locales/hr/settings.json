@@ -1,0 +1,71 @@
+{
+  "title": "Postavke",
+  "language": {
+    "title": "Jezik",
+    "choose": "Odaberi jezik aplikacije"
+  },
+  "privacy": {
+    "title": "Privatnost",
+    "body": "Tvoja raspoloženja i rituali pohranjuju se lokalno na uređaju i šifrirani su."
+  },
+  "prefs": {
+    "title": "Postavke",
+    "haptics": "Haptičke povratne informacije (ako je podržano)"
+  },
+  "practice": {
+    "title": "Praksa i podsjetnici",
+    "goal": "Dnevni cilj (minute)",
+    "time": "Preferirano vrijeme podsjetnika",
+    "smart": "Pametni podsjetnici",
+    "note": "Poticat ćemo te blizu preferiranog vremena koristeći laganu, lokalnu logiku na uređaju."
+  },
+  "pro": {
+    "title": "Pro (Pregled)",
+    "toggle": "Uključi Pro značajke (lokalno)",
+    "upgradeCta": "Nadogradi na Pro",
+    "note": "Ovo je samo klijentski prekidač za testiranje. Stripe ćemo povezati kasnije."
+  },
+  "pin": {
+    "title": "Zaključavanje aplikacije (PIN)",
+    "already": "Na ovom je uređaju trenutačno postavljen PIN.",
+    "disable": "Isključi PIN",
+    "new": "Novi PIN",
+    "confirm": "Potvrdi PIN",
+    "enable": "Uključi PIN",
+    "note": "PIN se lokalno pohranjuje kao soljeni SHA-256 sažetak. Štiti pristup samo na ovom uređaju.",
+    "minDigits": "PIN mora imati najmanje 4 znamenke (samo brojevi).",
+    "mismatch": "PIN-ovi se ne podudaraju.",
+    "enabled": "Zaključavanje aplikacije je uključeno na ovom uređaju.",
+    "disabled": "Zaključavanje aplikacije je isključeno na ovom uređaju.",
+    "enableFail": "Nije uspjelo uključivanje PIN-a. Pokušaj ponovno.",
+    "disableFail": "Nije uspjelo isključivanje PIN-a. Pokušaj ponovno."
+  },
+  "clearAll": {
+    "cta": "Obriši sve lokalne podatke",
+    "confirmed": "Svi lokalni podaci su obrisani."
+  },
+  "common": {
+    "saving": "Spremanje…",
+    "working": "Obrada…",
+    "appearance": {
+      "title": "Izgled",
+      "useGradient": "Koristi gradijent",
+      "usePhoto": "Koristi fotografiju",
+      "photoNoteCustom": "Pozadina s fotografijom koristi se samo u Prilagođenom izgledu.",
+      "custom": "Prilagođeno",
+      "light": "Svijetlo",
+      "dark": "Tamno"
+    },
+    "accent": {
+      "titleWithName": "Akcent: {{name}}",
+      "berry": "bobica",
+      "ocean": "ocean",
+      "forest": "šuma"
+    },
+    "nav": {
+      "settings": "Postavke",
+      "history": "Povijest",
+      "insights": "Uvidi"
+    }
+  }
+}

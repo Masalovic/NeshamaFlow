@@ -11,7 +11,8 @@
   "heatmap": {
     "title": "Ultimi 28 giorni",
     "legend": "Legenda",
-    "repaired": "riparato"
+    "repaired": "riparato",
+    "empty": "Nessuna sessione — avvia il tuo primo rituale per illuminare la griglia."
   },
   "item": {
     "minutesSep": "· {{minutes}} min",

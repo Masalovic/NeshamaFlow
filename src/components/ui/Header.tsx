@@ -1,11 +1,18 @@
-// src/components/ui/Header.tsx
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-export default function Header({ title, back = false }: { title: string; back?: boolean }) {
+export default function Header({
+  title,
+  back = false,
+}: {
+  title: string;
+  back?: boolean;
+}) {
   const nav = useNavigate();
-  const { t } = useTranslation('common');
+  const { t } = useTranslation("common");
+
+  const backLabel = t("a11y.back", "Back");
 
   return (
     <header className="bg-inherit">
@@ -15,8 +22,8 @@ export default function Header({ title, back = false }: { title: string; back?: 
             <button
               onClick={() => nav(-1)}
               className="btn btn-ghost h-10 w-10 rounded-full"
-              aria-label={t('a11y.back')}
-              title={t('a11y.back')}
+              aria-label={backLabel}
+              title={backLabel}
             >
               ←
             </button>

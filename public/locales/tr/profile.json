@@ -1,0 +1,14 @@
+{
+  "title": "Profil",
+  "signedInAs": "Olarak giriş yapıldı",
+  "displayName": "Görünen ad",
+  "username": "Kullanıcı adı",
+  "chooseAvatar": "Avatar seç",
+  "placeholders": { "name": "Adın", "username": "@kullanici" },
+  "save": "Profili kaydet",
+  "saving": "Kaydediliyor…",
+  "saved": "Profil kaydedildi!",
+  "account": { "title": "Hesap", "signOut": "Çıkış yap", "signOutDesc": "Bu cihazdan çıkış yap." },
+  "errors": { "usernameTaken": "Bu kullanıcı adı zaten alınmış.", "avatarPolicy": "Sunucu ilkesi avatar seçimine izin vermiyor." },
+  "a11y": { "chooseAvatar": "{{name}} avatarını seç" }
+}

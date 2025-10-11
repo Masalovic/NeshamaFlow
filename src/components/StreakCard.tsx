@@ -1,19 +1,20 @@
-// src/components/StreakCard.tsx
-import React, { useEffect, useMemo, useState } from 'react';
-import dayjs from 'dayjs';
-import { Flame, Crown } from 'lucide-react';
-import { loadHistory, type LogItem } from '../lib/history';
+import React, { useEffect, useMemo, useState } from "react";
+import dayjs from "dayjs";
+import { Flame, Crown } from "lucide-react";
+import { loadHistory, type LogItem } from "../lib/history";
 import {
   computeStreak,
   canRepairToday,
   cooldownDaysLeft,
   getRepairSet,
   recordRepairToday,
-} from '../lib/streak';
-import { isPro, setPro } from '../lib/pro';
-import { track } from '../lib/metrics'; 
+} from "../lib/streak";
+import { isPro, setPro } from "../lib/pro";
+import { track } from "../lib/metrics";
+import { useTranslation } from "react-i18next";
 
 export default function StreakCard() {
+  const { t } = useTranslation(["common"]);
   const [list, setList] = useState<LogItem[] | null>(null);
   const [repairs, setRepairs] = useState<Set<string>>(new Set());
   const [canRepair, setCanRepair] = useState(false);
@@ -36,14 +37,17 @@ export default function StreakCard() {
     setProState(proVal);
   }
 
-  useEffect(() => { void refresh(); }, []);
+  useEffect(() => {
+    void refresh();
+  }, []);
 
   const { streak, todayCount } = useMemo(() => {
     const h = Array.isArray(list) ? [...list] : [];
     const s = computeStreak(h, repairs);
-    const today = dayjs().startOf('day').format('YYYY-MM-DD');
+    const todayISO = dayjs().startOf("day").format("YYYY-MM-DD");
     const hasTodayLog =
-      h.some(x => dayjs(x.ts).isSame(dayjs(today), 'day')) || repairs.has(today);
+      h.some((x) => dayjs(x.ts).isSame(dayjs(todayISO), "day")) ||
+      repairs.has(todayISO);
     return { streak: s, todayCount: hasTodayLog ? 1 : 0 };
   }, [list, repairs]);
 
@@ -52,7 +56,7 @@ export default function StreakCard() {
     setBusy(true);
     try {
       await recordRepairToday();
-      track('streak_repair_used');
+      track("streak_repair_used");
       await refresh();
     } finally {
       setBusy(false);
@@ -66,9 +70,13 @@ export default function StreakCard() {
       </div>
 
       <div className="flex-1 min-w-0">
-        <div className="text-sm font-medium">Daily streak</div>
+        <div className="text-sm font-medium">
+          {t("streak.title", "Daily streak")}
+        </div>
         <div className="text-xs text-gray-500 truncate">
-          {todayCount ? 'You’re on track today' : 'Log a mood to keep it going'}
+          {todayCount
+            ? t("streak.onTrack", "You’re on track today")
+            : t("streak.logToKeep", "Log a mood to keep it going")}
         </div>
       </div>
 
@@ -81,28 +89,33 @@ export default function StreakCard() {
               className="btn btn-outline h-8 px-3"
               onClick={onRepair}
               disabled={busy}
-              title="Repair today (Pro • 1 per 7 days)"
+              title={t(
+                "buttons.repair",
+                "Repair"
+              )}
             >
-              {busy ? 'Repairing…' : 'Repair'}
+              {busy ? t("generic.working", "Working…") : t("buttons.repair", "Repair")}
             </button>
           ) : (
             cooldown > 0 && (
-              <span className="text-[11px] text-gray-500">Repair in {cooldown}d</span>
+              <span className="text-[11px] text-gray-500">
+                {t("streak.cooldown", "Repair in {{count}}d", { count: cooldown })}
+              </span>
             )
           )
         ) : (
           <button
             className="btn btn-ghost h-8 px-3"
             onClick={async () => {
-              track('upgrade_click', { source: 'streak_card' });
+              track("upgrade_click", { source: "streak_card" });
               await setPro(true); // local preview upgrade
               setProState(true);
-              track('pro_enabled');
+              track("pro_enabled");
             }}
-            title="Pro feature: repair missed day"
+            title={t("buttons.goPro", "Go Pro")}
           >
             <Crown size={14} className="mr-1" />
-            Go Pro
+            {t("buttons.goPro", "Go Pro")}
           </button>
         )}
       </div>

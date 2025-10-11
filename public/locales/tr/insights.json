@@ -1,0 +1,50 @@
+{
+  "title": "Analizler (Pro)",
+  "range": {
+    "label": "{{start}} – {{end}}",
+    "last7": "Son 7 gün",
+    "last28": "Son 28 gün",
+    "last90": "Son 90 gün",
+    "custom": "Özel…",
+    "startDate": "Başlangıç tarihi",
+    "endDate": "Bitiş tarihi"
+  },
+  "summary": {
+    "thisPeriod": "Bu dönem",
+    "minutesSessions": "{{minutes}} dk · {{sessions}} oturum",
+    "avgSession": "Ortalama oturum",
+    "topRitual": "En çok yapılan ritüel",
+    "streak": "Seri",
+    "noEntryToday": "(bugün giriş yok)"
+  },
+  "empty": "Henüz veri yok — bir iki ritüel yap ve tekrar bak!",
+  "charts": {
+    "moodDistribution": "Ruh hâli dağılımı",
+    "sessionsPerDay": "Tutarlılık — günde oturum",
+    "timeBlocks": "Ne zaman pratik — zaman blokları",
+    "quickWins": "Hızlı kazançlar",
+    "noData": "Henüz veri yok."
+  },
+  "table": {
+    "ritual": "Ritüel",
+    "avgSec": "Ort. süre (sn)",
+    "samples": "Örnek",
+    "tip": "İpucu: kısa ritüeller sürtünmeyi azaltır — seri oluşturmak için iyi bir yol."
+  },
+  "chips": {
+    "lastN": "Son {{n}} g",
+    "sessions_one": "{{count}} oturum",
+    "sessions_few": "{{count}} oturum",
+    "sessions_other": "{{count}} oturum",
+    "avgTime": "Ort. süre",
+    "bestTime": "En iyi zaman",
+    "mostFrequent": "En sık"
+  },
+  "heatmap": {
+    "title28d": "Son 28 gün",
+    "badge": "{{total}} oturum • {{streak}} günlük seri",
+    "legend": "Açıklama",
+    "repaired": "onarılmış",
+    "cellTitle": "{{date}}: {{count}} oturum{{repaired}}"
+  }
+}

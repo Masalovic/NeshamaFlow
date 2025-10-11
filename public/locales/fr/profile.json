@@ -1,0 +1,26 @@
+{
+  "title": "Profil",
+  "signedInAs": "Connecté en tant que",
+  "displayName": "Nom d’affichage",
+  "username": "Nom d’utilisateur",
+  "chooseAvatar": "Choisir un avatar",
+  "placeholders": {
+    "name": "Votre nom",
+    "username": "@utilisateur"
+  },
+  "save": "Enregistrer le profil",
+  "saving": "Enregistrement…",
+  "saved": "Profil enregistré !",
+  "account": {
+    "title": "Compte",
+    "signOut": "Se déconnecter",
+    "signOutDesc": "Se déconnecter sur cet appareil."
+  },
+  "errors": {
+    "usernameTaken": "Ce nom d’utilisateur est déjà pris.",
+    "avatarPolicy": "La sélection d’avatar n’est pas autorisée par la politique du serveur."
+  },
+  "a11y": {
+    "chooseAvatar": "Choisir l’avatar {{name}}"
+  }
+}

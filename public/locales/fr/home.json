@@ -1,0 +1,48 @@
+{
+  "title": "Comment vous sentez-vous ?",
+  "todayPanel": {
+    "greeting": {
+      "lateNight": "Tard dans la nuit",
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir"
+    },
+    "suggestedToday": "Suggestion du jour",
+    "goal": "Objectif",
+    "done": "effectué",
+    "startSuggestion": "Démarrer la suggestion"
+  },
+  "moodPicker": {
+    "title": "Choisir l’humeur",
+    "settings": "Réglages",
+    "noteLabel": "Ajouter une note (facultatif)",
+    "placeholder": "Qu’avez-vous en tête ?",
+    "quickSaveHint_html": "<strong>Enregistrement rapide</strong> enregistre instantanément l’humeur et passe le rituel. Nous sauvegarderons l’humeur choisie et la note (facultative) dans <em>Historique</em>.",
+    "lastLogged": "Dernière humeur :",
+    "onDate": "— {{date}}"
+  },
+  "actions": { "startRitual": "Lancer un rituel", "quickSave": "Enregistrement rapide" },
+  "reminder": {
+    "takeAMoment": "Une petite pause ?",
+    "suggestion": "Que diriez-vous de {{pretty}} ? Vous ne vous êtes pas encore connecté aujourd’hui.",
+    "startNow": "Commencer maintenant",
+    "later": "Plus tard",
+    "mute7d": "Couper 7 j"
+  },
+  "streak": {
+    "title": "Série quotidienne",
+    "onTrack": "Vous êtes dans les temps aujourd’hui",
+    "logToKeep": "Enregistrez une humeur pour continuer",
+    "repair": "Réparer",
+    "repairIn": "Réparer dans {{days}} j",
+    "goPro": "Passer à Pro",
+    "proFeature": "Fonction Pro : réparer un jour manqué"
+  },
+  "selectMood": "Choisir l’humeur",
+  "noteLabelOptional": "Ajouter une note (facultatif)",
+  "notePlaceholder": "Qu’avez-vous en tête ?",
+  "startRitual": "Lancer un rituel",
+  "quickSave": "Enregistrement rapide",
+  "quickSaveHelpPrefix": "enregistre instantanément l’humeur et passe le rituel. Nous enregistrerons l’humeur et la note dans",
+  "lastLogged": "Dernière humeur : {{emoji}} — {{date}}"
+}

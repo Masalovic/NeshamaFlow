@@ -4,12 +4,26 @@
   "chips": {
     "all": "Alle"
   },
-  "empty": "Keine Treffer. Probiere eine andere Suche oder Filter.",
+  "noMatches": "Keine Treffer. Versuche eine andere Suche oder einen Filter.",
+  "start": "Start",
+  "details": "Details",
+  "steps": "Schritte",
+  "tags": {
+    "awareness": "Achtsamkeit",
+    "breath": "Atmung",
+    "calm": "Ruhe",
+    "gratitude": "Dankbarkeit",
+    "grounding": "Erdung",
+    "kindness": "Freundlichkeit",
+    "panic": "Panik",
+    "sleep": "Schlaf"
+  },
+  "empty": "Keine Treffer. Versuche eine andere Suche oder einen Filter.",
   "card": {
     "start": "Start",
     "details": "Details",
-    "approxMin": "~ {{min}} Min",
-    "why": "Warum es hilft",
+    "approxMin": "~ {{min}} Min.",
+    "why": "Warum das hilft",
     "steps": "Schritte",
     "tip": "Tipp"
   },

@@ -2,13 +2,14 @@
   "appName": "Neshama Flow",
   "a11y": {
     "primaryNav": "Navigazione principale",
-    "openSettings": "Apri Impostazioni"
+    "openSettings": "Apri Impostazioni",
+    "back": "Indietro"
   },
   "nav": {
     "home": "Home",
     "rituals": "Rituali",
-    "history": "Calendario",
-    "insights": "Approfondimenti",
+    "history": "Cronologia",
+    "insights": "Insights",
     "profile": "Profilo",
     "settings": "Impostazioni"
   },
@@ -26,7 +27,7 @@
     "details": "Dettagli",
     "startThis": "Avvia questo",
     "startSuggestion": "Avvia suggerimento",
-    "startNow": "Inizia ora",
+    "startNow": "Avvia ora",
     "later": "Più tardi",
     "mute7d": "Silenzia 7g",
     "repair": "Ripara",
@@ -49,33 +50,35 @@
     "tip": "Suggerimento",
     "none": "—",
     "pleaseWait": "Attendere…",
-    "working": "Elaborazione…"
+    "working": "Operazione in corso…"
   },
-  "units": {
-    "min": "min",
-    "secondsSuffix": "s"
-  },
+  "units": { "min": "min", "secondsSuffix": "s" },
+
   "appearance": {
     "title": "Aspetto",
+    "custom": "Personalizzato",
+    "light": "Chiaro",
+    "dark": "Scuro",
     "useGradient": "Usa gradiente",
     "usePhoto": "Usa foto",
-    "photoNoteCustom": "Lo sfondo con foto è usato solo con Aspetto personalizzato."
+    "photoNoteCustom": "Lo sfondo foto è usato solo in Aspetto Personalizzato."
   },
   "accent": {
     "titleWithName": "Accento: {{name}}",
-    "berry": "berry",
-    "ocean": "ocean",
-    "forest": "forest"
+    "berry": "Frutti di bosco",
+    "ocean": "Oceano",
+    "forest": "Foresta"
   },
+
   "home": {
     "title": "Come ti senti?",
-    "selectMood": "Seleziona il tuo umore",
+    "selectMood": "Seleziona umore",
     "settings": "Impostazioni",
-    "addNote": "Aggiungi una nota (opzionale)",
+    "addNote": "Aggiungi nota (opzionale)",
     "notePlaceholder": "A cosa stai pensando?",
     "quickSaveTitle": "Salvataggio rapido",
-    "quickSaveDesc": "registra subito l’umore e salta il rituale. Salveremo umore e nota opzionale nella <em>Cronologia</em>.",
-    "lastLoggedMood": "Ultimo umore registrato: {{emoji}} il {{date}}",
+    "quickSaveDesc": "registra subito l’umore e salta il rituale. Salveremo l’umore scelto e la nota (opzionale) nella <em>Cronologia</em>.",
+    "lastLoggedMood": "Ultimo umore: {{emoji}} — {{date}}",
     "startRitual": "Avvia rituale",
     "quickSave": "Salvataggio rapido"
   },
@@ -84,16 +87,17 @@
       "lateNight": "Notte fonda",
       "goodMorning": "Buongiorno",
       "goodAfternoon": "Buon pomeriggio",
-      "goodEvening": "Buonasera"
+      "goodEvening": "Buona sera"
     },
     "suggestedToday": "Suggerito oggi: {{suggestion}}",
-    "goalDone": "Obiettivo: {{goalMin}} min · <strong>{{minutesToday}} min</strong> fatti"
+    "goalDone": "Obiettivo: {{goalMin}} min · <strong>{{minutesToday}} min</strong> completati"
   },
+
   "smartReminder": {
     "title": "Un momento?",
-    "body": "Che ne dici di {{pretty}}? Oggi non hai ancora fatto check-in.",
-    "prettyReset": "un reset di 2 min",
-    "prettyBlock": "un reset {{block}} di 2 min",
+    "body": "Che ne dici di {{pretty}}? Oggi non ti sei ancora registrato/a.",
+    "prettyReset": "Reset 2 min",
+    "prettyBlock": "Reset 2 min {{block}}",
     "blocks": {
       "morning": "mattina",
       "afternoon": "pomeriggio",
@@ -101,25 +105,32 @@
       "night": "notte"
     }
   },
-  "streak": {
-    "title": "Serie giornaliera",
-    "onTrack": "Sei in linea oggi",
-    "logToKeep": "Registra un umore per mantenerla",
-    "cooldown": "Ripara tra {{count}}g"
-  },
+
   "history": {
     "title": "Cronologia",
-    "insights": "Approfondimenti",
+    "insights": "Insights",
     "today": "Oggi",
     "yesterday": "Ieri",
-    "empty": "Nessuna sessione — avvia il tuo primo rituale per illuminare la griglia."
+    "empty": "Nessuna sessione — avvia il primo rituale per attivare la griglia."
   },
+
   "heatmap": {
     "title": "Ultimi 28 giorni",
     "legend": "Legenda",
     "repaired": "riparato",
-    "tooltip": "{{date}}: {{count, plural, one {# sessione} other {# sessioni}}}{{repaired, select, true { (riparato)} other {}}}"
+    "tooltip": "{{date}}: {{count, plural, one {# sessione} other {# sessioni}}}{{repaired, select, true { (riparato)} other {}}}",
+    "sessionsCount_one": "{{count}} sessione",
+    "sessionsCount_other": "{{count}} sessioni"
   },
+  "streak": {
+    "title": "Serie giornaliera",
+    "onTrack": "Sei sulla buona strada oggi",
+    "logToKeep": "Registra l’umore per mantenerla",
+    "cooldown": "Ripristino tra {{count}}g",
+    "days_one": "Serie di {{count}} giorno",
+    "days_other": "Serie di {{count}} giorni"
+  },
+
   "library": {
     "title": "Rituali",
     "searchPlaceholder": "Cerca rituali…",
@@ -133,38 +144,41 @@
     "detailViewedEvent": "library_detail_viewed",
     "startClickedEvent": "library_start_clicked"
   },
+
   "player": {
-    "restingPrompt": "Riposa — chiudi gli occhi e respira.",
+    "restingPrompt": "Riposo — chiudi gli occhi e respira.",
     "rest20s": "Pausa 20s",
     "finishNow": "Termina ora",
     "saving": "Salvataggio…"
   },
+
   "done": {
     "title": "Rituale completato",
     "sessionComplete": "Sessione completata",
-    "loggedLine": "Registrati <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "loggedLine": "Registrato <strong>{{duration}}</strong> — {{ritualTitle}}.",
     "saved": "Salvato.",
     "afterCare": "Dopo la sessione"
   },
+
   "settings": {
     "title": "Impostazioni",
     "privacyTitle": "Privacy",
-    "privacyBody": "Umore e rituali sono archiviati localmente sul tuo dispositivo e crittografati.",
+    "privacyBody": "Umore e rituali sono archiviati localmente sul dispositivo e crittografati.",
     "preferencesTitle": "Preferenze",
     "haptics": "Feedback aptico (se supportato)",
     "practiceTitle": "Pratica e promemoria",
     "dailyGoal": "Obiettivo giornaliero (minuti)",
-    "preferredTime": "Orario preferito del promemoria",
+    "preferredTime": "Orario preferito",
     "smartReminders": "Promemoria smart",
-    "nudgeNote": "Ti daremo un leggero promemoria vicino all’orario scelto usando logica on-device.",
+    "nudgeNote": "Ti avviseremo vicino all’orario preferito con logica on-device.",
     "proTitle": "Pro (Anteprima)",
-    "proToggle": "Abilita funzioni Pro (solo locale)",
-    "proNote": "Solo per test lato client. In seguito collegheremo Stripe.",
+    "proToggle": "Abilita funzioni Pro (locale)",
+    "proNote": "Solo client per test; Stripe in seguito.",
     "lockTitle": "Blocco app (PIN)",
-    "pinSet": "Un PIN è attivo su questo dispositivo.",
+    "pinSet": "PIN impostato su questo dispositivo.",
     "newPin": "Nuovo PIN",
     "confirmPin": "Conferma PIN",
-    "pinStoredInfo": "Il PIN è salvato in locale come hash SHA-256 con salt. Protegge l’accesso solo su questo dispositivo.",
+    "pinStoredInfo": "Il PIN è salvato localmente come hash SHA-256 con salt. Protegge solo questo dispositivo.",
     "clearAll": "Cancella tutti i dati locali",
     "language": "Lingua",
     "accent": "Accento",
@@ -174,47 +188,50 @@
     "light": "Chiaro",
     "dark": "Scuro"
   },
+
   "profile": {
     "title": "Profilo",
-    "signedInAs": "Accesso come",
+    "signedInAs": "Connesso come",
     "displayName": "Nome visualizzato",
-    "username": "Username",
+    "username": "Nome utente",
     "chooseAvatar": "Scegli avatar",
     "saveProfile": "Salva profilo",
     "profileSaved": "Profilo salvato!",
     "account": "Account",
     "errors": {
       "usernameTaken": "Questo username è già in uso.",
-      "avatarNotAllowed": "Avatar non consentito dalle policy del server."
+      "avatarNotAllowed": "Avatar non consentito dalle regole del server."
     }
   },
+
   "welcome": {
     "title": "Benvenuto/a",
     "goalQuestion": "Qual è il tuo obiettivo principale?",
     "goalHelp": "Ci aiuta a personalizzare le indicazioni.",
     "goals": {
       "reduceStress": "Ridurre lo stress",
-      "buildHabit": "Creare un’abitudine",
+      "buildHabit": "Costruire un’abitudine",
       "sleepBetter": "Dormire meglio",
-      "feelSteadier": "Sentirti più stabile"
+      "feelSteadier": "Sentirmi più stabile"
     },
     "hapticCues": "Feedback aptico",
     "hapticDesc": "Breve vibrazione all’inizio/fine",
     "smartReminder": "Promemoria smart",
-    "smartReminderDesc": "Un promemoria gentile vicino al tuo orario abituale. Tutto on-device.",
-    "enableReminder": "Abilita promemoria",
-    "changeAnytime": "Puoi modificare tutto in <em>Impostazioni</em>."
+    "smartReminderDesc": "Un leggero invito vicino all’orario abituale. Tutto sul dispositivo.",
+    "enableReminder": "Attiva promemoria",
+    "changeAnytime": "Puoi cambiare tutto in <em>Impostazioni</em>."
   },
+
   "insights": {
-    "title": "Approfondimenti (Pro)",
+    "title": "Insights (Pro)",
     "thisPeriod": "Questo periodo",
     "avgSession": "Sessione media",
-    "topRitual": "Rituale principale",
+    "topRitual": "Rituale più frequente",
     "streak": "Serie",
-    "noData": "Nessun dato — completa uno o due rituali e torna!",
-    "moodDistribution": "Distribuzione umori",
+    "noData": "Ancora nessun dato — fai uno o due rituali e riprova.",
+    "moodDistribution": "Distribuzione dell’umore",
     "entries": "{{count}} voci",
-    "consistency": "Costanza — sessioni al giorno",
+    "consistency": "Coerenza — sessioni per giorno",
     "timeBlocks": "Quando pratichi — fasce orarie",
     "quickWins": "Vittorie rapide",
     "table": {
@@ -222,11 +239,16 @@
       "avgTime": "Media (s)",
       "samples": "Campioni"
     },
-    "tipShortRituals": "Suggerimento: rituali brevi riducono l’attrito — ottimi per creare costanza."
+    "tipShortRituals": "Suggerimento: i rituali brevi riducono l’attrito — ottimi per creare una serie.",
+    "chips": {
+      "past28d": "Últimos 28 días",
+      "sessions_one": "{{count}} sesión",
+      "sessions_other": "{{count}} sesiones",
+      "avgTime": "Tiempo prom.",
+      "bestTime": "Mejor hora",
+      "mostFrequent": "Más frecuente"
+    }
   },
-  "export": {
-    "title": "Esporta",
-    "json": "Esporta JSON",
-    "csv": "Esporta CSV"
-  }
+
+  "export": { "title": "Esporta", "json": "Esporta JSON", "csv": "Esporta CSV" }
 }

@@ -24,11 +24,27 @@
     "timeBlocks": "Quando pratichi — fasce orarie",
     "quickWins": "Vittorie rapide",
     "noData": "Nessun dato."
-  },
+  }, 
   "table": {
     "ritual": "Rituale",
     "avgSec": "Media (s)",
     "samples": "Campioni",
     "tip": "Suggerimento: i rituali brevi riducono l’attrito — ottimi per creare costanza."
+  },
+   "chips": {
+    "lastN": "Ultimi {{n}}g",
+    "sessions_one": "{{count}} sessione",
+    "sessions_few": "{{count}} sessioni",
+    "sessions_other": "{{count}} sessioni",
+    "avgTime": "Tempo medio",
+    "bestTime": "Orario migliore",
+    "mostFrequent": "Più frequente"
+  },
+  "heatmap": {
+    "title28d": "Ultimi 28 giorni",
+    "badge": "{{total}} sessioni • serie di {{streak}} giorni",
+    "legend": "Legenda",
+    "repaired": "riparato",
+    "cellTitle": "{{date}}: {{count}} sessione(i){{repaired}}"
   }
 }

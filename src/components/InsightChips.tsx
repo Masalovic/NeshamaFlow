@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { loadHistory, type LogItem } from "../lib/history";
 import { computeQuickStats, fmtAvg } from "../lib/quickStats";
+import { useTranslation } from "react-i18next";
 
-export default function InsightChips({ windowDays = 28, compact = false }:{
+export default function InsightChips({
+  windowDays = 28,
+  compact = false,
+}: {
   windowDays?: number;
   compact?: boolean;
 }) {
+  const { t } = useTranslation(["insights"]); // uses insights namespace
   const [list, setList] = useState<LogItem[] | null>(null);
 
   useEffect(() => {
@@ -14,17 +19,44 @@ export default function InsightChips({ windowDays = 28, compact = false }:{
       const h = await loadHistory();
       if (alive) setList(h);
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
   if (list === null) return null;
   const qs = computeQuickStats(list, windowDays);
+
   const chips: { label: string; value: string }[] = [];
 
-  chips.push({ label: "Last 28d", value: `${qs.sessions} sessions` });
-  chips.push({ label: "Avg time", value: fmtAvg(qs.avgDurationSec) });
-  if (qs.bestBlockLabel) chips.push({ label: "Best time", value: qs.bestBlockLabel });
-  if (qs.topRitualTitle) chips.push({ label: "Most frequent", value: qs.topRitualTitle });
+  // “Past 28d • N sessions”
+  chips.push({
+    label: t("chips.lastN", { n: windowDays, defaultValue: "Last {{n}}d" }),
+    value: t("chips.sessions", {
+      count: qs.sessions,
+      defaultValue: "{{count}} sessions",
+    }),
+  });
+
+  // “Avg time • 2m”
+  chips.push({
+    label: t("chips.avgTime", "Avg time"),
+    value: fmtAvg(qs.avgDurationSec),
+  });
+
+  if (qs.bestBlockLabel) {
+    chips.push({
+      label: t("chips.bestTime", "Best time"),
+      value: qs.bestBlockLabel,
+    });
+  }
+
+  if (qs.topRitualTitle) {
+    chips.push({
+      label: t("chips.mostFrequent", "Most frequent"),
+      value: qs.topRitualTitle,
+    });
+  }
 
   if (!chips.length) return null;
 

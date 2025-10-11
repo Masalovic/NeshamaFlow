@@ -1,0 +1,204 @@
+{
+  "suggestion": { "title": "Tvoj ritual" },
+
+  "actions": {
+    "startRitual": "Pokreni ritual",
+    "seeSteps": "Vidi korake",
+    "whyWorks": "Zašto radi",
+    "browse": "Pregledaj rituale"
+  },
+
+  "modals": {
+    "how": "Kako se radi",
+    "why": "Zašto radi",
+    "noSteps": "Nema dostupnih koraka."
+  },
+
+  "player": {
+    "restMsg": "Odmor — zatvori oči i diši.",
+    "restHint": "Napravi pauzu za disanje od 20 s",
+    "rest20": "Odmor 20 s",
+    "finishNow": "Završi odmah"
+  },
+
+  "done": {
+    "title": "Ritual završen",
+    "sessionComplete": "Sesija završena",
+    "logged": "Zabeleženo <strong>{{duration}}</strong> — {{ritualTitle}}.",
+    "saved": "Sačuvano.",
+    "summary": "Rezime",
+    "afterCare": "Nega posle",
+    "logAnother": "Zabeleži još jedan",
+    "seeHistory": "Vidi istoriju",
+    "share": "Podeli",
+    "copy": "Kopiraj",
+    "copied": "Kopirano!",
+    "setReminder": "Podesi pametni podsetnik",
+    "labels": {
+    "sessionComplete": "Sesija završena",
+    "ritual": "Ritual",
+    "duration": "Trajanje",
+    "mood": "Raspoloženje",
+    "when": "Kada",
+    "note": "Beleška"
+  }
+  },
+
+  "share": { "title": "Moja sesija rituala" },
+
+  "generic": "ritual",
+
+  "titles": {
+    "box-breath-2m": "Kvadratno disanje",
+    "478-pace-2m": "Disanje 4-7-8",
+    "body-scan-1m": "Jednominutni sken tela",
+    "ground-54321": "Tehnika 5-4-3-2-1",
+    "compassion-break": "Pauza samosaosećanja",
+    "gratitude-3": "Zahvalnost"
+  },
+
+  "guides": {
+    "box-breath-2m": {
+      "title": "Šta raditi",
+      "why": "Spori, jednako dugi udah/zadržavanje/izdah ciljaju ~6 udisaja u minutu, povećavaju vagalni tonus i pomeraju balans ka parasimpatikusu („odmor i varenje“). Koristi se za akutni stres da smanji reaktivnost amigdale i stabilizuje HRV.",
+      "whyBullets": [
+        "Aktivira parasimpatički sistem („odmor i varenje“)",
+        "Stabilizuje HRV pod stresom",
+        "Jednostavan ritam 4-4-4-4"
+      ],
+      "steps": [
+        "Sedi uspravno; opusti ramena i vilicu.",
+        "Udahni kroz nos brojeći do 4.",
+        "Zadrži dah do 4.",
+        "Izdahni kroz nos (ili blago stisnute usne) do 4.",
+        "Zadrži prazan do 4. Ponovi „kutiju“ 4–8 ciklusa."
+      ],
+      "tip": "Ako je 4 s dugo, probaj 3-3-3-3. Dah neka bude gladak, bez naprezanja."
+    },
+
+    "478-pace-2m": {
+      "title": "Šta raditi",
+      "why": "Produžen izdah aktivira vagus nerv i smanjuje simpatičku pobuđenost. Obrazac 4-7-8 privremeno povećava toleranciju na CO₂ i može umanjiti anksioznost i vreme uspavljivanja u malim studijama.",
+      "whyBullets": [
+        "Dugi izdah → vagalna aktivacija",
+        "Gradi toleranciju na CO₂",
+        "Korisno za anksioznost i san"
+      ],
+      "steps": [
+        "Udobno sedi; vrh jezika lagano iza gornjih zuba (opciono).",
+        "Udahni tiho kroz nos do 4.",
+        "Zadrži dah do 7.",
+        "Izdahni mekano kroz usta do 8.",
+        "Nastavi ciklus 4-7-8 u mirnom, nenapornom ritmu."
+      ],
+      "tip": "Za spavanje: 3–4 kruga su dovoljna."
+    },
+
+    "body-scan-1m": {
+      "title": "Šta raditi",
+      "why": "Brza interoceptivna provera uključuje somatosenzorne mreže i preusmerava pažnju sa ruminacije. Kratki skenovi tela povezani su sa manjim stresom i boljom regulacijom emocija.",
+      "whyBullets": [
+        "Brzo prekida ruminaciju",
+        "Poboljšava interoceptivnu svesnost",
+        "Radi svuda, bez pomagala"
+      ],
+      "steps": [
+        "Udobno se namesti (sedenje ili ležanje); opusti pogled ili zatvori oči.",
+        "Usmeri pažnju na stopala; primeti dodir, temperaturu, strujanje.",
+        "Polako idi naviše — listovi, kolena, butine, kukovi, stomak, grudi, ramena, ruke, dlanovi, vrat, lice, teme.",
+        "Označi senzacije (pritisak, toplota, zategnuto/opusteno, neutralno) bez procene i menjanja.",
+        "Kada odlutaš, nežno se vrati na poslednji deo tela."
+      ],
+      "tip": "Kratko i često je bolje nego dugo i retko."
+    },
+
+    "ground-54321": {
+      "title": "Šta raditi",
+      "why": "Upravljanje na pet čula angažuje prefrontalnu pažnju i smanjuje limbicku procenu pretnje. Široko korišćeno u KBT-u za panične i besne navale.",
+      "whyBullets": [
+        "Senzorni fokus spušta odgovor na pretnju",
+        "Prijateljski KBT-u, brzo se uči",
+        "Odlično za paniku/napetost"
+      ],
+      "steps": [
+        "Osvrni se: imenuj 5 stvari koje vidiš.",
+        "Primeti 4 stvari koje osećaš (stolica, odeća, vazduh…).",
+        "Uoči 3 zvuka (blizu i daleko).",
+        "Primeti 2 mirisa.",
+        "Primeti 1 ukus (ili uzmi gutljaj vode)."
+      ],
+      "tip": "Tiho izgovorene stavke dodatno sidre pažnju."
+    },
+
+    "compassion-break": {
+      "title": "Šta raditi",
+      "why": "Kratke izjave samoljubaznosti snižavaju kortizol i umanjuju samokritiku. „Zajednička ljudskost“ pomaže kognitivnu reaprakciju i otpornost.",
+      "whyBullets": [
+        "Smanjuje samokritiku",
+        "Podržava kognitivnu reaprakciju",
+        "Kratak skript za pamćenje"
+      ],
+      "steps": [
+        "Priznaj: „Ovo je trenutak patnje / Ovo je teško.“",
+        "Zajednička ljudskost: „Nisam sam/a; i drugi se tako osećaju.“",
+        "Ljubaznost: stavi ruku na srce (ili drugi umirujući dodir).",
+        "Ponudi fraze: „Neka budem ljubazan/na prema sebi; neka prihvatim sebe; neka budem strpljiv/a.“"
+      ],
+      "tip": "Koristi topao ton kao prema dragom prijatelju."
+    },
+
+    "gratitude-3": {
+      "title": "Šta raditi",
+      "why": "Mikro-vežbe zahvalnosti povećavaju pozitivni afekt i šire opseg pažnje. Ponavljanje se povezuje sa boljim raspoloženjem i snom.",
+      "whyBullets": [
+        "Podiže pozitivni afekt",
+        "Širi pažnju",
+        "Laka dnevna mikro-praksa"
+      ],
+      "steps": [
+        "Priseti se jedne konkretne stvari na kojoj si zahvalan/na (npr. „sunce na stolu“).",
+        "U jednoj rečenici reci zašto je važna.",
+        "Ponovi još dve konkretne stavke (ukupno tri)."
+      ],
+      "tip": "Konkretno pobeđuje opšte. Zamisi prizor i primeti osećaj u telu."
+    }
+  },
+
+  "after": {
+    "default": {
+      "1": "Udahni sporije i opusti ramena.",
+      "2": "Popij gutljaj vode (male navike bolje prianjaju!).",
+      "3": "Opciono: zabeleži jednu rečenicu u Istoriji."
+    },
+    "boxBreath": {
+      "1": "Udahni mirno i opusti vilicu.",
+      "2": "Omekšaj sledeći izdah; primeti kako ramena padaju.",
+      "3": "Ako prija, uradi 1–2 tiha ciklusa kasnije danas."
+    },
+    "478": {
+      "1": "Ako se vrti, diši normalno minut.",
+      "2": "Za spavanje koristi 4-7-8: 3–4 kruga su dovoljna.",
+      "3": "Popij vode i ne ustaj naglo."
+    },
+    "bodyScan": {
+      "1": "Zarotiraj ramena; opusti čelo i jezik.",
+      "2": "Izaberi jednu zonu za 30 s kasnije danas.",
+      "3": "Popij gutljaj vode i nežno se istegni."
+    },
+    "ground": {
+      "1": "Odaberi jednu malu sledeću radnju i uradi je polako.",
+      "2": "Otvori šake; opusti jezik sa nepca.",
+      "3": "Ako se uznemirenost vrati, produži izdah."
+    },
+    "compassion": {
+      "1": "Stavi ruku na srce i reci jednu blagu frazu.",
+      "2": "Seti se „zajedničke ljudskosti“: i drugi ovako osećaju.",
+      "3": "Zapiši jednu podržavajuću rečenicu za kasnije."
+    },
+    "gratitude": {
+      "1": "Uživaj u jednom konkretnom detalju ~10 sekundi.",
+      "2": "Ako možeš, pošalji kratku poruku zahvalnosti.",
+      "3": "Blago se nasmeši da učvrstiš sećanje."
+    }
+  }
+}
