@@ -151,7 +151,7 @@ export default function Profile() {
             <button
               onClick={saveProfile}
               disabled={saving}
-              className="btn btn-primary w-full mt-4 disabled:opacity-60"
+              className="btn btn-primary btn-full w-full mt-4 disabled:opacity-60"
             >
               {saving ? t('common:saving', 'Saving…') : t('profile:save', 'Save profile')}
             </button>
@@ -164,7 +164,7 @@ export default function Profile() {
             <p className="text-sm text-dim">{t('profile:account.signOutDesc', 'Sign out on this device.')}</p>
             <button
               onClick={signOut}
-              className="btn btn-primary w-full mt-2"
+              className="btn btn-primary btn-full w-full mt-2"
             >
               {t('profile:account.signOut', 'Sign out')}
             </button>

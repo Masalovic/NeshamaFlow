@@ -105,8 +105,7 @@ select:focus {
 
 /* Primary – uses contrast tokens from theme.ts */
 .btn-primary {
-  background: var(--primary-bg);
-  color: black;
+  background: var(--accent-500);
   height: 30px;
 }
 .btn-primary:hover {
@@ -121,7 +120,6 @@ select:focus {
 .btn-secondary {
   background: var(--surface-2);
   height: 30px;
-
   border: 1px solid var(--border);
   color: var(--text);
 }
@@ -148,7 +146,6 @@ select:focus {
 .btn-outline {
   background: transparent;
   height: 30px;
-  color: white;
   border: 1px solid var(--accent-400);
 }
 .btn-outline:hover {
@@ -290,7 +287,7 @@ select:focus {
     color: var(--text-dim) !important;
   }
   .text-muted {
-    color: var(--text-muted) !important;
+    color: var(--text-muted) !important; 
   }
 
   .border-token {
