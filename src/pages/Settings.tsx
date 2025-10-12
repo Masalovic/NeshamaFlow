@@ -207,10 +207,7 @@ export default function Settings() {
     } catch (e) {
       console.error(e);
       setMsg(
-        t(
-          "settings:pin.enableFail",
-          "Failed to enable PIN. Please try again."
-        )
+        t("settings:pin.enableFail", "Failed to enable PIN. Please try again.")
       );
     } finally {
       setBusy(false);
@@ -266,7 +263,7 @@ export default function Settings() {
               <LanguageSelect
                 value={lng}
                 onChange={changeLanguage}
-                className="min-w-[180px]"
+                className="min-w-[180px] flex justify-end"
               />
             </label>
           </section>
@@ -277,53 +274,76 @@ export default function Settings() {
               {t("common:appearance.title", "Appearance")}
             </div>
 
-            {/* Appearance segmented */}
-            <div className="grid grid-cols-3 gap-2 mb-3">
-              {(["custom", "light", "dark"] as Appearance[]).map((opt) => (
-                <button
-                  key={opt}
-                  className={
-                    "h-9 rounded-xl border text-sm " +
-                    (appearance === opt
-                      ? "border-brand-400 ring-1 ring-brand-300"
-                      : "border-[var(--border)] hover:bg-[var(--hover)]")
-                  }
-                  onClick={() => updateTheme({ appearance: opt })}
-                  aria-pressed={appearance === opt}
-                >
-                  {t(
-                    `common:appearance.${opt}`,
-                    opt[0].toUpperCase() + opt.slice(1)
-                  )}
-                </button>
-              ))}
+            {/* Appearance segmented — full width track */}
+            <div className="mb-3">
+              <div className="w-full inline-flex items-center justify-between rounded-full border border-token bg-[var(--surface-2)] px-1 py-1">
+                {(["custom", "light", "dark"] as Appearance[]).map((opt) => {
+                  const active = appearance === opt;
+                  return (
+                    <button
+                      key={opt}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      onClick={() => updateTheme({ appearance: opt })}
+                      className={
+                        "h-8 px-8 rounded-full text-sm leading-none transition-colors " +
+                        (active
+                          ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)] [data-appearance=dark]&:bg-[var(--accent-300)]"
+                          : "text-[var(--text-dim)] hover:bg-[var(--hover)]")
+                      }
+                    >
+                      {t(
+                        `common:appearance.${opt}`,
+                        opt[0].toUpperCase() + opt.slice(1)
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
-            {/* Accent chips */}
-            <div className="flex items-center gap-2 mb-3">
-              {(["berry", "ocean", "forest"] as Accent[]).map((a) => {
-                const isActive = accent === a;
-                return (
-                  <button
-                    key={a}
-                    onClick={() => updateTheme({ accent: a })}
-                    className="h-6 px-3 rounded-full border text-xs"
-                    style={{
-                      background: isActive ? "var(--accent-200)" : "transparent",
-                      borderColor: "var(--border)",
-                      color: isActive ? "#000" : "var(--text)",
-                      textTransform: "capitalize",
-                    }}
-                    aria-pressed={isActive}
-                    title={t("common:accent.titleWithName", {
-                      defaultValue: "Accent: {{name}}",
-                      name: a,
-                    })}
-                  >
-                    {t(`common:accent.${a}`, a)}
-                  </button>
-                );
-              })}
+            {/* Accent segmented chips — full width track */}
+            <div className="mb-3">
+              <div className="w-full inline-flex items-center justify-between rounded-full border border-token bg-[var(--surface-2)] px-1 py-1 gap-2">
+                {(["berry", "ocean", "forest"] as Accent[]).map((a) => {
+                  const active = accent === a;
+                  const SWATCH: Record<Accent, string> = {
+                    berry: "#e94d96",
+                    ocean: "#3b91ea",
+                    forest: "#36a844",
+                  };
+                  return (
+                    <button
+                      key={a}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      onClick={() => updateTheme({ accent: a })}
+                      title={t("common:accent.titleWithName", {
+                        defaultValue: "Accent: {{name}}",
+                        name: a,
+                      })}
+                      className={
+                        "h-8 px-6 rounded-full text-xs leading-none inline-flex items-center gap-2 transition-colors " +
+                        (active
+                          ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)] [data-appearance=dark]&:bg-[var(--accent-300)]"
+                          : "text-[var(--text-dim)] hover:bg-[var(--hover)]")
+                      }
+                    >
+                      <span
+                        className="inline-block h-2.5 w-2.5 rounded-full"
+                        style={{
+                          background: active ? "var(--accent-600)" : SWATCH[a],
+                        }}
+                      />
+                      <span style={{ textTransform: "capitalize" }}>
+                        {t(`common:accent.${a}`, a)}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
 
             {/* Background style */}
@@ -445,10 +465,7 @@ export default function Settings() {
                 className="h-4 w-4"
                 checked={remindersEnabled}
                 onChange={onToggleReminders}
-                aria-label={t(
-                  "settings:practice.smart",
-                  "Smart reminders"
-                )}
+                aria-label={t("settings:practice.smart", "Smart reminders")}
               />
             </label>
 
@@ -467,10 +484,7 @@ export default function Settings() {
             </div>
             <label className="flex items-center justify-between py-1">
               <span className="text-sm text-main">
-                {t(
-                  "settings:pro.toggle",
-                  "Enable Pro features (local toggle)"
-                )}
+                {t("settings:pro.toggle", "Enable Pro features (local toggle)")}
               </span>
               <input
                 type="checkbox"

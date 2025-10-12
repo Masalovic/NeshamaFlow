@@ -1,4 +1,3 @@
-// src/lib/theme.ts
 export type Appearance = 'custom' | 'light' | 'dark';
 export type Accent = 'berry' | 'ocean' | 'forest';
 export type BgMode = 'gradient' | 'image';
@@ -10,10 +9,8 @@ export type Theme = {
   bgImageUrl?: string;
 };
 
-// BUMPED to v2 to invalidate old saved wallpapers (e.g., Pexels links)
 const THEME_KEY = 'ui.theme.v2';
 
-// ---- Accent palettes ----
 type Shade = '50'|'100'|'200'|'300'|'400'|'500'|'600'|'700'|'800'|'900';
 type AccentMap = Record<Shade, string>;
 
@@ -23,7 +20,6 @@ const ACCENTS: Record<Accent, AccentMap> = {
   forest: {'50':'#edfbea','100':'#d6f5d0','200':'#b3ecab','300':'#84dd7c','400':'#55c655','500':'#36a844','600':'#238838','700':'#1b6c2e','800':'#165627','900':'#124621'}
 } as const;
 
-// ---- Surface tokens per appearance ----
 const SURFACES = {
   light: {
     bg:        '#ffffff',
@@ -50,7 +46,6 @@ const SURFACES = {
     hover:     'rgba(255,255,255,0.06)',
   },
   custom: {
-    // Default morph (only used when bgMode !== 'image')
     bg: `
       radial-gradient(1100px 700px at 8% -8%,  var(--accent-100) 0%, transparent 60%),
       radial-gradient(900px 650px  at 100% 0%, var(--accent-50)  0%, transparent 55%),
@@ -58,7 +53,6 @@ const SURFACES = {
       radial-gradient(720px 520px  at 100% 100%, var(--accent-300) 0%, transparent 52%),
       #ffffff
     `,
-    // light translucent cards on colorful bg
     surface1:  'rgba(255,255,255,0.40)',
     surface2:  '#fafbff',
     border:    'var(--accent-300)',
@@ -71,29 +65,24 @@ const SURFACES = {
   },
 } as const;
 
-// ---- Defaults & helpers ----
 const DEFAULT_SYSTEM_BG_URL =
   'https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0';
 
 function sanitizeBgUrl(url: string | undefined): string {
   try {
     const u = new URL(url ?? '');
-    // Allow Unsplash only (prevents lingering Pexels URL)
     if (u.hostname !== 'images.unsplash.com') return DEFAULT_SYSTEM_BG_URL;
     return u.toString();
   } catch {
     return DEFAULT_SYSTEM_BG_URL;
   }
 }
-
 function normalizeAppearance(a: unknown): Appearance {
   return a === 'light' || a === 'dark' ? a : 'custom';
 }
 
-// ---- Load / Save (with migration from v1) ----
 export function loadTheme(): Theme {
   let t: Partial<Theme> | null = null;
-
   try {
     const raw = localStorage.getItem(THEME_KEY);
     if (raw) t = JSON.parse(raw) as Partial<Theme>;
@@ -102,7 +91,7 @@ export function loadTheme(): Theme {
       if (oldRaw) {
         const old = JSON.parse(oldRaw) as Partial<Theme>;
         t = {
-          appearance: old.appearance, // 'system' maps to 'custom' below
+          appearance: old.appearance,
           accent: old.accent,
           bgMode: old.bgMode,
           bgImageUrl: old.bgImageUrl,
@@ -110,18 +99,13 @@ export function loadTheme(): Theme {
         localStorage.removeItem('ui.theme.v1');
       }
     }
-  } catch {
-    // ignore
-  }
-
+  } catch {}
   const out: Theme = {
     appearance: normalizeAppearance(t?.appearance),
     accent:     (t?.accent ?? 'berry') as Accent,
     bgMode:     (t?.bgMode ?? 'image') as BgMode,
     bgImageUrl: sanitizeBgUrl(t?.bgImageUrl),
   };
-
-  // Persist normalized theme so future reads are safe
   localStorage.setItem(THEME_KEY, JSON.stringify(out));
   return out;
 }
@@ -135,11 +119,10 @@ export function saveTheme(t: Theme) {
   localStorage.setItem(THEME_KEY, JSON.stringify(safe));
 }
 
-// ---- Apply ----
 export function applyTheme(t: Theme): void {
   const root = document.documentElement;
 
-  // Resolve OS mode for contrast when appearance='custom'
+  // resolve effective scheme when appearance='custom'
   const mql = window.matchMedia?.('(prefers-color-scheme: dark)');
   const resolved: Exclude<Appearance,'custom'> =
     t.appearance === 'custom' ? (mql?.matches ? 'dark' : 'light') : t.appearance;
@@ -149,11 +132,11 @@ export function applyTheme(t: Theme): void {
   root.dataset.appearance = t.appearance;
   root.dataset.accent     = t.accent;
 
-  // Accent scale → CSS vars
+  // accent → CSS vars
   const pal = ACCENTS[t.accent];
   (Object.keys(pal) as Shade[]).forEach(k => set('--accent-' + k, pal[k]));
 
-  // Background: Custom + Image → overlay + photo (with cache-bust)
+  // background
   if (t.appearance === 'custom' && t.bgMode === 'image' && (t.bgImageUrl ?? '').length > 0) {
     const url = withVersion(sanitizeBgUrl(t.bgImageUrl));
     const overlay = 'linear-gradient(0deg, rgba(255,255,255,0.42), rgba(255,255,255,0.42))';
@@ -164,7 +147,7 @@ export function applyTheme(t: Theme): void {
     set('--bg-image', 'none');
   }
 
-  // Surfaces & text tokens
+  // surfaces & text
   set('--surface-1',  surf.surface1);
   set('--surface-2',  surf.surface2);
   set('--border',     surf.border);
@@ -174,7 +157,7 @@ export function applyTheme(t: Theme): void {
   set('--nav-bg',     surf.navBg);
   set('--hover',      surf.hover);
 
-  // Primary buttons (use resolved mode for correct contrast)
+  // primary buttons
   if (resolved === 'dark') {
     set('--primary-fg', '#ffffff');
     set('--primary-bg', 'var(--accent-300)');
@@ -187,7 +170,35 @@ export function applyTheme(t: Theme): void {
     set('--primary-bg-active','var(--accent-800)');
   }
 
-  // BottomNav accent
+  // 🔹 TIMER RING tokens
+  if (resolved === 'dark') {
+    set('--ring-track',   '#2b2f37');
+    set('--ring-text',    '#cbd5e1');
+  } else {
+    set('--ring-track',   '#e5e7eb');
+    set('--ring-text',    '#9aa3af');
+  }
+  // progress uses accent but different step per scheme
+  const progressToken = resolved === 'dark' ? '--accent-300' : '--accent-600';
+  const computed = getComputedStyle(root).getPropertyValue(progressToken).trim();
+  set('--ring-progress', computed || (resolved === 'dark' ? ACCENTS[t.accent]['300'] : ACCENTS[t.accent]['600']));
+
+  // 🔹 MENU / POPOVER palette (used by LanguageSelect etc.)
+  if (resolved === 'dark') {
+    set('--menu-bg',        '#0f1012');
+    set('--menu-fg',        '#ffffff');
+    set('--menu-border',    '#2c2f36');
+    set('--menu-hover',     'rgba(255,255,255,.08)');
+    set('--menu-active-fg', '#0f172a'); // text when active item has white bg
+  } else {
+    set('--menu-bg',        '#ffffff');
+    set('--menu-fg',        '#0f172a');
+    set('--menu-border',    surf.border);
+    set('--menu-hover',     surf.hover);
+    set('--menu-active-fg', '#0f172a');
+  }
+
+  // bottom nav accent
   if (resolved === 'dark') {
     set('--accent-nav', 'var(--accent-400)');
     set('--accent-nav-press', 'var(--accent-500)');
@@ -196,7 +207,7 @@ export function applyTheme(t: Theme): void {
     set('--accent-nav-press', 'var(--accent-700)');
   }
 
-  // Browser chrome color
+  // browser chrome color
   const themeMeta = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
   if (themeMeta) themeMeta.content = (surf as any).themeMeta ?? '#ffffff';
 
@@ -209,7 +220,6 @@ export function applyTheme(t: Theme): void {
   }
 }
 
-// Keep UI synced with OS mode when appearance='custom'
 export function bindSystemThemeReactivity(getAppearance: () => Appearance): () => void {
   const mql = window.matchMedia?.('(prefers-color-scheme: dark)');
   if (!mql) return () => {};

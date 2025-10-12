@@ -110,7 +110,7 @@ export default function TodayPanel() {
         </div>
 
         <button
-          className="btn btn-secondary inline-flex items-center gap-1"
+          className="btn btn-secondary flex-none items-center gap-1"
           onClick={quickStart}
         >
           <Sparkles size={16} />

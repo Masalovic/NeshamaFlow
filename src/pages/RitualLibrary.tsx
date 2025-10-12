@@ -70,7 +70,7 @@ export default function RitualLibrary() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("library:searchPlaceholder", "Search rituals…")}
-              className="input flex-1"
+              className="input flex-1 text-main"
               autoCorrect="off"
               autoCapitalize="none"
               aria-label={t("library:searchPlaceholder", "Search rituals…")}
@@ -91,7 +91,7 @@ export default function RitualLibrary() {
                   key={k}
                   onClick={() => setFilter(k)}
                   aria-pressed={active}
-                  className="px-3 py-1.5 rounded-full text-sm border transition-colors"
+                  className="px-2 py-1 rounded-full text-sm border transition-colors"
                   style={{
                     background: active ? "var(--accent-200)" : "var(--surface-2)",
                     borderColor: active ? "var(--accent-300)" : "var(--border)",
@@ -158,7 +158,7 @@ export default function RitualLibrary() {
                       </Button>
                     </div>
 
-                    <button className="btn btn-outline h-9 px-3 mt-3 text-sm" onClick={() => openDetails(r.id)}>
+                    <button className="btn btn-outline h-8 px-3 mt-3 text-sm" onClick={() => openDetails(r.id)}>
                       {t("library:details", "Details")}
                     </button>
                   </Card>

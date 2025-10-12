@@ -23,16 +23,8 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   color: var(--text);
-  font-family:
-    "Outfit",
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Inter,
-    "Helvetica Neue",
-    Arial;
+  font-family: "Outfit", ui-sans-serif, system-ui, -apple-system, Segoe UI,
+    Roboto, Inter, "Helvetica Neue", Arial;
 }
 
 /* ---- Cards & tiles (shared across pages) ----------------------------- */
@@ -90,17 +82,32 @@ select:focus {
   box-shadow: 0 0 0 2px var(--accent-400);
 }
 
+/* ---- Progress ring tokens ------------------------------------------- */
+.ring-track {
+  stroke: var(--ring-track);
+}
+.ring-progress {
+  stroke: var(--ring-progress);
+}
+.ring-text {
+  fill: var(--ring-text);
+}
+
 /* ---- Buttons --------------------------------------------------------- */
 .btn {
-  @apply inline-flex items-center justify-center h-10 px-5 rounded-pill text-sm font-normal transition select-none outline-none disabled:opacity-45 disabled:cursor-not-allowed;
+  @apply inline-flex items-center justify-center rounded-pill text-sm font-normal transition select-none outline-none disabled:opacity-45 disabled:cursor-not-allowed;
+  height: 40px;
+  padding-inline: 14px;
+  width: auto; /* content-sized by default */
+  white-space: nowrap; /* never wrap labels */
   box-shadow: var(--elev, 0 0 0 rgba(0, 0, 0, 0));
 }
 
-/* Primary – uses theme.ts contrast tokens */
+/* Primary – uses contrast tokens from theme.ts */
 .btn-primary {
-  background: var(--accent-200);
+  background: var(--primary-bg);
+  color: black;
   height: 30px;
-  color: var(--primary-fg); /* black in light, white in dark */
 }
 .btn-primary:hover {
   background: var(--primary-bg-hover);
@@ -110,26 +117,77 @@ select:focus {
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.25);
 }
 
-/* Secondary – subtle surface */
+/* Secondary – readable on both light & dark */
 .btn-secondary {
-  background: var(--surface-1);
-  color: var(--text);
-   height: 30px;
+  background: var(--surface-2);
+  height: 30px;
+
   border: 1px solid var(--border);
+  color: var(--text);
 }
 .btn-secondary:hover {
-  background: var(--surface-2);
+  background: var(--hover);
+}
+/* sublabel/suffix inside secondary (e.g., “s”) inherits color */
+.btn-secondary small {
+  color: inherit;
+  opacity: 0.85;
+  line-height: 1;
 }
 
-/* Outline – neutral with accent border */
+/* Full-width CTA that also works in WebKit */
+.btn-full { width: 100%; }
+@supports (width: -webkit-fill-available) {
+  .btn-full { width: -webkit-fill-available; }
+}
+@supports (width: stretch) {
+  .btn-full { width: stretch; }
+}
+
+/* Outline – clearer border + good hover in dark */
 .btn-outline {
   background: transparent;
-  color: var(--text);
   height: 30px;
-  border: 1px solid var(--accent-300);
+  color: white;
+  border: 1px solid var(--accent-400);
 }
 .btn-outline:hover {
+  background: color-mix(in oklab, var(--accent-400) 12%, transparent);
+}
+/* Fallback if color-mix isn't supported */
+@supports not (background: color-mix(in oklab, white 10%, black)) {
+  .btn-outline:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+}
+
+/* Ghost – text-only */
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+}
+.btn-ghost:hover {
   background: var(--hover);
+}
+
+/* Dark-specific polish */
+[data-appearance="dark"] .btn-secondary {
+  background: #232328; /* slightly lighter than surface for contrast */
+  border-color: #5a5f69;
+}
+[data-appearance="dark"] .btn-outline {
+  border-color: var(--accent-300);
+}
+[data-appearance="dark"] .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Accent text when “active” in lists (e.g., LanguageSelect) */
+.is-active {
+  color: var(--accent-600);
+}
+[data-appearance="dark"] .is-active {
+  color: var(--accent-300);
 }
 
 /* Small pill CTA inside tiles/cards (e.g. Ritual list “Start”) */
@@ -137,8 +195,6 @@ select:focus {
 .btn-chip {
   background: var(--primary-bg);
   color: #fff; /* keep white for punchy pills */
-  height: 40px;
-  padding-inline: 16px;
 }
 
 /* ---- Bottom nav ------------------------------------------------------ */
@@ -164,30 +220,24 @@ select:focus {
   border-color: var(--border);
   box-shadow: 0 -6px 16px rgba(15, 15, 16, 0.06);
 }
-
 .bottom-nav .nav-link {
   color: var(--text-muted);
-  transition:
-    color 0.18s ease,
-    background-color 0.18s ease,
+  transition: color 0.18s ease, background-color 0.18s ease,
     transform 0.04s ease;
 }
 .bottom-nav .nav-link:hover {
   color: var(--text);
 }
-
 /* Active = current route (accent hue) */
 .bottom-nav .nav-link.active {
   color: var(--accent-nav);
 }
-
 /* Pressed feedback */
 .bottom-nav .nav-link:active {
   color: var(--accent-nav-press);
   transform: translateY(1px);
 }
-
-/* Optional: a very subtle icon highlight “pill” */
+/* subtle icon highlight “pill” */
 .bottom-nav .nav-link.active .nav-ico {
   background: rgb(var(--accent-50) / 0.6);
   border-radius: 10px;

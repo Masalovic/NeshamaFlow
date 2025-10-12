@@ -1,14 +1,15 @@
+// src/pages/History.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
-import Header from "../components/ui/Header";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
-import { loadHistory, type LogItem } from "../lib/history";
-import { ready as storageReady } from "../lib/secureStorage";
-import { titleForRitualId } from "../lib/ritualEngine";
-import { localizedTitleForRitualId } from "../lib/ritualEngine";
+import Header from "../components/ui/Header";
 import InsightChips from "../components/InsightChips";
 import Heatmap28 from "../components/Heatmap28";
+import { loadHistory, type LogItem } from "../lib/history";
+import { ready as storageReady } from "../lib/secureStorage";
+import { titleForRitualId, type RitualId } from "../lib/ritualEngine";
+import { tRitualTitle } from "../lib/i18nRitual";
 import { useTranslation } from "react-i18next";
 
 dayjs.extend(relativeTime);
@@ -34,9 +35,10 @@ export default function History() {
     if (d.isSame(dayjs(), "day")) return t("history:labels.today", "Today");
     if (d.isSame(dayjs().subtract(1, "day"), "day"))
       return t("history:labels.yesterday", "Yesterday");
-    return d.format("ddd, MMM D");
+    return d.format(t("history:labels.format", "ddd, MMM D"));
   }
 
+  // wait for secure storage to be ready (if locked)
   useEffect(() => {
     if (unlocked) return;
     const id = setInterval(() => {
@@ -48,6 +50,7 @@ export default function History() {
     return () => clearInterval(id);
   }, [unlocked]);
 
+  // load and sort history
   useEffect(() => {
     if (!unlocked) return;
     let alive = true;
@@ -62,6 +65,7 @@ export default function History() {
     };
   }, [unlocked]);
 
+  // group by day for sticky headers
   const grouped = useMemo(() => {
     const map = new Map<string, LogItem[]>();
     (items ?? []).forEach((it) => {
@@ -81,14 +85,14 @@ export default function History() {
       <button
         type="button"
         onClick={() => navigate("/insights")}
-        className="text-xs underline text-accent"
+        className="mx-auto mt-1 text-xs underline text-accent"
         aria-label={t("history:openInsights", "Open Insights")}
       >
         {t("common:nav.insights", "Insights")}
       </button>
 
       <main className="flex-1 overflow-y-auto p-4">
-        <div className="max-w-[420px] mx-auto space-y-4">
+        <div className="mx-auto max-w-[420px] space-y-4">
           <Heatmap28 />
           <InsightChips compact />
 
@@ -108,47 +112,50 @@ export default function History() {
           )}
 
           {grouped.map(([dayISO, rows]) => (
-            <section
-              key={dayISO}
-              className="space-y-2"
-              aria-label={dayLabel(dayISO)}
-            >
-              <div className="sticky top-0 z-[1] -mx-4 px-4 py-1 bg-nav backdrop-blur text-xs font-medium text-muted">
+            <section key={dayISO} className="space-y-2" aria-label={dayLabel(dayISO)}>
+              <div className="sticky top-0 z-[1] -mx-4 bg-nav px-4 py-1 text-xs font-medium text-muted backdrop-blur">
                 {dayLabel(dayISO)}
               </div>
 
               <div className="space-y-2">
-                {rows.map((it) => (
-                  <article
-                    key={it.id}
-                    className="rounded-2xl shadow-soft p-3 flex items-start gap-3 bg-surface-1 border border-token"
-                  >
-                    <div
-                      className="text-2xl leading-none select-none"
-                      aria-hidden
+                {rows.map((it) => {
+                  // Type-safe, localized ritual title with fallback
+                  const title = tRitualTitle(
+                    t,
+                    (it.ritualId as RitualId) ?? ("box-breath-2m" as RitualId),
+                    titleForRitualId(it.ritualId)
+                  );
+
+                  return (
+                    <article
+                      key={it.id}
+                      className="flex items-start gap-3 rounded-2xl border border-token bg-surface-1 p-3 shadow-soft"
                     >
-                      {String(it.mood)}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <div className="text-sm font-medium text-main">
-                          {fmtTime(it.ts)}
-                        </div>
-                        <div className="text-[11px] text-muted">
-                          · {fmtDuration(it.durationSec)}
-                        </div>
-                        <div className="ml-auto text-[11px] text-muted truncate">
-                          {localizedTitleForRitualId(t, it.ritualId)}
-                        </div>
+                      <div className="select-none text-2xl leading-none" aria-hidden>
+                        {String(it.mood)}
                       </div>
-                      {it.note && it.note.trim() !== "" && (
-                        <p className="mt-1 text-sm text-dim break-words">
-                          {it.note}
-                        </p>
-                      )}
-                    </div>
-                  </article>
-                ))}
+
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <div className="text-sm font-medium text-main">{fmtTime(it.ts)}</div>
+                          <div className="text-[11px] text-muted">· {fmtDuration(it.durationSec)}</div>
+
+                          <div
+                            className="ml-auto truncate text-[11px] text-muted"
+                            title={title}
+                            aria-label={title}
+                          >
+                            {title}
+                          </div>
+                        </div>
+
+                        {it.note && it.note.trim() !== "" && (
+                          <p className="mt-1 break-words text-sm text-dim">{it.note}</p>
+                        )}
+                      </div>
+                    </article>
+                  );
+                })}
               </div>
             </section>
           ))}
