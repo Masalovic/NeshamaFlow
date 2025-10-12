@@ -281,7 +281,7 @@ export default function Settings() {
                   const active = appearance === opt;
                   return (
                     <button
-                      key={opt}
+                      key={opt} 
                       type="button"
                       role="radio"
                       aria-checked={active}
@@ -567,7 +567,7 @@ export default function Settings() {
                   onChange={(e) => setPin2(e.target.value)}
                 />
                 <button
-                  className="btn btn-primary w-full"
+                  className="btn btn-primary btn-full w-full"
                   onClick={enablePin}
                   disabled={busy}
                 >
@@ -588,7 +588,7 @@ export default function Settings() {
           </div>
 
           {/* Danger / Clear */}
-          <button className="btn btn-primary w-full" onClick={clearAll}>
+          <button className="btn btn-primary btn-full w-full" onClick={clearAll}>
             {t("settings:clearAll.cta", "Clear all local data")}
           </button>
         </div>
