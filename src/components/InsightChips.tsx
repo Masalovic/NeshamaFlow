@@ -10,7 +10,7 @@ export default function InsightChips({
   windowDays?: number;
   compact?: boolean;
 }) {
-  const { t } = useTranslation(["insights"]); // uses insights namespace
+  const { t } = useTranslation(["insights"]);
   const [list, setList] = useState<LogItem[] | null>(null);
 
   useEffect(() => {
@@ -19,9 +19,7 @@ export default function InsightChips({
       const h = await loadHistory();
       if (alive) setList(h);
     })();
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, []);
 
   if (list === null) return null;
@@ -29,7 +27,6 @@ export default function InsightChips({
 
   const chips: { label: string; value: string }[] = [];
 
-  // “Past 28d • N sessions”
   chips.push({
     label: t("chips.lastN", { n: windowDays, defaultValue: "Last {{n}}d" }),
     value: t("chips.sessions", {
@@ -38,24 +35,16 @@ export default function InsightChips({
     }),
   });
 
-  // “Avg time • 2m”
   chips.push({
     label: t("chips.avgTime", "Avg time"),
     value: fmtAvg(qs.avgDurationSec),
   });
 
   if (qs.bestBlockLabel) {
-    chips.push({
-      label: t("chips.bestTime", "Best time"),
-      value: qs.bestBlockLabel,
-    });
+    chips.push({ label: t("chips.bestTime", "Best time"), value: qs.bestBlockLabel });
   }
-
   if (qs.topRitualTitle) {
-    chips.push({
-      label: t("chips.mostFrequent", "Most frequent"),
-      value: qs.topRitualTitle,
-    });
+    chips.push({ label: t("chips.mostFrequent", "Most frequent"), value: qs.topRitualTitle });
   }
 
   if (!chips.length) return null;
@@ -65,13 +54,13 @@ export default function InsightChips({
       {chips.map((c, i) => (
         <span
           key={i}
-          className="inline-flex items-center gap-1 rounded-full border px-2 py-1 text-[11px] text-gray-700 bg-white"
+          className="inline-flex items-center gap-1 rounded-full border border-token px-2 py-1 text-[11px] bg-[var(--surface-2)] text-[var(--text-dim)]"
           aria-label={`${c.label}: ${c.value}`}
           title={`${c.label}: ${c.value}`}
         >
-          <strong className="font-medium text-gray-600">{c.label}</strong>
+          <strong className="font-medium text-main">{c.label}</strong>
           <span>·</span>
-          <span className="truncate max-w-[9rem]">{c.value}</span>
+          <span className="truncate max-w-[9rem] text-main/90">{c.value}</span>
         </span>
       ))}
     </div>

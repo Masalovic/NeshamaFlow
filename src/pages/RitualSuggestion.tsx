@@ -1,4 +1,3 @@
-// src/screens/RitualSuggestion.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -104,7 +103,7 @@ export default function RitualSuggestion() {
               </ul>
             ) : null}
 
-            {/* Secondary actions — centered segmented chips with accent borders */}
+            {/* Secondary actions — segmented chips with accent borders (no overlay) */}
             <div className="mt-4">
               <div className="rounded-full w-full border border-token bg-[var(--surface-2)] p-1">
                 <div className="flex flex-wrap justify-center gap-2">
@@ -113,14 +112,14 @@ export default function RitualSuggestion() {
                       setStepsOpen(true);
                       track("suggestion_steps_opened", { ritualId: ritual.id });
                     }}
-                    className="h-9 px-2 rounded-full text-sm text-[var(--text-dim)] hover:bg-[var(--hover)] border border-[var(--accent-300)] hover:border-[var(--accent-400)]"
+                    className="h-9 px-3 rounded-full text-sm text-[var(--text-dim)] hover:bg-[var(--hover)] border border-[var(--accent-300)] hover:border-[var(--accent-400)]"
                   >
                     {t("ritual:actions.seeSteps", "See steps")}
                   </button>
 
                   <Link
                     to="/rituals"
-                    className="h-9 px-2 rounded-full text-sm text-[var(--text-dim)] hover:bg-[var(--hover)] border border-[var(--accent-300)] hover:border-[var(--accent-400)] inline-flex items-center justify-center"
+                    className="h-9 px-3 rounded-full text-sm text-[var(--text-dim)] hover:bg-[var(--hover)] border border-[var(--accent-300)] hover:border-[var(--accent-400)] inline-flex items-center justify-center"
                   >
                     {t("ritual:actions.browse", "Browse rituals")}
                   </Link>
@@ -130,7 +129,7 @@ export default function RitualSuggestion() {
                       setWhyOpen(true);
                       track("suggestion_why_opened", { ritualId: ritual.id });
                     }}
-                    className="h-9 px-2 rounded-full text-sm text-[var(--text-dim)] hover:bg-[var(--hover)] border border-[var(--accent-300)] hover:border-[var(--accent-400)]"
+                    className="h-9 px-3 rounded-full text-sm text-[var(--text-dim)] hover:bg-[var(--hover)] border border-[var(--accent-300)] hover:border-[var(--accent-400)]"
                   >
                     {t("ritual:actions.whyWorks", "Why it works")}
                   </button>
@@ -138,11 +137,8 @@ export default function RitualSuggestion() {
               </div>
             </div>
 
-            {/* Primary CTA — full width */}
-            <Link
-              to="/ritual/start"
-              className="btn btn-primary btn-full block mt-4 text-center"
-            >
+            {/* Primary CTA — full width, token-compliant */}
+            <Link to="/ritual/start" className="btn btn-primary btn-full mt-4">
               {t("ritual:actions.startRitual", "Start Ritual")}
             </Link>
 

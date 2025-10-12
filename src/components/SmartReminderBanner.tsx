@@ -74,7 +74,7 @@ export default function SmartReminderBanner() {
           className="btn btn-primary flex-1"
           onClick={() => {
             markTapped();
-            nav("/ritual", { replace: false });
+            nav("/ritual/start"); // ensure the player opens
           }}
         >
           {t("common:buttons.startNow", "Start now")}
