@@ -105,7 +105,7 @@ export default function RitualSuggestion() {
 
             {/* Secondary actions — segmented chips with accent borders (no overlay) */}
             <div className="mt-4">
-              <div className="rounded-full w-full bg-[var(--surface-2)] p-1">
+              <div className="rounded-full w-full p-1">
                 <div className="flex flex-wrap justify-center gap-2">
                   <button
                     onClick={() => {

@@ -287,7 +287,7 @@ export default function Settings() {
                       aria-checked={active}
                       onClick={() => updateTheme({ appearance: opt })}
                       className={
-                        "h-8 px-8 rounded-full text-sm leading-none transition-colors " +
+                        "h-8 px-2 rounded-full text-sm leading-none transition-colors " +
                         (active
                           ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)] [data-appearance=dark]&:bg-[var(--accent-300)]"
                           : "text-[var(--text-dim)] hover:bg-[var(--hover)]")
@@ -325,7 +325,7 @@ export default function Settings() {
                         name: a,
                       })}
                       className={
-                        "h-8 px-6 rounded-full text-xs leading-none inline-flex items-center gap-2 transition-colors " +
+                        "h-8 px-2 rounded-full text-xs leading-none inline-flex items-center gap-2 transition-colors " +
                         (active
                           ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)] [data-appearance=dark]&:bg-[var(--accent-300)]"
                           : "text-[var(--text-dim)] hover:bg-[var(--hover)]")
