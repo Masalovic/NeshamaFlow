@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Header from "../components/ui/Header";
 import { summarize } from "../lib/insights";
-import { localizedTitleForRitualId } from "../lib/ritualEngine";
+import { localizedTitleForRitualId, isRitualId } from "../lib/ritualEngine";
 import { loadHistory, type LogItem } from "../lib/history";
 import dayjs, { Dayjs } from "dayjs";
 import {
@@ -44,9 +44,17 @@ function Card({
 
 type MoodSlice = { name: string; value: number };
 type DayPoint = { day: string; count: number };
-type Block = { block: string; count: number };
 
-const COLORS = ["#7c3aed","#22c55e","#f59e0b","#ef4444","#06b6d4","#a78bfa","#84cc16","#fb7185"];
+const COLORS = [
+  "#7c3aed",
+  "#22c55e",
+  "#f59e0b",
+  "#ef4444",
+  "#06b6d4",
+  "#a78bfa",
+  "#84cc16",
+  "#fb7185",
+];
 
 type Preset = "7" | "28" | "90" | "custom";
 
@@ -60,7 +68,9 @@ export default function Insights() {
       const list = await loadHistory();
       if (alive) setHistory(list);
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
   // -------- Range controls --------
@@ -83,7 +93,10 @@ export default function Insights() {
     return { start: s, end: e };
   }, [preset, customStart, customEnd]);
 
-  const windowDays = Math.max(1, end.startOf("day").diff(start.startOf("day"), "day") + 1);
+  const windowDays = Math.max(
+    1,
+    end.startOf("day").diff(start.startOf("day"), "day") + 1
+  );
 
   // -------- Data slicing --------
   const rangeItems: LogItem[] = useMemo(() => {
@@ -134,7 +147,10 @@ export default function Insights() {
     const out: { block: string; count: number }[] = [];
     for (let i = 0; i < 24; i += 4) {
       const value = buckets.slice(i, i + 4).reduce((a, b) => a + b, 0);
-      const label = `${String(i).padStart(2, "0")}-${String(i + 3).padStart(2, "0")}h`;
+      const label = `${String(i).padStart(2, "0")}-${String(i + 3).padStart(
+        2,
+        "0"
+      )}h`;
       out.push({ block: label, count: value });
     }
     return out.filter((b) => b.count > 0).sort((a, b) => b.count - a.count);
@@ -142,7 +158,8 @@ export default function Insights() {
 
   // 4) Quick wins
   const quickWins = useMemo(() => {
-    if (!rangeItems.length) return [] as { ritualId: string; avg: number; n: number }[];
+    if (!rangeItems.length)
+      return [] as { ritualId: string; avg: number; n: number }[];
     const map = new Map<string, { sum: number; n: number }>();
     for (const x of rangeItems) {
       const p = map.get(x.ritualId) || { sum: 0, n: 0 };
@@ -151,7 +168,11 @@ export default function Insights() {
       map.set(x.ritualId, p);
     }
     return Array.from(map.entries())
-      .map(([ritualId, s]) => ({ ritualId, avg: Math.round(s.sum / Math.max(1, s.n)), n: s.n }))
+      .map(([ritualId, s]) => ({
+        ritualId,
+        avg: Math.round(s.sum / Math.max(1, s.n)),
+        n: s.n,
+      }))
       .sort((a, b) => a.avg - b.avg)
       .slice(0, 3);
   }, [rangeItems]);
@@ -211,34 +232,49 @@ export default function Insights() {
             <RangeControls />
             <div className="mt-3 flex flex-wrap gap-3 text-sm">
               <div className="min-w-[140px] flex-1">
-                <div className="text-xs text-muted">{t("insights:thisPeriod", "This period")}</div>
+                <div className="text-xs text-muted">
+                  {t("insights:thisPeriod", "This period")}
+                </div>
                 <div className="font-medium text-main">
-                  {Math.round((summary.totalSec ?? 0) / 60)} {t("common:units.min", "min")} · {summary.sessions ?? 0} {t("insights:chips.sessions_other", "sessions")}
+                  {Math.round((summary.totalSec ?? 0) / 60)} {t("common:units.min", "min")} ·{" "}
+                  {t("insights:chips.sessions", {
+                    count: summary.sessions ?? 0,
+                    defaultValue: "{{count}} sessions",
+                  })}
                 </div>
               </div>
 
               <div className="min-w-[140px] flex-1">
-                <div className="text-xs text-muted">{t("insights:avgSession", "Avg session")}</div>
+                <div className="text-xs text-muted">
+                  {t("insights:avgSession", "Avg session")}
+                </div>
                 <div className="font-medium text-main">
-                  {summary.avgSec ?? 0}{t("common:units.secondsSuffix", "s")}
+                  {summary.avgSec ?? 0}
+                  {t("common:units.secondsSuffix", "s")}
                 </div>
               </div>
 
               <div className="min-w-[140px] flex-1">
-                <div className="text-xs text-muted">{t("insights:topRitual", "Top ritual")}</div>
+                <div className="text-xs text-muted">
+                  {t("insights:topRitual", "Top ritual")}
+                </div>
                 <div className="font-medium text-main truncate">
-                  {summary.topRitualId
+                  {isRitualId(summary.topRitualId)
                     ? `${localizedTitleForRitualId(t, summary.topRitualId)} (${summary.topRitualCount})`
                     : "—"}
                 </div>
               </div>
 
               <div className="min-w-[140px] flex-1">
-                <div className="text-xs text-muted">{t("insights:streak", "Streak")}</div>
+                <div className="text-xs text-muted">
+                  {t("insights:streak", "Streak")}
+                </div>
                 <div className="font-medium text-main">
                   {summary.streak ?? 0}🔥{" "}
                   {summary.hasTodayLog ? "" : (
-                    <span className="text-muted">{t("insights:noEntryToday", "(no entry today)")}</span>
+                    <span className="text-muted">
+                      {t("insights:noEntryToday", "(no entry today)")}
+                    </span>
                   )}
                 </div>
               </div>
@@ -247,7 +283,10 @@ export default function Insights() {
 
           {empty && (
             <section className="card text-sm text-muted">
-              {t("insights:empty", "No data yet — complete a ritual or two and check back!")}
+              {t(
+                "insights:empty",
+                "No data yet — complete a ritual or two and check back!"
+              )}
             </section>
           )}
 
@@ -257,7 +296,9 @@ export default function Insights() {
             right={
               !!moodChart.length && (
                 <span className="text-xs text-muted">
-                  {t("insights:entries", "{{count}} entries", { count: rangeItems.length })}
+                  {t("insights:entries", "{{count}} entries", {
+                    count: rangeItems.length,
+                  })}
                 </span>
               )
             }
@@ -266,8 +307,17 @@ export default function Insights() {
               <div className="h-56">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
-                    <Pie data={moodChart} dataKey="value" nameKey="name" innerRadius={50} outerRadius={80} paddingAngle={2}>
-                      {moodChart.map((_, i) => (<Cell key={i} fill={COLORS[i % COLORS.length]} />))}
+                    <Pie
+                      data={moodChart}
+                      dataKey="value"
+                      nameKey="name"
+                      innerRadius={50}
+                      outerRadius={80}
+                      paddingAngle={2}
+                    >
+                      {moodChart.map((_, i) => (
+                        <Cell key={i} fill={COLORS[i % COLORS.length]} />
+                      ))}
                     </Pie>
                     <Legend verticalAlign="bottom" height={24} />
                     <Tooltip />
@@ -275,16 +325,23 @@ export default function Insights() {
                 </ResponsiveContainer>
               </div>
             ) : (
-              <div className="text-xs text-muted">{t("insights:noData", "No data yet.")}</div>
+              <div className="text-xs text-muted">
+                {t("insights:noData", "No data yet.")}
+              </div>
             )}
           </Card>
 
           {/* Sessions per day */}
-          <Card title={t("insights:consistency", "Consistency — sessions per day")}>
+          <Card
+            title={t("insights:consistency", "Consistency — sessions per day")}
+          >
             {daySeries.length ? (
               <div className="h-40">
                 <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={daySeries} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
+                  <AreaChart
+                    data={daySeries}
+                    margin={{ left: 0, right: 0, top: 10, bottom: 0 }}
+                  >
                     <defs>
                       <linearGradient id="c" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stopColor="#7c3aed" stopOpacity={0.4} />
@@ -292,7 +349,11 @@ export default function Insights() {
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                    <XAxis dataKey="day" tick={{ fontSize: 10 }} interval={Math.ceil(windowDays / 7)} />
+                    <XAxis
+                      dataKey="day"
+                      tick={{ fontSize: 10 }}
+                      interval={Math.ceil(windowDays / 7)}
+                    />
                     <YAxis allowDecimals={false} tick={{ fontSize: 10 }} width={24} />
                     <Tooltip />
                     <Area type="monotone" dataKey="count" stroke="#7c3aed" fill="url(#c)" />
@@ -340,7 +401,11 @@ export default function Insights() {
                   <tbody>
                     {quickWins.map((r) => (
                       <tr key={r.ritualId} className="border-t" style={{ borderColor: "var(--border)" }}>
-                        <td className="py-2 pr-3 font-medium text-main">{localizedTitleForRitualId(t, r.ritualId)}</td>
+                        <td className="py-2 pr-3 font-medium text-main">
+                          {isRitualId(r.ritualId)
+                            ? localizedTitleForRitualId(t, r.ritualId)
+                            : r.ritualId}
+                        </td>
                         <td className="py-2 pr-3 text-main">{r.avg}</td>
                         <td className="py-2 text-main">{r.n}</td>
                       </tr>

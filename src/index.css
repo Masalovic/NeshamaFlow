@@ -150,3 +150,24 @@ input[type="password"], input[type="email"], textarea, select {
   color: var(--text) !important;
   opacity: 1;
 }
+
+/* Solid white modal surface on Custom theme */
+[data-appearance="custom"] .modal-panel {
+  background: #ffffff !important;       /* override translucent surface-1 */
+  /* keep existing border/shadow from .card styles */
+}
+
+/* ---------- Top header should show gradient on Custom ---------- */
+/* Only affects the top header; bottom nav keeps its own bg */
+[data-appearance="custom"] header.bg-nav {
+  background: transparent !important;   /* let the gradient show */
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* If your Header uses a wrapper div instead of <header> */
+[data-appearance="custom"] .header.bg-nav {
+  background: transparent !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}

@@ -7,7 +7,7 @@ export default function Header({
   back = false,
 }: {
   title: string;
-  back?: boolean;
+  back?: boolean; 
 }) {
   const nav = useNavigate();
   const { t } = useTranslation("common");
@@ -15,7 +15,7 @@ export default function Header({
   const backLabel = t("a11y.back", "Back");
 
   return (
-    <header className="bg-inherit">
+    <header className="bg-nav sticky top-0 z-40 px-4 py-3">
       <div className="h-12 flex items-center border-b">
         <div className="w-12 flex items-center justify-center">
           {back && (

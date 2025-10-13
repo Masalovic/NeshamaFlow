@@ -89,7 +89,7 @@ export default function RitualSuggestion() {
                 {title}
               </h2>
               {!!ritual.durationSec && (
-                <span className="ml-3 shrink-0 inline-flex items-center rounded-full border border-token bg-surface-2 px-2 py-0.5 text-xs text-muted">
+                <span className="ml-3 shrink-0 inline-flex items-center rounded-full border border-token bg-surface-2 px-2 py-0.5 text-xs text-main">
                   ~ {minutes} {t("common:units.min", "min")}
                 </span>
               )}
@@ -105,7 +105,7 @@ export default function RitualSuggestion() {
 
             {/* Secondary actions — segmented chips with accent borders (no overlay) */}
             <div className="mt-4">
-              <div className="rounded-full w-full border border-token bg-[var(--surface-2)] p-1">
+              <div className="rounded-full w-full bg-[var(--surface-2)] p-1">
                 <div className="flex flex-wrap justify-center gap-2">
                   <button
                     onClick={() => {
