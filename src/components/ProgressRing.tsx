@@ -1,10 +1,15 @@
+// src/components/ProgressRing.tsx
 import React from "react";
 
 type Props = {
-  progress: number;           // 0..1
-  children?: React.ReactNode; // center label
-  size?: number;              // px (default 160)
-  thickness?: number;         // px (default 12)
+  /** 0..1 */
+  progress: number;
+  /** Usually seconds / mm:ss */
+  children?: React.ReactNode;
+  /** Outer diameter in px */
+  size?: number;
+  /** Stroke width in px */
+  thickness?: number;
 };
 
 export default function ProgressRing({
@@ -14,60 +19,57 @@ export default function ProgressRing({
   thickness = 12,
 }: Props) {
   const pct = Math.max(0, Math.min(1, progress));
-  const r = (size - thickness) / 2;
-  const c = 2 * Math.PI * r;
-  const dash = c * pct;
+
+  // SVG circle math
+  const r = (size - thickness) / 2;           // radius
+  const c = size / 2;                          // center
+  const circumference = 2 * Math.PI * r;
+  const dash = circumference * pct;
+  const gap = circumference - dash;
 
   return (
     <div
-      className="grid place-items-center"
+      className="relative inline-block"
       style={{ width: size, height: size }}
       role="img"
-      aria-label="progress ring"
+      aria-label={`progress ${Math.round(pct * 100)}%`}
     >
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {/* track */}
+        {/* Track */}
         <circle
-          className="ring-track"
-          cx={size / 2}
-          cy={size / 2}
+          cx={c}
+          cy={c}
           r={r}
           fill="none"
+          stroke="var(--ring-track)"
           strokeWidth={thickness}
           strokeLinecap="round"
         />
-        {/* progress */}
+        {/* Progress (starts at 12 o’clock) */}
         <circle
-          className="ring-progress"
-          cx={size / 2}
-          cy={size / 2}
+          cx={c}
+          cy={c}
           r={r}
           fill="none"
+          stroke="var(--ring-progress)"
           strokeWidth={thickness}
-          strokeDasharray={c}
-          strokeDashoffset={c - dash}
           strokeLinecap="round"
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          strokeDasharray={`${dash} ${gap}`}
+          // rotate -90deg so stroke starts at top, not at 3 o’clock
+          transform={`rotate(-90 ${c} ${c})`}
+          style={{ transition: "stroke-dasharray 300ms ease" }}
         />
-        {/* center disc */}
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={r - thickness / 2}
-          fill="var(--surface-1)"
-        />
-        {/* label */}
-        <text
-          className="ring-text"
-          x="50%"
-          y="50%"
-          dominantBaseline="middle"
-          textAnchor="middle"
-          style={{ fontFamily: "ui-monospace, monospace", fontSize: size * 0.22 }}
+      </svg>
+
+      {/* Center content */}
+      <div className="absolute inset-0 grid place-items-center">
+        <div
+          className="font-mono tabular-nums"
+          style={{ color: "var(--ring-text)", fontSize: Math.max(16, size * 0.18) }}
         >
           {children}
-        </text>
-      </svg>
+        </div>
+      </div>
     </div>
   );
 }

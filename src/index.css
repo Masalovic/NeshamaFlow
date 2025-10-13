@@ -84,7 +84,7 @@ select:focus {
 
 /* ---- Progress ring tokens ------------------------------------------- */
 .ring-track {
-  stroke: var(--ring-track);
+  stroke: var(--ring-text);
 }
 .ring-progress {
   stroke: var(--ring-progress);

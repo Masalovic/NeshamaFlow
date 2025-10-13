@@ -1,3 +1,4 @@
+// src/lib/theme.ts
 export type Appearance = 'custom' | 'light' | 'dark';
 export type Accent = 'berry' | 'ocean' | 'forest';
 export type BgMode = 'gradient' | 'image';
@@ -170,26 +171,38 @@ export function applyTheme(t: Theme): void {
     set('--primary-bg-active','var(--accent-800)');
   }
 
-  // 🔹 TIMER RING tokens
-  if (resolved === 'dark') {
-    set('--ring-track',   '#2b2f37');
-    set('--ring-text',    '#cbd5e1');
-  } else {
-    set('--ring-track',   '#e5e7eb');
-    set('--ring-text',    '#9aa3af');
-  }
-  // progress uses accent but different step per scheme
-  const progressToken = resolved === 'dark' ? '--accent-300' : '--accent-600';
-  const computed = getComputedStyle(root).getPropertyValue(progressToken).trim();
-  set('--ring-progress', computed || (resolved === 'dark' ? ACCENTS[t.accent]['300'] : ACCENTS[t.accent]['600']));
+// ---- Timer ring tokens (all themes) ----
+{
+  // palette per resolved scheme
+  const ringTrack   = resolved === 'light' ? '#d9dee6' : '#3a3f48';
+  // default text (used for light/dark appearances)
+  let ringText      = resolved === 'light' ? '#0f172a' : '#ffffff';
 
-  // 🔹 MENU / POPOVER palette (used by LanguageSelect etc.)
+  // On CUSTOM appearance, force text to match the ring track color
+  if (t.appearance === 'custom') {
+    ringText = ringTrack;
+  }
+
+  // progress hue from current accent scale
+  const progressKey = resolved === 'light' ? '--accent-600' : '--accent-300';
+  const computedAccent =
+    getComputedStyle(root).getPropertyValue(progressKey).trim() ||
+    (resolved === 'light' ? ACCENTS[t.accent]['600'] : ACCENTS[t.accent]['300']);
+
+  set('--ring-track', ringTrack);
+  set('--ring-progress', computedAccent);
+  set('--ring-text', ringText);
+  // subtle outline so the knob separates from the track
+  set('--ring-knob-outline', resolved === 'light' ? '#ffffff' : '#0b0b0c');
+}
+
+  // menu / popover palette (LanguageSelect, etc.)
   if (resolved === 'dark') {
     set('--menu-bg',        '#0f1012');
     set('--menu-fg',        '#ffffff');
     set('--menu-border',    '#2c2f36');
     set('--menu-hover',     'rgba(255,255,255,.08)');
-    set('--menu-active-fg', '#0f172a'); // text when active item has white bg
+    set('--menu-active-fg', '#0f172a');
   } else {
     set('--menu-bg',        '#ffffff');
     set('--menu-fg',        '#0f172a');
@@ -223,7 +236,7 @@ export function applyTheme(t: Theme): void {
 export function bindSystemThemeReactivity(getAppearance: () => Appearance): () => void {
   const mql = window.matchMedia?.('(prefers-color-scheme: dark)');
   if (!mql) return () => {};
-  const handler = () => {
+  const handler = () => { 
     if (getAppearance() === 'custom') {
       const current = loadTheme();
       applyTheme({
