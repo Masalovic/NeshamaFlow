@@ -44,7 +44,7 @@ export default function Modal({
 
   return (
     <div
-      className="fixed inset-0 z-[60]"
+      className="modal-root fixed inset-0 z-[60]"
       role="dialog"
       aria-modal="true"
       aria-labelledby={title ? titleId : undefined}
@@ -69,6 +69,7 @@ export default function Modal({
       >
         <div
           className="
+            modal-panel
             pointer-events-auto
             mx-auto w-full max-w-[560px]
             rounded-t-2xl sm:rounded-2xl
@@ -98,7 +99,8 @@ export default function Modal({
             </button>
           </div>
 
-          <div className="text-dim">{children}</div>
+          {/* Default to main text color; callers can still use text-muted where desired */}
+          <div className="modal-body text-main">{children}</div>
         </div>
       </div>
     </div>
