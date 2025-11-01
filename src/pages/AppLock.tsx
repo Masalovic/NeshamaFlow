@@ -62,7 +62,7 @@ export default function AppLock({ onUnlock }: Props) {
   // Optional: dev-only manual lock to drop the in-memory key
   function forceLock() {
     clearEncryptionKey();
-    setPin("");
+    setPin(""); 
     setErr(null);
     inputRef.current?.focus();
   }

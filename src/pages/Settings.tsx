@@ -24,7 +24,7 @@ import {
   type BgMode,
 } from "../lib/theme";
 
-import i18n, { SUPPORTED_LNGS, type SupportedLng } from "../lib/i18n";
+import i18n, { type SupportedLng } from "../lib/i18n";
 import { useTranslation } from "react-i18next";
 import LanguageSelect from "../components/LanguageSelect";
 
@@ -41,44 +41,36 @@ const REKEY_KEYS = [
 export default function Settings() {
   const { t } = useTranslation(["settings", "common"]);
 
-  async function clearAll() {
-    secureClearAll();
-    try {
-      await supabase.auth.signOut();
-    } catch {}
-    alert(t("settings:clearAll.confirmed", "All local data cleared."));
-  }
-
-  // THEME state
+  // THEME state (start empty → fill from loadTheme())
   const [appearance, setAppearance] = useState<Appearance>("custom");
   const [accent, setAccent] = useState<Accent>("berry");
   const [bgMode, setBgMode] = useState<BgMode>("image");
-  const [bgUrl, setBgUrl] = useState<string>(
-    "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&q=80&w=1200"
-  );
+  const [bgUrl, setBgUrl] = useState<string>(""); // ⬅️ no hardcoded old URL
 
   useEffect(() => {
-    const t0 = loadTheme();
-    setAppearance(t0.appearance);
-    setAccent(t0.accent);
-    setBgMode((t0.bgMode ?? "image") as BgMode);
-    setBgUrl(
-      t0.bgImageUrl ??
-        "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?auto=format&fit=crop&q=80&w=1200"
-    );
+    const current = loadTheme();
+    setAppearance(current.appearance);
+    setAccent(current.accent);
+    setBgMode((current.bgMode ?? "image") as BgMode);
+    setBgUrl(current.bgImageUrl ?? ""); // if theme.ts gave us new default, we keep it
 
-    applyTheme(t0);
+    applyTheme(current);
 
     // keep “custom” reactive even when leaving the screen open
-    const unbind = bindSystemThemeReactivity(() => loadTheme().appearance);
+    const unbind = bindSystemThemeReactivity(() => appearance);
     return () => unbind();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function updateTheme(next: Partial<Theme>) {
-    // Normalize before saving/applying
+    // merge with current component state
     const mergedAppearance: Appearance = next.appearance ?? appearance;
     const mergedAccent: Accent = next.accent ?? accent;
     const mergedBgMode: BgMode = (next.bgMode ?? bgMode) as BgMode;
+
+    // VERY IMPORTANT:
+    // if caller provided bgImageUrl → use it
+    // else → keep whatever we already have in state (which came from loadTheme())
     const mergedBgUrl: string | undefined =
       typeof next.bgImageUrl !== "undefined" ? next.bgImageUrl : bgUrl;
 
@@ -92,11 +84,19 @@ export default function Settings() {
     saveTheme(merged);
     applyTheme(merged);
 
-    // Update local state
+    // update local state so UI reflects it
     setAppearance(mergedAppearance);
     setAccent(mergedAccent);
     setBgMode(mergedBgMode);
     setBgUrl(mergedBgUrl ?? "");
+  }
+
+  async function clearAll() {
+    secureClearAll();
+    try {
+      await supabase.auth.signOut();
+    } catch {}
+    alert(t("settings:clearAll.confirmed", "All local data cleared."));
   }
 
   // Preferences (encrypted)
@@ -243,7 +243,6 @@ export default function Settings() {
   function changeLanguage(next: SupportedLng) {
     setLng(next);
     i18n.changeLanguage(next);
-    // html lang + dayjs are synced in i18n.ts
   }
 
   return (
@@ -274,14 +273,14 @@ export default function Settings() {
               {t("common:appearance.title", "Appearance")}
             </div>
 
-            {/* Appearance segmented — full width track */}
+            {/* appearance chips */}
             <div className="mb-3">
               <div className="w-full inline-flex items-center justify-between rounded-full border border-token bg-[var(--surface-2)] px-1 py-1">
                 {(["custom", "light", "dark"] as Appearance[]).map((opt) => {
                   const active = appearance === opt;
                   return (
                     <button
-                      key={opt} 
+                      key={opt}
                       type="button"
                       role="radio"
                       aria-checked={active}
@@ -289,7 +288,7 @@ export default function Settings() {
                       className={
                         "h-8 px-2 rounded-full text-sm leading-none transition-colors " +
                         (active
-                          ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)] [data-appearance=dark]&:bg-[var(--accent-300)]"
+                          ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)]"
                           : "text-[var(--text-dim)] hover:bg-[var(--hover)]")
                       }
                     >
@@ -303,7 +302,7 @@ export default function Settings() {
               </div>
             </div>
 
-            {/* Accent segmented chips — full width track */}
+            {/* accent chips */}
             <div className="mb-3">
               <div className="w-full inline-flex items-center justify-between rounded-full border border-token bg-[var(--surface-2)] px-1 py-1 gap-2">
                 {(["berry", "ocean", "forest"] as Accent[]).map((a) => {
@@ -320,14 +319,10 @@ export default function Settings() {
                       role="radio"
                       aria-checked={active}
                       onClick={() => updateTheme({ accent: a })}
-                      title={t("common:accent.titleWithName", {
-                        defaultValue: "Accent: {{name}}",
-                        name: a,
-                      })}
                       className={
-                        "h-8 px-2 rounded-full text-xs leading-none inline-flex items-center gap-2 transition-colors " +
+                        "h-8 px-3 rounded-full text-xs leading-none inline-flex items-center gap-2 transition-colors " +
                         (active
-                          ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)] [data-appearance=dark]&:bg-[var(--accent-300)]"
+                          ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)]"
                           : "text-[var(--text-dim)] hover:bg-[var(--hover)]")
                       }
                     >
@@ -411,10 +406,6 @@ export default function Settings() {
                 className="h-4 w-4"
                 checked={haptics}
                 onChange={(e) => toggleHaptics(e.target.checked)}
-                aria-label={t(
-                  "settings:prefs.haptics",
-                  "Haptic cues (if supported)"
-                )}
               />
             </label>
           </div>
@@ -436,7 +427,6 @@ export default function Settings() {
                 value={goalMin}
                 onChange={(e) => onGoalChange(e.target.value)}
                 className="input w-20 text-right text-sm h-8"
-                aria-label={t("settings:practice.goal", "Daily goal (minutes)")}
               />
             </label>
 
@@ -449,10 +439,6 @@ export default function Settings() {
                 value={reminderTime}
                 onChange={(e) => onReminderTimeChange(e.target.value)}
                 className="input h-8 text-sm"
-                aria-label={t(
-                  "settings:practice.time",
-                  "Preferred reminder time"
-                )}
               />
             </label>
 
@@ -465,16 +451,8 @@ export default function Settings() {
                 className="h-4 w-4"
                 checked={remindersEnabled}
                 onChange={onToggleReminders}
-                aria-label={t("settings:practice.smart", "Smart reminders")}
               />
             </label>
-
-            <p className="text-xs text-muted mt-2">
-              {t(
-                "settings:practice.note",
-                "We’ll nudge you near your preferred time using lightweight, on-device logic."
-              )}
-            </p>
           </div>
 
           {/* Pro (preview) */}
@@ -491,31 +469,8 @@ export default function Settings() {
                 className="h-4 w-4"
                 checked={pro}
                 onChange={(e) => togglePro(e.target.checked)}
-                aria-label={t(
-                  "settings:pro.toggle",
-                  "Enable Pro features (local toggle)"
-                )}
               />
             </label>
-            {!pro && (
-              <button
-                className="btn btn-primary w-full mt-3"
-                onClick={async () => {
-                  const { track } = await import("../lib/metrics");
-                  track("upgrade_click", { source: "settings_pro_card" });
-                  await togglePro(true);
-                  track("pro_enabled");
-                }}
-              >
-                {t("settings:pro.upgradeCta", "Upgrade to Pro")}
-              </button>
-            )}
-            <p className="text-xs text-muted mt-2">
-              {t(
-                "settings:pro.note",
-                "This is a client-only toggle for testing. We’ll wire it to Stripe later."
-              )}
-            </p>
           </div>
 
           {/* App Lock (PIN) */}
@@ -579,12 +534,6 @@ export default function Settings() {
             )}
 
             {msg && <div className="text-sm mt-2 text-main">{msg}</div>}
-            <p className="text-xs text-muted mt-2">
-              {t(
-                "settings:pin.note",
-                "The PIN is stored locally as a salted SHA-256 hash. It protects access on this device only."
-              )}
-            </p>
           </div>
 
           {/* Danger / Clear */}

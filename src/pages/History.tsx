@@ -79,7 +79,7 @@ export default function History() {
   const empty = (items?.length ?? 0) === 0;
 
   return (
-    <div className="flex h-full flex-col bg-app">
+    <div className="flex h-full flex-col">
       <Header title={t("history:title", "History")} back />
 
       <button

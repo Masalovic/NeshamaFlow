@@ -12,7 +12,7 @@ import {
 import { guideFor } from "../lib/ritualGuides";
 import Header from "../components/ui/Header";
 import Button from "../components/ui/Button";
-import ProgressRing from "../components/ProgressRing";
+import Card from "../components/ui/Card";
 import { getItem as sGet, setItem as sSet } from "../lib/secureStorage";
 import { track } from "../lib/metrics";
 import { logLocal, loadHistory } from "../lib/history";
@@ -97,6 +97,7 @@ export default function RitualPlayer() {
     if (loaded && !ritual) navigate("/log", { replace: true });
   }, [loaded, ritual, navigate]);
 
+  // main timer
   useEffect(() => {
     if (!running || resting) return;
     vibrate(24, haptics);
@@ -119,6 +120,7 @@ export default function RitualPlayer() {
     };
   }, [running, resting, haptics]);
 
+  // rest timer
   useEffect(() => {
     if (!resting) return;
     const id = window.setInterval(() => {
@@ -136,6 +138,7 @@ export default function RitualPlayer() {
     return () => window.clearInterval(id);
   }, [resting, haptics]);
 
+  // pause on background
   useEffect(() => {
     const onVis = () => {
       if (document.hidden && running) setRunning(false);
@@ -214,92 +217,147 @@ export default function RitualPlayer() {
 
   if (!loaded || !ritual) return null;
 
-  const progress = total > 0 ? 1 - remaining / total : 0;
   const rid = ritual.id as RitualId;
   const headerTitle = tRitualTitle(t, rid, ritual.title);
   const g = tGuide(t, rid, guideFor(ritual));
 
+  // pct for the svg
+  const pct =
+    total > 0 ? Math.min(100, ((total - remaining) / total) * 100) : 0;
+
+  function formatTime(sec: number) {
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return `${m}:${s.toString().padStart(2, "0")}`;
+  }
+
   return (
     <div className="flex h-full flex-col">
       <Header title={headerTitle} back />
+
       <main className="flex-1 overflow-y-auto p-4">
-        <div className="max-w-[380px] mx-auto">
-          {/* Tokenized card */}
-          <div className="card p-6 flex flex-col items-center">
-            {/* Timer (ProgressRing reads theme tokens) */}
-            <div role="timer" aria-live="polite" aria-atomic="true">
-              <ProgressRing progress={progress}>
-                {resting ? restRemaining : remaining}
-              </ProgressRing>
+        <div className="max-w-[540px] mx-auto space-y-4">
+          {/* UPLIFTED CARD (copied style from meditation) */}
+          <Card className="p-6 bg-[rgba(255,255,255,0.35)] backdrop-blur rounded-3xl space-y-5">
+            {/* circle */}
+            <div className="flex flex-col items-center gap-3">
+              <div className="relative w-40 h-40">
+                <svg
+                    viewBox="0 0 120 120"
+                    className="w-full h-full"
+                    style={{ transform: "rotate(-90deg)" }} // rotate ONLY path
+                  >
+                    {/* base ring */}
+                    <circle
+                      cx="60"
+                      cy="60"
+                      r="52"
+                      stroke="rgba(255,255,255,0.4)"
+                      strokeWidth="8"
+                      fill="transparent"
+                    />
+                    {/* progress ring */}
+                    <circle
+                      cx="60"
+                      cy="60"
+                      r="52"
+                      stroke="rgba(253,84,142,1)"
+                      strokeWidth="8"
+                      strokeLinecap="round"
+                      fill="transparent"
+                      strokeDasharray={2 * Math.PI * 52}
+                      strokeDashoffset={
+                        (1 - pct / 100) * (2 * Math.PI * 52)
+                      }
+                    />
+                  </svg>
+
+                {/* text stays normal */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
+                  <span className="text-xs text-dim">
+                    {t("meditation:remaining", "Remaining")}
+                  </span>
+                  <span className="text-lg font-semibold text-main tabular-nums">
+                    {resting ? formatTime(restRemaining) : formatTime(remaining)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <h1 className="text-base font-semibold text-main">
+                  {headerTitle}
+                </h1>
+                {resting ? (
+                  <p className="text-sm text-muted mt-1 max-w-[360px]">
+                    {t(
+                      "ritual:player.restMsg",
+                      "Rest — close your eyes and breathe."
+                    )}
+                  </p>
+                ) : g.title ? (
+                  <p className="text-sm text-muted mt-1 max-w-[360px]">
+                    {g.title}
+                  </p>
+                ) : null}
+              </div>
             </div>
 
-            {/* Guidance */}
-            <div className="mt-4 w-full text-sm text-main text-center">
-              {resting ? (
-                <div className="text-dim">
-                  {t(
-                    "ritual:player.restMsg",
-                    "Rest — close your eyes and breathe."
-                  )}
-                </div>
-              ) : (
-                <div className="text-left">
-                  <div className="font-medium mb-1">{g.title}</div>
-                  <ol className="list-decimal pl-5 space-y-1">
-                    {(g.steps ?? []).map((s: string, i: number) => (
-                      <li key={i}>{s}</li>
-                    ))}
-                  </ol>
-                  {g.tip && (
-                    <p className="text-xs text-muted mt-2">{g.tip}</p>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Controls */}
-            <div className="mt-8 w-full flex gap-3 flex-wrap items-center justify-center">
+            {/* controls (ritual-specific) */}
+            <div className="flex gap-3 justify-center flex-wrap">
               {!running ? (
-                <Button variant="primary" onClick={onStartPause}>
+                <Button className="min-w-[120px]"
+                  variant="outline"
+                  onClick={onStartPause}>
                   {t("common:start", "Start")}
                 </Button>
               ) : (
-                <Button variant="outline" onClick={onPause}>
+                <Button
+                  className="min-w-[120px]"
+                  variant="outline"
+                  onClick={onPause}
+                >
                   {t("common:pause", "Pause")}
                 </Button>
               )}
-
               <Button
                 variant="outline"
                 onClick={onRest}
                 disabled={!running || resting}
-                title={t(
-                  "ritual:player.restHint",
-                  "Take a 20s breathing break"
-                )}
               >
                 {t("ritual:player.rest20", "Rest 20s")}
               </Button>
-
               <Button
                 variant="outline"
                 onClick={() => {
                   if (timerRef.current) {
                     clearInterval(timerRef.current);
-                    timerRef.current = null;
                   }
                   setRunning(false);
                   void onComplete();
                 }}
                 disabled={completing}
-                aria-busy={completing}
               >
                 {completing
                   ? t("common:saving", "Saving…")
                   : t("ritual:player.finishNow", "Finish Now")}
               </Button>
             </div>
-          </div>
+          </Card>
+
+          {/* guidance card under, like your original ritual */}
+          <Card className="p-5 bg-[rgba(255,255,255,0.15)] backdrop-blur rounded-3xl space-y-3">
+            <div className="text-xs uppercase tracking-wide text-dim">
+              {t("ritual:player.whatToDo", "What to do")}
+            </div>
+            <ol className="list-decimal pl-5 space-y-1 text-sm text-main">
+              {(g.steps ?? []).map((s: string, i: number) => (
+                <li key={i}>{s}</li>
+              ))}
+            </ol>
+            {g.tip ? (
+              <p className="text-xs text-muted mt-2 italic">{g.tip}</p>
+            ) : null}
+          </Card>
         </div>
       </main>
     </div>

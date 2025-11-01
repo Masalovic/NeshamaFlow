@@ -1,4 +1,4 @@
-// src/pages/Home.tsx (a.k.a. MoodLog)
+// src/pages/Home.tsx
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
@@ -19,7 +19,8 @@ import { useTranslation } from "react-i18next";
 
 export default function MoodLog() {
   const { t } = useTranslation(["common", "home"]);
-  const [mood, setMood] = useState("");
+  // MULTI-SELECT: store an array of emoji
+  const [moods, setMoods] = useState<string[]>([]);
   const [note, setNote] = useState("");
   const [last, setLast] = useState<{ emoji: string; date: string } | null>(null);
   const navigate = useNavigate();
@@ -36,24 +37,27 @@ export default function MoodLog() {
         date: dayjs(it.ts).format("DD MMM, HH:mm"),
       });
     })();
-    return () => {
-      alive = false;
-    };
+    return () => { alive = false; };
   }, []);
 
-  const hasMood = isMoodKey(mood);
+  // primary mood = first selection (back-compat with engine + history)
+  const primaryMood = moods[0];
+  const hasMood = isMoodKey(primaryMood);
   const slash = parseSlashCommand(note);
   const isSlashQuick = slash?.name === "quick";
 
   async function startRitual() {
     if (!hasMood) return;
-    await sSet("mood", mood);
+    // Persist primary (legacy) + full selection (new)
+    await sSet("mood", primaryMood);
+    await sSet("moods", JSON.stringify(moods));
     await sSet("note", note.trim());
-    track("mood_selected", { mood });
+
+    track("mood_selected", { mood: primaryMood, selected: moods });
 
     try {
       const items = await loadHistory();
-      if (!items.length) track("first_mood", { mood });
+      if (!items.length) track("first_mood", { mood: primaryMood });
     } catch {}
 
     navigate("/ritual");
@@ -64,17 +68,19 @@ export default function MoodLog() {
     const cleanedNote = isSlashQuick ? (slash?.rest ?? "").trim() : note.trim();
 
     await logLocal({
-      mood: mood as MoodKey,
+      mood: primaryMood as MoodKey,             // use primary for history schema
       ritualId: "quick",
       durationSec: 0,
       note: cleanedNote || null,
+      // if your LogItem supports metadata, you could also attach the array:
+      // meta: { moods }
     });
 
-    track("slash_quick_used", { mood });
+    track("slash_quick_used", { mood: primaryMood, selected: moods });
     void syncHistoryUp().catch(() => {});
 
     setNote("");
-    setMood("");
+    setMoods([]);
     navigate("/history", { replace: true });
   }
 
@@ -89,7 +95,7 @@ export default function MoodLog() {
   const noteId = "home-note";
 
   return (
-    <div className="flex h-full flex-col bg-app">
+    <div className="flex h-full flex-col">
       <Header title={t("home:title")} />
 
       <main className="flex-1 overflow-y-auto">
@@ -114,7 +120,14 @@ export default function MoodLog() {
                 {t("common:nav.settings")}
               </button>
             </div>
-            <EmojiGrid selected={mood} onSelect={setMood} />
+
+            {/* Multi-select grid (max 3) */}
+            <EmojiGrid selected={moods} onChange={setMoods} maxSelections={3} />
+
+            {/* Optional tiny helper text (keeps tokens) */}
+            <div className="text-[11px] text-muted px-1">
+              {moods.length}/3
+            </div>
           </section>
 
           {/* Note + explanation */}

@@ -13,6 +13,9 @@ import RitualSuggestion from './pages/RitualSuggestion';
 import RitualPlayer from './pages/RitualPlayer';
 import RitualLibrary from './pages/RitualLibrary';
 import RitualDone from './pages/RitualDone';
+import Meditations from './pages/Meditations';
+import FlowsHub from './pages/FlowsHub';
+import RoutineRun from './pages/RoutineRun';
 import History from './pages/History';
 import SignupForm from './components/SignupForm';
 import Settings from './pages/Settings';
@@ -20,6 +23,7 @@ import BottomNav from './components/BottomNav';
 import RequirePro from './components/RequirePro';
 import UpgradeCard from './components/UpgradeCard';
 import Insights from './pages/Insights';
+import MeditationRun from './components/MeditationPlay';
 import ExportData from './pages/ExportData';
 import OnboardingGate from './components/OnboardingGate';
 import Welcome from './pages/Welcome';
@@ -104,7 +108,9 @@ export default function App() {
               <Route path="/ritual/start" element={<RitualPlayer />} />
               <Route path="/ritual/done" element={<RitualDone />} />
               <Route path="/rituals" element={<RitualLibrary />} />
-              <Route path="/library" element={<RitualLibrary />} />
+              <Route path="/flows" element={<FlowsHub />} />
+              <Route path="/meditations" element={<Meditations />} />
+              <Route path="/routines/:id" element={<RoutineRun />} />              <Route path="/library" element={<RitualLibrary />} />
               <Route path="/history" element={<History />} />
               <Route path="/signup" element={<SignupForm />} />
               <Route path="/profile" element={<Profile />} />

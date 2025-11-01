@@ -87,7 +87,7 @@ export default function Profile() {
   }
 
   return (
-    <div className="flex flex-col h-full bg-app">
+    <div className="flex flex-col h-full">
       <Header title={t('profile:title', 'Profile')} back />
 
       <main className="flex-1 overflow-y-auto px-6 py-6">

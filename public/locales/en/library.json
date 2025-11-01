@@ -16,8 +16,26 @@
     "grounding": "Grounding",
     "kindness": "Kindness",
     "panic": "Panic",
-    "sleep": "Sleep"
+    "sleep": "Sleep",
+    "connection": "Connection",
+    "single-pointed": "Single-Pointed",
+    "visual": "Visual",
+    "interoception": "Interoception",
+    "nonreactivity": "Nonreactivity",
+    "attention": "Attention",
+    "metacognition": "Metacognition",
+    "relaxation": "Relaxation",
+    "somatic": "Somatic",
+    "trauma-informed": "Trauma-Informed",
+    "imagery": "Imagery"
   },
+  "kind": {
+    "ritual": "Rituals",
+    "meditation": "Meditations",
+    "routine": "Routines"
+  },
+  "stepsLabel": "steps",
+
   "empty": "No matches. Try a different search or filter.",
   "card": {
     "start": "Start",

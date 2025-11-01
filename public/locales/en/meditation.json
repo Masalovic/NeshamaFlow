@@ -1,0 +1,153 @@
+{
+  "titles": {
+    "breath-awareness": "Breath Awareness",
+    "loving-kindness": "Loving-Kindness",
+    "focus-candle": "Candle Focus",
+    "body-scan-5m": "Body Scan (5 min)",
+    "open-monitoring": "Open Monitoring",
+    "noting": "Noting (Label Thoughts)",
+    "pmr-6m": "Progressive Muscle Relaxation",
+    "safe-place-imagery": "Safe-Place Imagery"
+  },
+
+  "descriptions": {
+    "breath-awareness": "Gently attend to the natural breath. When attention wanders, return without judgment.",
+    "loving-kindness": "Cultivate warm goodwill for yourself and others using short phrases.",
+    "focus-candle": "Rest attention on the flame’s shape, light and shadow as a single visual anchor.",
+    "body-scan-5m": "Sweep attention through the body from toes to head, noticing sensations as they are.",
+    "open-monitoring": "Open awareness to any experience—sounds, thoughts, sensations—without choosing a single anchor.",
+    "noting": "When you notice a distraction, softly label it (e.g., “thinking”, “hearing”) and return.",
+    "pmr-6m": "Gently tense and release major muscle groups to downshift arousal and invite sleep.",
+    "safe-place-imagery": "Imagine a vividly safe, soothing place to reduce anxiety and promote calm."
+  },
+
+  "guides": {
+    "breath-awareness": {
+      "why": "Mindful breathing increases attentional control and reduces amygdala reactivity; clinical trials link it to lower perceived stress and improved HRV.",
+      "whyBullets": [
+        "Strengthens top-down attention control",
+        "Decreases sympathetic arousal",
+        "Improves emotion regulation"
+      ],
+      "steps": [
+        "Sit comfortably; lengthen spine; relax jaw and shoulders.",
+        "Notice the breath at one spot (nostrils or belly).",
+        "When the mind wanders, gently note it and return to the breath.",
+        "Continue at a natural pace."
+      ],
+      "tip": "Choose a single breath location; keep the return gentle."
+    },
+
+    "loving-kindness": {
+      "why": "Compassion practices increase positive affect and social connectedness; meta-analyses show reductions in self-criticism and depressive symptoms.",
+      "whyBullets": [
+        "Boosts positive emotion and connection",
+        "Reduces self-criticism",
+        "Supports resilience"
+      ],
+      "steps": [
+        "Bring to mind yourself or someone easy to care for.",
+        "Silently repeat phrases like: “May you be safe. May you be healthy. May you be peaceful.”",
+        "Let the tone be warm and sincere; if difficult, start neutral (e.g., a pet or benefactor).",
+        "Expand to others as time allows."
+      ],
+      "tip": "Adjust phrases to feel natural in your own words."
+    },
+
+    "focus-candle": {
+      "why": "Single-pointed attention reduces mind-wandering and trains sustained focus; visual anchors can rapidly stabilize attention networks.",
+      "whyBullets": [
+        "Trains sustained attention",
+        "Reduces rumination",
+        "Easy visual anchor"
+      ],
+      "steps": [
+        "Place a lit candle at eye level, ~1–2 meters away.",
+        "Soften the gaze on the flame’s shape, color and halo.",
+        "When pulled away, note “thinking/seeing” and return.",
+        "Keep blinks natural; shoulders relaxed."
+      ],
+      "tip": "If eyes tire, close briefly and visualize the flame."
+    },
+
+    "body-scan-5m": {
+      "why": "Interoceptive training reduces rumination and improves pain and stress tolerance by recruiting somatosensory networks.",
+      "whyBullets": [
+        "Enhances body awareness",
+        "Interrupts cognitive looping",
+        "Supports relaxation"
+      ],
+      "steps": [
+        "Lie down or sit; soften gaze or close eyes.",
+        "Start at toes; notice contact, temperature, tingling or neutral.",
+        "Progress slowly: feet → calves → knees → thighs → hips → belly → chest → shoulders → arms/hands → neck → face → scalp.",
+        "If distracted, return to the last body area."
+      ],
+      "tip": "Notice without trying to change sensations."
+    },
+
+    "open-monitoring": {
+      "why": "Open monitoring increases nonreactivity and cognitive flexibility; studies show reduced stress and improved attentional breadth.",
+      "whyBullets": [
+        "Builds nonreactivity to experience",
+        "Wider attentional scope",
+        "Less stress reactivity"
+      ],
+      "steps": [
+        "Sit upright; breathe naturally.",
+        "Allow sounds, sensations, thoughts to arise and pass.",
+        "Notice beginnings and endings without pursuing any one object.",
+        "If you get hooked, acknowledge “caught” and re-open."
+      ],
+      "tip": "Think of awareness as a spacious room; experiences move through."
+    },
+
+    "noting": {
+      "why": "Labeling (“affect labeling”) reduces limbic activation and improves attentional switching; helpful for rumination.",
+      "whyBullets": [
+        "Reduces emotional load via labeling",
+        "Supports quick returns to the task",
+        "Decreases rumination"
+      ],
+      "steps": [
+        "Choose a gentle anchor (breath or sounds).",
+        "When a distraction appears, softly label it: “thinking”, “planning”, “hearing”, “feeling”.",
+        "Return to the anchor without judgment.",
+        "Repeat as many times as needed."
+      ],
+      "tip": "Keep labels short and quiet—just enough to notice."
+    },
+
+    "pmr-6m": {
+      "why": "Progressive muscle relaxation (PMR) reduces sympathetic arousal and improves sleep onset by alternating tension and release.",
+      "whyBullets": [
+        "Down-regulates arousal",
+        "Improves sleep latency",
+        "Easy to learn"
+      ],
+      "steps": [
+        "While seated or lying down, inhale and gently tense feet and calves for ~3–5s.",
+        "Exhale and fully release. Move to thighs and hips.",
+        "Continue through belly/chest, hands/arms, shoulders, face/jaw.",
+        "Finish with one slow, deep breath and full body release."
+      ],
+      "tip": "Keep tension gentle—aim for awareness, not strain."
+    },
+
+    "safe-place-imagery": {
+      "why": "Guided imagery activates parasympathetic pathways and can reduce anxiety; trauma-informed protocols often include a safe-place exercise.",
+      "whyBullets": [
+        "Engages calming imagery networks",
+        "Reduces anxiety and threat appraisal",
+        "Useful between sessions"
+      ],
+      "steps": [
+        "Close eyes and picture a place that feels safe and soothing (real or imagined).",
+        "Engage senses: colors, sounds, temperature, scents, textures.",
+        "Add a supportive phrase (e.g., “Here I am safe.”).",
+        "Rest there for several breaths; return when ready."
+      ],
+      "tip": "If visualizing is hard, build it slowly using one sense at a time."
+    }
+  }
+}

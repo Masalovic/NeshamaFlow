@@ -20,7 +20,8 @@
     "restMsg": "Rest — close your eyes and breathe.",
     "restHint": "Take a 20s breathing break",
     "rest20": "Rest 20s",
-    "finishNow": "Finish Now"
+    "finishNow": "Finish Now",
+    "whatToDo": "What to do"
   },
 
   "done": {
@@ -58,7 +59,12 @@
     "body-scan-1m": "1-min Body Scan",
     "ground-54321": "5-4-3-2-1 Grounding",
     "compassion-break": "Self-Compassion Break",
-    "gratitude-3": "Gratitude ×3"
+    "gratitude-3": "Gratitude ×3",
+
+    "release-tension-2m": "Release Tension",
+    "coherent-5m": "Coherent Breathing (5:5)",
+    "mindful-walk-2m": "Mindful Walk",
+    "name-it-2m": "Name It to Tame It"
   },
 
   "guides": {
@@ -165,6 +171,73 @@
         "Repeat with two more specifics (total of three)."
       ],
       "tip": "Specific beats general. Picture it and notice how the body feels."
+    },
+
+  
+
+    "release-tension-2m": {
+      "title": "What to do",
+      "why": "A brief cycle of gentle tension–release plus micro-mobility leverages reciprocal inhibition and exhalation to downshift sympathetic arousal and reduce somatic fatigue.",
+      "whyBullets": [
+        "Quick physical downshift",
+        "Reduces jaw/shoulder bracing",
+        "Pairs breath with release"
+      ],
+      "steps": [
+        "Roll shoulders; unclench jaw; soften forehead.",
+        "Inhale, gently tense fists/forearms for ~3 seconds; exhale and fully release. Repeat 3–5 rounds.",
+        "Add a slow neck turn left/right; pause anywhere tight and breathe there."
+      ],
+      "tip": "Keep it gentle—no pain. The exhale is the “let go.”"
+    },
+
+    "coherent-5m": {
+      "title": "What to do",
+      "why": "Breathing at ~5–6 breaths/min (no holds) increases heart–breath synchrony (HRV coherence) and can improve focus and emotional balance.",
+      "whyBullets": [
+        "Balances autonomic tone",
+        "Supports focus and steadiness",
+        "Beginner-friendly cadence"
+      ],
+      "steps": [
+        "Sit upright; relax shoulders.",
+        "Inhale for ~5 seconds.",
+        "Exhale for ~5 seconds (no breath-holding).",
+        "Continue at an even pace for the duration."
+      ],
+      "tip": "Even, comfortable breaths help—avoid any strain."
+    },
+
+    "mindful-walk-2m": {
+      "title": "What to do",
+      "why": "Light movement with sensory attention interrupts rumination and increases arousal just enough to re-engage executive control without over-stimulation.",
+      "whyBullets": [
+        "Grounds attention in the body",
+        "Gently boosts energy",
+        "Works in small spaces"
+      ],
+      "steps": [
+        "Stand tall and begin walking slowly (or march in place).",
+        "Match steps to the breath; notice feet, temperature, sounds.",
+        "When the mind drifts, come back to the next step."
+      ],
+      "tip": "Tiny loop or in-place is fine—consistency beats distance."
+    },
+
+    "name-it-2m": {
+      "title": "What to do",
+      "why": "Accurately labeling affect recruits prefrontal regions that can reduce limbic reactivity—“name it to tame it.”",
+      "whyBullets": [
+        "Reduces emotional intensity",
+        "Clarifies what you need",
+        "Improves self-awareness"
+      ],
+      "steps": [
+        "Ask: “What am I feeling right now?”",
+        "Label it in 1–3 words (e.g., “tired”, “antsy”, “okay”).",
+        "Notice where it sits in the body; let the label be enough."
+      ],
+      "tip": "Aim for specific and honest; no need to fix anything yet."
     }
   },
 

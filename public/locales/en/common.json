@@ -7,11 +7,21 @@
   },
   "nav": {
     "home": "Home",
-    "rituals": "Rituals",
+    "flows": "Flows",
     "history": "History",
     "insights": "Insights",
     "profile": "Profile",
     "settings": "Settings"
+  },
+  "filters": {
+    "all": "All",
+    "rituals": "Rituals",
+    "meditations": "Meditations",
+    "routines": "Routines"
+  },
+  "pro": {
+    "badge": "PRO",
+    "makeYourOwn": "Make your own routine"
   },
   "buttons": {
     "start": "Start",

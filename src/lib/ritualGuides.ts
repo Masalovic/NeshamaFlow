@@ -153,6 +153,11 @@ const ALIAS: Record<string, string> = {
   // 5-4-3-2-1
   '5_4_3_2_1_grounding': 'grounding_54321',
   '54321_grounding': 'grounding_54321',
+  // new ids mapping straight to CANON keys
+  'release_tension_2m': 'release_tension',
+  'coherent_5m': 'coherent_breathing',
+  'mindful_walk_2m': 'mindful_walk',
+  'name_it_2m': 'name_it_to_tame_it',
 }
 
 /** Pattern fallbacks when id/title is unknown but clearly indicates the ritual */

@@ -134,7 +134,7 @@ export default function AuthScreen() {
   }
 
   return (
-    <div className="min-h-screen grid place-items-center p-6 bg-app">
+    <div className="min-h-screen grid place-items-center p-6">
       <div className="w-full max-w-sm card p-6 space-y-4">
         <div>
           <h1 className="text-xl font-semibold text-main">
