@@ -1,29 +1,51 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { isOnboarded } from '../lib/onboarding';
+import { useEffect, useState } from "react";
+import { ready as storageReady } from "../lib/secureStorage";
+import { isOnboarded } from "../lib/onboarding";
+import Welcome from "../pages/Welcome";
 
-type Props = { children: React.ReactNode };
+export default function OnboardingGate({ children }: { children: JSX.Element }) {
+  const [ready, setReady] = useState(storageReady());
+  const [done, setDone] = useState<boolean | null>(null);
 
-export default function OnboardingGate({ children }: Props) {
-  const [ready, setReady] = useState(false);
-  const [done, setDone] = useState<boolean>(true);
-  const nav = useNavigate();
-  const { pathname } = useLocation();
-
+  // wait until secure storage key is available (unlock / passphrase)
   useEffect(() => {
+    if (ready) return;
+
+    const id = window.setInterval(() => {
+      if (storageReady()) {
+        setReady(true);
+        window.clearInterval(id);
+      }
+    }, 200);
+
+    return () => window.clearInterval(id);
+  }, [ready]);
+
+  // read onboarded flag only after key is ready
+  useEffect(() => {
+    if (!ready) return;
+
     let alive = true;
     (async () => {
-      const ok = await isOnboarded();
-      if (!alive) return;
-      setDone(ok);
-      setReady(true);
-      if (!ok && pathname !== '/welcome') {
-        nav('/welcome', { replace: true });
+      try {
+        const v = await isOnboarded();
+        if (alive) setDone(v);
+      } catch {
+        if (alive) setDone(false);
       }
     })();
-    return () => { alive = false; };
-  }, [nav, pathname]);
 
-  if (!ready) return null;
-  return <>{children}</>;
+    return () => {
+      alive = false;
+    };
+  }, [ready]);
+
+  if (!ready || done === null) return null;
+
+  // ✅ if not done, show Welcome and mark done when it finishes
+  if (!done) {
+    return <Welcome onDone={() => setDone(true)} />;
+  }
+
+  return children;
 }

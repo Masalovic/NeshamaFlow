@@ -1,19 +1,31 @@
 // src/lib/pro.ts
-import { supabase } from './supabase';
-import { getItem as sGet, setItem as sSet } from './secureStorage';
+import { supabase } from "./supabase";
+import { getItem as sGet, setItem as sSet } from "./secureStorage";
 
-const KEY = 'entitlement.pro';
+const KEY = "entitlement.pro";
 
+/**
+ * Pro entitlement:
+ * - Primary source: Supabase table `entitlements` scoped by user_id.
+ * - Fallback: encrypted cache (local preview toggle).
+ */
 export async function isPro(): Promise<boolean> {
-  // local cache first
   const cached = await sGet<boolean>(KEY);
   let result = !!cached;
 
   try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    // If not authed, rely on cached (preview toggle)
+    if (!user) return result;
+
     const { data, error } = await supabase
-      .from('entitlements')
-      .select('active')
-      .eq('product', 'pro')
+      .from("entitlements")
+      .select("active")
+      .eq("user_id", user.id)
+      .eq("product", "pro")
       .maybeSingle();
 
     if (!error && data) {
@@ -21,7 +33,7 @@ export async function isPro(): Promise<boolean> {
       await sSet(KEY, result);
     }
   } catch {
-    // ignore network errors; rely on cache
+    // ignore, rely on cache
   }
 
   return result;
@@ -35,10 +47,16 @@ export async function setPro(val: boolean): Promise<void> {
 /** Refresh from server after login or foreground. */
 export async function refreshEntitlement(): Promise<void> {
   try {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return;
+
     const { data, error } = await supabase
-      .from('entitlements')
-      .select('active')
-      .eq('product', 'pro')
+      .from("entitlements")
+      .select("active")
+      .eq("user_id", user.id)
+      .eq("product", "pro")
       .maybeSingle();
 
     if (!error && data) {

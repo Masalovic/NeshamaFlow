@@ -67,5 +67,15 @@
       "history": "Cronologia",
       "insights": "Approfondimenti"
     }
+  },
+  "goal": {
+  "title": "Obiettivo principale",
+  "hint": "Usato per suggerimenti e per il progresso verso l’obiettivo.",
+  "desc": {
+    "reduceStress": "Reset brevi, meno tensione.",
+    "buildHabit": "Costruisci costanza e slancio.",
+    "sleepBetter": "Routine serali e rilassamento prima di dormire.",
+    "feelSteadier": "Stabilità ed equilibrio nel tempo."
   }
+}
 }

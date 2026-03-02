@@ -43,5 +43,15 @@
   "clearAll": {
     "cta": "Obriši sve lokalne podatke",
     "confirmed": "Svi lokalni podaci su obrisani."
+  },
+  "goal": {
+  "title": "Primarni cilj",
+  "hint": "Koristi se za predloge i praćenje napretka ka cilju.",
+  "desc": {
+    "reduceStress": "Kratki reseti, manja napetost.",
+    "buildHabit": "Izgradi doslednost i momentum.",
+    "sleepBetter": "Večernje rutine i smirivanje pred san.",
+    "feelSteadier": "Stabilnost i ravnoteža kroz vreme."
   }
+}
 }

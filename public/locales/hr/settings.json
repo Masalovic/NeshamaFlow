@@ -67,5 +67,15 @@
       "history": "Povijest",
       "insights": "Uvidi"
     }
+  },
+  "goal": {
+    "title": "Glavni cilj",
+    "hint": "Koristi se za prijedloge i praćenje napretka prema cilju.",
+    "desc": {
+      "reduceStress": "Kratki reseti, manje napetosti.",
+      "buildHabit": "Izgradi dosljednost i zamah.",
+      "sleepBetter": "Večernje rutine i smirivanje prije spavanja.",
+      "feelSteadier": "Stabilnost i ravnoteža kroz vrijeme."
+    }
   }
 }

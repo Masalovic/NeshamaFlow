@@ -10,16 +10,20 @@ import { completeOnboarding } from "../lib/onboarding";
 import { track } from "../lib/metrics";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { setItem as sSet } from "../lib/secureStorage";
+import { setGoal, type GoalId } from "../lib/goal";
 
 const GOAL_KEYS = ["reduceStress", "buildHabit", "sleepBetter", "feelSteadier"] as const;
 type GoalKey = (typeof GOAL_KEYS)[number];
 
-export default function Welcome() {
+type Props = {
+  onDone?: () => void; // ✅ added (used by OnboardingGate)
+};
+
+export default function Welcome({ onDone }: Props) {
   const nav = useNavigate();
   const { t } = useTranslation(["onboarding", "common"]);
 
-  const [goal, setGoal] = useState<GoalKey | null>(null);
+  const [goal, setGoalState] = useState<GoalKey | null>(null);
   const [haptics, setHaptics] = useState(true);
   const [remOn, setRemOn] = useState<boolean>(false);
   const [busy, setBusy] = useState(false);
@@ -40,14 +44,27 @@ export default function Welcome() {
   async function finish() {
     if (busy) return;
     setBusy(true);
+
     try {
-      // Persist goal without widening the typed AppSettings bag
-      if (goal) await sSet("onboarding.goal", goal);
+      // ✅ store primary goal (scoped) via goal.ts
+      if (goal) {
+        await setGoal(goal as GoalId);
+      }
 
       await setSetting("haptics", haptics);
+
+      // reminders checkbox reflects localStorage; toggle only if changed
       if (remOn !== remindersEnabled()) toggleReminders();
+
       await completeOnboarding();
-      track("app_open");
+
+      // metrics is best-effort
+      try { track("app_open"); } catch {}
+
+      // ✅ tell gate we are done (so it stops showing Welcome)
+      onDone?.();
+
+      // ✅ keep old behavior (Welcome can still be used standalone as a route)
       nav("/log", { replace: true });
     } finally {
       setBusy(false);
@@ -74,7 +91,7 @@ export default function Welcome() {
                 return (
                   <button
                     key={k}
-                    onClick={() => setGoal(k)}
+                    onClick={() => setGoalState(k)}
                     aria-pressed={active}
                     className="h-10 rounded-xl px-3 text-sm border transition"
                     style={{
@@ -156,7 +173,6 @@ export default function Welcome() {
 
           <p
             className="text-[12px] text-muted text-center"
-            // This one intentionally supports inline <em> in translations
             dangerouslySetInnerHTML={{
               __html: t(
                 "onboarding:actions.footnote",

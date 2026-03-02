@@ -27,7 +27,7 @@
   },
   "table": {
     "ritual": "Ritual",
-    "avgSec": "Avg time (s)", 
+    "avgSec": "Avg time (s)",
     "samples": "Samples",
     "tip": "Tip: short rituals reduce friction — a good way to build streaks."
   },
@@ -46,5 +46,18 @@
     "legend": "Legend",
     "repaired": "repaired",
     "cellTitle": "{{date}}: {{count}} session(s){{repaired}}"
-  }
+  },
+  "goal": {
+    "title": "Goal progress",
+    "teaser": "Unlock deeper goal analytics, trends, and personalized suggestions in Pro.",
+    "score": "Score",
+    "daysPracticed": "Days practiced",
+    "streak": "Streak",
+    "eveningShare": "Evening sessions",
+    "consistency": "Consistency",
+    "shortResets": "Short resets (≤4 min)",
+    "avgSessionMin": "Avg session"
+  },
+  "error": "Couldn’t load insights.",
+  "noEntryToday": "(no entry today)"
 }

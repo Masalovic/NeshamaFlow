@@ -67,5 +67,15 @@
       "history": "Verlauf",
       "insights": "Einblicke"
     }
+  },
+  "goal": {
+  "title": "Hauptziel",
+  "hint": "Wird für Vorschläge und die Ziel-Fortschrittsanzeige verwendet.",
+  "desc": {
+    "reduceStress": "Kurze Resets, weniger Anspannung.",
+    "buildHabit": "Baue Beständigkeit und Momentum auf.",
+    "sleepBetter": "Abendroutine und Runterkommen vor dem Schlafen.",
+    "feelSteadier": "Stabilität und Balance über die Zeit."
   }
+}
 }

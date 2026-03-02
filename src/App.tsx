@@ -110,7 +110,8 @@ export default function App() {
               <Route path="/rituals" element={<RitualLibrary />} />
               <Route path="/flows" element={<FlowsHub />} />
               <Route path="/meditations" element={<Meditations />} />
-              <Route path="/routines/:id" element={<RoutineRun />} />              <Route path="/library" element={<RitualLibrary />} />
+              <Route path="/routines/:id" element={<RoutineRun />} />
+              <Route path="/library" element={<RitualLibrary />} />
               <Route path="/history" element={<History />} />
               <Route path="/signup" element={<SignupForm />} />
               <Route path="/profile" element={<Profile />} />

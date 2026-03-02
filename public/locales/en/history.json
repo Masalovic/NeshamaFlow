@@ -2,6 +2,7 @@
   "title": "History",
   "openInsights": "Open Insights",
   "loading": "Loading…",
+  "error": "Couldn’t load history.",
   "empty": "No sessions yet—start your first ritual to light up the grid.",
   "labels": {
     "today": "Today",

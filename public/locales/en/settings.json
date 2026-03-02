@@ -67,5 +67,15 @@
       "history": "History",
       "insights": "Insights"
     }
+  },
+  "goal": {
+    "title": "Primary goal",
+    "hint": "Used for suggestions and goal progress.",
+    "desc": {
+      "reduceStress": "Short resets, lower tension.",
+      "buildHabit": "Build consistency and momentum.",
+      "sleepBetter": "Wind-down routines and evenings.",
+      "feelSteadier": "Stability and balance over time."
+    }
   }
 }

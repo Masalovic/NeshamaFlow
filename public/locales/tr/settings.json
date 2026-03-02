@@ -1,10 +1,27 @@
 {
   "title": "Ayarlar",
   "language": { "title": "Dil", "choose": "Uygulama dilini seç" },
-  "privacy": { "title": "Gizlilik", "body": "Ruh hâllerin ve ritüellerin cihazında yerel olarak saklanır ve şifrelenir." },
-  "prefs": { "title": "Tercihler", "haptics": "Dokunsal uyarılar (destekleniyorsa)" },
-  "practice": { "title": "Pratik & hatırlatıcılar", "goal": "Günlük hedef (dakika)", "time": "Tercih edilen hatırlatma saati", "smart": "Akıllı hatırlatıcılar", "note": "Tercih ettiğin saate yakın, cihaz içi hafif bir mantıkla dürteceğiz." },
-  "pro": { "title": "Pro (Önizleme)", "toggle": "Pro özellikleri etkinleştir (yerel anahtar)", "upgradeCta": "Pro’ya yükselt", "note": "Yalnızca test için istemci tarafı anahtar. Stripe daha sonra bağlanacak." },
+  "privacy": {
+    "title": "Gizlilik",
+    "body": "Ruh hâllerin ve ritüellerin cihazında yerel olarak saklanır ve şifrelenir."
+  },
+  "prefs": {
+    "title": "Tercihler",
+    "haptics": "Dokunsal uyarılar (destekleniyorsa)"
+  },
+  "practice": {
+    "title": "Pratik & hatırlatıcılar",
+    "goal": "Günlük hedef (dakika)",
+    "time": "Tercih edilen hatırlatma saati",
+    "smart": "Akıllı hatırlatıcılar",
+    "note": "Tercih ettiğin saate yakın, cihaz içi hafif bir mantıkla dürteceğiz."
+  },
+  "pro": {
+    "title": "Pro (Önizleme)",
+    "toggle": "Pro özellikleri etkinleştir (yerel anahtar)",
+    "upgradeCta": "Pro’ya yükselt",
+    "note": "Yalnızca test için istemci tarafı anahtar. Stripe daha sonra bağlanacak."
+  },
   "pin": {
     "title": "Uygulama Kilidi (PIN)",
     "already": "Bu cihazda şu anda bir PIN ayarlı.",
@@ -20,7 +37,10 @@
     "enableFail": "PIN etkinleştirilemedi. Lütfen tekrar deneyin.",
     "disableFail": "PIN devre dışı bırakılamadı. Lütfen tekrar deneyin."
   },
-  "clearAll": { "cta": "Tüm yerel verileri temizle", "confirmed": "Tüm yerel veriler temizlendi." },
+  "clearAll": {
+    "cta": "Tüm yerel verileri temizle",
+    "confirmed": "Tüm yerel veriler temizlendi."
+  },
   "common": {
     "saving": "Kaydediliyor…",
     "working": "Çalışıyor…",
@@ -33,7 +53,26 @@
       "light": "Açık",
       "dark": "Koyu"
     },
-    "accent": { "titleWithName": "Vurgu: {{name}}", "berry": "meyve", "ocean": "okyanus", "forest": "orman" },
-    "nav": { "settings": "Ayarlar", "history": "Geçmiş", "insights": "Analizler" }
+    "accent": {
+      "titleWithName": "Vurgu: {{name}}",
+      "berry": "meyve",
+      "ocean": "okyanus",
+      "forest": "orman"
+    },
+    "nav": {
+      "settings": "Ayarlar",
+      "history": "Geçmiş",
+      "insights": "Analizler"
+    }
+  },
+  "goal": {
+    "title": "Ana hedef",
+    "hint": "Öneriler ve hedefe doğru ilerleme takibi için kullanılır.",
+    "desc": {
+      "reduceStress": "Kısa resetler, daha az gerginlik.",
+      "buildHabit": "Tutarlılık ve ivme oluştur.",
+      "sleepBetter": "Akşam rutinleri ve uykuya hazırlık.",
+      "feelSteadier": "Zamanla daha fazla istikrar ve denge."
+    }
   }
 }

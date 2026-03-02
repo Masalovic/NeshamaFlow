@@ -12,8 +12,16 @@ export type LogItem = {
   source?: 'local' | 'remote'
 }
 
-const KEY = 'history'
 const MAX_ITEMS = 500
+
+// ✅ user scope for storage key
+let scope: string = 'anon'
+export function setHistoryScope(next: string | null | undefined) {
+  scope = next && next.trim() ? next : 'anon'
+}
+function KEY(): string {
+  return `history:${scope}`
+}
 
 /** Clamp any ISO to exact second precision to create a stable natural key. */
 function toSecondISO(iso: string): string {
@@ -30,9 +38,8 @@ function secondKey(x: { ts: string; ritualId: string }): string {
 export async function loadHistory(): Promise<LogItem[]> {
   if (!sReady()) return []
   try {
-    const data = await sGet<LogItem[]>(KEY)
+    const data = await sGet<LogItem[]>(KEY())
     const list = Array.isArray(data) ? data.slice(0, MAX_ITEMS) : []
-    // Normalize + sort newest-first
     list.forEach(it => { it.ts = toSecondISO(it.ts) })
     list.sort((a, b) => (a.ts < b.ts ? 1 : -1))
     return list
@@ -47,9 +54,9 @@ export async function saveHistory(items: LogItem[]): Promise<void> {
   try {
     const copy = (items ?? []).map(it => ({ ...it, ts: toSecondISO(it.ts) }))
     copy.sort((a, b) => (a.ts < b.ts ? 1 : -1))
-    await sSet(KEY, copy.slice(0, MAX_ITEMS))
+    await sSet(KEY(), copy.slice(0, MAX_ITEMS))
   } catch {
-    // ignore write errors (quota, etc.)
+    // ignore write errors
   }
 }
 
@@ -73,7 +80,6 @@ export async function logLocal(input: {
     source: 'local',
   }
 
-  // Merge with dedupe by id AND by natural second key
   const seenIds = new Set<string>()
   const seenKeys = new Set<string>()
   const merged = [row, ...items].filter(it => {
@@ -88,15 +94,10 @@ export async function logLocal(input: {
   return row
 }
 
-/**
- * Merge remote rows (e.g., from Supabase) into local history with proper dedupe.
- * Returns the number of new rows accepted.
- */
 export async function mergeRemote(incoming: LogItem[]): Promise<number> {
   if (!incoming?.length) return 0
   const current = await loadHistory()
 
-  // Pre-normalize incoming
   const sanitized = incoming.map(r => ({
     ...r,
     ts: toSecondISO(r.ts),
@@ -120,8 +121,7 @@ export async function mergeRemote(incoming: LogItem[]): Promise<number> {
   return additions.length
 }
 
-/** Optional helper if you ever need it elsewhere */
 export async function clearHistory(): Promise<void> {
   if (!sReady()) return
-  await sSet(KEY, [])
+  await sSet(KEY(), [])
 }

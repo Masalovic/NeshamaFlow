@@ -41,6 +41,7 @@
     "later": "Later",
     "mute7d": "Mute 7d",
     "repair": "Repair",
+    "retry": "Retry",
     "goPro": "Go Pro",
     "signOut": "Sign out",
     "enablePin": "Enable PIN",
@@ -252,7 +253,7 @@
       "sessions_other": "{{count}} sessions",
       "avgTime": "Avg time",
       "bestTime": "Best time",
-      "mostFrequent": "Most frequent"
+      "mostFrequent": "Most frequent" 
     }
   },
 

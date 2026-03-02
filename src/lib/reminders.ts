@@ -1,48 +1,53 @@
 // src/lib/reminders.ts
-import dayjs from 'dayjs';
-import { loadHistory } from './history';
-import { track } from './metrics';
+import dayjs from "dayjs";
+import { loadHistory } from "./history";
+import { track } from "./metrics";
+import { getGoal, type GoalId } from "./goal";
 
 const LS = {
-  enabled: 'reminder.enabled.v1',          // "1" | "0" (default ON)
-  mutedUntil: 'reminder.muted_until.v1',   // ISO string
-  lastShownYMD: 'reminder.last_shown_ymd', // "YYYY-MM-DD"
-  lastTappedYMD: 'reminder.last_tap_ymd',
-  learnedHour: 'reminder.learned_hour.v1', // "0..23"
+  enabled: "reminder.enabled.v1", // "1" | "0" (default ON)
+  mutedUntil: "reminder.muted_until.v1", // ISO string
+  lastShownYMD: "reminder.last_shown_ymd", // "YYYY-MM-DD"
+  lastTappedYMD: "reminder.last_tap_ymd",
+  learnedHour: "reminder.learned_hour.v1", // "0..23"
 };
 
 export type ReminderDecision = {
   due: boolean;
   reason?:
-    | 'already-logged'
-    | 'muted'
-    | 'out-of-window'
-    | 'shown-today'
-    | 'disabled'
-    | 'insufficient-data';
+    | "already-logged"
+    | "muted"
+    | "out-of-window"
+    | "shown-today"
+    | "disabled"
+    | "insufficient-data";
   preferredHour?: number;
+  // NEW
+  goal?: GoalId;
+  nudgeTitle?: string;
+  nudgeBody?: string;
 };
 
 function safeTrack(name: string, props?: Record<string, unknown>) {
   try {
     (track as any)(name, props);
   } catch {
-    // ignore typing mismatch; keeps compile happy without changing metrics.ts
+    // ignore typing mismatch
   }
 }
 
 export function isEnabled(): boolean {
   const v = localStorage.getItem(LS.enabled);
-  return v === null ? true : v === '1';
+  return v === null ? true : v === "1";
 }
 
 export function setEnabled(on: boolean): void {
-  localStorage.setItem(LS.enabled, on ? '1' : '0');
+  localStorage.setItem(LS.enabled, on ? "1" : "0");
 }
 
 /** Mute for n days (default 7) */
 export function mute(days = 7): void {
-  const until = dayjs().add(days, 'day').endOf('day').toISOString();
+  const until = dayjs().add(days, "day").endOf("day").toISOString();
   localStorage.setItem(LS.mutedUntil, until);
 }
 
@@ -50,7 +55,7 @@ export function mute(days = 7): void {
 export async function learnPreferredHour(): Promise<number> {
   const h = await loadHistory();
   if (!h.length) return 20; // fallback: 8pm
-  const last = h.slice(0, 30); // list is newest-first; take 30 most recent
+  const last = h.slice(0, 30);
   const freq = new Array(24).fill(0);
   for (const it of last) {
     const hour = dayjs(it.ts).hour();
@@ -77,46 +82,87 @@ export async function getPreferredHour(): Promise<number> {
 
 /** True if there's already at least one log today */
 export async function loggedToday(): Promise<boolean> {
-  const today = dayjs().startOf('day');
+  const today = dayjs().startOf("day");
   const items = await loadHistory();
-  return items.some((it) => dayjs(it.ts).isSame(today, 'day'));
+  return items.some((it) => dayjs(it.ts).isSame(today, "day"));
+}
+
+function composeNudge(goal: GoalId): { title: string; body: string } {
+  // Keep it simple; later we can i18n these strings.
+  switch (goal) {
+    case "sleepBetter":
+      return {
+        title: "Wind down?",
+        body: "A short evening reset can help you sleep better.",
+      };
+    case "buildHabit":
+      return {
+        title: "Keep the streak alive?",
+        body: "A 2-minute ritual keeps your habit going.",
+      };
+    case "feelSteadier":
+      return {
+        title: "Ground for a minute?",
+        body: "A quick grounding reset can help you feel steadier.",
+      };
+    case "reduceStress":
+    default:
+      return {
+        title: "Take a moment?",
+        body: "A quick reset can lower tension and clear your head.",
+      };
+  }
 }
 
 /** Compute if a nudge is due right now */
 export async function decide(): Promise<ReminderDecision> {
-  if (!isEnabled()) return { due: false, reason: 'disabled' };
+  if (!isEnabled()) return { due: false, reason: "disabled" };
 
   const muted = localStorage.getItem(LS.mutedUntil);
-  if (muted && dayjs().isBefore(dayjs(muted))) return { due: false, reason: 'muted' };
+  if (muted && dayjs().isBefore(dayjs(muted))) return { due: false, reason: "muted" };
 
   // once/day max
   const lastYMD = localStorage.getItem(LS.lastShownYMD);
-  const todayYMD = dayjs().format('YYYY-MM-DD');
-  if (lastYMD === todayYMD) return { due: false, reason: 'shown-today' };
+  const todayYMD = dayjs().format("YYYY-MM-DD");
+  if (lastYMD === todayYMD) return { due: false, reason: "shown-today" };
 
-  if (await loggedToday()) return { due: false, reason: 'already-logged' };
+  if (await loggedToday()) return { due: false, reason: "already-logged" };
 
   const preferredHour = await getPreferredHour();
 
-  // Nudge window: [hour-0.5h, hour+1.5h]
+  // window: [hour-0.5h, hour+1.5h]
   const now = dayjs();
-  const start = now.hour(preferredHour).minute(0).second(0).millisecond(0).subtract(30, 'minute');
-  const end = start.add(2, 'hour');
+  const start = now
+    .hour(preferredHour)
+    .minute(0)
+    .second(0)
+    .millisecond(0)
+    .subtract(30, "minute");
+  const end = start.add(2, "hour");
 
   const inWindow = now.isAfter(start) && now.isBefore(end);
-  if (!inWindow) return { due: false, reason: 'out-of-window', preferredHour };
+  if (!inWindow) return { due: false, reason: "out-of-window", preferredHour };
 
-  return { due: true, preferredHour };
+  const g = await getGoal();
+  const copy = composeNudge(g.goal);
+
+  return {
+    due: true,
+    preferredHour,
+    goal: g.goal,
+    nudgeTitle: copy.title,
+    nudgeBody: copy.body,
+  };
 }
 
-export function markShown(): void {
-  localStorage.setItem(LS.lastShownYMD, dayjs().format('YYYY-MM-DD'));
-  safeTrack('nudge_shown');
+export function markShown(props?: Record<string, unknown>): void {
+  localStorage.setItem(LS.lastShownYMD, dayjs().format("YYYY-MM-DD"));
+  safeTrack("nudge_shown", props);
 }
 
-export function markTapped(): void {
-  localStorage.setItem(LS.lastTappedYMD, dayjs().format('YYYY-MM-DD'));
-  safeTrack('nudge_tapped');
+export function markTapped(props?: Record<string, unknown>): void {
+  localStorage.setItem(LS.lastTappedYMD, dayjs().format("YYYY-MM-DD"));
+  safeTrack("nudge_tapped", props);
 }
 
 /** Convenience: checkbox toggle in Settings */
