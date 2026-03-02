@@ -14,7 +14,7 @@ const THEME_KEY = "ui.theme.v2";
 
 // ✅ your new default — change ONLY this if you want a new shipped image
 const NEW_DEFAULT_BG_URL =
-  "https://images.unsplash.com/photo-1592639252926-01f6628980f0?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2hpdGUlMjBsb3R1c3xlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=600";
+  "https://images.unsplash.com/photo-1749143930790-65db0ee6d222?q=80&w=694&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 // this is just for migration; right now it's the same
 const OLD_DEFAULT_BG_URL = NEW_DEFAULT_BG_URL;

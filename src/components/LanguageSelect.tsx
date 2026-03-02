@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState, useMemo } from "react";
 import i18n, { SUPPORTED_LNGS, type SupportedLng } from "../lib/i18n";
 import { LANG_LABELS, LANG_FLAG_CC } from "../lib/i18nFlags";
 
-type Props = {
+type Props = { 
   value?: SupportedLng;
   onChange?: (lng: SupportedLng) => void;
   className?: string;

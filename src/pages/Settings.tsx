@@ -103,7 +103,9 @@ export default function Settings() {
   // Practice & reminders
   const [goalMin, setGoalMin] = useState<number>(2);
   const [reminderTime, setReminderTime] = useState<string>("20:00");
-  const [remindersEnabled, setRemindersEnabled] = useState<boolean>(remindersOn());
+  const [remindersEnabled, setRemindersEnabled] = useState<boolean>(
+    remindersOn()
+  );
 
   // ✅ Primary goal (encrypted)
   const [primaryGoal, setPrimaryGoal] = useState<GoalId>("reduceStress");
@@ -202,7 +204,12 @@ export default function Settings() {
     setMsg(null);
     if (busy) return;
     if (pin.length < 4 || /\D/.test(pin)) {
-      setMsg(t("settings:pin.minDigits", "PIN must be at least 4 digits (numbers only)."));
+      setMsg(
+        t(
+          "settings:pin.minDigits",
+          "PIN must be at least 4 digits (numbers only)."
+        )
+      );
       return;
     }
     if (pin !== pin2) {
@@ -218,7 +225,9 @@ export default function Settings() {
       setMsg(t("settings:pin.enabled", "App lock enabled on this device."));
     } catch (e) {
       console.error(e);
-      setMsg(t("settings:pin.enableFail", "Failed to enable PIN. Please try again."));
+      setMsg(
+        t("settings:pin.enableFail", "Failed to enable PIN. Please try again.")
+      );
     } finally {
       setBusy(false);
     }
@@ -235,14 +244,21 @@ export default function Settings() {
       setMsg(t("settings:pin.disabled", "App lock disabled on this device."));
     } catch (e) {
       console.error(e);
-      setMsg(t("settings:pin.disableFail", "Failed to disable PIN. Please try again."));
+      setMsg(
+        t(
+          "settings:pin.disableFail",
+          "Failed to disable PIN. Please try again."
+        )
+      );
     } finally {
       setBusy(false);
     }
   }
 
   // Language selector
-  const [lng, setLng] = useState<SupportedLng>(((i18n.resolvedLanguage as SupportedLng) || "en") as SupportedLng);
+  const [lng, setLng] = useState<SupportedLng>(
+    ((i18n.resolvedLanguage as SupportedLng) || "en") as SupportedLng
+  );
   function changeLanguage(next: SupportedLng) {
     setLng(next);
     i18n.changeLanguage(next);
@@ -262,7 +278,11 @@ export default function Settings() {
               <span className="text-sm text-main">
                 {t("settings:language.choose", "Choose app language")}
               </span>
-              <LanguageSelect value={lng} onChange={changeLanguage} className="min-w-[180px] flex justify-end" />
+              <LanguageSelect
+                value={lng}
+                onChange={changeLanguage}
+                className="min-w-[180px] flex justify-end"
+              />
             </label>
           </section>
 
@@ -284,13 +304,16 @@ export default function Settings() {
                       aria-checked={active}
                       onClick={() => updateTheme({ appearance: opt })}
                       className={
-                        "h-8 px-2 rounded-full text-sm leading-none transition-colors " +
+                        "h-8 px-6 rounded-full text-sm leading-none transition-colors " +
                         (active
                           ? "bg-[var(--accent-200)] text-black shadow-[inset_0_0_0_1px_rgba(0,0,0,.06)]"
                           : "text-[var(--text-dim)] hover:bg-[var(--hover)]")
                       }
                     >
-                      {t(`common:appearance.${opt}`, opt[0].toUpperCase() + opt.slice(1))}
+                      {t(
+                        `common:appearance.${opt}`,
+                        opt[0].toUpperCase() + opt.slice(1)
+                      )}
                     </button>
                   );
                 })}
@@ -322,7 +345,9 @@ export default function Settings() {
                     >
                       <span
                         className="inline-block h-2.5 w-2.5 rounded-full"
-                        style={{ background: active ? "var(--accent-600)" : SWATCH[a] }}
+                        style={{
+                          background: active ? "var(--accent-600)" : SWATCH[a],
+                        }}
                       />
                       <span style={{ textTransform: "capitalize" }}>
                         {t(`common:accent.${a}`, a)}
@@ -332,37 +357,6 @@ export default function Settings() {
                 })}
               </div>
             </div>
-
-            <div className="grid grid-cols-2 gap-2 mb-2">
-              <button
-                className={
-                  "h-10 rounded-xl border text-sm " +
-                  (bgMode === "gradient"
-                    ? "border-brand-400 ring-1 ring-brand-300"
-                    : "border-[var(--border)] hover:bg-[var(--hover)]")
-                }
-                onClick={() => updateTheme({ bgMode: "gradient" })}
-                aria-pressed={bgMode === "gradient"}
-              >
-                {t("common:appearance.useGradient", "Use gradient")}
-              </button>
-              <button
-                className={
-                  "h-10 rounded-xl border text-sm " +
-                  (bgMode === "image"
-                    ? "border-brand-400 ring-1 ring-brand-300"
-                    : "border-[var(--border)] hover:bg-[var(--hover)]")
-                }
-                onClick={() => updateTheme({ bgMode: "image", bgImageUrl: bgUrl })}
-                aria-pressed={bgMode === "image"}
-              >
-                {t("common:appearance.usePhoto", "Use photo")}
-              </button>
-            </div>
-
-            <p className="mt-3 text-xs text-muted">
-              {t("common:appearance.photoNoteCustom", "Photo background is used only in Custom appearance.")}
-            </p>
           </section>
 
           {/* Privacy */}
@@ -371,7 +365,10 @@ export default function Settings() {
               {t("settings:privacy.title", "Privacy")}
             </div>
             <p className="text-sm text-muted mt-1">
-              {t("settings:privacy.body", "Your moods and rituals are stored locally on your device and encrypted.")}
+              {t(
+                "settings:privacy.body",
+                "Your moods and rituals are stored locally on your device and encrypted."
+              )}
             </p>
           </div>
 
@@ -444,7 +441,10 @@ export default function Settings() {
               {t("settings:goal.title", "Primary goal")}
             </div>
             <p className="text-xs text-muted mb-3">
-              {t("settings:goal.hint", "Used for suggestions and goal progress.")}
+              {t(
+                "settings:goal.hint",
+                "Used for suggestions and goal progress."
+              )}
             </p>
 
             <div className="grid grid-cols-2 gap-2">
@@ -464,17 +464,23 @@ export default function Settings() {
                     onClick={() => changePrimaryGoal(id)}
                     aria-pressed={active}
                     className={
-                      "h-12 rounded-xl border px-3 text-left transition-colors " +
+                      "rounded-xl border py-1 px-3 text-left transition-colors " +
                       (active
                         ? "border-brand-400 ring-1 ring-brand-300 bg-[var(--surface-2)]"
                         : "border-[var(--border)] hover:bg-[var(--hover)]")
                     }
                   >
                     <div className="text-sm text-main font-medium">
-                      {String(t(`settings:welcome.goals.${id}`, { defaultValue: fallback }))}
+                      {String(
+                        t(`settings:welcome.goals.${id}`, {
+                          defaultValue: fallback,
+                        })
+                      )}
                     </div>
-                    <div className="text-[11px] text-muted">
-                      {String(t(`settings:goal.desc.${id}`, { defaultValue: "" }))}
+                    <div className="text-[11px] text-muted leading-snug">
+                      {String(
+                        t(`settings:goal.desc.${id}`, { defaultValue: "" })
+                      )}
                     </div>
                   </button>
                 );
@@ -509,10 +515,19 @@ export default function Settings() {
             {lockEnabled ? (
               <div className="space-y-2">
                 <p className="text-sm text-muted">
-                  {t("settings:pin.already", "A PIN is currently set on this device.")}
+                  {t(
+                    "settings:pin.already",
+                    "A PIN is currently set on this device."
+                  )}
                 </p>
-                <button className="btn btn-secondary w-full" onClick={disablePin} disabled={busy}>
-                  {busy ? t("common:working", "Working…") : t("settings:pin.disable", "Disable PIN")}
+                <button
+                  className="btn btn-secondary w-full"
+                  onClick={disablePin}
+                  disabled={busy}
+                >
+                  {busy
+                    ? t("common:working", "Working…")
+                    : t("settings:pin.disable", "Disable PIN")}
                 </button>
               </div>
             ) : (
@@ -539,8 +554,14 @@ export default function Settings() {
                   value={pin2}
                   onChange={(e) => setPin2(e.target.value)}
                 />
-                <button className="btn btn-primary btn-full w-full" onClick={enablePin} disabled={busy}>
-                  {busy ? t("common:saving", "Saving…") : t("settings:pin.enable", "Enable PIN")}
+                <button
+                  className="btn btn-primary btn-full w-full"
+                  onClick={enablePin}
+                  disabled={busy}
+                >
+                  {busy
+                    ? t("common:saving", "Saving…")
+                    : t("settings:pin.enable", "Enable PIN")}
                 </button>
               </div>
             )}
@@ -549,7 +570,10 @@ export default function Settings() {
           </div>
 
           {/* Danger / Clear */}
-          <button className="btn btn-primary btn-full w-full" onClick={clearAll}>
+          <button
+            className="btn btn-primary btn-full w-full"
+            onClick={clearAll}
+          >
             {t("settings:clearAll.cta", "Clear all local data")}
           </button>
         </div>

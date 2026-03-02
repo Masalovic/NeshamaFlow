@@ -1,17 +1,14 @@
 // src/lib/onboarding.ts
-// Remember (encrypted) that we finished onboarding on this device/account.
-
-import { getItem as sGet, setItem as sSet, ready as storageReady } from "./secureStorage";
+import { getItem as sGet, setItem as sSet, ready as storageReady, removeItem } from "./secureStorage";
 import { ensureDefaultCryptoKey } from "./secureBootstrap";
 
 const KEY_BASE = "onboarded.v1";
 
-// ✅ scope per user (same idea as history/goal)
+// ✅ scope per user
 let scope = "anon";
 export function setOnboardingScope(next: string | null | undefined) {
   scope = next && next.trim() ? next : "anon";
 }
-
 function KEY() {
   return `${KEY_BASE}:${scope}`;
 }
@@ -21,16 +18,13 @@ function KEY() {
  * Safe to call even before secure storage is unlocked.
  */
 export async function isOnboarded(): Promise<boolean> {
-  // If encryption key is not ready yet, treat as not onboarded.
   if (!storageReady()) return false;
 
-  try {
-    const v = await sGet(KEY());
-    return Boolean(v);
-  } catch {
-    // Any decrypt failure → behave as not onboarded.
-    return false;
-  }
+  // sGet() already returns null on decrypt fail / missing key
+  const v = await sGet<{ at: string } | boolean>(KEY());
+  if (v === true) return true;
+  if (v && typeof v === "object") return true;
+  return false;
 }
 
 /**
@@ -38,12 +32,10 @@ export async function isOnboarded(): Promise<boolean> {
  * Ensures crypto key exists before writing.
  */
 export async function completeOnboarding(): Promise<void> {
+  // If no PIN, bootstrap device-secret key (so storageReady becomes true).
   try {
-    // Ensure we have a device-secret key if no PIN is set.
     ensureDefaultCryptoKey();
-  } catch {
-    // ignore — secureStorage will throw later if truly broken
-  }
+  } catch {}
 
   if (!storageReady()) {
     throw new Error("secureStorage not ready — cannot complete onboarding.");
@@ -52,8 +44,8 @@ export async function completeOnboarding(): Promise<void> {
   await sSet(KEY(), { at: new Date().toISOString() });
 }
 
-/** Optional helper if you want “Reset onboarding” for debug */
+/** Debug / optional: reset onboarding for this user scope */
 export async function resetOnboarding(): Promise<void> {
   if (!storageReady()) return;
-  await sSet(KEY(), null);
+  removeItem(KEY()); // ✅ clean remove
 }
