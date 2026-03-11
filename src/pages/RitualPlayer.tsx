@@ -169,10 +169,11 @@ export default function RitualPlayer() {
     doneRef.current = true;
     setCompleting(true);
     vibrate([60, 40, 60], haptics);
+
     try {
       if (mood && ritual) {
         const durationSec = Math.max(0, Math.min(total, total - remaining));
-        await logLocal({ mood, ritualId: ritual.id, durationSec, note });
+        await logLocal({ mood, ritualId: ritual.id, durationSec, note, kind: "ritual" });
         track("ritual_completed", {
           ritualId: ritual.id,
           durationSec,
@@ -185,7 +186,9 @@ export default function RitualPlayer() {
         await syncHistoryUp().catch(() => {});
       }
     } finally {
-      navigate("/ritual/done", { replace: true });
+      // ✅ unified done route + params
+      const ritualId = ritual?.id ?? "";
+      navigate(`/ritual/done?kind=ritual&id=${encodeURIComponent(ritualId)}`, { replace: true });
     }
   }
 
@@ -221,9 +224,7 @@ export default function RitualPlayer() {
   const headerTitle = tRitualTitle(t, rid, ritual.title);
   const g = tGuide(t, rid, guideFor(ritual));
 
-  // pct for the svg
-  const pct =
-    total > 0 ? Math.min(100, ((total - remaining) / total) * 100) : 0;
+  const pct = total > 0 ? Math.min(100, ((total - remaining) / total) * 100) : 0;
 
   function formatTime(sec: number) {
     const m = Math.floor(sec / 60);
@@ -237,42 +238,24 @@ export default function RitualPlayer() {
 
       <main className="flex-1 overflow-y-auto p-4">
         <div className="max-w-[540px] mx-auto space-y-4">
-          {/* UPLIFTED CARD (copied style from meditation) */}
           <Card className="p-6 bg-[rgba(255,255,255,0.35)] backdrop-blur rounded-3xl space-y-5">
-            {/* circle */}
             <div className="flex flex-col items-center gap-3">
               <div className="relative w-40 h-40">
-                <svg
-                    viewBox="0 0 120 120"
-                    className="w-full h-full"
-                    style={{ transform: "rotate(-90deg)" }} // rotate ONLY path
-                  >
-                    {/* base ring */}
-                    <circle
-                      cx="60"
-                      cy="60"
-                      r="52"
-                      stroke="rgba(255,255,255,0.4)"
-                      strokeWidth="8"
-                      fill="transparent"
-                    />
-                    {/* progress ring */}
-                    <circle
-                      cx="60"
-                      cy="60"
-                      r="52"
-                      stroke="rgba(253,84,142,1)"
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                      fill="transparent"
-                      strokeDasharray={2 * Math.PI * 52}
-                      strokeDashoffset={
-                        (1 - pct / 100) * (2 * Math.PI * 52)
-                      }
-                    />
-                  </svg>
+                <svg viewBox="0 0 120 120" className="w-full h-full" style={{ transform: "rotate(-90deg)" }}>
+                  <circle cx="60" cy="60" r="52" stroke="rgba(255,255,255,0.4)" strokeWidth="8" fill="transparent" />
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="52"
+                    stroke="rgba(253,84,142,1)"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    fill="transparent"
+                    strokeDasharray={2 * Math.PI * 52}
+                    strokeDashoffset={(1 - pct / 100) * (2 * Math.PI * 52)}
+                  />
+                </svg>
 
-                {/* text stays normal */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                   <span className="text-xs text-dim">
                     {t("meditation:remaining", "Remaining")}
@@ -284,67 +267,46 @@ export default function RitualPlayer() {
               </div>
 
               <div className="text-center">
-                <h1 className="text-base font-semibold text-main">
-                  {headerTitle}
-                </h1>
+                <h1 className="text-base font-semibold text-main">{headerTitle}</h1>
                 {resting ? (
                   <p className="text-sm text-muted mt-1 max-w-[360px]">
-                    {t(
-                      "ritual:player.restMsg",
-                      "Rest — close your eyes and breathe."
-                    )}
+                    {t("ritual:player.restMsg", "Rest — close your eyes and breathe.")}
                   </p>
                 ) : g.title ? (
-                  <p className="text-sm text-muted mt-1 max-w-[360px]">
-                    {g.title}
-                  </p>
+                  <p className="text-sm text-muted mt-1 max-w-[360px]">{g.title}</p>
                 ) : null}
               </div>
             </div>
 
-            {/* controls (ritual-specific) */}
             <div className="flex gap-3 justify-center flex-wrap">
               {!running ? (
-                <Button className="min-w-[120px]"
-                  variant="outline"
-                  onClick={onStartPause}>
+                <Button className="min-w-[120px]" variant="outline" onClick={onStartPause}>
                   {t("common:start", "Start")}
                 </Button>
               ) : (
-                <Button
-                  className="min-w-[120px]"
-                  variant="outline"
-                  onClick={onPause}
-                >
+                <Button className="min-w-[120px]" variant="outline" onClick={onPause}>
                   {t("common:pause", "Pause")}
                 </Button>
               )}
-              <Button
-                variant="outline"
-                onClick={onRest}
-                disabled={!running || resting}
-              >
+
+              <Button variant="outline" onClick={onRest} disabled={!running || resting}>
                 {t("ritual:player.rest20", "Rest 20s")}
               </Button>
+
               <Button
                 variant="outline"
                 onClick={() => {
-                  if (timerRef.current) {
-                    clearInterval(timerRef.current);
-                  }
+                  if (timerRef.current) clearInterval(timerRef.current);
                   setRunning(false);
                   void onComplete();
                 }}
                 disabled={completing}
               >
-                {completing
-                  ? t("common:saving", "Saving…")
-                  : t("ritual:player.finishNow", "Finish Now")}
+                {completing ? t("common:saving", "Saving…") : t("ritual:player.finishNow", "Finish Now")}
               </Button>
             </div>
           </Card>
 
-          {/* guidance card under, like your original ritual */}
           <Card className="p-5 bg-[rgba(255,255,255,0.15)] backdrop-blur rounded-3xl space-y-3">
             <div className="text-xs uppercase tracking-wide text-dim">
               {t("ritual:player.whatToDo", "What to do")}
@@ -354,9 +316,7 @@ export default function RitualPlayer() {
                 <li key={i}>{s}</li>
               ))}
             </ol>
-            {g.tip ? (
-              <p className="text-xs text-muted mt-2 italic">{g.tip}</p>
-            ) : null}
+            {g.tip ? <p className="text-xs text-muted mt-2 italic">{g.tip}</p> : null}
           </Card>
         </div>
       </main>

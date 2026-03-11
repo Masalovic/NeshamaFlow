@@ -1,0 +1,154 @@
+{
+  "titles": {
+    "breath-awareness": "Atención a la respiración",
+    "loving-kindness": "Bondad amorosa",
+    "focus-candle": "Enfoque en la vela",
+    "body-scan-5m": "Escaneo corporal (5 min)",
+    "open-monitoring": "Observación abierta",
+    "noting": "Etiquetar pensamientos",
+    "pmr-6m": "Relajación muscular progresiva",
+    "safe-place-imagery": "Visualización de lugar seguro"
+  },
+  "descriptions": {
+    "breath-awareness": "Atiende suavemente a la respiración natural. Cuando la atención se desvíe, vuelve sin juzgar.",
+    "loving-kindness": "Cultiva una cálida buena voluntad hacia ti y hacia los demás con frases breves.",
+    "focus-candle": "Descansa la atención en la forma de la llama, la luz y la sombra como ancla visual.",
+    "body-scan-5m": "Recorre el cuerpo con la atención desde los dedos de los pies hasta la cabeza, notando las sensaciones tal como son.",
+    "open-monitoring": "Abre la conciencia a cualquier experiencia — sonidos, pensamientos, sensaciones — sin elegir un solo ancla.",
+    "noting": "Cuando notes una distracción, etiquétala suavemente (por ejemplo, “pensando”, “oyendo”) y regresa.",
+    "pmr-6m": "Tensa y relaja suavemente los principales grupos musculares para reducir la activación e invitar al sueño.",
+    "safe-place-imagery": "Imagina un lugar intensamente seguro y reconfortante para reducir la ansiedad y promover la calma."
+  },
+  "guides": {
+    "breath-awareness": {
+      "why": "La respiración consciente aumenta el control atencional y reduce la reactividad de la amígdala; los ensayos clínicos la relacionan con menor estrés percibido y mejor HRV.",
+      "whyBullets": [
+        "Fortalece el control atencional de arriba abajo",
+        "Disminuye la activación simpática",
+        "Mejora la regulación emocional"
+      ],
+      "steps": [
+        "Siéntate cómodamente; alarga la columna; relaja la mandíbula y los hombros.",
+        "Observa la respiración en un solo punto (fosas nasales o vientre).",
+        "Cuando la mente se vaya, reconócelo suavemente y vuelve a la respiración.",
+        "Continúa a un ritmo natural."
+      ],
+      "tip": "Elige un solo punto de la respiración y que el regreso sea suave."
+    },
+    "loving-kindness": {
+      "why": "Las prácticas de compasión aumentan el afecto positivo y la conexión social; los metaanálisis muestran reducciones en la autocrítica y los síntomas depresivos.",
+      "whyBullets": [
+        "Aumenta la emoción positiva y la conexión",
+        "Reduce la autocrítica",
+        "Favorece la resiliencia"
+      ],
+      "steps": [
+        "Trae a la mente a ti misma o a alguien por quien te resulte fácil sentir cariño.",
+        "Repite en silencio frases como: “Que estés a salvo. Que tengas salud. Que estés en paz.”",
+        "Deja que el tono sea cálido y sincero; si es difícil, empieza con alguien neutral (por ejemplo, una mascota o una persona benefactora).",
+        "Amplía la práctica hacia otras personas si el tiempo lo permite."
+      ],
+      "tip": "Ajusta las frases para que se sientan naturales con tus propias palabras."
+    },
+    "focus-candle": {
+      "why": "La atención en un solo punto reduce la divagación mental y entrena el foco sostenido; los anclajes visuales pueden estabilizar rápidamente las redes de atención.",
+      "whyBullets": [
+        "Entrena la atención sostenida",
+        "Reduce la rumiación",
+        "Ancla visual sencilla"
+      ],
+      "steps": [
+        "Coloca una vela encendida a la altura de los ojos, a unos 1–2 metros de distancia.",
+        "Suaviza la mirada sobre la forma, el color y el halo de la llama.",
+        "Cuando algo te distraiga, observa “pensando/viendo” y vuelve.",
+        "Deja que el parpadeo sea natural; hombros relajados."
+      ],
+      "tip": "Si los ojos se cansan, ciérralos brevemente y visualiza la llama."
+    },
+    "body-scan-5m": {
+      "why": "El entrenamiento interoceptivo reduce la rumiación y mejora la tolerancia al dolor y al estrés al reclutar redes somatosensoriales.",
+      "whyBullets": [
+        "Mejora la conciencia corporal",
+        "Interrumpe el bucle cognitivo",
+        "Favorece la relajación"
+      ],
+      "steps": [
+        "Túmbate o siéntate; suaviza la mirada o cierra los ojos.",
+        "Empieza por los dedos de los pies; observa contacto, temperatura, cosquilleo o neutralidad.",
+        "Avanza despacio: pies → pantorrillas → rodillas → muslos → caderas → vientre → pecho → hombros → brazos/manos → cuello → cara → cuero cabelludo.",
+        "Si te distraes, vuelve a la última zona del cuerpo."
+      ],
+      "tip": "Observa sin intentar cambiar las sensaciones."
+    },
+    "open-monitoring": {
+      "why": "La observación abierta aumenta la no reactividad y la flexibilidad cognitiva; los estudios muestran menos estrés y una atención más amplia.",
+      "whyBullets": [
+        "Desarrolla no reactividad ante la experiencia",
+        "Amplía el alcance de la atención",
+        "Menor reactividad al estrés"
+      ],
+      "steps": [
+        "Siéntate erguida; respira de forma natural.",
+        "Deja que sonidos, sensaciones y pensamientos aparezcan y pasen.",
+        "Observa comienzos y finales sin perseguir un solo objeto.",
+        "Si te quedas enganchada, reconoce “atrapada” y vuelve a abrir la atención."
+      ],
+      "tip": "Piensa en la conciencia como una habitación espaciosa; las experiencias se mueven a través de ella."
+    },
+    "noting": {
+      "why": "Etiquetar (“affect labeling”) reduce la activación límbica y mejora el cambio atencional; es útil para la rumiación.",
+      "whyBullets": [
+        "Reduce la carga emocional al etiquetar",
+        "Favorece el regreso rápido a la tarea",
+        "Disminuye la rumiación"
+      ],
+      "steps": [
+        "Elige un ancla suave (la respiración o los sonidos).",
+        "Cuando aparezca una distracción, etiquétala suavemente: “pensando”, “planificando”, “oyendo”, “sintiendo”.",
+        "Vuelve al ancla sin juzgar.",
+        "Repítelo tantas veces como sea necesario."
+      ],
+      "tip": "Mantén las etiquetas cortas y suaves, lo justo para notar."
+    },
+    "pmr-6m": {
+      "why": "La relajación muscular progresiva reduce la activación simpática y mejora el inicio del sueño al alternar tensión y liberación.",
+      "whyBullets": [
+        "Reduce la activación",
+        "Mejora la latencia del sueño",
+        "Fácil de aprender"
+      ],
+      "steps": [
+        "Mientras estás sentada o tumbada, inhala y tensa suavemente pies y pantorrillas durante unos 3–5 segundos.",
+        "Exhala y libera por completo. Pasa a muslos y caderas.",
+        "Continúa por vientre/pecho, manos/brazos, hombros, cara/mandíbula.",
+        "Termina con una respiración lenta y profunda y una liberación completa de todo el cuerpo."
+      ],
+      "tip": "Mantén la tensión suave: busca conciencia, no esfuerzo."
+    },
+    "safe-place-imagery": {
+      "why": "La imaginería guiada activa vías parasimpáticas y puede reducir la ansiedad; los protocolos informados por trauma suelen incluir un ejercicio de lugar seguro.",
+      "whyBullets": [
+        "Activa redes calmantes de imaginería",
+        "Reduce la ansiedad y la percepción de amenaza",
+        "Útil entre sesiones"
+      ],
+      "steps": [
+        "Cierra los ojos e imagina un lugar que se sienta seguro y reconfortante (real o imaginado).",
+        "Activa los sentidos: colores, sonidos, temperatura, aromas, texturas.",
+        "Añade una frase de apoyo (por ejemplo, “Aquí estoy a salvo.”).",
+        "Descansa allí durante varias respiraciones; vuelve cuando estés lista."
+      ],
+      "tip": "Si te cuesta visualizar, constrúyelo poco a poco, un sentido a la vez."
+    }
+  },
+  "ambient": {
+  "off": "Sin ambiente",
+  "base": "Fondo",
+  "rain": "Lluvia"
+},
+  "voice": {
+    "f": "Femenina",
+    "m": "Masculina",
+    "asmr": "ASMR"
+  }
+}

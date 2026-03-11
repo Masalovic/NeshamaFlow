@@ -59,6 +59,17 @@
     "goPro": "Go Pro",
     "proFeature": "Pro opcija: popravi propušten dan"
   },
+  "quoteCard": {
+    "title": "Misao dana",
+    "subtitle": "Mali koraci se računaju.",
+    "quotes": [
+      "Udahni. Ide ti bolje nego što misliš.",
+      "Jedna mala akcija je jača od savršenog plana.",
+      "Učini lako. Učini malo. Učini sada.",
+      "Ne treba ti više vremena. Treba ti manje trenja.",
+      "Smirenost je veština — vežbaj je, dah po dah."
+    ]
+  },
   "selectMood": "Izaberi raspoloženje",
   "noteLabelOptional": "Dodaj belešku (opciono)",
   "notePlaceholder": "Šta ti je na umu?",

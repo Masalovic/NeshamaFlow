@@ -1,0 +1,154 @@
+{
+  "titles": {
+    "breath-awareness": "Achtsamkeit auf den Atem",
+    "loving-kindness": "Liebende Güte",
+    "focus-candle": "Kerzenfokus",
+    "body-scan-5m": "Body Scan (5 Min.)",
+    "open-monitoring": "Offenes Gewahrsein",
+    "noting": "Gedanken benennen",
+    "pmr-6m": "Progressive Muskelentspannung",
+    "safe-place-imagery": "Sicherer Ort – Imagination"
+  },
+  "descriptions": {
+    "breath-awareness": "Richte deine Aufmerksamkeit sanft auf den natürlichen Atem. Wenn sie abschweift, kehre ohne Bewertung zurück.",
+    "loving-kindness": "Entwickle warme Güte für dich selbst und andere mit kurzen Sätzen.",
+    "focus-candle": "Lege die Aufmerksamkeit auf Form, Licht und Schatten der Flamme als visuellen Anker.",
+    "body-scan-5m": "Lenke die Aufmerksamkeit durch den Körper von den Zehen bis zum Kopf und nimm Empfindungen wahr, wie sie sind.",
+    "open-monitoring": "Öffne das Gewahrsein für alle Erfahrungen — Geräusche, Gedanken, Empfindungen — ohne einen einzigen Anker zu wählen.",
+    "noting": "Wenn du eine Ablenkung bemerkst, benenne sie sanft (z. B. „denken“, „hören“) und kehre zurück.",
+    "pmr-6m": "Spanne große Muskelgruppen sanft an und löse sie wieder, um Erregung zu senken und Schlaf zu fördern.",
+    "safe-place-imagery": "Stelle dir einen lebendigen, sicheren und beruhigenden Ort vor, um Angst zu verringern und Ruhe zu fördern."
+  },
+  "guides": {
+    "breath-awareness": {
+      "why": "Achtsames Atmen erhöht die Aufmerksamkeitskontrolle und verringert die Reaktivität der Amygdala; klinische Studien verbinden es mit weniger wahrgenommenem Stress und verbessertem HRV.",
+      "whyBullets": [
+        "Stärkt die Top-down-Aufmerksamkeitskontrolle",
+        "Verringert sympathische Erregung",
+        "Verbessert die Emotionsregulation"
+      ],
+      "steps": [
+        "Sitze bequem; richte die Wirbelsäule auf; entspanne Kiefer und Schultern.",
+        "Nimm den Atem an einer Stelle wahr (Nasenlöcher oder Bauch).",
+        "Wenn der Geist abschweift, nimm es sanft wahr und kehre zum Atem zurück.",
+        "Fahre in natürlichem Tempo fort."
+      ],
+      "tip": "Wähle einen einzigen Atemort und halte die Rückkehr sanft."
+    },
+    "loving-kindness": {
+      "why": "Mitgefühlspraktiken steigern positive Gefühle und soziale Verbundenheit; Meta-Analysen zeigen weniger Selbstkritik und depressive Symptome.",
+      "whyBullets": [
+        "Fördert positive Gefühle und Verbundenheit",
+        "Reduziert Selbstkritik",
+        "Stärkt Resilienz"
+      ],
+      "steps": [
+        "Rufe dir dich selbst oder jemanden ins Gedächtnis, für den du leicht Fürsorge empfindest.",
+        "Wiederhole still Sätze wie: „Mögest du sicher sein. Mögest du gesund sein. Mögest du friedlich sein.“",
+        "Lass den Ton warm und aufrichtig sein; wenn es schwerfällt, beginne neutral (z. B. mit einem Haustier oder Wohltäter).",
+        "Beziehe nach und nach weitere Menschen mit ein, wenn die Zeit es erlaubt."
+      ],
+      "tip": "Passe die Sätze so an, dass sie sich in deinen eigenen Worten natürlich anfühlen."
+    },
+    "focus-candle": {
+      "why": "Einpunktige Aufmerksamkeit reduziert Gedankenabschweifen und trainiert anhaltenden Fokus; visuelle Anker können Aufmerksamkeitsnetzwerke schnell stabilisieren.",
+      "whyBullets": [
+        "Trainiert anhaltende Aufmerksamkeit",
+        "Reduziert Grübeln",
+        "Einfacher visueller Anker"
+      ],
+      "steps": [
+        "Stelle eine brennende Kerze auf Augenhöhe in etwa 1–2 Metern Entfernung auf.",
+        "Lass den Blick weich auf Form, Farbe und Halo der Flamme ruhen.",
+        "Wenn du abgelenkt wirst, benenne es als „denken/sehen“ und kehre zurück.",
+        "Lass Blinzeln natürlich geschehen; halte die Schultern entspannt."
+      ],
+      "tip": "Wenn die Augen müde werden, schließe sie kurz und visualisiere die Flamme."
+    },
+    "body-scan-5m": {
+      "why": "Interozeptives Training reduziert Grübeln und verbessert Schmerz- und Stresstoleranz durch die Aktivierung somatosensorischer Netzwerke.",
+      "whyBullets": [
+        "Verbessert das Körperbewusstsein",
+        "Unterbricht kognitive Schleifen",
+        "Unterstützt Entspannung"
+      ],
+      "steps": [
+        "Lege dich hin oder setze dich; lass den Blick weich werden oder schließe die Augen.",
+        "Beginne bei den Zehen; nimm Kontakt, Temperatur, Kribbeln oder Neutralität wahr.",
+        "Gehe langsam weiter: Füße → Waden → Knie → Oberschenkel → Hüften → Bauch → Brust → Schultern → Arme/Hände → Nacken → Gesicht → Kopfhaut.",
+        "Wenn du abgelenkt wirst, kehre zum zuletzt wahrgenommenen Körperbereich zurück."
+      ],
+      "tip": "Beobachte, ohne Empfindungen verändern zu wollen."
+    },
+    "open-monitoring": {
+      "why": "Offenes Gewahrsein erhöht Nicht-Reaktivität und kognitive Flexibilität; Studien zeigen weniger Stress und eine breitere Aufmerksamkeit.",
+      "whyBullets": [
+        "Stärkt Nicht-Reaktivität gegenüber Erfahrung",
+        "Erweitert den Aufmerksamkeitsraum",
+        "Weniger Stressreaktivität"
+      ],
+      "steps": [
+        "Sitze aufrecht; atme natürlich.",
+        "Lass Geräusche, Empfindungen und Gedanken auftauchen und vergehen.",
+        "Nimm Anfänge und Enden wahr, ohne einem einzelnen Objekt zu folgen.",
+        "Wenn du dich verfängst, erkenne es als „erwischt“ an und öffne dich wieder."
+      ],
+      "tip": "Stell dir Bewusstsein wie einen weiten Raum vor; Erfahrungen bewegen sich hindurch."
+    },
+    "noting": {
+      "why": "Benennen („affect labeling“) reduziert limbische Aktivierung und verbessert das Umschalten der Aufmerksamkeit; hilfreich bei Grübeln.",
+      "whyBullets": [
+        "Verringert emotionale Last durch Benennen",
+        "Unterstützt schnelle Rückkehr zur Aufgabe",
+        "Reduziert Grübeln"
+      ],
+      "steps": [
+        "Wähle einen sanften Anker (Atem oder Geräusche).",
+        "Wenn eine Ablenkung auftaucht, benenne sie leise: „denken“, „planen“, „hören“, „fühlen“.",
+        "Kehre ohne Bewertung zum Anker zurück.",
+        "Wiederhole es so oft wie nötig."
+      ],
+      "tip": "Halte die Benennungen kurz und leise — gerade genug, um zu bemerken."
+    },
+    "pmr-6m": {
+      "why": "Progressive Muskelentspannung senkt sympathische Erregung und verbessert das Einschlafen durch den Wechsel von Anspannung und Loslassen.",
+      "whyBullets": [
+        "Reguliert Erregung nach unten",
+        "Verbessert Einschlafzeit",
+        "Leicht zu lernen"
+      ],
+      "steps": [
+        "Während du sitzt oder liegst, atme ein und spanne Füße und Waden für etwa 3–5 Sekunden sanft an.",
+        "Atme aus und lass vollständig los. Gehe weiter zu Oberschenkeln und Hüften.",
+        "Fahre fort mit Bauch/Brust, Händen/Armen, Schultern, Gesicht/Kiefer.",
+        "Beende die Übung mit einem langsamen, tiefen Atemzug und vollständigem Loslassen im ganzen Körper."
+      ],
+      "tip": "Halte die Anspannung sanft — es geht um Bewusstheit, nicht um Anstrengung."
+    },
+    "safe-place-imagery": {
+      "why": "Geführte Imagination aktiviert parasympathische Bahnen und kann Angst reduzieren; traumasensible Protokolle enthalten oft eine Übung zum sicheren Ort.",
+      "whyBullets": [
+        "Aktiviert beruhigende Vorstellungsnetzwerke",
+        "Reduziert Angst und Bedrohungsbewertung",
+        "Nützlich zwischen Sitzungen"
+      ],
+      "steps": [
+        "Schließe die Augen und stelle dir einen Ort vor, der sicher und beruhigend wirkt (real oder vorgestellt).",
+        "Beziehe die Sinne ein: Farben, Geräusche, Temperatur, Düfte, Texturen.",
+        "Füge einen unterstützenden Satz hinzu (z. B. „Hier bin ich sicher.“).",
+        "Verweile dort für mehrere Atemzüge; kehre zurück, wenn du bereit bist."
+      ],
+      "tip": "Wenn Visualisieren schwerfällt, baue es langsam auf — Sinn für Sinn."
+    }
+  },
+  "ambient": {
+  "off": "Kein Hintergrund",
+  "base": "Hintergrund",
+  "rain": "Regen"
+},
+  "voice": {
+    "f": "Weiblich",
+    "m": "Männlich",
+    "asmr": "ASMR"
+  }
+}

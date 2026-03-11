@@ -176,3 +176,39 @@ input[type="password"], input[type="email"], textarea, select {
   box-shadow: none !important;
   border-color: transparent !important;
 }
+
+/* ---------- Horizontal scrollbar styling (clean & rounded) ---------- */
+
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: thin;    /* Firefox */
+  scrollbar-color: var(--border) transparent;
+}
+
+/* Chrome / Safari */
+.hide-scrollbar::-webkit-scrollbar {
+  height: 6px;              /* tanji */
+}
+
+.hide-scrollbar::-webkit-scrollbar-track {
+  background: transparent;  /* bez bele pozadine */
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 9999px;    /* potpuno zaobljen */
+}
+
+/* ukloni strelice */
+.hide-scrollbar::-webkit-scrollbar-button {
+  display: none;
+}
+
+@keyframes quoteFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.quote-fade {
+  animation: quoteFadeIn 420ms ease both;
+}

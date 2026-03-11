@@ -27,6 +27,17 @@
     "goPro": "Pro’ya geç",
     "proFeature": "Pro özelliği: kaçırılan günü onar"
   },
+  "quoteCard": {
+    "title": "Günün düşüncesi",
+    "subtitle": "Küçük adımlar da önemlidir.",
+    "quotes": [
+      "Nefes al. Sandığından daha iyisin.",
+      "Küçük bir eylem, mükemmel planlamadan iyidir.",
+      "Kolaylaştır. Küçült. Şimdi yap.",
+      "Daha fazla zamana değil, daha az sürtünmeye ihtiyacın var.",
+      "Sakinlik bir beceridir — nefes nefes pratik et."
+    ]
+  },
   "selectMood": "Ruh hâli seç",
   "noteLabelOptional": "Not ekle (isteğe bağlı)",
   "notePlaceholder": "Aklında ne var?",

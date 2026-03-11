@@ -27,6 +27,17 @@
     "goPro": "Go Pro",
     "proFeature": "Pro-Funktion: versäumten Tag reparieren"
   },
+  "quoteCard": {
+    "title": "Gedanke des Tages",
+    "subtitle": "Kleine Schritte zählen auch.",
+    "quotes": [
+      "Atme. Du machst das besser, als du denkst.",
+      "Eine kleine Handlung schlägt perfektes Planen.",
+      "Mach es leicht. Mach es klein. Mach es jetzt.",
+      "Du brauchst nicht mehr Zeit. Du brauchst weniger Reibung.",
+      "Ruhe ist eine Fähigkeit — übe sie Atemzug für Atemzug."
+    ]
+  },
   "selectMood": "Stimmung wählen",
   "noteLabelOptional": "Notiz hinzufügen (optional)",
   "notePlaceholder": "Woran denkst du?",

@@ -6,6 +6,7 @@ import EmojiGrid from "../components/EmojiGrid";
 import TodayPanel from "../components/TodayPanel";
 import Header from "../components/ui/Header";
 import InsightChips from "../components/InsightChips";
+import QuoteCard from "../components/QuoteCard";
 import StreakCard from "../components/StreakCard";
 import SmartReminderBanner from "../components/SmartReminderBanner";
 import { loadHistory, logLocal, type LogItem } from "../lib/history";
@@ -72,6 +73,7 @@ export default function MoodLog() {
       ritualId: "quick",
       durationSec: 0,
       note: cleanedNote || null,
+      kind: "ritual",
       // if your LogItem supports metadata, you could also attach the array:
       // meta: { moods }
     });
@@ -102,6 +104,7 @@ export default function MoodLog() {
         <div className="mx-auto max-w-[420px] space-y-4 p-4">
           <TodayPanel />
           <SmartReminderBanner />
+          <QuoteCard />
           <StreakCard />
           <InsightChips />
 

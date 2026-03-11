@@ -44,7 +44,7 @@ function tagLabel(t: (k: string, d?: any) => string, key: string) {
 
 type Med = {
   id: string;
-  titleKey: string;
+  titleKey: string; 
   descKey?: string;
   durSec: number;
   tags?: string[];
@@ -419,7 +419,7 @@ export default function FlowsHub() {
               moreChip={
                 allTags.length > topTags.length ? (
                   <button
-                    className="chip h-8 px-3 py-1.5"
+                    className="chip h-8 px-3 text-sm font-bold"
                     onClick={() => setTagModalOpen(true)}
                     title={t("library:moreFilters", "More")}
                   >

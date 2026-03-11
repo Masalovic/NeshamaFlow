@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => ({
     VitePWA({
       // show "update available" prompt from the SW
       registerType: "prompt",
-      devOptions: { enabled: false }, // keep SW off in dev
+      devOptions: { enabled: true }, // keep SW off in dev
 
       includeAssets: [
         "offline.html",
@@ -84,7 +84,7 @@ export default defineConfig(({ mode }) => ({
             },
           },
         ],
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,json}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,json, mp3}"],
         additionalManifestEntries: [{ url: "/locales/en/common.json", revision: null }],
       },
     }),

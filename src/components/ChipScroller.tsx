@@ -21,7 +21,7 @@ export default function ChipScroller<T extends string>({
 }: ChipScrollerProps<T>) {
   return (
     <div
-      className={`relative overflow-x-auto no-scrollbar -mx-2 px-2 ${className}`}
+      className={`relative overflow-x-auto hide-scrollbar -mx-2 px-2 ${className}`}
       aria-label={ariaLabel}
     >
       <div className="flex gap-1.5 py-0.5">
@@ -33,7 +33,7 @@ export default function ChipScroller<T extends string>({
               type="button"
               onClick={() => onChange(opt.key)}
               aria-pressed={active}
-              className={"chip flex flex-wrap items-center justify-center text-sm h-8 px-3 py-1.5 whitespace-nowrap " + (active ? "ring-2" : "")}
+              className={"chip flex flex-wrap items-center justify-center text-sm h-8 px-3 whitespace-nowrap " + (active ? "ring-2" : "")}
               style={{ "--tw-ring-color": "var(--accent-400)" } as React.CSSProperties}
               title={opt.label}
             >

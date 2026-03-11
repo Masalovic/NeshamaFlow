@@ -1,27 +1,26 @@
 // src/routes/RoutineRun.tsx
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import Header from "../components/ui/Header";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import { BUILT_IN_ROUTINES, type RoutineStep } from "../lib/routines";
-import { BreathCoach } from "../components/BreathCoach"; // 👈 add this
+import { BreathCoach } from "../components/BreathCoach";
+import { getItem as sGet } from "../lib/secureStorage";
+import { logLocal } from "../lib/history";
+import { isMoodKey, type MoodKey } from "../lib/ritualEngine";
 
 export default function RoutineRun() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const routine = useMemo(
-    () => BUILT_IN_ROUTINES.find((x) => x.id === id),
-    [id]
-  );
+  const routine = useMemo(() => BUILT_IN_ROUTINES.find((x) => x.id === id), [id]);
 
-  // some older routines might not have steps → normalize to []
-  const steps: RoutineStep[] = Array.isArray(routine?.steps)
-    ? (routine!.steps as RoutineStep[])
-    : [];
-
+  const steps: RoutineStep[] = Array.isArray(routine?.steps) ? (routine!.steps as RoutineStep[]) : [];
   const [stepIdx, setStepIdx] = useState(0);
+
+  const finalizedRef = useRef(false);
+  const startedAtRef = useRef<number>(Date.now());
 
   if (!routine) {
     return (
@@ -39,16 +38,50 @@ export default function RoutineRun() {
     );
   }
 
+  const routineId = routine.id;
   const total = steps.length;
-  // if no steps, show a dummy step-like view
   const current: RoutineStep | null = total ? steps[stepIdx] : null;
+
+  const estTotalSec = useMemo(() => {
+    const sum = steps.reduce((acc, s) => acc + (s.durationSec ?? 0), 0);
+    return Math.max(0, Math.round(sum));
+  }, [steps]);
+
+  async function finalizeRoutine() {
+    if (finalizedRef.current) return;
+    finalizedRef.current = true;
+
+    const elapsedSec = Math.max(0, Math.round((Date.now() - startedAtRef.current) / 1000));
+    const durationSec = elapsedSec || estTotalSec || 0;
+
+    try {
+      const moodRaw = await sGet<string>("mood");
+      const noteRaw = await sGet<string>("note");
+
+      const mood = isMoodKey(moodRaw) ? (moodRaw as MoodKey) : null;
+      const note = (noteRaw ?? "").trim() || null;
+
+      if (mood) {
+        await logLocal({
+          mood,
+          ritualId: routineId,
+          durationSec,
+          note,
+          kind: "routine",
+        });
+      }
+    } catch {
+      // ignore
+    }
+
+    navigate(`/ritual/done?kind=routine&id=${encodeURIComponent(routineId)}`, { replace: true });
+  }
 
   function goNext() {
     if (total && stepIdx + 1 < total) {
       setStepIdx((i) => i + 1);
     } else {
-      // done
-      navigate("/flows", { replace: true });
+      void finalizeRoutine();
     }
   }
 
@@ -56,15 +89,13 @@ export default function RoutineRun() {
     if (total && stepIdx + 1 < total) {
       setStepIdx((i) => i + 1);
     } else {
-      navigate("/flows", { replace: true });
+      void finalizeRoutine();
     }
   }
 
-  // 👇 detect if this step is a breathing step
   const isBreathStep =
     current &&
-    (current.type === "breath" ||
-      /inhale|exhale|4s|8s/i.test(current.summary ?? ""));
+    (current.type === "breath" || /inhale|exhale|4s|8s/i.test(current.summary ?? ""));
 
   return (
     <div className="min-h-dvh flex flex-col">
@@ -72,21 +103,13 @@ export default function RoutineRun() {
 
       <main className="flex-1 px-4 py-4">
         <div className="max-w-[540px] mx-auto space-y-4">
-          {/* hero */}
           <Card className="p-4 bg-[rgba(255,255,255,0.35)] backdrop-blur">
             {routine.when ? (
-              <div className="text-xs uppercase tracking-wide text-dim mb-1">
-                {routine.when}
-              </div>
+              <div className="text-xs uppercase tracking-wide text-dim mb-1">{routine.when}</div>
             ) : null}
-            <h1 className="text-lg font-semibold text-main">
-              {routine.title}
-            </h1>
-            {routine.intent ? (
-              <p className="text-sm text-muted mt-1">{routine.intent}</p>
-            ) : null}
+            <h1 className="text-lg font-semibold text-main">{routine.title}</h1>
+            {routine.intent ? <p className="text-sm text-muted mt-1">{routine.intent}</p> : null}
 
-            {/* progress */}
             {total ? (
               <div className="mt-3">
                 <div className="flex items-center justify-between text-xs text-muted mb-1">
@@ -102,16 +125,13 @@ export default function RoutineRun() {
                 <div className="h-1.5 w-full bg-[rgba(255,255,255,0.4)] rounded-full overflow-hidden">
                   <div
                     className="h-full bg-[var(--accent-500)] transition-all"
-                    style={{
-                      width: `${((stepIdx + 1) / total) * 100}%`,
-                    }}
+                    style={{ width: `${((stepIdx + 1) / total) * 100}%` }}
                   />
                 </div>
               </div>
             ) : null}
           </Card>
 
-          {/* current step */}
           <Card className="p-5 space-y-3">
             {current ? (
               <>
@@ -120,17 +140,12 @@ export default function RoutineRun() {
                     {stepIdx + 1}
                   </span>
                   {current.type ? (
-                    <span className="uppercase tracking-wide text-[11px]">
-                      {current.type}
-                    </span>
+                    <span className="uppercase tracking-wide text-[11px]">{current.type}</span>
                   ) : null}
                 </div>
-                <h2 className="text-base font-semibold text-main">
-                  {current.title}
-                </h2>
-                {current.summary ? (
-                  <p className="text-sm text-muted">{current.summary}</p>
-                ) : null}
+
+                <h2 className="text-base font-semibold text-main">{current.title}</h2>
+                {current.summary ? <p className="text-sm text-muted">{current.summary}</p> : null}
 
                 {current.benefit ? (
                   <div className="p-3 rounded-xl bg-[rgba(249,190,222,0.25)] text-xs text-main leading-relaxed">
@@ -142,13 +157,10 @@ export default function RoutineRun() {
                 {current.prompt ? (
                   <div>
                     <div className="text-xs text-dim mb-1">What to do</div>
-                    <p className="text-sm text-main leading-relaxed">
-                      {current.prompt}
-                    </p>
+                    <p className="text-sm text-main leading-relaxed">{current.prompt}</p>
                   </div>
                 ) : null}
 
-                {/* 👇 breath timer goes right after instructions */}
                 {isBreathStep && (
                   <BreathCoach
                     inhaleSec={current.breath?.inhaleSec ?? 4}
@@ -158,30 +170,21 @@ export default function RoutineRun() {
                   />
                 )}
 
-                {/* actions */}
                 <div className="flex gap-3 pt-2">
                   <Button className="btn btn-primary flex-1" onClick={goNext}>
                     {stepIdx + 1 === total ? "Finish" : "Next"}
                   </Button>
-                  <Button
-                    className="btn btn-outline"
-                    variant="outline"
-                    onClick={skipStep}
-                  >
+                  <Button className="btn btn-outline" variant="outline" onClick={skipStep}>
                     Skip
                   </Button>
                 </div>
               </>
             ) : (
               <>
-                <h2 className="text-base font-semibold text-main">
-                  No steps yet
-                </h2>
-                <p className="text-sm text-muted">
-                  This routine doesn’t have individual steps configured.
-                </p>
+                <h2 className="text-base font-semibold text-main">No steps yet</h2>
+                <p className="text-sm text-muted">This routine doesn’t have individual steps configured.</p>
                 <div className="flex gap-3 pt-2">
-                  <Button className="btn btn-primary" onClick={goNext}>
+                  <Button className="btn btn-primary" onClick={() => void finalizeRoutine()}>
                     Finish
                   </Button>
                   <Link className="btn btn-outline" to="/flows">
@@ -192,7 +195,6 @@ export default function RoutineRun() {
             )}
           </Card>
 
-          {/* list of steps preview */}
           {total ? (
             <Card className="p-4 space-y-2">
               <div className="text-xs text-dim mb-1">Routine steps</div>
@@ -202,21 +204,15 @@ export default function RoutineRun() {
                     key={s.id ?? i}
                     className={
                       "flex items-center justify-between gap-2 rounded-lg px-3 py-2 " +
-                      (i === stepIdx
-                        ? "bg-[rgba(253,84,142,0.12)]"
-                        : "bg-transparent")
+                      (i === stepIdx ? "bg-[rgba(253,84,142,0.12)]" : "bg-transparent")
                     }
                   >
                     <div>
                       <div className="text-sm text-main">{s.title}</div>
-                      {s.summary ? (
-                        <div className="text-xs text-muted">{s.summary}</div>
-                      ) : null}
+                      {s.summary ? <div className="text-xs text-muted">{s.summary}</div> : null}
                     </div>
                     {s.durationSec ? (
-                      <span className="text-[11px] text-dim">
-                        {Math.round(s.durationSec / 60) || 1}m
-                      </span>
+                      <span className="text-[11px] text-dim">{Math.round(s.durationSec / 60) || 1}m</span>
                     ) : null}
                   </li>
                 ))}

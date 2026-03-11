@@ -7,20 +7,15 @@ export default function Meditations() {
   const { search } = useLocation();
   const navigate = useNavigate();
 
-  // read ?id=...
   const params = useMemo(() => new URLSearchParams(search), [search]);
   const id = params.get("id");
 
-  // if someone opens /meditations without id -> send them to Flows
   useEffect(() => {
-    if (!id) {
-      navigate("/flows", { replace: true });
-    }
+    if (!id) navigate("/flows", { replace: true });
   }, [id, navigate]);
 
-  // while redirecting, render nothing
   if (!id) return null;
 
-  // with id -> show the real player (the one with audio + ambience)
-  return <MeditationPlay />;
+  // ✅ pass id explicitly (more reliable than hidden URL reading)
+  return <MeditationPlay id={id} />;
 }

@@ -1,0 +1,154 @@
+{
+  "titles": {
+    "breath-awareness": "Conscience du souffle",
+    "loving-kindness": "Bienveillance aimante",
+    "focus-candle": "Focalisation sur la bougie",
+    "body-scan-5m": "Scan corporel (5 min)",
+    "open-monitoring": "Observation ouverte",
+    "noting": "Étiqueter les pensées",
+    "pmr-6m": "Relaxation musculaire progressive",
+    "safe-place-imagery": "Visualisation d’un lieu sûr"
+  },
+  "descriptions": {
+    "breath-awareness": "Porte doucement ton attention sur la respiration naturelle. Quand l’attention s’égare, reviens sans jugement.",
+    "loving-kindness": "Cultive une chaleur bienveillante envers toi-même et les autres à l’aide de courtes phrases.",
+    "focus-candle": "Pose l’attention sur la forme de la flamme, sa lumière et son ombre comme ancrage visuel unique.",
+    "body-scan-5m": "Fais passer l’attention dans le corps des orteils jusqu’à la tête, en remarquant les sensations telles qu’elles sont.",
+    "open-monitoring": "Ouvre la conscience à toute expérience — sons, pensées, sensations — sans choisir un seul ancrage.",
+    "noting": "Quand tu remarques une distraction, nomme-la doucement (par ex. « pensée », « entendre ») puis reviens.",
+    "pmr-6m": "Contracte puis relâche doucement les principaux groupes musculaires pour apaiser l’activation et favoriser le sommeil.",
+    "safe-place-imagery": "Imagine un lieu intensément sûr et apaisant afin de réduire l’anxiété et favoriser le calme."
+  },
+  "guides": {
+    "breath-awareness": {
+      "why": "La respiration en pleine conscience augmente le contrôle attentionnel et réduit la réactivité de l’amygdale ; les essais cliniques l’associent à moins de stress perçu et à une meilleure HRV.",
+      "whyBullets": [
+        "Renforce le contrôle attentionnel top-down",
+        "Diminue l’activation sympathique",
+        "Améliore la régulation émotionnelle"
+      ],
+      "steps": [
+        "Assieds-toi confortablement ; allonge la colonne ; détends la mâchoire et les épaules.",
+        "Observe la respiration en un seul point (narines ou ventre).",
+        "Quand l’esprit s’égare, remarque-le doucement puis reviens au souffle.",
+        "Continue à un rythme naturel."
+      ],
+      "tip": "Choisis un seul point de respiration et garde un retour doux."
+    },
+    "loving-kindness": {
+      "why": "Les pratiques de compassion augmentent l’affect positif et la connexion sociale ; les méta-analyses montrent une réduction de l’autocritique et des symptômes dépressifs.",
+      "whyBullets": [
+        "Renforce l’émotion positive et la connexion",
+        "Réduit l’autocritique",
+        "Soutient la résilience"
+      ],
+      "steps": [
+        "Fais venir à l’esprit toi-même ou une personne envers qui il t’est facile d’éprouver de la bienveillance.",
+        "Répète silencieusement des phrases comme : « Puisses-tu être en sécurité. Puisses-tu être en bonne santé. Puisses-tu être en paix. »",
+        "Laisse le ton être chaleureux et sincère ; si c’est difficile, commence par quelqu’un de neutre (par exemple un animal ou un bienfaiteur).",
+        "Élargis ensuite à d’autres personnes si le temps le permet."
+      ],
+      "tip": "Ajuste les phrases pour qu’elles sonnent naturellement avec tes propres mots."
+    },
+    "focus-candle": {
+      "why": "L’attention à point unique réduit l’errance mentale et entraîne la concentration soutenue ; les ancrages visuels peuvent stabiliser rapidement les réseaux attentionnels.",
+      "whyBullets": [
+        "Entraîne l’attention soutenue",
+        "Réduit la rumination",
+        "Ancrage visuel simple"
+      ],
+      "steps": [
+        "Place une bougie allumée à hauteur des yeux, à environ 1–2 mètres.",
+        "Adoucis le regard sur la forme, la couleur et le halo de la flamme.",
+        "Quand l’attention s’éloigne, remarque « penser/voir » puis reviens.",
+        "Laisse les clignements naturels ; garde les épaules détendues."
+      ],
+      "tip": "Si les yeux se fatiguent, ferme-les brièvement et visualise la flamme."
+    },
+    "body-scan-5m": {
+      "why": "L’entraînement intéroceptif réduit la rumination et améliore la tolérance à la douleur et au stress en recrutant les réseaux somatosensoriels.",
+      "whyBullets": [
+        "Renforce la conscience corporelle",
+        "Interrompt les boucles cognitives",
+        "Soutient la relaxation"
+      ],
+      "steps": [
+        "Allonge-toi ou assieds-toi ; adoucis le regard ou ferme les yeux.",
+        "Commence par les orteils ; remarque le contact, la température, les picotements ou l’absence de sensation particulière.",
+        "Progresse lentement : pieds → mollets → genoux → cuisses → hanches → ventre → poitrine → épaules → bras/mains → nuque → visage → cuir chevelu.",
+        "Si tu es distraite, reviens à la dernière zone du corps."
+      ],
+      "tip": "Observe sans chercher à modifier les sensations."
+    },
+    "open-monitoring": {
+      "why": "L’observation ouverte augmente la non-réactivité et la flexibilité cognitive ; les études montrent moins de stress et une attention plus large.",
+      "whyBullets": [
+        "Développe la non-réactivité à l’expérience",
+        "Élargit le champ attentionnel",
+        "Moins de réactivité au stress"
+      ],
+      "steps": [
+        "Assieds-toi bien droite ; respire naturellement.",
+        "Laisse les sons, les sensations et les pensées apparaître puis passer.",
+        "Remarque les débuts et les fins sans suivre un seul objet.",
+        "Si tu te laisses happer, reconnais « prise » puis rouvre l’attention."
+      ],
+      "tip": "Vois la conscience comme une pièce spacieuse ; les expériences y passent."
+    },
+    "noting": {
+      "why": "L’étiquetage (« affect labeling ») réduit l’activation limbique et améliore le basculement attentionnel ; utile contre la rumination.",
+      "whyBullets": [
+        "Réduit la charge émotionnelle grâce à l’étiquetage",
+        "Favorise un retour rapide à la tâche",
+        "Diminue la rumination"
+      ],
+      "steps": [
+        "Choisis un ancrage doux (le souffle ou les sons).",
+        "Quand une distraction apparaît, étiquette-la doucement : « penser », « planifier », « entendre », « sentir ».",
+        "Reviens à l’ancrage sans jugement.",
+        "Répète autant de fois que nécessaire."
+      ],
+      "tip": "Garde les étiquettes courtes et discrètes — juste assez pour remarquer."
+    },
+    "pmr-6m": {
+      "why": "La relaxation musculaire progressive réduit l’activation sympathique et améliore l’endormissement en alternant tension et relâchement.",
+      "whyBullets": [
+        "Diminue l’activation",
+        "Améliore le temps d’endormissement",
+        "Facile à apprendre"
+      ],
+      "steps": [
+        "En position assise ou allongée, inspire et contracte doucement les pieds et les mollets pendant environ 3–5 secondes.",
+        "Expire et relâche complètement. Passe ensuite aux cuisses et aux hanches.",
+        "Continue avec le ventre/la poitrine, les mains/les bras, les épaules, le visage/la mâchoire.",
+        "Termine par une respiration lente et profonde et un relâchement complet de tout le corps."
+      ],
+      "tip": "Garde la tension légère — vise la conscience, pas l’effort."
+    },
+    "safe-place-imagery": {
+      "why": "L’imagerie guidée active les voies parasympathiques et peut réduire l’anxiété ; les protocoles sensibles au traumatisme incluent souvent un exercice de lieu sûr.",
+      "whyBullets": [
+        "Active des réseaux d’imagerie apaisants",
+        "Réduit l’anxiété et l’évaluation de menace",
+        "Utile entre les séances"
+      ],
+      "steps": [
+        "Ferme les yeux et imagine un lieu qui semble sûr et apaisant (réel ou imaginaire).",
+        "Fais intervenir les sens : couleurs, sons, température, odeurs, textures.",
+        "Ajoute une phrase de soutien (par ex. « Ici, je suis en sécurité. »).",
+        "Repose-toi là pendant plusieurs respirations ; reviens quand tu seras prête."
+      ],
+      "tip": "Si visualiser est difficile, construis-le lentement, un sens à la fois."
+    }
+  },
+  "ambient": {
+  "off": "Sans ambiance",
+  "base": "Fond sonore",
+  "rain": "Pluie"
+},
+  "voice": {
+    "f": "Féminine",
+    "m": "Masculine",
+    "asmr": "ASMR"
+  }
+}

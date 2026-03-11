@@ -38,6 +38,17 @@
     "goPro": "Passer à Pro",
     "proFeature": "Fonction Pro : réparer un jour manqué"
   },
+  "quoteCard": {
+    "title": "Pensée du jour",
+    "subtitle": "Les petits pas comptent aussi.",
+    "quotes": [
+      "Respire. Tu t’en sors mieux que tu ne le penses.",
+      "Une petite action vaut mieux qu’une planification parfaite.",
+      "Fais simple. Fais petit. Fais-le maintenant.",
+      "Tu n’as pas besoin de plus de temps. Tu as besoin de moins de friction.",
+      "Le calme est une compétence — un souffle à la fois."
+    ]
+  },
   "selectMood": "Choisir l’humeur",
   "noteLabelOptional": "Ajouter une note (facultatif)",
   "notePlaceholder": "Qu’avez-vous en tête ?",

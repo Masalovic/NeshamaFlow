@@ -149,5 +149,15 @@
       ],
       "tip": "If visualizing is hard, build it slowly using one sense at a time."
     }
+  },
+  "ambient": {
+    "off": "No ambience",
+    "base": "Background",
+    "rain": "Rain"
+  },
+  "voice": {
+    "f": "Female",
+    "m": "Male",
+    "asmr": "ASMR"
   }
 }

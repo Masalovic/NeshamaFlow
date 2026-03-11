@@ -1,6 +1,7 @@
 // src/pages/History.tsx
 import React, { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
+import type { TFunction } from "i18next";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -9,7 +10,7 @@ import Header from "../components/ui/Header";
 import InsightChips from "../components/InsightChips";
 import Heatmap28 from "../components/Heatmap28";
 
-import { loadHistory, type LogItem } from "../lib/history";
+import { loadHistory, type LogItem, type PracticeKind } from "../lib/history";
 import { ready as storageReady } from "../lib/secureStorage";
 import { titleForRitualId, type RitualId } from "../lib/ritualEngine";
 import { tRitualTitle } from "../lib/i18nRitual";
@@ -25,6 +26,40 @@ function fmtDuration(sec: number): string {
   if (s < 60) return `${s}s`;
   const m = Math.round(s / 60);
   return `${m} min`;
+}
+
+function kindOf(it: Pick<LogItem, "kind">): PracticeKind {
+  // ✅ backward compatibility: old logs without kind => ritual
+  return it.kind ?? "ritual";
+}
+
+function kindLabel(t: TFunction, k: PracticeKind): string {
+  if (k === "meditation") {
+    return t("history:kinds.meditation", { defaultValue: "Meditation" });
+  }
+  if (k === "routine") {
+    return t("history:kinds.routine", { defaultValue: "Routine" });
+  }
+  return t("history:kinds.ritual", { defaultValue: "Ritual" });
+}
+
+function KindBadge({ kind }: { kind: PracticeKind }) {
+  // Minimal visual difference: subtle badge + tiny dot (no redesign)
+  const label = kind === "meditation" ? "Meditation" : kind === "routine" ? "Routine" : "Ritual";
+
+  const dotClass =
+    kind === "meditation"
+      ? "bg-accent"
+      : kind === "routine"
+        ? "bg-main"
+        : "bg-muted";
+
+  return (
+    <span className="inline-flex items-center rounded-full border border-token bg-surface-2 px-2 py-[2px] text-[10px] font-medium text-muted">
+      <span className={`h-1.5 rounded-full ${dotClass}`} aria-hidden />
+      <span aria-hidden>{label}</span>
+    </span>
+  );
 }
 
 export default function History() {
@@ -147,7 +182,7 @@ export default function History() {
             <div className="card text-center text-dim">
               {t(
                 "history:empty",
-                "No sessions yet—start your first ritual to light up the grid."
+                "No sessions yet—start your first ritual to light up the grid.",
               )}
             </div>
           )}
@@ -160,21 +195,38 @@ export default function History() {
                 className="space-y-2"
                 aria-label={dayLabel(dayISO)}
               >
-                <div className="sticky top-0 z-[1] -mx-4 bg-nav px-4 py-1 text-xs font-medium text-muted backdrop-blur">
+                <div
+                  className="
+                    rounded-xl border border-token bg-[var(--surface-2)]
+                    px-3 py-2 text-xs font-medium text-muted
+                    shadow-[0_1px_0_rgba(0,0,0,0.05)]
+                  "
+                >
                   {dayLabel(dayISO)}
                 </div>
 
                 <div className="space-y-2">
                   {rows.map((it) => {
-                    const ritualId =
-                      (it.ritualId as RitualId) ??
-                      ("box-breath-2m" as RitualId);
+                    const k = kindOf(it);
 
-                    const title = tRitualTitle(
-                      t,
-                      ritualId,
-                      titleForRitualId(it.ritualId)
-                    );
+                    // Title mapping:
+                    // - Ritual uses existing ritual title system
+                    // - Others fall back to kind label + stored id (keeps it useful without new deps)
+                    let title = "";
+                    if (k === "ritual") {
+                      const ritualId =
+                        (it.ritualId as RitualId) ??
+                        ("box-breath-2m" as RitualId);
+
+                      title = tRitualTitle(
+                        t,
+                        ritualId,
+                        titleForRitualId(it.ritualId),
+                      );
+                    } else {
+                      const label = kindLabel(t, k);
+                      title = it.ritualId ? `${label} · ${it.ritualId}` : label;
+                    }
 
                     return (
                       <article
@@ -193,9 +245,13 @@ export default function History() {
                             <div className="text-sm font-medium text-main">
                               {fmtTime(it.ts)}
                             </div>
+
                             <div className="text-[11px] text-muted">
                               · {fmtDuration(it.durationSec ?? 0)}
                             </div>
+
+                            {/* ✅ minimal kind visual difference */}
+                            <KindBadge kind={k} />
 
                             <div
                               className="ml-auto truncate text-[11px] text-muted"

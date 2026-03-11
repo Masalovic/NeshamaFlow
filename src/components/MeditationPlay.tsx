@@ -1,4 +1,3 @@
-// src/routes/MeditationPlay.tsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../components/ui/Header";
@@ -6,6 +5,19 @@ import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import { useTranslation } from "react-i18next";
 import { tMedGuide } from "../lib/i18nMeditation";
+import { getItem as sGet, setItem as sSet } from "../lib/secureStorage";
+import { logLocal } from "../lib/history";
+import { isMoodKey, type MoodKey } from "../lib/ritualEngine";
+import {
+  buildMeditationSourceChain,
+  DEFAULT_AMBIENT_VARIANT,
+  DEFAULT_VOICE_VARIANT,
+  getAmbientSrc,
+  isAmbientVariant,
+  isVoiceVariant,
+  type AmbientVariant,
+  type VoiceVariant,
+} from "../lib/meditationAudio";
 
 // keep in sync with FlowsHub
 const MEDITATIONS = [
@@ -65,33 +77,31 @@ const MEDITATIONS = [
     durSec: 300,
     tags: ["anxiety", "trauma-informed", "imagery"],
   },
-];
-
-// main voice tracks (your renamed files)
-const MEDITATION_AUDIO: Record<string, string> = {
-  "breath-awareness": "/audio/meditations/breath-awareness.mp3",
-  "loving-kindness": "/audio/meditations/loving-kindness.mp3",
-  "open-monitoring": "/audio/meditations/open-monitoring.mp3",
-  noting: "/audio/meditations/noting.mp3",
-  "focus-candle": "/audio/meditations/candle-focus.mp3",
-  "body-scan-5m": "/audio/meditations/body-scan.mp3",
-  "pmr-6m": "/audio/meditations/muscle-relaxation.mp3",
-  "safe-place-imagery": "/audio/meditations/safe-place.mp3",
-};
-
-// ambience (optional)
-const AMBIENT_AUDIO = {
-  rain: "/audio/ambience/rain-soft.mp3",
-  water: "/audio/ambience/river.mp3",
-  fire: "/audio/ambience/fireplace.mp3",
-} as const;
+] as const;
 
 function useQuery() {
   const { search } = useLocation();
   return useMemo(() => new URLSearchParams(search), [search]);
 }
 
-export default function MeditationPlay() {
+function fadeGain(
+  gainNode: GainNode,
+  target: number,
+  duration = 0.8,
+  audioCtx?: AudioContext | null,
+) {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+  gainNode.gain.cancelScheduledValues(now);
+  gainNode.gain.setValueAtTime(gainNode.gain.value, now);
+  gainNode.gain.linearRampToValueAtTime(target, now + duration);
+}
+
+type MeditationPlayProps = {
+  id?: string;
+};
+
+export default function MeditationPlay({ id: idProp }: MeditationPlayProps) {
   const { t, i18n } = useTranslation([
     "meditation",
     "library",
@@ -100,11 +110,11 @@ export default function MeditationPlay() {
   ]);
   const navigate = useNavigate();
   const q = useQuery();
-  const id = q.get("id") ?? "";
+  const id = (idProp ?? q.get("id") ?? "").trim();
 
   const med = useMemo(
     () => MEDITATIONS.find((m) => m.id === id),
-    [id, i18n.language]
+    [id, i18n.language],
   );
 
   const guide = med ? tMedGuide(t, med.id) : null;
@@ -112,86 +122,322 @@ export default function MeditationPlay() {
   const voiceRef = useRef<HTMLAudioElement | null>(null);
   const ambientRef = useRef<HTMLAudioElement | null>(null);
 
-  // seconds already played
+  // Web Audio API refs for ducking
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const voiceSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const ambientSourceRef = useRef<MediaElementAudioSourceNode | null>(null);
+  const voiceGainRef = useRef<GainNode | null>(null);
+  const ambientGainRef = useRef<GainNode | null>(null);
+
   const [progress, setProgress] = useState(0);
   const [playing, setPlaying] = useState(true);
-  const [ambient, setAmbient] = useState<keyof typeof AMBIENT_AUDIO | "off">(
-    "off"
-  );
+  const [voiceVariant, setVoiceVariant] =
+    useState<VoiceVariant>(DEFAULT_VOICE_VARIANT);
+  const [ambient, setAmbient] =
+    useState<AmbientVariant>(DEFAULT_AMBIENT_VARIANT);
 
-  // for manual rAF timer
   const lastTsRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
 
   const totalSec = med?.durSec ?? 300;
+  const finalizedRef = useRef(false);
 
-  // init voice audio
+  useEffect(() => {
+    let alive = true;
+
+    (async () => {
+      const storedVoice = await sGet<string>("meditation.voice");
+      const storedAmbient = await sGet<string>("meditation.ambient");
+
+      if (!alive) return;
+
+      if (isVoiceVariant(storedVoice)) {
+        setVoiceVariant(storedVoice);
+      }
+      if (isAmbientVariant(storedAmbient)) {
+        setAmbient(storedAmbient);
+      }
+    })();
+
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  async function setVoiceAndPersist(next: VoiceVariant) {
+    setVoiceVariant(next);
+    await sSet("meditation.voice", next);
+  }
+
+  async function setAmbientAndPersist(next: AmbientVariant) {
+    setAmbient(next);
+    await sSet("meditation.ambient", next);
+  }
+
+  async function ensureAudioGraph(
+    voiceEl: HTMLAudioElement,
+    ambientEl?: HTMLAudioElement | null,
+  ) {
+    let ctx = audioCtxRef.current;
+
+    if (!ctx) {
+      ctx = new AudioContext();
+      audioCtxRef.current = ctx;
+    }
+
+    if (ctx.state === "suspended") {
+      try {
+        await ctx.resume();
+      } catch {
+        // ignore
+      }
+    }
+
+    // create voice graph once per element instance
+    if (!voiceSourceRef.current || voiceRef.current !== voiceEl) {
+      voiceGainRef.current?.disconnect();
+      voiceSourceRef.current?.disconnect();
+
+      const source = ctx.createMediaElementSource(voiceEl);
+      const gain = ctx.createGain();
+
+      gain.gain.value = 1;
+
+      source.connect(gain);
+      gain.connect(ctx.destination);
+
+      voiceSourceRef.current = source;
+      voiceGainRef.current = gain;
+    }
+
+    // create ambient graph once per element instance
+    if (ambientEl && (!ambientSourceRef.current || ambientRef.current !== ambientEl)) {
+      ambientGainRef.current?.disconnect();
+      ambientSourceRef.current?.disconnect();
+
+      const source = ctx.createMediaElementSource(ambientEl);
+      const gain = ctx.createGain();
+
+      gain.gain.value = 0;
+
+      source.connect(gain);
+      gain.connect(ctx.destination);
+
+      ambientSourceRef.current = source;
+      ambientGainRef.current = gain;
+    }
+  }
+
+  function duckAmbient(active: boolean) {
+    const ctx = audioCtxRef.current;
+    const ambientGain = ambientGainRef.current;
+    if (!ctx || !ambientGain) return;
+
+    const targetBase = ambient === "rain" ? 0.22 : 0.30;
+    const ducked = ambient === "rain" ? 0.10 : 0.14;
+
+    fadeGain(ambientGain, active ? ducked : targetBase, 0.35, ctx);
+  }
+
+  async function finalizeMeditation() {
+    if (!med) return;
+    if (finalizedRef.current) return;
+    finalizedRef.current = true;
+
+    try {
+      const moodRaw = await sGet<string>("mood");
+      const noteRaw = await sGet<string>("note");
+
+      const mood = isMoodKey(moodRaw) ? (moodRaw as MoodKey) : null;
+      const note = (noteRaw ?? "").trim() || null;
+
+      if (mood) {
+        await logLocal({
+          mood,
+          ritualId: med.id,
+          durationSec: totalSec,
+          note,
+          kind: "meditation",
+        });
+      }
+    } catch {
+      // ignore
+    }
+
+    navigate(
+      `/ritual/done?kind=meditation&id=${encodeURIComponent(med.id)}`,
+      { replace: true },
+    );
+  }
+
+  // voice audio with fallback chain
   useEffect(() => {
     if (!med) return;
-    const src = MEDITATION_AUDIO[med.id];
-    const el = new Audio(src);
+
+    const medId = med.id;
+    let disposed = false;
+    finalizedRef.current = false;
+    setProgress(0);
+
+    const el = new Audio();
     el.loop = false;
     el.preload = "auto";
 
-    // keep state in sync when audio really moves
+    voiceRef.current = el;
+
     el.ontimeupdate = () => {
-      // browser is giving us correct time, trust it
       setProgress(el.currentTime);
+    };
+
+    el.onplay = async () => {
+      setPlaying(true);
+
+      const ambientEl = ambientRef.current;
+      await ensureAudioGraph(el, ambientEl);
+
+      if (ambientEl && ambientEl.paused) {
+        ambientEl.currentTime = el.currentTime || 0;
+        ambientEl.play().catch(() => {});
+      }
+
+      duckAmbient(true);
+    };
+
+    el.onpause = () => {
+      setPlaying(false);
+      duckAmbient(false);
+      ambientRef.current?.pause();
     };
 
     el.onended = () => {
       setProgress(totalSec);
       setPlaying(false);
+      duckAmbient(false);
+
+      if (ambientRef.current) {
+        ambientRef.current.pause();
+        ambientRef.current.currentTime = 0;
+      }
+
       const bell = new Audio("/audio/ui/bell.mp3");
       bell.play().catch(() => {});
+      void finalizeMeditation();
     };
 
-    // try auto-play
-    el.play().then(
-      () => {
-        setPlaying(true);
-      },
-      () => {
-        // autoplay blocked → we stay paused, timer will not tick until user presses play
+    async function startWithFallback() {
+      const chain = await buildMeditationSourceChain(medId, voiceVariant);
+
+      for (const src of chain) {
+        if (disposed) return;
+
+        try {
+          el.pause();
+          el.src = src;
+          el.load();
+          await el.play();
+          setPlaying(true);
+          return;
+        } catch {
+          // try next source
+        }
+      }
+
+      if (!disposed) {
         setPlaying(false);
       }
-    );
+    }
 
-    voiceRef.current = el;
+    void startWithFallback();
 
     return () => {
+      disposed = true;
       el.pause();
       el.src = "";
       voiceRef.current = null;
+      voiceSourceRef.current?.disconnect();
+      voiceGainRef.current?.disconnect();
+      voiceSourceRef.current = null;
+      voiceGainRef.current = null;
     };
-  }, [med, totalSec]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [med?.id, totalSec, voiceVariant]);
 
-  // ambience
+  // ambient audio: base per meditation / rain / off
   useEffect(() => {
-    if (ambient === "off") {
+    if (!med) return;
+
+    const src = getAmbientSrc(med.id, ambient);
+
+    if (!src) {
       if (ambientRef.current) {
         ambientRef.current.pause();
         ambientRef.current.src = "";
         ambientRef.current = null;
       }
+
+      ambientSourceRef.current?.disconnect();
+      ambientGainRef.current?.disconnect();
+      ambientSourceRef.current = null;
+      ambientGainRef.current = null;
       return;
     }
-    const src = AMBIENT_AUDIO[ambient];
+
     const el = new Audio(src);
     el.loop = true;
-    el.volume = 0.35;
-    el.play().catch(() => {});
+    el.preload = "auto";
+    el.volume = 1; // actual volume controlled by GainNode
+
+    const voiceEl = voiceRef.current;
+
+    (async () => {
+      if (voiceEl) {
+        el.currentTime = voiceEl.currentTime || 0;
+        await ensureAudioGraph(voiceEl, el);
+
+        const ctx = audioCtxRef.current;
+        const ambientGain = ambientGainRef.current;
+
+        if (ctx && ambientGain) {
+          ambientGain.gain.value = 0;
+        }
+
+        if (!voiceEl.paused) {
+          el.play()
+            .then(() => {
+              if (ctx && ambientGain) {
+                const target = ambient === "rain" ? 0.10 : 0.14; // ducked level while voice speaks
+                fadeGain(ambientGain, target, 0.8, ctx);
+              }
+            })
+            .catch(() => {});
+        }
+      }
+    })();
+
+    const prevAmbient = ambientRef.current;
+    const prevGain = ambientGainRef.current;
+    const ctx = audioCtxRef.current;
+
+    if (prevAmbient && prevGain && ctx) {
+      fadeGain(prevGain, 0, 0.5, ctx);
+      window.setTimeout(() => {
+        prevAmbient.pause();
+        prevAmbient.src = "";
+      }, 550);
+    }
+
     ambientRef.current = el;
+
     return () => {
       el.pause();
       el.src = "";
     };
-  }, [ambient]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ambient, med?.id]);
 
-  // ✅ manual timer (so circle always moves)
+  // manual timer fallback
   useEffect(() => {
     if (!playing) {
-      // stop ticking
       if (rafRef.current) {
         cancelAnimationFrame(rafRef.current);
         rafRef.current = null;
@@ -201,25 +447,16 @@ export default function MeditationPlay() {
     }
 
     const tick = (ts: number) => {
-      // if the audio is playing and we can read currentTime, we *already* update via ontimeupdate
-      // but some browsers fire ontimeupdate rarely → we supplement it here
-      if (lastTsRef.current == null) {
-        lastTsRef.current = ts;
-      }
+      if (lastTsRef.current == null) lastTsRef.current = ts;
       const dt = (ts - lastTsRef.current) / 1000;
       lastTsRef.current = ts;
 
       setProgress((prev) => {
-        // if audio exists, prefer its time
         const audio = voiceRef.current;
         if (audio && !audio.paused) {
-          const cur = audio.currentTime;
-          const capped = Math.min(cur, totalSec);
-          return capped;
+          return Math.min(audio.currentTime, totalSec);
         }
-        // fallback: manual
-        const next = Math.min(totalSec, prev + dt);
-        return next;
+        return Math.min(totalSec, prev + dt);
       });
 
       rafRef.current = requestAnimationFrame(tick);
@@ -237,6 +474,7 @@ export default function MeditationPlay() {
   function togglePlay() {
     const el = voiceRef.current;
     if (!el) return;
+
     if (playing) {
       el.pause();
       setPlaying(false);
@@ -248,12 +486,21 @@ export default function MeditationPlay() {
 
   function finishNow() {
     const el = voiceRef.current;
+
     if (el) {
       el.pause();
       el.currentTime = el.duration || totalSec;
     }
+
+    if (ambientRef.current) {
+      ambientRef.current.pause();
+      ambientRef.current.currentTime = 0;
+    }
+
+    duckAmbient(false);
     setProgress(totalSec);
     setPlaying(false);
+    void finalizeMeditation();
   }
 
   function formatTime(sec: number) {
@@ -272,7 +519,7 @@ export default function MeditationPlay() {
             <p className="text-main">
               {t(
                 "meditation:notFoundBody",
-                "This meditation is not available right now."
+                "This meditation is not available right now.",
               )}
             </p>
             <Button onClick={() => navigate("/flows")}>
@@ -292,15 +539,13 @@ export default function MeditationPlay() {
 
       <main className="flex-1 px-4 py-4">
         <div className="max-w-[540px] mx-auto space-y-4">
-          {/* Player card */}
           <Card className="p-6 bg-[rgba(255,255,255,0.35)] backdrop-blur rounded-3xl space-y-5">
-            {/* circle */}
             <div className="flex flex-col items-center gap-3">
               <div className="relative w-40 h-40">
                 <svg
                   viewBox="0 0 120 120"
                   className="w-full h-full"
-                  style={{ transform: "rotate(-90deg)" }} // rotate ONLY the svg path
+                  style={{ transform: "rotate(-90deg)" }}
                 >
                   <circle
                     cx="60"
@@ -323,7 +568,6 @@ export default function MeditationPlay() {
                   />
                 </svg>
 
-                {/* ✅ text stays normal */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center">
                   <span className="text-xs text-dim">
                     {t("meditation:remaining", "Remaining")}
@@ -346,7 +590,6 @@ export default function MeditationPlay() {
               </div>
             </div>
 
-            {/* controls */}
             <div className="flex gap-3 justify-center">
               <Button
                 className="min-w-[120px]"
@@ -357,15 +600,50 @@ export default function MeditationPlay() {
                   ? t("meditation:pause", "Pause")
                   : t("meditation:play", "Start")}
               </Button>
+
               <Button variant="outline" onClick={finishNow}>
                 {t("meditation:finish", "Finish")}
               </Button>
             </div>
 
-            {/* ambience */}
-            <div className="flex gap-2 justify-center pt-2">
+            <div className="flex gap-2 justify-center pt-1 flex-wrap">
               <button
-                onClick={() => setAmbient("off")}
+                onClick={() => void setVoiceAndPersist("f")}
+                className={`px-4 py-1.5 rounded-full text-xs ${
+                  voiceVariant === "f"
+                    ? "bg-[rgba(253,84,142,0.15)] text-main"
+                    : "bg-[rgba(255,255,255,0.35)] text-dim"
+                }`}
+              >
+                {t("meditation:voice.f", "Female")}
+              </button>
+
+              <button
+                onClick={() => void setVoiceAndPersist("m")}
+                className={`px-4 py-1.5 rounded-full text-xs ${
+                  voiceVariant === "m"
+                    ? "bg-[rgba(253,84,142,0.15)] text-main"
+                    : "bg-[rgba(255,255,255,0.35)] text-dim"
+                }`}
+              >
+                {t("meditation:voice.m", "Male")}
+              </button>
+
+              <button
+                onClick={() => void setVoiceAndPersist("asmr")}
+                className={`px-4 py-1.5 rounded-full text-xs ${
+                  voiceVariant === "asmr"
+                    ? "bg-[rgba(253,84,142,0.15)] text-main"
+                    : "bg-[rgba(255,255,255,0.35)] text-dim"
+                }`}
+              >
+                {t("meditation:voice.asmr", "ASMR")}
+              </button>
+            </div>
+
+            <div className="flex gap-2 justify-center pt-2 flex-wrap">
+              <button
+                onClick={() => void setAmbientAndPersist("off")}
                 className={`px-4 py-1.5 rounded-full text-xs ${
                   ambient === "off"
                     ? "bg-[rgba(253,84,142,0.15)] text-main"
@@ -374,8 +652,20 @@ export default function MeditationPlay() {
               >
                 {t("meditation:ambient.off", "No ambience")}
               </button>
+
               <button
-                onClick={() => setAmbient("rain")}
+                onClick={() => void setAmbientAndPersist("base")}
+                className={`px-4 py-1.5 rounded-full text-xs ${
+                  ambient === "base"
+                    ? "bg-[rgba(253,84,142,0.15)] text-main"
+                    : "bg-[rgba(255,255,255,0.35)] text-dim"
+                }`}
+              >
+                {t("meditation:ambient.base", "Background")}
+              </button>
+
+              <button
+                onClick={() => void setAmbientAndPersist("rain")}
                 className={`px-4 py-1.5 rounded-full text-xs ${
                   ambient === "rain"
                     ? "bg-[rgba(253,84,142,0.15)] text-main"
@@ -384,25 +674,17 @@ export default function MeditationPlay() {
               >
                 {t("meditation:ambient.rain", "Rain")}
               </button>
-              <button
-                onClick={() => setAmbient("water")}
-                className={`px-4 py-1.5 rounded-full text-xs ${
-                  ambient === "water"
-                    ? "bg-[rgba(253,84,142,0.15)] text-main"
-                    : "bg-[rgba(255,255,255,0.35)] text-dim"
-                }`}
-              >
-                {t("meditation:ambient.water", "Water")}
-              </button>
             </div>
           </Card>
 
-          {/* guide box */}
           {guide ? (
             <Card className="p-5 rounded-3xl bg-[rgba(249,190,222,0.18)] border border-[rgba(253,84,142,0.12)] space-y-3">
               {guide.why ? (
-                <p className="text-sm text-main leading-relaxed">{guide.why}</p>
+                <p className="text-sm text-main leading-relaxed">
+                  {guide.why}
+                </p>
               ) : null}
+
               {guide.whyBullets?.length ? (
                 <ul className="list-disc pl-5 space-y-1 text-sm text-dim">
                   {guide.whyBullets.map((b, i) => (
@@ -410,43 +692,10 @@ export default function MeditationPlay() {
                   ))}
                 </ul>
               ) : null}
+
               {guide.tip ? (
                 <p className="text-xs text-dim italic">{guide.tip}</p>
               ) : null}
-            </Card>
-          ) : null}
-
-          {/* done panel */}
-          {progress >= totalSec - 0.5 ? (
-            <Card className="p-5 text-center space-y-3">
-              <h2 className="text-base font-semibold text-main">
-                {t("meditation:doneTitle", "You’re done ✨")}
-              </h2>
-              <p className="text-sm text-muted">
-                {t(
-                  "meditation:doneBody",
-                  "Stay here for a few breaths, then return to your day."
-                )}
-              </p>
-              <div className="flex gap-3 justify-center">
-                <Button onClick={() => navigate("/flows")}>
-                  {t("common:backTo", "Back to flows")}
-                </Button>
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    const el = voiceRef.current;
-                    if (el) {
-                      el.currentTime = 0;
-                      el.play().catch(() => {});
-                    }
-                    setProgress(0);
-                    setPlaying(true);
-                  }}
-                >
-                  {t("meditation:repeat", "Play again")}
-                </Button>
-              </div>
             </Card>
           ) : null}
         </div>

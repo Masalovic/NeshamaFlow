@@ -1,0 +1,154 @@
+{
+  "titles": {
+    "breath-awareness": "Nefes farkındalığı",
+    "loving-kindness": "Sevgi dolu şefkat",
+    "focus-candle": "Mum odağı",
+    "body-scan-5m": "Beden taraması (5 dk)",
+    "open-monitoring": "Açık gözlem",
+    "noting": "Düşünceleri etiketleme",
+    "pmr-6m": "Aşamalı kas gevşetme",
+    "safe-place-imagery": "Güvenli yer imgelemesi"
+  },
+  "descriptions": {
+    "breath-awareness": "Dikkatini nazikçe doğal nefese getir. Dikkat dağıldığında, yargılamadan geri dön.",
+    "loving-kindness": "Kısa cümlelerle kendine ve başkalarına sıcak bir iyi niyet geliştir.",
+    "focus-candle": "Alevin şekli, ışığı ve gölgesine tek bir görsel dayanak olarak odaklan.",
+    "body-scan-5m": "Dikkatini ayak parmaklarından başa doğru beden boyunca gezdir ve duyumları oldukları gibi fark et.",
+    "open-monitoring": "Tek bir dayanak seçmeden her türlü deneyime — sesler, düşünceler, duyumlar — açık ol.",
+    "noting": "Bir dikkat dağıtıcı fark ettiğinde onu yumuşakça etiketle (ör. “düşünme”, “duyma”) ve geri dön.",
+    "pmr-6m": "Uyarılmayı azaltmak ve uykuya geçişi desteklemek için ana kas gruplarını nazikçe sıkıp bırak.",
+    "safe-place-imagery": "Kaygıyı azaltmak ve sakinliği desteklemek için canlı, güvenli ve yatıştırıcı bir yer hayal et."
+  },
+  "guides": {
+    "breath-awareness": {
+      "why": "Bilinçli nefes, dikkat kontrolünü artırır ve amigdala tepkiselliğini azaltır; klinik çalışmalar bunu daha düşük algılanan stres ve daha iyi HRV ile ilişkilendirir.",
+      "whyBullets": [
+        "Üstten-aşağı dikkat kontrolünü güçlendirir",
+        "Sempatik uyarılmayı azaltır",
+        "Duygu düzenlemeyi iyileştirir"
+      ],
+      "steps": [
+        "Rahatça otur; omurganı uzat; çeneni ve omuzlarını gevşet.",
+        "Nefesi tek bir noktada fark et (burun delikleri veya karın).",
+        "Zihin dağıldığında bunu nazikçe fark et ve nefese dön.",
+        "Doğal bir tempoda devam et."
+      ],
+      "tip": "Nefeste tek bir nokta seç ve geri dönüşü nazik tut."
+    },
+    "loving-kindness": {
+      "why": "Şefkat uygulamaları olumlu duygulanımı ve sosyal bağlılığı artırır; meta-analizler öz eleştiride ve depresif belirtilerde azalma gösterir.",
+      "whyBullets": [
+        "Olumlu duyguyu ve bağlantıyı artırır",
+        "Öz eleştiriyi azaltır",
+        "Dayanıklılığı destekler"
+      ],
+      "steps": [
+        "Kendini ya da kolayca şefkat duyabildiğin birini aklına getir.",
+        "İçinden şu gibi cümleleri tekrarla: “Güvende ol. Sağlıklı ol. Huzurlu ol.”",
+        "Ton sıcak ve içten olsun; zor gelirse nötr biriyle başla (örneğin bir evcil hayvan ya da iyiliksever biri).",
+        "Zaman elverirse bunu başkalarına da genişlet."
+      ],
+      "tip": "Cümleleri kendi sözlerinle doğal hissettirecek şekilde uyarlayabilirsin."
+    },
+    "focus-candle": {
+      "why": "Tek noktaya yönelen dikkat, zihnin dağılmasını azaltır ve sürdürülen odağı eğitir; görsel dayanaklar dikkat ağlarını hızla dengeler.",
+      "whyBullets": [
+        "Sürdürülen dikkati eğitir",
+        "Ruminasyonu azaltır",
+        "Kolay görsel dayanak"
+      ],
+      "steps": [
+        "Yanan bir mumu göz hizasına, yaklaşık 1–2 metre uzağa yerleştir.",
+        "Bakışını alevin şekline, rengine ve halesine yumuşat.",
+        "Dikkatin başka yere kaydığında “düşünme/görme” diye fark et ve geri dön.",
+        "Göz kırpmaların doğal olsun; omuzlarını gevşek tut."
+      ],
+      "tip": "Gözlerin yorulursa kısa süre kapat ve alevi zihninde canlandır."
+    },
+    "body-scan-5m": {
+      "why": "İnteroseptif eğitim, somatosensoriyel ağları devreye sokarak ruminasyonu azaltır ve ağrı ile stres toleransını artırır.",
+      "whyBullets": [
+        "Beden farkındalığını artırır",
+        "Bilişsel döngüyü keser",
+        "Rahatlamayı destekler"
+      ],
+      "steps": [
+        "Uzan ya da otur; bakışını yumuşat ya da gözlerini kapat.",
+        "Ayak parmaklarından başla; temas, sıcaklık, karıncalanma ya da nötr hisleri fark et.",
+        "Yavaşça ilerle: ayaklar → baldırlar → dizler → uyluklar → kalçalar → karın → göğüs → omuzlar → kollar/eller → boyun → yüz → saç derisi.",
+        "Dikkatin dağılırsa son fark ettiğin beden bölgesine geri dön."
+      ],
+      "tip": "Duyumları değiştirmeye çalışmadan fark et."
+    },
+    "open-monitoring": {
+      "why": "Açık gözlem, tepkisizliği ve bilişsel esnekliği artırır; araştırmalar daha az stres ve daha geniş dikkat alanı gösterir.",
+      "whyBullets": [
+        "Deneyime karşı tepkisizliği geliştirir",
+        "Daha geniş dikkat kapsamı",
+        "Daha az stres tepkiselliği"
+      ],
+      "steps": [
+        "Dik otur; doğal şekilde nefes al.",
+        "Seslerin, duyumların ve düşüncelerin ortaya çıkıp geçmesine izin ver.",
+        "Herhangi bir nesnenin peşine düşmeden başlangıçları ve bitişleri fark et.",
+        "Bir şeye kapıldığında “yakalandım” diye fark et ve dikkati yeniden aç."
+      ],
+      "tip": "Farkındalığı geniş bir oda gibi düşün; deneyimler içinden geçip gider."
+    },
+    "noting": {
+      "why": "Etiketleme (“affect labeling”) limbik aktivasyonu azaltır ve dikkat geçişini iyileştirir; ruminasyon için yararlıdır.",
+      "whyBullets": [
+        "Etiketleme yoluyla duygusal yükü azaltır",
+        "Göreve hızlı dönüşü destekler",
+        "Ruminasyonu azaltır"
+      ],
+      "steps": [
+        "Nazik bir dayanak seç (nefes ya da sesler).",
+        "Bir dikkat dağıtıcı ortaya çıktığında onu yumuşakça etiketle: “düşünme”, “planlama”, “duyma”, “hissetme”.",
+        "Yargılamadan dayanağa geri dön.",
+        "Gerektiği kadar tekrar et."
+      ],
+      "tip": "Etiketleri kısa ve sessiz tut — fark etmeye yetecek kadar."
+    },
+    "pmr-6m": {
+      "why": "Aşamalı kas gevşetme, gerginlik ve bırakma arasında geçiş yaparak sempatik uyarılmayı azaltır ve uykuya dalmayı destekler.",
+      "whyBullets": [
+        "Uyarılmayı aşağı çeker",
+        "Uykuya dalma süresini iyileştirir",
+        "Öğrenmesi kolaydır"
+      ],
+      "steps": [
+        "Otururken ya da uzanırken nefes al ve ayakları ile baldırlarını yaklaşık 3–5 saniye nazikçe sık.",
+        "Nefes ver ve tamamen bırak. Sonra uyluklara ve kalçalara geç.",
+        "Karın/göğüs, eller/kollar, omuzlar, yüz/çene boyunca devam et.",
+        "Bir yavaş, derin nefes ve tüm bedeni tamamen bırakarak bitir."
+      ],
+      "tip": "Gerginliği hafif tut — amaç zorlamak değil, farkındalık kazanmaktır."
+    },
+    "safe-place-imagery": {
+      "why": "Yönlendirilmiş imgeleme parasempatik yolları etkinleştirir ve kaygıyı azaltabilir; travma-duyarlı protokoller genellikle güvenli yer egzersizi içerir.",
+      "whyBullets": [
+        "Sakinleştirici imgeleme ağlarını devreye sokar",
+        "Kaygıyı ve tehdit algısını azaltır",
+        "Seanslar arasında faydalıdır"
+      ],
+      "steps": [
+        "Gözlerini kapat ve güvenli ve yatıştırıcı hissettiren bir yeri hayal et (gerçek ya da hayali).",
+        "Duyuları devreye sok: renkler, sesler, sıcaklık, kokular, dokular.",
+        "Destekleyici bir cümle ekle (örneğin: “Burada güvendeyim.”).",
+        "Orada birkaç nefes dinlen; hazır olduğunda geri dön."
+      ],
+      "tip": "Görselleştirmek zorsa, her seferinde bir duyuyla yavaşça inşa et."
+    }
+  },
+  "ambient": {
+  "off": "Ortam sesi yok",
+  "base": "Arka plan",
+  "rain": "Yağmur"
+},
+  "voice": {
+    "f": "Kadın",
+    "m": "Erkek",
+    "asmr": "ASMR"
+  }
+}

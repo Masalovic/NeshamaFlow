@@ -27,6 +27,17 @@
     "goPro": "Go Pro",
     "proFeature": "Función Pro: reparar un día perdido"
   },
+   "quoteCard": {
+    "title": "Idea del día",
+    "subtitle": "Los pasos pequeños también cuentan.",
+    "quotes": [
+      "Respira. Lo estás haciendo mejor de lo que crees.",
+      "Una pequeña acción vence a la planificación perfecta.",
+      "Hazlo fácil. Hazlo pequeño. Hazlo ahora.",
+      "No necesitas más tiempo. Necesitas menos fricción.",
+      "La calma es una habilidad: practícala respiración a respiración."
+    ]
+  },
   "selectMood": "Elige el ánimo",
   "noteLabelOptional": "Añadir nota (opcional)",
   "notePlaceholder": "¿Qué tienes en mente?",

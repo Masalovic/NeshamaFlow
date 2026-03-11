@@ -1,0 +1,154 @@
+{
+  "titles": {
+    "breath-awareness": "Svesnost daha",
+    "loving-kindness": "Ljubaznost i toplina",
+    "focus-candle": "Fokus na sveću",
+    "body-scan-5m": "Skeniranje tela (5 min)",
+    "open-monitoring": "Otvoreno posmatranje",
+    "noting": "Označavanje misli",
+    "pmr-6m": "Progresivna mišićna relaksacija",
+    "safe-place-imagery": "Vizualizacija sigurnog mesta"
+  },
+  "descriptions": {
+    "breath-awareness": "Nežno usmeri pažnju na prirodan dah. Kada pažnja odluta, vrati je bez osuđivanja.",
+    "loving-kindness": "Neguj toplu dobronamernost prema sebi i drugima kroz kratke fraze.",
+    "focus-candle": "Odmori pažnju na obliku plamena, svetlosti i senci kao jednoj vizuelnoj tački fokusa.",
+    "body-scan-5m": "Provedi pažnju kroz telo od prstiju na nogama do glave, primećujući senzacije onakve kakve jesu.",
+    "open-monitoring": "Otvori svesnost za bilo koje iskustvo — zvuke, misli, senzacije — bez biranja jedne sidrene tačke.",
+    "noting": "Kada primetiš distrakciju, nežno je označi (npr. „misao“, „zvuk“) i vrati se.",
+    "pmr-6m": "Nežno zategni i opusti glavne mišićne grupe kako bi smanjila napetost i podstakla san.",
+    "safe-place-imagery": "Zamisli živo sigurno i umirujuće mesto kako bi smanjila anksioznost i podstakla mir."
+  },
+  "guides": {
+    "breath-awareness": {
+      "why": "Svesno disanje povećava kontrolu pažnje i smanjuje reaktivnost amigdale; klinička istraživanja ga povezuju sa nižim doživljenim stresom i boljim HRV-om.",
+      "whyBullets": [
+        "Jača kontrolu pažnje odozgo nadole",
+        "Smanjuje simpatičku pobuđenost",
+        "Poboljšava regulaciju emocija"
+      ],
+      "steps": [
+        "Sedi udobno; izduži kičmu; opusti vilicu i ramena.",
+        "Usmeri pažnju na dah u jednoj tački (nozdrve ili stomak).",
+        "Kada um odluta, nežno to primeti i vrati se na dah.",
+        "Nastavi prirodnim tempom."
+      ],
+      "tip": "Izaberi jednu tačku daha; povratak neka bude blag."
+    },
+    "loving-kindness": {
+      "why": "Prakse saosećanja povećavaju pozitivan afekt i osećaj povezanosti; meta-analize pokazuju smanjenje samokritike i depresivnih simptoma.",
+      "whyBullets": [
+        "Povećava pozitivne emocije i povezanost",
+        "Smanjuje samokritiku",
+        "Podržava otpornost"
+      ],
+      "steps": [
+        "Priseti se sebe ili nekoga prema kome ti je lako da osetiš toplinu.",
+        "U sebi ponavljaj fraze poput: „Neka budeš bezbedan/na. Neka budeš zdrav/a. Neka budeš miran/na.“",
+        "Neka ton bude topao i iskren; ako je teško, kreni neutralno (npr. ljubimac ili dobročinitelj).",
+        "Proširi praksu i na druge ako vreme dozvoljava."
+      ],
+      "tip": "Prilagodi fraze tako da zvuče prirodno tvojim rečima."
+    },
+    "focus-candle": {
+      "why": "Usmerena pažnja na jednu tačku smanjuje lutanje uma i trenira održani fokus; vizuelna sidra mogu brzo stabilizovati mreže pažnje.",
+      "whyBullets": [
+        "Trenira održanu pažnju",
+        "Smanjuje ruminaciju",
+        "Jednostavno vizuelno sidro"
+      ],
+      "steps": [
+        "Postavi upaljenu sveću u visini očiju, približno 1–2 metra dalje.",
+        "Omekšaj pogled na oblik, boju i oreol plamena.",
+        "Kada pažnju nešto odvuče, primeti „misao/gledanje“ i vrati se.",
+        "Treptanje neka bude prirodno; ramena opuštena."
+      ],
+      "tip": "Ako se oči umore, kratko ih zatvori i vizualizuj plamen."
+    },
+    "body-scan-5m": {
+      "why": "Interoceptivni trening smanjuje ruminaciju i poboljšava toleranciju na bol i stres angažovanjem somatosenzornih mreža.",
+      "whyBullets": [
+        "Povećava svesnost tela",
+        "Prekida kognitivno vrtloženje",
+        "Podržava opuštanje"
+      ],
+      "steps": [
+        "Lezi ili sedi; omekšaj pogled ili zatvori oči.",
+        "Počni od prstiju na nogama; primeti dodir, temperaturu, trnce ili neutralan osećaj.",
+        "Napreduj polako: stopala → listovi → kolena → butine → kukovi → stomak → grudi → ramena → ruke/šake → vrat → lice → teme.",
+        "Ako se ometeš, vrati se na poslednju oblast tela."
+      ],
+      "tip": "Primećuj bez pokušaja da promeniš senzacije."
+    },
+    "open-monitoring": {
+      "why": "Otvoreno posmatranje povećava nereaktivnost i kognitivnu fleksibilnost; istraživanja pokazuju manji stres i širi opseg pažnje.",
+      "whyBullets": [
+        "Gradi nereaktivnost prema iskustvu",
+        "Širi opseg pažnje",
+        "Manja stresna reaktivnost"
+      ],
+      "steps": [
+        "Sedi uspravno; diši prirodno.",
+        "Dozvoli da se zvuci, senzacije i misli pojave i prođu.",
+        "Primećuj početke i završetke bez zadržavanja na jednom objektu.",
+        "Ako se zakačiš, priznaj „uhvaćen/a“ i ponovo otvori pažnju."
+      ],
+      "tip": "Zamisli svesnost kao prostranu sobu; iskustva prolaze kroz nju."
+    },
+    "noting": {
+      "why": "Označavanje („affect labeling“) smanjuje limbičku aktivaciju i poboljšava prebacivanje pažnje; korisno je kod ruminacije.",
+      "whyBullets": [
+        "Smanjuje emocionalno opterećenje kroz označavanje",
+        "Podržava brz povratak zadatku",
+        "Smanjuje ruminaciju"
+      ],
+      "steps": [
+        "Izaberi blago sidro (dah ili zvuke).",
+        "Kada se pojavi distrakcija, tiho je označi: „misao“, „planiranje“, „slušanje“, „osećaj“.",
+        "Vrati se na sidro bez osuđivanja.",
+        "Ponovi onoliko puta koliko je potrebno."
+      ],
+      "tip": "Neka oznake budu kratke i tihe — taman toliko da ih primetiš."
+    },
+    "pmr-6m": {
+      "why": "Progresivna mišićna relaksacija smanjuje simpatičku pobuđenost i poboljšava uspavljivanje kroz smenu napetosti i opuštanja.",
+      "whyBullets": [
+        "Smanjuje pobuđenost",
+        "Poboljšava vreme uspavljivanja",
+        "Lako se uči"
+      ],
+      "steps": [
+        "Dok sediš ili ležiš, udahni i nežno zategni stopala i listove oko 3–5 sekundi.",
+        "Izdahni i potpuno otpusti. Pređi na butine i kukove.",
+        "Nastavi kroz stomak/grudi, šake/ruke, ramena, lice/vilicu.",
+        "Završi jednim sporim, dubokim dahom i potpunim opuštanjem celog tela."
+      ],
+      "tip": "Napetost neka bude blaga — cilj je svesnost, ne naprezanje."
+    },
+    "safe-place-imagery": {
+      "why": "Vođena imaginacija aktivira parasimpatičke puteve i može smanjiti anksioznost; trauma-informed pristupi često uključuju vežbu sigurnog mesta.",
+      "whyBullets": [
+        "Aktivira umirujuće mreže imaginacije",
+        "Smanjuje anksioznost i procenu pretnje",
+        "Korisno između sesija"
+      ],
+      "steps": [
+        "Zatvori oči i zamisli mesto koje deluje sigurno i umirujuće (stvarno ili izmaštano).",
+        "Uključi čula: boje, zvuke, temperaturu, mirise, teksture.",
+        "Dodaj podržavajuću frazu (npr. „Ovde sam bezbedan/na.“).",
+        "Ostani tu nekoliko udaha; vrati se kada budeš spreman/na."
+      ],
+      "tip": "Ako ti je vizualizacija teška, gradi je polako, po jedno čulo."
+    }
+  },
+  "ambient": {
+    "off": "Bez ambijenta",
+    "base": "Pozadina",
+    "rain": "Kiša"
+  },
+  "voice": {
+    "f": "Ženski",
+    "m": "Muški",
+    "asmr": "ASMR"
+  }
+}

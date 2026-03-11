@@ -19,7 +19,9 @@ export default function InsightChips({
       const h = await loadHistory();
       if (alive) setList(h);
     })();
-    return () => { alive = false; };
+    return () => {
+      alive = false;
+    };
   }, []);
 
   if (list === null) return null;
@@ -41,26 +43,39 @@ export default function InsightChips({
   });
 
   if (qs.bestBlockLabel) {
-    chips.push({ label: t("chips.bestTime", "Best time"), value: qs.bestBlockLabel });
+    chips.push({
+      label: t("chips.bestTime", "Best time"),
+      value: qs.bestBlockLabel,
+    });
   }
   if (qs.topRitualTitle) {
-    chips.push({ label: t("chips.mostFrequent", "Most frequent"), value: qs.topRitualTitle });
+    chips.push({
+      label: t("chips.mostFrequent", "Most frequent"),
+      value: qs.topRitualTitle,
+    });
   }
 
   if (!chips.length) return null;
 
   return (
-    <div className={`flex flex-wrap gap-2 ${compact ? "mt-2" : "mt-3"}`}>
+    <div
+      className={[
+        "grid grid-cols-2 gap-2",
+        compact ? "mt-2" : "mt-3",
+      ].join(" ")}
+    >
       {chips.map((c, i) => (
         <span
           key={i}
-          className="inline-flex items-center gap-1 rounded-full border border-token px-2 py-1 text-[11px] bg-[var(--surface-2)] text-[var(--text-dim)]"
+          className="w-full inline-flex items-center justify-center gap-1 rounded-full border border-token px-3 py-1.5 text-[11px] bg-[var(--surface-2)] text-[var(--text-dim)]"
           aria-label={`${c.label}: ${c.value}`}
           title={`${c.label}: ${c.value}`}
         >
-          <strong className="font-medium text-main">{c.label}</strong>
-          <span>·</span>
-          <span className="truncate max-w-[9rem] text-main/90">{c.value}</span>
+          <strong className="font-medium text-main whitespace-nowrap">
+            {c.label}
+          </strong>
+          <span className="opacity-70">·</span>
+          <span className="truncate max-w-[10rem] text-main/90">{c.value}</span>
         </span>
       ))}
     </div>

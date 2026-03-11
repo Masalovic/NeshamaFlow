@@ -27,6 +27,17 @@
     "goPro": "Go Pro",
     "proFeature": "Pro feature: repair a missed day"
   },
+  "quoteCard": {
+    "title": "Today’s thought",
+    "subtitle": "Small steps still count.",
+    "quotes": [
+      "Breathe. You’re doing better than you think.",
+      "One small action beats perfect planning.",
+      "Make it easy. Make it tiny. Make it now.",
+      "You don’t need more time. You need less friction.",
+      "Calm is a skill — practice one breath at a time."
+    ]
+  },
   "selectMood": "Select mood",
   "noteLabelOptional": "Add a note (optional)",
   "notePlaceholder": "What’s on your mind?",

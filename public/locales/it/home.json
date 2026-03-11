@@ -27,6 +27,17 @@
     "goPro": "Go Pro",
     "proFeature": "Funzione Pro: ripara un giorno perso"
   },
+   "quoteCard": {
+    "title": "Pensiero del giorno",
+    "subtitle": "Anche i piccoli passi contano.",
+    "quotes": [
+      "Respira. Stai andando meglio di quanto pensi.",
+      "Una piccola azione batte una pianificazione perfetta.",
+      "Rendilo facile. Rendilo piccolo. Fallo ora.",
+      "Non ti serve più tempo. Ti serve meno attrito.",
+      "La calma è un’abilità — pratica un respiro alla volta."
+    ]
+  },
   "selectMood": "Seleziona umore",
   "noteLabelOptional": "Aggiungi nota (opzionale)",
   "notePlaceholder": "A cosa stai pensando?",
