@@ -1,4 +1,3 @@
-// src/screens/RitualPlayer.tsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -21,12 +20,13 @@ import { loadSettings } from "../lib/settings";
 import { useTranslation } from "react-i18next";
 import { tRitualTitle, tGuide } from "../lib/i18nRitual";
 
+const FALLBACK_ROUTE = "/";
+
 function vibrate(pattern: number[] | number, enabled: boolean) {
   if (!enabled) return;
   if ("vibrate" in navigator) {
     try {
-      // @ts-ignore
-      navigator.vibrate(pattern);
+      navigator.vibrate(pattern as any);
     } catch {}
   }
 }
@@ -41,77 +41,101 @@ export default function RitualPlayer() {
   const [haptics, setHaptics] = useState(true);
   const [draftRitualId, setDraftRitualId] = useState<string | null>(null);
 
+  const timerRef = useRef<number | null>(null);
+  const doneRef = useRef(false);
+
   useEffect(() => {
     let alive = true;
+
     (async () => {
-      const s = await loadSettings();
-      if (alive) setHaptics(s.haptics);
+      try {
+        const s = await loadSettings();
+        if (alive) setHaptics(s.haptics);
 
-      const rawMood = await sGet<unknown>("mood");
-      const n = (await sGet<string>("note")) || "";
-      const draft = await sGet<string>("draft.ritual");
+        const rawMood = await sGet<unknown>("mood");
+        const n = (await sGet<string>("note")) || "";
+        const draft = await sGet<string>("draft.ritual");
 
-      if (!isMoodKey(rawMood)) {
-        navigate("/log", { replace: true });
-        return;
+        if (!alive) return;
+
+        if (!isMoodKey(rawMood)) {
+          navigate(FALLBACK_ROUTE, { replace: true });
+          return;
+        }
+
+        setMood(rawMood);
+        setNote(n);
+        setDraftRitualId(draft || null);
+
+        if (draft) {
+          sSet("draft.ritual", "").catch(() => {});
+        }
+
+        setLoaded(true);
+      } catch {
+        if (!alive) return;
+        navigate(FALLBACK_ROUTE, { replace: true });
       }
-      if (!alive) return;
-      setMood(rawMood);
-      setNote(n);
-      setDraftRitualId(draft || null);
-      if (draft) {
-        sSet("draft.ritual", "").catch(() => {});
-      }
-      setLoaded(true);
     })();
+
     return () => {
       alive = false;
     };
   }, [navigate]);
 
   const ritual: Ritual | null = useMemo(() => {
-    return draftRitualId
-      ? getRitualById(draftRitualId)
-      : mood
-      ? getRitualForMood(mood)
-      : null;
+    if (draftRitualId) return getRitualById(draftRitualId);
+    if (mood) return getRitualForMood(mood);
+    return null;
   }, [draftRitualId, mood]);
 
   const total = ritual?.durationSec ?? 120;
   const [remaining, setRemaining] = useState<number>(total);
   const [running, setRunning] = useState(false);
-  const timerRef = useRef<number | null>(null);
 
   const REST_LEN = 20;
   const [resting, setResting] = useState(false);
   const [restRemaining, setRestRemaining] = useState(REST_LEN);
-
-  useEffect(() => {
-    setRemaining(total);
-  }, [total]);
-
-  const doneRef = useRef(false);
   const [completing, setCompleting] = useState(false);
 
   useEffect(() => {
-    if (loaded && !ritual) navigate("/log", { replace: true });
+    setRemaining(total);
+    setRunning(false);
+    setResting(false);
+    setRestRemaining(REST_LEN);
+    setCompleting(false);
+    doneRef.current = false;
+  }, [total]);
+
+  useEffect(() => {
+    if (loaded && !ritual) {
+      navigate(FALLBACK_ROUTE, { replace: true });
+    }
   }, [loaded, ritual, navigate]);
 
   // main timer
   useEffect(() => {
     if (!running || resting) return;
+
     vibrate(24, haptics);
+
     timerRef.current = window.setInterval(() => {
       setRemaining((r) => {
         const next = Math.max(0, r - 1);
-        if (next > 0 && next % 60 === 0) vibrate(10, haptics);
+
+        if (next > 0 && next % 60 === 0) {
+          vibrate(10, haptics);
+        }
+
         if (next === 0 && timerRef.current) {
           clearInterval(timerRef.current);
           timerRef.current = null;
         }
+
         return next;
       });
     }, 1000) as unknown as number;
+
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
@@ -123,26 +147,33 @@ export default function RitualPlayer() {
   // rest timer
   useEffect(() => {
     if (!resting) return;
+
     const id = window.setInterval(() => {
       setRestRemaining((r) => {
         const next = Math.max(0, r - 1);
+
         if (next === 0) {
           window.clearInterval(id);
           setResting(false);
           setRestRemaining(REST_LEN);
           vibrate(16, haptics);
         }
+
         return next;
       });
     }, 1000);
+
     return () => window.clearInterval(id);
   }, [resting, haptics]);
 
   // pause on background
   useEffect(() => {
     const onVis = () => {
-      if (document.hidden && running) setRunning(false);
+      if (document.hidden && running) {
+        setRunning(false);
+      }
     };
+
     document.addEventListener("visibilitychange", onVis);
     return () => document.removeEventListener("visibilitychange", onVis);
   }, [running]);
@@ -166,64 +197,112 @@ export default function RitualPlayer() {
 
   async function onComplete() {
     if (doneRef.current) return;
+
     doneRef.current = true;
     setCompleting(true);
+    setRunning(false);
+
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+
     vibrate([60, 40, 60], haptics);
 
     try {
       if (mood && ritual) {
         const durationSec = Math.max(0, Math.min(total, total - remaining));
-        await logLocal({ mood, ritualId: ritual.id, durationSec, note, kind: "ritual" });
+
+        await logLocal({
+          mood,
+          ritualId: ritual.id,
+          durationSec,
+          note,
+          kind: "ritual",
+        });
+
         track("ritual_completed", {
           ritualId: ritual.id,
           durationSec,
           source: draftRitualId ? "library" : "suggestion",
         });
+
         try {
           const list = await loadHistory();
-          if (list.length === 1) track("first_ritual", { ritualId: ritual.id });
+          if (list.length === 1) {
+            track("first_ritual", { ritualId: ritual.id });
+          }
         } catch {}
+
         await syncHistoryUp().catch(() => {});
       }
     } finally {
-      // ✅ unified done route + params
       const ritualId = ritual?.id ?? "";
-      navigate(`/ritual/done?kind=ritual&id=${encodeURIComponent(ritualId)}`, { replace: true });
+      navigate(
+        `/ritual/done?kind=ritual&id=${encodeURIComponent(ritualId)}`,
+        { replace: true },
+      );
     }
   }
 
   function onStartPause() {
     setRunning((v) => {
       const next = !v;
+
       if (next) {
         vibrate(18, haptics);
-        if (ritual)
+        if (ritual) {
           track("ritual_started", {
             ritualId: ritual.id,
             source: draftRitualId ? "library" : "suggestion",
           });
+        }
       }
+
       return next;
     });
   }
+
   function onPause() {
     setRunning(false);
     vibrate([20, 30, 20], haptics);
-    if (ritual) track("ritual_paused", { ritualId: ritual.id });
-  }
-  function onRest() {
-    if (!running || resting) return;
-    vibrate(14, haptics);
-    setResting(true);
-    if (ritual) track("ritual_rest", { ritualId: ritual.id, len: REST_LEN });
+
+    if (ritual) {
+      track("ritual_paused", { ritualId: ritual.id });
+    }
   }
 
-  if (!loaded || !ritual) return null;
+  function onRest() {
+    if (!running || resting) return;
+
+    vibrate(14, haptics);
+    setResting(true);
+
+    if (ritual) {
+      track("ritual_rest", { ritualId: ritual.id, len: REST_LEN });
+    }
+  }
+
+  if (!loaded) {
+    return (
+      <div className="flex h-full flex-col">
+        <Header title={t("ritual:title", "Ritual")} back />
+        <main className="flex-1 overflow-y-auto p-4">
+          <div className="max-w-[540px] mx-auto">
+            <Card className="p-5 text-center text-muted">
+              {t("common:loading", "Loading…")}
+            </Card>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (!ritual) return null;
 
   const rid = ritual.id as RitualId;
   const headerTitle = tRitualTitle(t, rid, ritual.title);
   const g = tGuide(t, rid, guideFor(ritual));
-
   const pct = total > 0 ? Math.min(100, ((total - remaining) / total) * 100) : 0;
 
   function formatTime(sec: number) {
@@ -241,8 +320,19 @@ export default function RitualPlayer() {
           <Card className="p-6 bg-[rgba(255,255,255,0.35)] backdrop-blur rounded-3xl space-y-5">
             <div className="flex flex-col items-center gap-3">
               <div className="relative w-40 h-40">
-                <svg viewBox="0 0 120 120" className="w-full h-full" style={{ transform: "rotate(-90deg)" }}>
-                  <circle cx="60" cy="60" r="52" stroke="rgba(255,255,255,0.4)" strokeWidth="8" fill="transparent" />
+                <svg
+                  viewBox="0 0 120 120"
+                  className="w-full h-full"
+                  style={{ transform: "rotate(-90deg)" }}
+                >
+                  <circle
+                    cx="60"
+                    cy="60"
+                    r="52"
+                    stroke="rgba(255,255,255,0.4)"
+                    strokeWidth="8"
+                    fill="transparent"
+                  />
                   <circle
                     cx="60"
                     cy="60"
@@ -258,7 +348,7 @@ export default function RitualPlayer() {
 
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
                   <span className="text-xs text-dim">
-                    {t("meditation:remaining", "Remaining")}
+                    {t("ritual:player.remaining", "Remaining")}
                   </span>
                   <span className="text-lg font-semibold text-main tabular-nums">
                     {resting ? formatTime(restRemaining) : formatTime(remaining)}
@@ -280,29 +370,48 @@ export default function RitualPlayer() {
 
             <div className="flex gap-3 justify-center flex-wrap">
               {!running ? (
-                <Button className="min-w-[120px]" variant="outline" onClick={onStartPause}>
+                <Button
+                  className="min-w-[120px]"
+                  variant="outline"
+                  onClick={onStartPause}
+                  disabled={completing}
+                >
                   {t("common:start", "Start")}
                 </Button>
               ) : (
-                <Button className="min-w-[120px]" variant="outline" onClick={onPause}>
+                <Button
+                  className="min-w-[120px]"
+                  variant="outline"
+                  onClick={onPause}
+                  disabled={completing}
+                >
                   {t("common:pause", "Pause")}
                 </Button>
               )}
 
-              <Button variant="outline" onClick={onRest} disabled={!running || resting}>
+              <Button
+                variant="outline"
+                onClick={onRest}
+                disabled={!running || resting || completing}
+              >
                 {t("ritual:player.rest20", "Rest 20s")}
               </Button>
 
               <Button
                 variant="outline"
                 onClick={() => {
-                  if (timerRef.current) clearInterval(timerRef.current);
+                  if (timerRef.current) {
+                    clearInterval(timerRef.current);
+                    timerRef.current = null;
+                  }
                   setRunning(false);
                   void onComplete();
                 }}
                 disabled={completing}
               >
-                {completing ? t("common:saving", "Saving…") : t("ritual:player.finishNow", "Finish Now")}
+                {completing
+                  ? t("common:saving", "Saving…")
+                  : t("ritual:player.finishNow", "Finish Now")}
               </Button>
             </div>
           </Card>
@@ -311,12 +420,16 @@ export default function RitualPlayer() {
             <div className="text-xs uppercase tracking-wide text-dim">
               {t("ritual:player.whatToDo", "What to do")}
             </div>
+
             <ol className="list-decimal pl-5 space-y-1 text-sm text-main">
               {(g.steps ?? []).map((s: string, i: number) => (
                 <li key={i}>{s}</li>
               ))}
             </ol>
-            {g.tip ? <p className="text-xs text-muted mt-2 italic">{g.tip}</p> : null}
+
+            {g.tip ? (
+              <p className="text-xs text-muted mt-2 italic">{g.tip}</p>
+            ) : null}
           </Card>
         </div>
       </main>
