@@ -67,10 +67,13 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-54d0af47'], (function (workbox) { 'use strict';
+define(['./workbox-b93e604c'], (function (workbox) { 'use strict';
 
-  self.skipWaiting();
-  workbox.clientsClaim();
+  self.addEventListener('message', event => {
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+      self.skipWaiting();
+    }
+  });
 
   /**
    * The precacheAndRoute() method efficiently caches and responds to
@@ -82,12 +85,23 @@ define(['./workbox-54d0af47'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "/offline.html",
-    "revision": "0.b5edk73l35"
+    "revision": "0.pjjo9reo168"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/offline.html"), {
     allowlist: [/^\/$/],
     denylist: [/^\/auth/i, /^\/api\//]
   }));
+  workbox.registerRoute(({
+    url
+  }) => /^https:\/\/(?:images|plus)\.unsplash\.com\/.*/i.test(url.href) || /^https:\/\/source\.unsplash\.com\/.*/i.test(url.href), new workbox.StaleWhileRevalidate({
+    "cacheName": "ext-images-v2",
+    plugins: [new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    }), new workbox.ExpirationPlugin({
+      maxEntries: 60,
+      maxAgeSeconds: 1209600
+    })]
+  }), 'GET');
 
 }));
